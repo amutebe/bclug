@@ -1,0 +1,167 @@
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="{% url 'home'%}">Dashboard</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          OPERATION
+        </a> 
+        
+
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" href="">CAR</a>
+          
+          <a class="dropdown-item" href="{% url 'createCARs'%}">Create</a>
+          <a class="dropdown-item" href="{% url 'cars_view'%}">View</a>
+          <a class="dropdown-item" href="{%url 'car_editing'%}">Edit</a>
+          <div class="dropdown-divider">
+          </div>
+          <a class="dropdown-item" href="{% url 'cars_pending'%}">Approve</a>
+          <div class="dropdown-divider">
+          </div>
+          <a class="dropdown-item" href="{% url 'cars_due'%}">Verification</a>
+          <div class="dropdown-divider">
+          </div>
+          <a class="dropdown-item" href="{% url 'cars_view'%}">Reports</a>
+        </div>
+      </li>
+<li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          ISSUES
+        </a> 
+        
+
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" href="">Issue</a>
+          
+          <a class="dropdown-item" href="{% url 'issues'%}">Create</a>
+          <a class="dropdown-item" href="{% url 'cars_view'%}">View</a>
+          <a class="dropdown-item" href="{%url 'issue_editing'%}">Edit</a>
+          <div class="dropdown-divider">
+          </div>
+          <a class="dropdown-item" href="{% url 'cars_pending'%}">Approve</a>
+          <div class="dropdown-divider">
+          </div>
+          <a class="dropdown-item" href="{% url 'cars_due'%}">Verification</a>
+          <div class="dropdown-divider">
+          </div>
+          <a class="dropdown-item" href="{% url 'cars_view'%}">Reports</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          INTERESTED PARTIES
+        </a> 
+        
+
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" href="">Interested Parties</a>
+          
+          <a class="dropdown-item" href="{% url 'interested_parties'%}">Create</a>
+          <a class="dropdown-item" href="{% url 'cars_view'%}">View</a>
+          <a class="dropdown-item" href="{%url 'ip_editing'%}">Edit</a>
+          <div class="dropdown-divider">
+          </div>
+          <a class="dropdown-item" href="{% url 'cars_pending'%}">Approve</a>
+          <div class="dropdown-divider">
+          </div>
+          <a class="dropdown-item" href="{% url 'cars_due'%}">Verification</a>
+          <div class="dropdown-divider">
+          </div>
+          <a class="dropdown-item" href="{% url 'cars_view'%}">Reports</a>
+        </div>
+      </li>
+	  
+	  <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          REGULATORY REQUIRMENTS
+        </a> 
+        
+
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" href="">Reg. req.</a>
+          
+          <a class="dropdown-item" href="{% url 'regulatory_requirement'%}">Create</a>
+          <a class="dropdown-item" href="{% url 'cars_view'%}">View</a>
+          <a class="dropdown-item" href="{%url 'regulatory_editing'%}">Edit</a>
+          <div class="dropdown-divider">
+          </div>
+          <a class="dropdown-item" href="{% url 'cars_pending'%}">Approve</a>
+          <div class="dropdown-divider">
+          </div>
+          <a class="dropdown-item" href="{% url 'cars_due'%}">Verification</a>
+          <div class="dropdown-divider">
+          </div>
+          <a class="dropdown-item" href="{% url 'cars_view'%}">Reports</a>
+        </div>
+      </li>
+  
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'ticket_class_view_3'%}"></a>
+      </li>
+       <li class="nav-item">
+        <a class="nav-link" href="{% url 'createCARs'%}"></a>
+      </li>
+ 
+ 
+  
+  <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          RISKS
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" href="">Risk</a>
+          
+          <a class="dropdown-item" href="{% url 'risks'%}">Create</a>
+          <a class="dropdown-item" href="{% url 'cars_view'%}">View</a>
+          <a class="dropdown-item" href="{%url 'regulatory_editing'%}">Edit</a>
+          <div class="dropdown-divider">
+          </div>
+          <a class="dropdown-item" href="{% url 'cars_pending'%}">Approve</a>
+          <div class="dropdown-divider">
+          </div>
+          <a class="dropdown-item" href="{% url 'cars_due'%}">Verification</a>
+          <div class="dropdown-divider">
+          </div>
+          <a class="dropdown-item" href="{% url 'cars_view'%}">Reports</a>
+        </div>
+      </li>
+  
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'ticket_class_view_3'%}"></a>
+      </li>
+       <li class="nav-item">
+        <a class="nav-link" href="{% url 'createCARs'%}"></a>
+      </li>
+    </ul>
+  </div>
+  
+  
+  <span ><a class="nav-link" href="">Welcome, {{request.user}}!</a></span>
+  <br>
+  <a href="{% url 'cars_view'%}" class="notification">
+  <span>inbox</span>
+  <span class="badge">{{total_tasks}}</span>
+</a>
+  <br>
+  <span ><a class="nav-link" href="{% url 'logout'%}"> Logout</a> </span>
+  <a class="nav-link" href="{% url 'admin:index' %}"> Admin site </a>
+  
+
+
+  
+
+
+
+        
+ 
+  
+
+</nav>
+

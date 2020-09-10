@@ -1,0 +1,57 @@
+{%  extends 'accounts/base.html' %}
+
+{% block content %}
+
+		<br>
+<div class="row">
+			<div class="col-md">
+				
+				
+				<div class="card card-body">
+					<table class="table-bordered">
+						<tr>
+							
+						<th>ID</th>
+					<th>Created on</th>
+					<th>Type</th>
+					<th>Status</th>
+					<th>Start</th>
+					<th>End</th>
+					<th>Description</th>
+					<th>Details</th>
+					<th>Location</th>
+                            
+						
+						</tr>
+						{% for i in products %}
+						<tr>
+						<td>{{i.plan_number}}</td>
+					<td>{{i.trainng_date}}</td>
+					<td>{{i.planner}}</td>
+					<td>{{i.status}}</td>
+					<td>{{i.start}}</td>
+					<td>{{i.end}}</td>
+					<td>{{i.description}}</td>
+					<td>{{i.details}}</td>
+					<td>{{i.location}}</td>
+                       				
+                        
+						
+						</tr>
+                        
+
+
+						{% endfor %}
+					
+						
+					</table>
+				
+			</div>
+			<div class="text-right">
+                    <a href="{%url 'training_due' %}"><h6><< Back</h6></a>
+                    </div>
+			
+		</div>
+		
+
+{% endblock content %}

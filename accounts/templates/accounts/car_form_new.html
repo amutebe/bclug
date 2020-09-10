@@ -1,0 +1,221 @@
+
+
+{% extends "accounts/base.html" %} 
+{% block content %}
+<style>
+form {
+  max-width: 900px;
+  display: block;
+  margin: 0 auto;
+}
+</style>
+<br>
+<h5>Corrective Action Request:</h5>
+
+<form action="/createCARs/" method="post">
+                     {% csrf_token %}
+                    
+               
+<div class="row">
+    <div class="col">
+      <label for="usr">CAR number: </label><br>
+
+     
+{{form.car_number}}
+           
+  
+</div>
+   
+<div class="col">
+ 
+  <label for="usr">Date occured:</label><br> 
+
+    <input class="form-control" type="date" value="{{context.car_dateoccur}}" id="example-date-input" name="car_dateoccur">
+       
+        <font color="red">{{ form.errors.car_dateoccur }}</font>
+      
+       
+</div>
+      
+
+<div class="col">
+      <label for="usr">Department ID:</label> <br>
+      
+<select name="car_dept">
+
+    {% for value,text in form.fields.car_dept.choices%}
+            <option value="{{value}}">{{text}}</option>
+    {% endfor %}
+</select>
+ <font color="red">{{ form.errors.car_dept }}</font>
+</div>
+
+<div class="col">
+      <label for="usr">Reported by ID: </label><br> 
+      <select name="car_userid">
+
+    {% for value,text in form.fields.car_userid.choices%}
+            <option value="{{value}}">{{text}}</option>
+    {% endfor %}
+</select>
+ <font color="red">{{ form.errors.car_userid }}</font>
+      
+</div>
+     <div class="col">
+      <label for="usr">CAR source and Non-conformity: </label><br>  
+           <select name="nonconf">
+
+    {% for value,text in form.fields.nonconf.choices%}
+            <option value="{{value}}">{{text}}</option>
+    {% endfor %}
+</select>
+ <font color="red">{{form.errors.nonconf}}</font>
+</div>
+    
+</div>
+
+
+<div class="form-group">
+    <label for="exampleFormControlTextarea1">Please briefly describe non-conformity</label>
+    <textarea name="description" class="form-control" rows="5" id="comment"{{form.description}}</textarea>
+    <font color="red">{{form.errors.description}}</font>
+</div>
+
+<div class="form-group" >
+    
+    <label for="CAOtherField">Correction/Containment</label>
+<br>
+
+<select  id="action" name="action" >
+    
+{% for value, text in form.fields.action.choices %}
+<option value="{{ value }}">{{ text }}</option>
+{% endfor %}
+  </select>
+  <font color="red">{{form.errors.action}}</font>
+</div>
+
+<div class="form-group" id="CADiv">
+    <label for="CAother"> Specify Other</label>
+    <!--<input type="text" class="form-control" id="CAother" placeholder="" name="CAother">-->
+    <textarea name="CAother" class="form-control" rows="5" id="comment"></textarea>
+</div>
+
+<div class="form-group" >
+    
+    <label for="rootcause">Root cause</label>
+<br>
+
+<select  id="rootcause" name="rootcause" >
+{% for value, text in form.fields.rootcause.choices %}
+<option value="{{ value }}">{{ text }}</option>
+{% endfor %}
+</select>
+<font color="red">{{form.errors.rootcause}}</font>
+</div>
+
+<div class="form-group" id="RootCdiv">
+    <label for="Rootother">Other specify</label>
+    <input type="text" class="form-control" id="Rootother" placeholder="" name="Rootother">
+    <font color="red">{{form.errors.Rootother}}</font>
+</div> 
+  
+
+<div class="form-group" >
+    
+    <label for="rootcause">Proposed Corrective Action or Preventive Action</label>
+<br>
+
+<select  id="correctiveaction" name="correctiveaction" >
+
+{% for value, text in form.fields.correctiveaction.choices %}
+<option value="{{ value }}">{{ text }}</option>
+{% endfor %}
+</select>
+   <font color="red">{{form.errors.correctiveaction}}</font>
+
+</div>
+
+
+<div class="form-group" id="ProposedCAdiv">
+    <label for="correctiveactionOther">Other specify</label>
+    <input type="text" class="form-control" id="Rootother" placeholder="" name="correctiveactionOther">{{form.correctiveactionOther}}
+     <font color="red">{{form.errors.correctiveactionOther}}</font>
+    
+</div>
+
+<div class="form-group">
+    
+    <label for="exampleFormControlSelect1">CA/PA proposed by</label><br>
+    <select name="proposedby">
+    {% for value,text in form.fields.proposedby.choices%}
+            <option value="{{value}}">{{text}}</option>
+    {% endfor %}
+
+</select>
+<font color="red">{{form.errors.proposedby}}</font>
+    
+</div>
+
+<div class="">
+    <div class=""><br>
+  <label for="example-date-input" class="col-2 col-form-label">CA/PA Proposal Date</label>
+  <div class="col-4"><br>
+    <input class="" type="date" value="" id="proposedDate" name="proposedDate">
+    <font color="red">{{form.errors.proposedDate}}</font>
+  </div>
+</div>
+
+
+<div class="">
+<br>
+  <label for="example-date-input" class="col-2 col-form-label">Implementation Deadline</label>
+  <div class="col-4">
+    <input class="" type="" value="" id="deadline" name="deadline">
+    <font color="red">{{form.errors.deadline}}</font>
+  </div>
+</div>
+
+<div class="form-group">
+    
+    <label for="exampleFormControlSelect1">Priority:</label><br>
+   <select name="priority">
+
+     {% for value,text in form.fields.priority.choices%}
+            <option value="{{value}}">{{text}}</option>
+    {% endfor %}
+</select>
+<font color="red">{{form.errors.priority}}</font>
+</div>	
+
+
+
+<div class="form-group">
+    
+    <label for="exampleFormControlSelect1">Implemented by:</label><br>
+   <select name="implementedby">
+
+     {% for value,text in form.fields.implementedby.choices%}
+            <option value="{{value}}">{{text}}</option>
+    {% endfor %}
+</select
+<font color="red">{{form.errors.implementedby}}</font>
+</div>	
+
+
+
+<div class="form-group row">
+  <label for="example-date-input" class="col-2 col-form-label">Date Today</label>
+  <div class="col-4">
+  
+    <input class="form-control" type="text" value="{{today.today}}" id="example-date-input" name="car_date" disabled>
+    <font color="red">{{form.errors.car_date}}</font>
+  </div>
+</div>
+
+
+<input class="btn btn-info" type="submit" name="Submit">
+</form>
+
+{% endblock %} 
+

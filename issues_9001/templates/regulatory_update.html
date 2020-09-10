@@ -1,0 +1,118 @@
+
+{% extends "accounts/base.html" %} 
+{% block content %}
+<style>
+form {
+  max-width: 900px;
+  display: block;
+  margin: 0 auto;
+}
+</style>
+<br>
+<h5>Regulatory Requirements:</h5>
+
+<form action="" method="post">
+                     {% csrf_token %}
+                    
+               
+<div class="row">
+    <div class="col">
+      <label for="usr">Reg. no: </label><br>
+
+     
+{{form.regulatory_number}}
+           
+  
+</div>
+   
+<div class="col">
+<label for="usr">Date of Registered:</label> <br>
+
+ 
+
+    {{form.registered}}
+       
+        <font color="red">{{ form.errors.registered }}</font>
+      
+       
+</div>
+      
+
+
+
+<div class="col">
+      <label for="usr">Lead Analyst: </label><br> 
+     {{form.analyst}}
+ <font color="red">{{ form.errors.analyst }}</font>
+      
+</div>
+     <div class="col" id="context">
+      <label for="context">Requirement Category: </label><br>  
+        {{form.cat_name}}  
+ <font color="red">{{form.errors.cat_name}}</font>
+</div>
+    
+</div>
+
+<div class="form-group" id="othercategory">
+    <label for="otherCategory">Other Category</label>
+    <input type="text" class="form-control" id="otherCategory"  name="otherCategory" {{form.otherCategory}}
+    <font color="red">{{form.errors.otherCategory}}</font>
+</div> 
+
+
+<div class="form-group" id="description">
+    <label for="Description">Description</label>
+    <input type="text" class="form-control" id="description"  name="description" {{form.description}}
+    <font color="red">{{form.errors.description}}</font>
+</div> 
+
+
+<div class="form-group" id="document">
+    <label for="document">document</label>
+    <input type="text" class="form-control" id="document"  name="document" {{form.document}}
+    <font color="red">{{form.errors.document}}</font>
+</div> 
+
+
+
+<div class="form-group" id="internaldiv">
+    
+    <label for="internal">Interested Party:</label>
+<br>
+
+{{form.interestedparty}}
+  <font color="red">{{form.errors.interestedparty}}</font>
+</div>
+
+
+<div class="form-group" id="otherInterestedParty">
+    <label for="otherInterestedParty">Other interested party:</label>
+    <input type="text" class="form-control" id="otherInterestedParty"  name="otherInterestedParty" {{form.otherInterestedParty}}
+    <font color="red">{{form.errors.otherInterestedParty}}</font>
+</div> 
+
+<div class="form-group">
+    
+    <label for="proposedby">responsibility:</label><br>
+   {{form.responsibility}}
+<font color="red">{{form.errors.responsibility}}</font>
+    
+</div>
+  
+<div class="form-group">
+   
+  <label for="proposedDate" >When:</label>
+  <br>
+    {{form.due}}
+    <font color="red">{{form.errors.due}}</font>
+  
+</div>
+
+
+
+<input class="btn btn-info" type="submit" name="Submit">
+</form>
+
+{% endblock %} 
+

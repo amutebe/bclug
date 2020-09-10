@@ -1,0 +1,220 @@
+
+{% extends "accounts/base.html" %} 
+{% block content %}
+<style>
+form {
+  max-width: 900px;
+  display: block;
+  margin: 0 auto;
+}
+</style>
+<div class="col-md-10 order-md-1">
+          <h4 class="mb-3">Opportunities</h4>
+<p class="round2"> 
+
+<form action="/opportunity/" method="post" id="riskForm" data-ids-url="{% url 'ajax_load_ids' %}" data-contextdesc-url="{% url 'ajax_load_contextdesc' %}" >
+                     {% csrf_token %}
+                    
+               
+<div class="row">
+    <div class="col">
+      <label for="usr" id='usr'>Opportunity no: </label><br>
+
+     
+{{form.risk_number}}
+           
+  
+</div>
+   
+<div class="col">
+<label for="usr">Date of Analysis:</label> <br>
+
+ 
+
+    {{form.risk_date}}
+       
+        <font color="red">{{ form.errors.risk_date }}</font>
+      
+       
+</div>
+      
+
+
+
+<div class="col">
+      <label for="usr">Lead Assessor: </label><br> 
+     {{form.assessor}}
+ <font color="red">{{ form.errors.assessor }}</font>
+      
+</div>
+     
+    
+
+<div class="col" id="context">
+      <label for="context">Context: </label><br>  
+  <p><i>{{form.contextdetails}}  </i></p><br>
+ <font color="red">{{form.errors.contextdetails}}</font>
+</div>    
+    
+
+<div class="col">
+      <label for="usr">ID: </label>
+     {{form.issue_number}}
+ <font color="red">{{ form.errors.issue_number }}</font>
+      
+</div>
+
+
+
+     
+    
+</div>
+
+<label for="contextdescription"></label>
+<div class="form-group" id="contextdescription">
+
+<input type="text" id="contextdescription" name="contextdescription" value="" >
+
+</div>
+    
+
+
+
+
+
+<div class="form-group" id="internal">
+    
+    <label for="internal">Opportunity description:</label>
+<br>
+<input type="text" class="form-control" id="contextdescription"  name="mitigation" {{form.description}}
+
+
+  <font color="red">{{form.errors.description}}</font>
+</div>
+<div class="row">
+    <div class="col">
+<div class="form-group">
+    <label for="likelihood"> Likelihood:</label>
+	<br>
+{{form.likelihood}}
+  <font color="red">{{form.errors.likelihood}}</font>
+
+</div>
+</div>
+ <div class="col">
+<div class="form-group">
+    <label for="severity"> Benefit:</label>
+	<br>
+{{form.severity}}
+  <font color="red">{{form.errors.severity}}</font>
+
+</div>
+</div>
+
+ <div class="col">
+
+
+<label for="severity"> Opportunity Rating:</label><br>
+{{form.riskrating}}
+<br>
+</div>
+<br>
+ <div class="col">
+<label for="severity"> Opportunity Rank:</label><br>
+{{form.riskrank}}
+<br>
+</div>
+</div>
+<div class="form-group" id="mitigation">
+    
+    <label for="mitigation">Opportunity pursuit action:</label>
+
+<input type="text" class="form-control" id="contextdescription"  name="mitigation" {{form.mitigation}}
+
+  <font color="red">{{form.errors.mitigation}}</font>
+</div>
+
+<div class="form-group" id="document">
+    <label for="upload"></label>
+   {{form.document}}
+    <font color="red">{{form.errors.document}}</font>
+</div> 
+
+
+<div class="form-group">
+    
+    <label for="proposedby">Responsibility:</label>
+   {{form.responsibility}}
+<font color="red">{{form.errors.responsibility}}</font>
+    
+</div>
+  
+<div class="form-group">
+   
+  <label for="proposedDate" >When:</label>
+  <br>
+    {{form.due}}
+    <font color="red">{{form.errors.due}}</font>
+  
+</div>
+<br>
+<p class="round2"> 
+<div class="card card-body">
+					<table class="form-group">
+					<tr> 
+
+
+<td ><a class="btn  btn-warning" href="{% url 'home'%}"> Cancel </a></td>
+<td align="right"><input class="btn btn-danger" type="submit" name="Submit"></td>
+					</tr>
+          </table>
+</div>
+</form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+    $("#id_contextdetails").change(function () {
+      var url = $("#riskForm").attr("data-ids-url");
+      var contextId = $(this).val();
+
+      $.ajax({
+        url: url,
+        data: {
+          'contextid': contextId
+        },
+        success: function (data) {
+          
+          $("#id_issue_number").html(data);
+        }
+      });
+
+    });
+    $("#id_contextdetails").trigger("change");
+
+    $("#id_issue_number").change(function () {
+      var url = $("#riskForm").attr("data-contextdesc-url");
+      var contextId = $(this).val();
+      var context = $("#id_contextdetails").val();
+
+      $.ajax({
+        url: url,
+        data: {
+          'contextid': contextId, 'context':context
+        },
+        success: function (data) {
+          
+          $("#contextdescription").html(data);
+        }
+      });
+
+    });
+    $("#id_issue_number").trigger("change");
+
+
+    
+
+  </script>
+
+{% endblock %} 
+

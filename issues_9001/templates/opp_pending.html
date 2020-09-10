@@ -1,0 +1,53 @@
+{% extends "accounts/base.html" %} 
+
+{% block content %}
+<br>
+<div class="col-md-24">
+		
+		<div class="card card-body">
+			
+			<table class="table table-sm">
+				<tr class="table-info">
+					<th>ID</th>
+					<th>LeadAnalyst</th>
+					<th>Created on</th>
+					<th>Status</th>
+					<th>Context</th>
+					<th>Description</th>
+					 <th>Ranking</th>
+					<th>PursuitAction</th>
+					<th>Responsibility</th>
+					<th>Deadline</th>
+					
+					<th></th>
+				</tr>
+				
+				{% for i in pendingcar %}
+				
+					<tr>
+					<td>{{i.risk_number}}</td>
+					<td>{{i.assessor}}</td>
+					<td>{{i.risk_date}}</td>
+					<td>{{i.status}}</td>
+					<td>{{i.contextdetails}}</td>
+					<td>{{i.description}}</td>									
+					<td>{{i.riskrank}}</td>
+					<td>{{i.mitigation}}</td>
+					<td>{{i.responsibility}}</td>
+					<td>{{i.due}}</td>
+					
+					
+					<td><a class="btn btn-sm btn-danger" href="{%url 'approve_opp' i.risk_number %}">Action</a></td>
+
+					</tr>
+
+				{%endfor%}
+		
+			</table>
+		</div>
+	</div>
+
+</div>
+
+
+{% endblock %} 

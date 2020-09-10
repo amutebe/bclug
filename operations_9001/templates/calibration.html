@@ -1,0 +1,97 @@
+
+{% extends "accounts/base.html" %} 
+{% block content %}
+<style>
+form {
+  max-width: 900px;
+  display: block;
+  margin: 0 auto;
+}
+</style>
+<br>
+<h5>Calibration Record:</h5>
+
+<form action="/calibration/" method="post">
+                     {% csrf_token %}
+                    
+               
+<div class="row">
+    <div class="col">
+      <label for="usr">Calibration Number: </label><br>
+
+{{form.calibration_number}}
+<font color="red">{{ form.errors.calibration_number}}</font>
+
+      
+  
+</div>
+   
+<div class="col">
+<label for="usr">Calibration Date:</label> <br>
+ 
+    {{form.calibration_date}}
+       
+        <font color="red">{{ form.errors.calibration_date}}</font>
+      
+       
+</div>
+    
+
+
+
+<div class="col">
+      <label for="usr">Type: </label><br> 
+     <input type="text" class="form-control" id="type"  name="type"{{form.type}}
+ <font color="red">{{ form.errors.type}}</font>
+      
+</div>
+     <div class="col" id="context">
+      <label for="context">Device ID: </label><br>  
+        <input type="text" class="form-control" id="device_id"  name="device_id"{{form.device_id}}  
+ <font color="red">{{form.errors.device_id}}</font>
+</div>
+    
+</div>
+
+
+
+
+<br>
+<div class="form-group" id="internaldiv">
+    
+    <label for="internal">Manufacturer:</label>
+<br>
+
+<input type="text" class="form-control" id="manufacturer"  name="device_id"{{form.manufacturer}}
+  <font color="red">{{form.errors.manufacturer}}</font>
+</div>
+
+<div class="form-group" id="externaldiv">
+    <label for="external">Range: </label>
+	<br>
+<input type="text" class="form-control" id="range"  name="range"{{form.range}}
+  <font color="red">{{form.errors.range}}</font>
+
+</div>
+
+<div class="form-group" id="processdiv">
+    <label for="process">Calibrated by:</label>
+	<br>
+{{form.calibrated_by}}
+  <font color="red">{{form.errors.calibrated_by}}</font>
+
+</div>
+
+<div class="form-group" id="process_StrengthWeaknessiv">
+    <label for="process_StrengthWeakness">Standard:</label>
+	<br>
+{{form.standard}}
+  <font color="red">{{form.errors.standard}}</font>
+
+</div>
+
+<input class="btn btn-info" type="submit" name="Submit">
+</form>
+
+{% endblock %} 
+

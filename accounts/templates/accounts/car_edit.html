@@ -1,0 +1,26 @@
+{% extends "accounts/base.html" %} 
+{% block content %}
+<style>
+form {
+  max-width: 900px;
+  display: block;
+  margin: 10 auto;
+}
+</style>
+
+<div class="form-row">
+    <div class="form-group">
+        <div class="col-4">
+
+<form action="" method="POST">
+ {% csrf_token %}
+ {{form}}
+ 
+<input class="btn btn-info" type="submit" name="Submit">
+</form>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %} 

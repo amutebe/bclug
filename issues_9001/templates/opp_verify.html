@@ -1,0 +1,48 @@
+
+
+{% extends "accounts/base.html" %} 
+{%load static%}
+{% block content %}
+<br>
+<div class="row">
+<div class="col-md-6">
+<div class="card card-body">
+
+
+<form action="" method="POST">
+ 
+ {% csrf_token %}
+
+<div class="form-group" id="verification">
+    
+    <label for="exampleFormControlSelect1">Verification status:</label><br>
+  {{form.verification}}
+<font color="red">{{form.errors.verification}}</font>
+</div>
+
+<div class="form-group" id="verification_failedDIV">
+    
+    <label for="exampleFormControlSelect1">Remark:</label><br>
+ 
+      <input type="text" class="form-control" id="verification_failed" placeholder="" name="verification_failed" {{form.verification_failed}}
+
+<font color="red">{{form.errors.verification_failed}}</font>
+</div>
+<br>
+
+<p class="round2"> 
+<div class="card card-body">
+					<table class="form-group">
+					<tr> 
+
+
+<td ><a class="btn btn-warning" href="{%url 'opp_due' %}">Cancel</a></td>
+<td align="right"> <input class="btn btn-danger" type="submit" name="Confirm" value="Close"></td>
+					</tr>
+          </table>
+</div>
+</form>
+</div>
+</div>
+</div>
+{% endblock %} 

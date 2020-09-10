@@ -1,0 +1,118 @@
+
+{% extends "accounts/base.html" %} 
+{% block content %}
+
+<style>
+form {
+  max-width: 900px;
+  display: block;
+  margin: 0 auto;
+}
+
+
+</style>
+<div class="col-md-8 order-md-1">
+          <h4 class="mb-3">QMS Planner</h4>
+<p class="round2"> 
+<form action="/qms_planner/" method="post">
+                     {% csrf_token %}
+                    
+               
+<div class="row">
+    <div class="col">
+      <label for="usr">Planner No.: </label><br>
+
+{{form.planner_number}}
+<font color="red">{{ form.errors.planner_number}}</font>
+
+      
+  
+</div>
+   
+<div class="col">
+<label for="usr">Plan Date:</label> <br>
+ 
+    {{form.plan_date}}
+       
+        <font color="red">{{ form.errors.plan_date}}</font>
+      
+       
+</div>
+    
+
+
+
+<div class="col">
+      <label for="usr">Planner: </label><br> 
+    {{form.planner}}
+ <font color="red">{{ form.errors.planner}}</font>
+      
+</div>
+     <div class="col" id="context">
+      <label for="context">Start Date: </label><br>  
+        {{form.start}}  
+ <font color="red">{{form.errors.start}}</font>
+</div>
+    
+</div>
+
+
+
+
+<br>
+<div class="form-group" id="internaldiv">
+    
+    <label for="internal">End Date:</label>
+<br>
+
+{{form.end}}
+  <font color="red">{{form.errors.end}}</font>
+ <font color="red"> {{ form.non_field_errors}}</font>
+</div>
+
+<div class="form-group" id="externaldiv">
+    <label for="external">Program Description: </label>
+	<br>
+{{form.description}}
+  <font color="red">{{form.errors.description}}</font>
+
+</div>
+<div class="row">
+    <div class="col">
+   
+
+<div class="form-group" id="processdiv">
+    <label for="process">Additional Description:</label>
+	<br>
+<input type="text" class="form-control" id="type"  name="type"{{form.details}}
+  <font color="red">{{form.errors.details}}</font>
+
+</div>
+
+
+
+<br>
+<p class="round2"> 
+<div class="card card-body">
+					<table class="form-group">
+					<tr> 
+
+<td ><a class="btn  btn-warning" href="{% url 'home'%}"> Cancel </a></td>
+<td align="right"><input class="btn btn-danger" type="submit" name="Submit"></td>
+
+					</tr>
+          </table>
+</div>
+</form>
+</div>
+
+
+
+
+{% endblock %} 
+
+
+
+
+
+

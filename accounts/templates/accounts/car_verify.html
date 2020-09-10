@@ -1,0 +1,52 @@
+
+
+{% extends "accounts/base.html" %} 
+{%load static%}
+{% block content %}
+<br>
+<div class="row">
+<div class="col-md-6">
+<div class="card card-body">
+
+
+<form action="" method="POST">
+ 
+ {% csrf_token %}
+
+<div class="form-group" id="verification">
+    
+    <label for="exampleFormControlSelect1">Verification status:</label><br>
+  {{form.verification}}
+<font color="red">{{form.errors.verification}}</font>
+</div>
+<div class="form-group" id="verification_statusDIV">
+    
+    <label for="exampleFormControlSelect1">Close or Reject:</label><br>
+
+<select  id="verification_status" name="verification_status" >
+{% for value, text in form.fields.verification_status.choices %}
+<option value="{{ value }}">{{ text }}</option>
+{% endfor %}
+</select>
+
+
+
+<font color="red">{{form.errors.verification_status}}</font>
+</div>
+<div class="form-group" id="verification_failedDIV">
+    
+    <label for="exampleFormControlSelect1">Reason for rejecting:</label><br>
+ 
+      <input type="text" class="form-control" id="verification_failed" placeholder="" name="verification_failed" {{form.verification_failed}}
+
+<font color="red">{{form.errors.verification_failed}}</font>
+</div>
+
+
+ <a class="btn btn-warning" href="{%url 'cars_due' %}">Cancel</a>
+ <input class="btn btn-danger" type="submit" name="Confirm">
+</form>
+</div>
+</div>
+</div>
+{% endblock %} 

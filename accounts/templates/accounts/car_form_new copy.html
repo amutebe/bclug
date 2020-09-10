@@ -1,0 +1,179 @@
+
+
+{% extends "accounts/base.html" %} 
+{% block content %}
+<style>
+form {
+  max-width: 900px;
+  display: block;
+  margin: 0 auto;
+}
+</style>
+<br>
+<h5>Corrective Action Request:</h5>
+
+<form action="" method="post">
+                     {% csrf_token %}
+                    
+               
+<div class="row">
+    <div class="col">
+      <label for="usr">CAR number: </label><br>
+
+     
+{{form.car_number}}
+           
+  
+</div>
+   
+<div class="col">
+<label for="usr">Date occured:</label> <br>
+
+ 
+
+    {{form.car_dateoccur}}
+       
+        <font color="red">{{ form.errors.car_dateoccur }}</font>
+      
+       
+</div>
+      
+
+<div class="col">
+      <label for="usr">Department:</label> <br>
+      
+{{form.car_dept}}
+ <font color="red">{{ form.errors.car_dept }}</font>
+</div>
+
+<div class="col">
+      <label for="usr">Reported by: </label><br> 
+     {{form.car_userid}}
+ <font color="red">{{ form.errors.car_userid }}</font>
+      
+</div>
+     <div class="col">
+      <label for="usr">CAR source and Non-conformity: </label><br>  
+        {{form.nonconf}}  
+ <font color="red">{{form.errors.nonconf}}</font>
+</div>
+    
+</div>
+
+
+<div class="form-group">
+    <label for="exampleFormControlTextarea1">Please briefly describe non-conformity</label>
+    <textarea name="description" class="form-control" rows="5" id="comment"{{form.description}}</textarea>
+    <font color="red">{{form.errors.description}}</font>
+</div>
+
+<div class="form-group" >
+    
+    <label for="CAOtherField">Correction/Containment</label>
+<br>
+
+{{form.action}}
+  <font color="red">{{form.errors.action}}</font>
+</div>
+
+<div class="form-group" id="CADiv">
+    <label for="CAother"> If Other, please specify</label>
+    <!--<input type="text" class="form-control" id="CAother" placeholder="" name="CAother">-->
+    <textarea name="CAother" class="form-control" rows="5" id="comment"{{form.CAother}}</textarea>
+</div>
+
+<div class="form-group" >
+    
+    <label for="rootcause">Root cause</label>
+<br>
+{{form.rootcause}}
+<font color="red">{{form.errors.rootcause}}</font>
+</div>
+
+<div class="form-group" id="RootCdiv">
+    <label for="Rootother">If Other, please specify</label>
+    <input type="text" class="form-control" id="Rootother"  name="Rootother" {{form.Rootother}}
+    <font color="red">{{form.errors.Rootother}}</font>
+</div> 
+  
+
+<div class="form-group" >
+    
+    <label for="rootcause">Proposed Corrective Action or Preventive Action</label>
+<br>
+
+{{form.correctiveaction}}
+
+   <font color="red">{{form.errors.correctiveaction}}</font>
+
+</div>
+
+
+<div class="form-group" id="ProposedCAdiv">
+    <label for="correctiveactionOther">If Other, please specify</label>
+    <input type="text" class="form-control" id="Rootother" placeholder="" name="correctiveactionOther"{{form.correctiveactionOther}}
+     <font color="red">{{form.errors.correctiveactionOther}}</font>
+    
+</div>
+<div class="row">
+  <div class="col">
+<div class="form-group">
+    
+    <label for="proposedby">CA/PA proposed by</label><br>
+   {{form.proposedby}}
+<font color="red">{{form.errors.proposedby}}</font>
+    
+</div>
+</div>
+
+  <div class="col">
+<div class="form-group">
+   
+  <label for="proposedDate" >CA/PA Proposal Date</label>
+  <br>
+    {{form.proposedDate}}
+    <font color="red">{{form.errors.proposedDate}}</font>
+  
+</div>
+
+</div>
+  <div class="col">
+<div class="form-group">
+    
+  <label for="example-date-input" >Implementation Deadline</label><br>
+      {{form.deadline}}
+    <font color="red">{{form.errors.deadline}}</font>
+  </div>
+</div>
+  
+  <div class="col">
+
+<div class="form-group">
+    
+    <label for="exampleFormControlSelect1">Implemented by:</label><br>
+ {{form.implementedby}} 
+<font color="red">{{form.errors.implementedby}}</font>
+</div>	
+
+</div>
+  </div>
+
+
+<div class="row">
+  <div class="col">
+
+    <div class="form-group">
+    
+    <label for="exampleFormControlSelect1">Priority:</label><br>
+  {{form.priority}}
+    <font color="red">{{form.errors.priority}}</font>
+    </div>	
+  </div>
+
+</div>
+
+<input class="btn btn-info" type="submit" name="Submit">
+</form>
+
+{% endblock %} 
+

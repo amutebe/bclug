@@ -1,0 +1,264 @@
+
+{% extends "accounts/base.html" %} 
+{% block content %}
+<style>
+form 
+{
+  max-width: 900px;
+  display: block;
+  margin: 0 auto;
+}
+</style>
+<div class="col-md-10 order-md-1">
+          <h4 class="mb-3">Risk Assessment</h4>
+<p class="round2"> 
+
+<form action="/risks/" method="post" id="riskForm" data-ids-url="{% url 'ajax_load_ids' %}" data-contextdesc-url="{% url 'ajax_load_contextdesc' %}" >
+                     {% csrf_token %}
+                    
+               
+<div class="row">
+    <div class="col">
+      <label for="usr">Risk no: </label><br>
+
+     
+{{form.risk_number}}
+ <font color="red">{{ form.errors.risk_number }}</font>
+           
+  
+</div>
+
+<div class="col">
+<label for="usr">Date of Analysis:</label> <br>
+
+ 
+
+    {{form.risk_date}}
+       
+        <font color="red">{{ form.errors.risk_date }}</font>
+      
+       
+</div>
+      
+
+
+
+<div class="col">
+      <label for="usr">Assessor: </label><br> 
+     {{form.assessor}}
+ <font color="red">{{ form.errors.assessor }}</font>
+      
+</div>
+
+ <div class="col" id="context">
+      <label for="context">Context: </label><br>  
+        {{form.contextdetails}}  
+ <font color="red">{{form.errors.contextdetails}}</font>
+</div>    
+    
+
+<div class="col"><br>
+      <label for="usr">ID:</label>
+     {{form.issue_number}}
+ <font color="red">{{ form.errors.issue_number }}</font>
+      
+</div>
+  
+    
+
+<div class="col"><br>
+ 
+<div class="form-group" id="contextdescription">
+<input type="text" id="contextdescription" name="contextdescription" value="" >
+</div>
+</div>
+</div>
+
+<div class="form-group" id="riskdescription">
+    
+    <label for="riskdescription">Risk description:</label>
+<br>
+
+{{form.riskdescription}}
+  <font color="red">{{form.errors.riskdescription}}</font>
+</div>
+
+<div class="form-group" id="internal">
+    
+    <label for="internal">Please describe:</label>
+<br>
+    <input type="text" class="form-control" id="description"  name="description" {{form.description}}
+
+
+  <font color="red">{{form.errors.description}}</font>
+</div>
+
+<div class="row">
+ <div class="col">
+<div class="form-group">
+    <label for="likelihood"> Likelihood:</label>
+	<br>
+{{form.likelihood}}
+  <font color="red">{{form.errors.likelihood}}</font>
+
+</div>
+</div>
+<div class="col">
+<div class="form-group">
+    <label for="severity"> Severity:</label>
+	<br>
+{{form.severity}}
+  <font color="red">{{form.errors.severity}}</font>
+
+</div>
+</div>
+
+<div class="col">
+<div class="form-group">
+<label for="severity"> Risk Rating:</label>
+{{form.riskrating}}
+
+</div>
+</div>
+ <div class="col">
+ <div class="form-group">
+<label  for="severity"> Risk Rank:</label>
+{{form.riskrank}}
+
+</div>
+</div>
+</div>
+
+
+
+<div class="form-group" id="risktreatment">
+    
+    <label for="risktreatment">Risk Treatment Option:</label>
+<br>
+{{form.risktreatment}}
+  <font color="red">{{form.errors.risktreatment}}</font>
+</div>
+
+<div class="form-group" id="retainreason">
+    
+    <label for="retainreason"> Please give Reason:</label>
+<br>
+
+    <input type="text" class="form-control" id="retainreason"  name="retainreason" {{form.retainreason}}
+
+  <font color="red">{{form.errors.retainreason}}</font>
+</div>
+
+<div class="form-group" id="riskmitigation">
+    
+    <label for="riskmitigation">Risk mitigation:</label>
+<br>
+
+{{form.riskmitigation}}
+  <font color="red">{{form.errors.riskmitigation}}</font>
+</div> 
+
+<div class="form-group" id="mitigation">
+    
+    <label for="mitigation">If other, please specify mitigation:</label>
+<br>
+    <input type="text" class="form-control" id="mitigation"  name="mitigation" {{form.mitigation}}
+
+  <font color="red">{{form.errors.mitigation}}</font>
+</div>
+
+
+<div class="form-group" id="mitigationdesc">
+    
+    <label for="internal">Please give risk mitigation details:</label>
+<br>
+    <input type="text" class="form-control" id="mitigationdesc"  name="mitigationdesc" {{form.mitigationdesc}}
+
+  <font color="red">{{form.errors.mitigationdesc}}</font>
+</div>
+
+
+ 
+   
+
+<div class="form-group" id="responsibility">
+    
+    <label for="proposedby">Responsibility:</label><br>
+   {{form.responsibility}}
+<font color="red">{{form.errors.responsibility}}</font>
+    
+</div>
+  
+<div class="form-group" id="when">
+   
+  <label for="proposedDate" >When:</label>
+  <br>
+    {{form.due}}
+    <font color="red">{{form.errors.due}}</font>
+  
+</div>
+
+<br>
+<p class="round2"> 
+<div class="card card-body">
+					<table class="form-group">
+					<tr> 
+
+
+<td><a class="btn  btn-warning" href="{% url 'home'%}"> Cancel </a></td>
+<td align="right"><input class="btn btn-danger" type="submit" name="Submit"></td>
+					</tr>
+          </table>
+</div>
+</form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+    $("#id_contextdetails").change(function () {
+      var url = $("#riskForm").attr("data-ids-url");
+      var contextId = $(this).val();
+   $('#contextdescription').hide();
+
+      $.ajax({
+        url: url,
+        data: {
+          'contextid': contextId
+        },
+        success: function (data) {
+          
+          $("#id_issue_number").html(data);
+        }
+      });
+
+    });
+    $("#id_contextdetails").trigger("change");
+
+    $("#id_issue_number").change(function () {
+      var url = $("#riskForm").attr("data-contextdesc-url");
+      var contextId = $(this).val();
+      var context = $("#id_contextdetails").val();
+       $('#contextdescription').show();
+
+      $.ajax({
+        url: url,
+        data: {
+          'contextid': contextId, 'context':context
+        },
+        success: function (data) {
+          
+          $("#contextdescription").html(data);
+        }
+      });
+
+    });
+    $("#id_issue_number").trigger("change");
+
+
+    
+
+  </script>
+
+
+{% endblock %} 
+

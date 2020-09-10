@@ -1,0 +1,67 @@
+
+
+{% extends "accounts/base.html" %} 
+{%load static%}
+{% block content %}
+<br>
+
+
+
+<form action="approve_ip" method="POST">
+ {% csrf_token %}
+<div class="col-md-12">
+		
+		<div class="card card-body">
+		
+			<table class="table table-sm">
+				<tr class="table-info ">
+					
+				
+          <th>Status:</th>
+					<th>Comment:</th>
+                 
+                  
+					
+					
+				</tr>
+				
+			
+				
+					<tr>
+	<!--			<td><input type="date" class="form-control-plaintext" readonly {{form.analysis_date}}</td>-->	
+          <td>{{form.status}}</td>
+					<td><input type="text" class="form-control" id="rejected"  name="rejected" {{form.rejected}}</td>
+                    
+                    
+					</tr>
+
+                    <tr>
+                    <td>
+                   <div class="text-left">
+                  <a class="btn btn-warning " href="{%url 'ip_pending' %}">Cancel</a>
+                    </div>
+                    </td>
+                     <td>
+                  
+                    
+                    <div class="text-right" >
+                      <input class="btn btn-danger" type="submit" name="Confirm">
+                    
+                    </div>
+                  
+                    </td>
+                    </tr>
+                
+
+			
+		
+			</table>
+            
+		</div>
+	</div>
+
+</div>
+ 
+</form>
+
+{% endblock %} 

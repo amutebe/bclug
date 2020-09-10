@@ -1,0 +1,220 @@
+
+
+{% extends "accounts/base.html" %} 
+{% block content %}
+<style>
+form {
+  max-width: 900px;
+  display: block;
+  margin: 0 auto;
+}
+</style>
+<br>
+<h5>Corrective Action Request:</h5>
+<form action="/SaveCAR/" method="post">
+                     {% csrf_token %}
+
+<div class="row">
+    <div class="col">
+      <label for="usr">CAR number: </label><br>
+      <input type="text" name="car_number" value="{{context.car_number}}"> <br>
+</div>
+   
+<div class="col">
+  
+  <label for="usr">Date occured:</label><br> 
+
+    <input class="form-control" type="date" value="{{context.car_dateoccur}}" id="example-date-input" name="car_dateoccur">
+  
+</div>
+      
+<div class="col">
+      <label for="usr">Time occured: </label><br> 
+       <input type="text" name="car_time" value="{{context.car_time}}"><br>
+</div>
+   
+<div class="col">
+      <label for="usr">Department ID:</label> <br>
+      <input type="text" name="car_dept" value="{{context.car_dept}}"><br>
+      
+</div>
+
+<div class="col">
+      <label for="usr">Reported by ID: </label><br> 
+       <input type="text" name="car_userid" value="{{context.car_userid}}"><br>
+</div>
+     <div class="col">
+      <label for="usr">CAR source ID: </label><br>  
+        <input type="text" name="nonconf" value="{{context.nonconf}}"><br>
+</div>
+    
+</div>
+
+<div class="form-group">
+    
+    <label for="exampleFormControlSelect1"><h6>Non-Conformity</label>
+  
+    <select class="form-control" id="exampleFormControlSelect1" name="car_issue">
+    {% for i in data%}
+       
+	 <option value="{{i.description}}" >{{i.description}}</option>
+    {% endfor %}
+    </select>
+
+</div>
+
+<div class="form-group">
+    <label for="exampleFormControlTextarea1">Please briefly describe non-conformity</label>
+    <textarea name="description" class="form-control" rows="5" id="comment"></textarea>
+</div>
+
+<div class="form-group" >
+    
+    <label for="CAOtherField">Correction/Containment</label>
+<br>
+
+<select  id="action" name="action" >
+      {% for i in nonConformityAction%}
+            <option value="{{i.id}}">{{i.description}}</option>
+    {% endfor %}
+  </select>
+</div>
+
+
+<div class="form-group" id="CADiv">
+    <label for="CAother"> Specify Other</label>
+    <!--<input type="text" class="form-control" id="CAother" placeholder="" name="CAother">-->
+    <textarea name="CAother" class="form-control" rows="5" id="comment"></textarea>
+</div>
+
+<div class="form-group" >
+    
+    <label for="rootcause">Root cause</label>
+<br>
+
+<select  id="rootcause" name="rootcause" >
+      {% for i in rootCause%}
+            <option value="{{i.id}}">{{i.description}}</option>
+    {% endfor %}
+</select>
+</div>
+
+<div class="form-group" id="RootCdiv">
+    <label for="Rootother">Other specify</label>
+    <input type="text" class="form-control" id="Rootother" placeholder="" name="Rootother">
+    
+</div> 
+  
+
+
+
+
+
+
+
+<div class="form-group">
+    
+    <label for="exampleFormControlSelect1">Proposed Corrective Action or Preventive Action</label>
+<br>
+    <select id="correctiveaction" name="correctiveaction">
+        {% for i in correctivePreventiveAction %}
+            <option value="{{i.id }}">{{i.description }}</option>
+    {% endfor %}
+    </select>
+    
+</div>
+
+<div class="form-group" id="ProposedCAdiv">
+    <label for="correctiveactionOther">Other specify</label>
+    <input type="text" class="form-control" id="Rootother" placeholder="" name="correctiveactionOther">
+    
+</div>
+
+<div class="form-group">
+    
+    <label for="exampleFormControlSelect1">CA/PA proposed by</label><br>
+    <select name="proposedby">
+    {% for i in all_users%}
+            <option value="{{i.id}}">{{i.username}}</option>
+    {% endfor %}
+</select>
+    
+</div>
+
+
+
+
+
+
+<div class="">
+    <div class=""><br>
+  <label for="example-date-input" class="col-2 col-form-label">CA/PA Proposal Date</label>
+  <div class="col-4"><br>
+    <input class="" type="" value="" id="proposedDate" name="proposedDate">
+  </div>
+</div>
+
+
+<div class="">
+<br>
+  <label for="example-date-input" class="col-2 col-form-label">Implementation Deadline</label>
+  <div class="col-4">
+    <input class="" type="" value="" id="deadline" name="deadline">
+  </div>
+</div>
+
+<div class="form-group">
+    
+    <label for="exampleFormControlSelect1">Priority:</label><br>
+   <select name="priority">
+
+     {% for i in priority%}
+            <option value="{{i.id}}">{{i.description}}</option>
+    {% endfor %}
+</select>
+</div>	
+
+
+
+<div class="form-group">
+    
+    <label for="exampleFormControlSelect1">Implemented by:</label><br>
+   <select name="implementedby">
+
+     {% for i in all_users%}
+            <option value="{{i.id}}">{{i.username}}</option>
+    {% endfor %}
+</select>
+</div>	
+
+
+
+<div class="form-group row">
+  <label for="example-date-input" class="col-2 col-form-label">Date Today</label>
+  <div class="col-4">
+    <input class="form-control" type="date" value="" id="example-date-input" name="car_date">
+  </div>
+</div>
+
+<div class="form-group row">
+    
+      <label for="usr">Approval Status: </label><br>
+      <input type="text" name="status" value="5"> <br>
+</div>
+<input class="btn btn-info" type="submit" name="Submit">
+
+
+
+
+
+
+
+
+
+</form>
+{{form.errors}}
+
+
+
+{% endblock %} 
+

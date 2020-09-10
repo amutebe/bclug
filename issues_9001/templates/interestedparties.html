@@ -1,0 +1,194 @@
+
+{% extends "accounts/base.html" %} 
+{% block content %}
+<style>
+form 
+{
+  max-width: 900px;
+  display: block;
+  margin: 0 auto;
+}
+p.normal
+{
+  border: 2px solid red;
+}
+
+p.round1
+{
+  border: 2px solid red;
+  border-radius: 5px;
+}
+
+
+
+p.round3
+{
+  border: 2px solid red;
+  border-radius: 12px;
+}
+div3
+{
+ border: 2px solid gray;
+  border-radius: 5px;
+}
+</style>
+        
+        
+        <div class="col-md-8 order-md-1">
+      
+          <h4 class="mb-3">Interested Party</h4>
+<p class="round2"> 
+<form action="/interested_parties/" method="post">
+                     {% csrf_token %}
+           
+<div class="row" >
+    <div class="col">
+      <h6 ><label for="usr">IP no: </label></h6>
+
+     
+{{form.ip_number}}
+<font color="red">{{ form.errors.ip_number }}</font>
+
+           
+  
+</div>
+   
+<div class="col">
+<h6 > <label for="usr">Date of Analysis:</label> <br></h6>
+
+ 
+
+    {{form.analysis_date}}
+       
+        <font color="red">{{ form.errors.analysis_date }}</font>
+      
+       
+</div>
+      
+
+
+
+<div class="col">
+     <h6> <label for="usr">Lead Analyst: </label><br> </h6>
+     {{form.analyst}}
+ <font color="red">{{ form.errors.analyst }}</font>
+      
+</div>
+     <div class="col" id="context">
+     <h6> <label for="context">IP Type: </label><br>  </h6>
+        {{form.context}}  
+ <font color="red">{{form.errors.context}}</font>
+</div>
+    
+</div>
+
+
+<br>
+<div class="form-group" id="internaldiv">
+    
+    <label for="internal">Internal IP:</label>
+<br>
+
+{{form.internal_issues}}
+  <font color="red">{{form.errors.internal_issues}}</font>
+</div>
+
+<div class="form-group" id="externaldiv">
+    <label for="external"> External IP:</label>
+	<br>
+{{form.external_issues}}
+  <font color="red">{{form.errors.external_issues}}</font>
+
+</div>
+
+<div class="form-group" id="qualitydiv">
+    <label for="external"> Requirements:</label>
+	<br>
+{{form.quality_needs}}
+  <font color="red">{{form.errors.quality_needs}}</font>
+
+</div>
+<div class="form-group" id="description">
+    <label for="Description">Description</label>
+    <input type="text" class="form-control" id="description"  name="description" {{form.description}}
+    <font color="red">{{form.errors.description}}</font>
+</div> 
+
+<div class="form-group" id="">
+    <label for="interestedparties"> Interested parties to company(control/influence):</label>
+	<br>
+{{form.interestedparties}}
+  <font color="red">{{form.errors.interestedparties}}</font>
+
+</div>
+
+
+<div class="form-group" id="">
+    <label for="companyinterestedparties"> Company to interested parties to company(control/influence):</label>
+	<br>
+{{form.companyinterestedparties}}
+  <font color="red">{{form.errors.companyinterestedparties}}</font>
+
+</div>
+<div class="row" >
+   
+<div class="col" id="">
+    <label for="priority"> Prioritizing:</label>
+	<br>
+{{form.priority}}
+  <font color="red">{{form.errors.priority}}</font>
+
+</div>
+
+<div class="col" id="">
+    <label for="actiontaken"> Action to manage IP:</label>
+	<br>
+{{form.actiontaken}}
+  <font color="red">{{form.errors.actiontaken}}</font>
+
+</div>
+
+<div class="col" id="actionOther">
+    <label for="Description">Specify, others</label>
+    <input type="text" class="form-control" id="description"  name="description" {{form.actionOther}}
+    <font color="red">{{form.errors.actionOther}}</font>
+</div> 
+
+
+<div class="col">
+    
+    <label for="responsibility">Responsibility:</label><br>
+   {{form.responsibility}}
+<font color="red">{{form.errors.responsibility}}</font>
+    
+</div>
+ 
+<div class="col">
+   
+  <label for="proposedDate" >When:</label>
+  <br>
+    {{form.due}}
+    <font color="red">{{form.errors.due}}</font>
+  
+</div>
+  </div>  
+  <br>          
+<p class="round2"> 
+<div class="card card-body">
+					<table class="form-group">
+												<tr>
+					
+					  <td ><a class="btn  btn-warning" href="{% url 'home'%}"> Cancel </a></td>
+							<td align="right"><input class="btn btn-danger" type="submit" name="Submit"></td>
+            </tr>
+                    </table>
+				
+</div>
+
+</form>
+</div>
+
+
+{% endblock %} 
+
+

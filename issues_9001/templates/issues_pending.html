@@ -1,0 +1,63 @@
+{% extends "accounts/base.html" %} 
+
+{% block content %}
+
+<div class="col-md-16">
+		
+		<div class="card card-body">
+			
+			<table class="table table-sm">
+				<tr class="table-info">
+					<th>ID </th>
+					<th>Lead Analyst</th>
+					<th>Created on</th>
+					<th>Status</th>
+					
+					<th>Context Description</th>
+					<th>External Issue</th>
+					<th>Internal Issue</th>
+					<th>Process Issue</th>
+				
+					
+					<th>Description </th>
+
+
+					
+					<th></th>
+					<th></th>
+				</tr>
+				
+				{% for i in pendingcar %}
+				
+					<tr>
+					<td>{{i.issue_number}}</td>
+					<td>{{i.analyst}}</td>
+					<td>{{i.analysis_date}}</td>
+					<td>{{i.status}}</td>
+					
+					<td>{{i.get_context_display}}</td>
+
+					<td>{{i.get_external_issues_display}}</td>
+					<td>{{i.get_internal_issues_display}}</td>
+					<td>{{i.get_process_issues_display}}</td>
+					<td>{{i.description}}</td>
+					
+					<td></td>
+
+					
+				
+					<td><a class="btn btn-sm btn-info" href="{%url 'approve_issue' i.issue_number %}">Action</a></td>
+
+					</tr>
+
+				{%endfor%}
+		
+			</table>
+			
+		</div>
+	</div>
+
+</div>
+
+
+{% endblock %} 

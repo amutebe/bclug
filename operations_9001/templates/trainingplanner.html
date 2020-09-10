@@ -1,0 +1,211 @@
+
+{% extends "accounts/base.html" %} 
+{% block content %}
+
+<style>
+form {
+  max-width: 900px;
+  display: block;
+  margin: 0 auto;
+}
+
+
+</style>
+<div class="col-md-8 order-md-1">
+          <h4 class="mb-3">Training Planner</h4>
+<p class="round2"> 
+<form action="/training_planner/" method="post">
+                     {% csrf_token %}
+                    
+               
+<div class="row">
+    <div class="col">
+      <label for="usr">Plan No:</label><br>
+
+{{form.plan_number}}
+<font color="red">{{ form.errors.plan_number}}</font>
+
+      
+  
+</div>
+   
+<div class="col">
+<label for="usr">Training Date:</label> <br>
+ 
+    {{form.trainng_date}}
+       
+        <font color="red">{{ form.errors.trainng_date}}</font>
+      
+       
+</div>
+    
+   
+<div class="col">
+<label for="type">Type:</label> <br>
+ 
+    {{form.type}}
+       
+        <font color="red">{{ form.errors.type}}</font>
+      
+       
+</div>
+
+
+     
+    
+</div>
+<div class="form-group" id="TrainingDescription">
+    
+    <label for="internal">Training Description:</label>
+<br>
+
+{{form.description}}
+  <font color="red">{{form.errors.description}}</font>
+</div>
+
+<div class="form-group">
+   
+
+<div class="form-group" id="other">
+    <label for="other">If other, specify:</label>
+	<br>
+<input type="text" class="form-control" id="other"  name="other"{{form.other}}
+  <font color="red">{{form.errors.other}}</font>
+
+</div>
+
+</div>
+
+<div class="form-group" id="addtionalDescription">
+    
+    <label for="internal">Additional Description:</label>
+<br>
+
+<input type="text" class="form-control" id="details"  name="details"{{form.details}}
+  <font color="red">{{form.errors.details}}</font>
+</div>
+
+
+
+    <div class="form-group">
+   
+
+<div class="form-group" id="trainaudience">
+    <label for="process">Training Audience:</label>
+	<br>
+{{form.trainaudience}}
+  <font color="red">{{form.errors.trainaudience}}</font>
+
+</div>
+
+<div class="form-group" id="other_audience">
+    <label for="other">Other:</label>
+	<br>
+<input type="text" class="form-control" id="other_audience"  name="other_audience"{{form.other_audience}}
+  <font color="red">{{form.errors.other_audience}}</font>
+
+</div>
+
+</div>
+
+<div class="form-group" id="context">
+      <label for="context">Start Date: </label><br>  
+        {{form.start}}  
+ <font color="red">{{form.errors.start}}</font>
+</div>
+  <br>
+<div class="form-group" id="internaldiv">
+    
+    <label for="internal">End Date:</label>
+<br>
+
+{{form.end}}
+  <font color="red">{{form.errors.end}}</font>
+ <font color="red"> {{ form.non_field_errors}}</font>
+</div>
+
+<div class="form-group" id="other">
+    <label for="other">Location:</label>
+	<br>
+{{form.trainlocation}}
+  <font color="red">{{form.errors.trainlocation}}</font>
+
+</div>
+
+<div class="form-group" id="other_location">
+    <label for="other">Other:</label>
+	<br>
+<input type="other_location" class="form-control" id="other_location"  name="other_location"{{form.other_location}}
+  <font color="red">{{form.errors.other_location}}</font>
+
+</div>
+
+
+
+    <div class="form-group">
+   
+
+<div class="form-group" id="trainer">
+    <label for="process">Trainer:</label>
+	<br>
+<input type="text" class="form-control" id="trainer"  name="trainer"{{form.trainer}}
+  <font color="red">{{form.errors.trainer}}</font>
+
+</div>
+
+</div>
+
+    <div class="form-group">
+   
+
+<div class="form-group" id="resources">
+    <label for="process">Resources:</label>
+	<br>
+<input type="text" class="form-control" id="resources"  name="resources"{{form.resources}}
+  <font color="red">{{form.errors.resources}}</font>
+
+</div>
+
+</div>
+
+    <div class="form-group">
+   
+
+<div class="form-group" id="tainee_dept">
+    <label for="process">Training Objective:</label>
+	<br>
+{{form.objective}}
+  <font color="red">{{form.errors.objective}}</font>
+
+</div>
+
+</div>
+
+    
+
+
+<br>
+<p class="round2"> 
+<div class="card card-body">
+					<table class="form-group">
+					<tr> 
+
+
+<td ><a class="btn  btn-warning" href="{% url 'home'%}"> Cancel </a></td>
+<td align="right"><input class="btn btn-danger" type="submit" name="Submit"></td>
+					</tr>
+          </table>
+</div>
+
+</form>
+</div>
+{{form.errors}}
+{% endblock %} 
+
+
+
+
+
+
+
+

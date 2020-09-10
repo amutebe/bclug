@@ -1,0 +1,146 @@
+
+{% extends "accounts/base.html" %} 
+{% block content %}
+<style>
+form {
+  max-width: 900px;
+  display: block;
+  margin: 0 auto;
+}
+</style>
+<br>
+<h5>Maintenance Record:</h5>
+
+<form action="/maintenance/" method="post">
+                     {% csrf_token %}
+                    
+               
+<div class="row">
+    <div class="col">
+      <label for="usr">Maintenance Number: </label><br>
+
+{{form.maintenance_number}}
+<font color="red">{{ form.errors.maintenance_number}}</font>
+
+      
+  
+</div>
+   
+<div class="col">
+<label for="usr">Date today:</label> <br>
+ 
+    {{form.date_today}}
+       
+        <font color="red">{{ form.errors.date_today}}</font>
+      
+       
+</div>
+    
+
+
+
+<div class="col">
+      <label for="usr">Equipment: </label><br> 
+     {{form.equipment}}
+ <font color="red">{{ form.errors.equipment}}</font>
+      
+</div>
+     <div class="col" id="context">
+      <label for="context">ID: </label><br>  
+        {{form.id}}  
+ <font color="red">{{form.errors.id}}</font>
+</div>
+    
+</div>
+
+
+
+
+<br>
+<div class="form-group" id="internaldiv">
+    
+    <label for="internal">Manufacturer:</label>
+<br>
+
+{{form.manufacturer}}
+  <font color="red">{{form.errors.manufacturer}}</font>
+</div>
+
+<div class="form-group" id="externaldiv">
+    <label for="external">Manufacture Date: </label>
+	<br>
+{{form.date}}
+  <font color="red">{{form.errors.date}}</font>
+
+</div>
+
+<div class="form-group" id="processdiv">
+    <label for="process">Location:</label>
+	<br>
+{{form.location}}
+  <font color="red">{{form.errors.location}}</font>
+
+</div>
+
+<div class="form-group" id="process_StrengthWeaknessiv">
+    <label for="process_StrengthWeakness">User:</label>
+	<br>
+{{form.user}}
+  <font color="red">{{form.errors.user}}</font>
+
+</div>
+
+<div class="form-group" id="process_StrengthWeaknessiv">
+    <label for="process_StrengthWeakness">Schedule:</label>
+	<br>
+{{form.schedule}}
+  <font color="red">{{form.errors.schedule}}</font>
+
+</div>
+
+<div class="form-group" id="process_StrengthWeaknessiv">
+    <label for="process_StrengthWeakness">Details:</label>
+	<br>
+{{form.details}}
+  <font color="red">{{form.errors.details}}</font>
+
+</div>
+
+<div class="form-group" id="process_StrengthWeaknessiv">
+    <label for="process_StrengthWeakness">Maintenance by:</label>
+	<br>
+{{form.maintenanceby}}
+  <font color="red">{{form.errors.maintenanceby}}</font>
+
+</div>
+
+
+<div class="form-group" id="process_StrengthWeaknessiv">
+    <label for="process_StrengthWeakness">Name:</label>
+	<br>
+{{form.name}}
+  <font color="red">{{form.errors.name}}</font>
+
+</div>
+
+<div class="form-group" id="process_StrengthWeaknessiv">
+    <label for="process_StrengthWeakness">Parts fixed:</label>
+	<br>
+{{form.parts}}
+  <font color="red">{{form.errors.parts}}</font>
+
+</div>
+
+<div class="form-group" id="process_StrengthWeaknessiv">
+    <label for="process_StrengthWeakness">Notes:</label>
+	<br>
+{{form.notes}}
+  <font color="red">{{form.errors.notes}}</font>
+
+</div>
+
+<input class="btn btn-info" type="submit" name="Submit">
+</form>
+
+{% endblock %} 
+

@@ -1,0 +1,43 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#dateFrom').datepicker();
+        $('#dateTo').datepicker({
+            onSelect: function () {
+                var dateFrom = $('#dateFrom').datepicker('getDate');
+                var dateTo = $(this).datepicker('getDate');
+                if (dateFrom >= dateTo) {
+                    alert("Oop! dateTo must be later than dateFrom.");
+                }
+            }
+        });
+    });
+</script>
+</head>
+<body>
+<form action="" method="POST">
+<div class="form-group">
+    <div class="form-group row"><br>
+  <label for="example-date-input" class="col-2 col-form-label">CA/PA Proposal Date</label>
+  <div class="col-4"><br>
+    <input class="form-control" type="" value="" id="dateFrom" name="dateFrom">
+  </div>
+</div>
+<div class="form-group">
+    <div class="form-group row"><br>
+  <label for="example-date-input" class="col-2 col-form-label">CA/PA Implementation Date</label>
+  <div class="col-4"><br>
+    <input class="form-control" type="" value="" id="dateTo" name="dateTo">
+  </div>
+</div>
+
+
+<input class="btn btn-info" type="submit" name="Submit">
+
+    
+
+
+
+</form>

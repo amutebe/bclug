@@ -1,0 +1,61 @@
+{% extends "accounts/base.html" %} 
+
+{% block content %}
+<br>
+<div class="col-md-26">
+		
+		<div class="">
+			
+			<table class="table table-sm">
+				<tr class="table-info">
+					<th>ID</th>
+					<th>CreatedBy</th>
+					<th>Created</th>
+						<th>Status</th>
+					<th>ContextDetails</th>
+					 
+					<th>RiskRanking</th>
+					<th>RiskTreatment</th>
+					<th>RiskMitigation</th>
+					<th>Details</th>
+					<th>Responsibility</th>
+					<th>Deadline</th>
+					
+					
+				
+					
+					<th></th>
+					<th></th>
+				</tr>
+				
+				{% for i in pendingcar %}
+				
+					<tr>
+					<td>{{i.risk_number}}</td>
+					<td>{{i.assessor}}</td>
+					<td>{{i.risk_date}}</td>
+					<td>{{i.status}}</td>
+						<td>{{i.contextdetails}}</td>
+					
+						<td>{{i.riskrank}}</td>
+					<td>{{i.risktreatment}}</td>
+						<td>{{i.riskmitigation}}</td>
+						<td>{{i.mitigationdesc}}</td>
+					<td>{{i.responsibility}}</td>
+					<td>{{i.due}}</td>
+					
+					
+					<td><a class="btn btn-sm btn-danger" href="{%url 'approve_risk' i.risk_number %}">Action</a></td>
+
+					</tr>
+
+				{%endfor%}
+		
+			</table>
+		</div>
+	</div>
+
+</div>
+
+
+{% endblock %} 

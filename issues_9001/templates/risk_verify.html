@@ -1,0 +1,127 @@
+
+
+{% extends "accounts/base.html" %} 
+{%load static%}
+{% block content %}
+<br>
+<div class="row">
+<div class="col-md-10">
+<div class="card card-body">
+
+
+<form action="" method="POST">
+ 
+ {% csrf_token %}
+ <h5>
+<label for="residuelikelihood"> Approved Risk</label>
+</h5>
+<table class="table table-sm">
+				<tr class="table-info">
+					<th>Likelihood</th>
+					<th>Severity</th>
+					<th>Risk Rating</th>
+					<th>Risk Rank</th>
+					
+				</tr>
+						
+				<tr >
+					<td>{{open_car.likelihood}}</td>				
+					<td>{{open_car.severity}}</td>
+					<td>{{open_car.riskrating}}</td>
+					<td>{{open_car.riskrank}}</td>
+					</tr>
+</table>
+
+<h5>
+<label for="residuelikelihood"> Residue Risk</label>
+</h5>
+
+
+<div class="row table-info">
+    <div class="col">
+<div class="form-group">
+
+    <label for="residuelikelihood"> Likelihood:</label>
+   
+	<br>
+{{form.residuelikelihood}}
+  <font color="red">{{form.errors.residuelikelihood}}</font>
+
+</div>
+</div>
+ <div class="col">
+<div class="form-group">
+    <label for="residueseverity"> Severity:</label>
+	<br>
+{{form.residueseverity}}
+  <font color="red">{{form.errors.residueseverity}}</font>
+
+</div>
+</div>
+
+ <div class="col">
+
+
+<label for="residueseverity"> Risk Rating:</label><br>
+{{form.residueriskrating}}
+<br>
+</div>
+<br>
+ <div class="col">
+<label for="residuerank"> Risk Rank:</label>
+{{form.residueriskrank}}
+<br>
+</div>
+</div>
+
+
+<div class="form-group" id="verification_statusDIV">
+    <br>
+    <label for="exampleFormControlSelect1">Action:</label>
+
+ <input type="text" id="verification_status" name="verification_status" value="Close">
+
+
+
+<font color="red">{{form.errors.verification_status}}</font>
+</div>
+<div class="form-group" id="verification_failedDIV">
+    
+    <label for="exampleFormControlSelect1">Comment:</label><br>
+ 
+      <input type="text"  class="form-control" id="verification_failed" placeholder="" name="verification_failed" {{form.verification_failed}}
+
+<font color="red">{{form.errors.verification_failed}}</font>
+</div>
+
+<div class="form-group" id="document">
+    
+    <label for="exampleFormControlSelect1">Upload Evidence:</label>
+  {{form.document}}
+<font color="red">{{form.errors.document}}</font>
+</div>
+
+
+ 
+
+
+
+
+ <br>
+<p class="round2"> 
+<div class="card card-body">
+					<table class="form-group">
+					<tr> 
+
+
+<td ><a class="btn btn-warning" href="{%url 'risks_due' %}">Cancel</a></td>
+<td align="right"> <input class="btn btn-danger" type="submit" name="Confirm" value="Close"></td>
+					</tr>
+          </table>
+</div>
+
+</form>
+</div>
+</div>
+</div>
+{% endblock %} 

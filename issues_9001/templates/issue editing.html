@@ -1,0 +1,42 @@
+{% extends "accounts/base.html" %} 
+{% block content %}
+
+<div class="col-md-7">
+		
+		<div class="card card-body">
+			<a class="btn btn-primary  btn-sm btn-block" href="">ISSUES</a>
+			<table class="table table-sm">
+				<tr>
+					<th>Issue Number</th>
+					<th>Date of Analysis</th>
+					<th>Due date</th>
+					<th>Lead Analyst</th>
+					
+					<th></th>
+					<th></th>
+				</tr>
+				
+				{% for i in all_issues %}
+				
+					<tr>
+					<td>{{i.issue_number}}</td>
+					
+					
+					<td>{{i.analysis_date}}</td>
+					<td>{{i.due}}</td>
+					
+					<td>{{i.analyst}}</td>
+					<td><a class="btn btn-sm btn-info" href="{%url 'edit_issue' i.issue_number %}">Approve</a></td>
+					<td><a class="btn btn-sm btn-danger" href="{%url 'deleteissue' i.issue_number %}">Delete</a></td>
+
+					</tr>
+
+				{%endfor%}
+		
+			</table>
+		</div>
+	</div>
+
+</div>
+
+{% endblock %} 

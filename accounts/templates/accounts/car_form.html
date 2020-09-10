@@ -1,0 +1,22 @@
+{% extends "accounts/base.html" %} 
+{% block content %}
+<br>
+
+<div class="container">
+    <div class="col-md-2">
+        <div class="form-group">
+
+<form action="" method="POST">
+ {% csrf_token %}
+ {{form}}
+ 
+ <br>
+<input class="btn btn-info" type="submit" name="Submit" value="Next">
+
+</form>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %} 

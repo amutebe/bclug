@@ -1,0 +1,153 @@
+
+{% extends "accounts/base.html" %} 
+{% block content %}
+<style>
+form {
+  max-width: 900px;
+  display: block;
+  margin: 0 auto;
+}
+</style>
+<br>
+<h5>Interested Parties:</h5>
+
+<form action="" method="post">
+                     {% csrf_token %}
+                    
+               
+<div class="row">
+    <div class="col">
+      <label for="usr">IP #: </label><br>
+
+     
+{{form.ip_number}}
+           
+  
+</div>
+   
+<div class="col">
+<label for="usr">Date of Analysis:</label> <br>
+
+ 
+
+    {{form.analysis_date}}
+       
+        <font color="red">{{ form.errors.analysis_date }}</font>
+   
+       
+</div>
+      
+<div class="col">
+      <label for="usr">Lead Analyst: </label><br> 
+     {{form.analyst}}
+ <font color="red">{{ form.errors.analyst }}</font>
+      
+</div>
+     <div class="col" id="context">
+      <label for="context">IP Type: </label><br>  
+        {{form.context}}  
+ <font color="red">{{form.errors.context}}</font>
+</div>
+    
+</div>
+
+<br>
+<h5>Issues:</h5>
+<br>
+<div class="form-group" id="internaldiv">
+    
+    <label for="internal">If internal:</label>
+<br>
+
+{{form.internal_issues}}
+  <font color="red">{{form.errors.internal_issues}}</font>
+</div>
+
+<div class="form-group" id="externaldiv">
+    <label for="external"> If External:</label>
+	<br>
+{{form.external_issues}}
+  <font color="red">{{form.errors.external_issues}}</font>
+
+</div>
+
+<div class="form-group" id="qualitydiv">
+    <label for="external"> Quality Needs/Expectations:</label>
+	<br>
+{{form.quality_needs}}
+  <font color="red">{{form.errors.quality_needs}}</font>
+
+</div>
+
+
+<div class="form-group" id="description">
+    <label for="Description">Description</label>
+    {{form.description}}
+    <font color="red">{{form.errors.description}}</font>
+</div> 
+
+<div class="form-group" id="">
+    <label for="interestedparties"> Interested parties to company(control/influence):</label>
+	<br>
+{{form.interestedparties}}
+  <font color="red">{{form.errors.interestedparties}}</font>
+
+</div>
+
+
+<div class="form-group" id="">
+    <label for="companyinterestedparties"> Company to interested parties to company(control/influence):</label>
+	<br>
+{{form.companyinterestedparties}}
+  <font color="red">{{form.errors.companyinterestedparties}}</font>
+
+</div>
+
+<div class="form-group" id="">
+    <label for="priority"> Prioritizing:</label>
+	<br>
+{{form.priority}}
+  <font color="red">{{form.errors.priority}}</font>
+
+</div>
+
+<div class="form-group" id="">
+    <label for="actiontaken"> Action to manage interested parties:</label>
+	<br>
+{{form.actiontaken}}
+  <font color="red">{{form.errors.actiontaken}}</font>
+
+</div>
+
+
+<div class="form-group">
+    
+    <label for="responsibility">responsibility:</label><br>
+   {{form.responsibility}}
+<font color="red">{{form.errors.responsibility}}</font>
+    
+</div>
+  
+<div class="form-group">
+   
+  <label for="proposedDate" >When:</label>
+  <br>
+    {{form.due}}
+    <font color="red">{{form.errors.due}}</font>
+  
+</div>
+
+
+
+
+  
+
+
+
+
+
+<input class="btn btn-info" type="submit" name="Submit">
+</form>
+
+{% endblock %} 
+
