@@ -49,7 +49,7 @@ class ApproveIp(ModelForm):
     class Meta:
         model = mod9001_interestedParties 
         #fields = '__all__'
-        fields=['status','rejected','approval_date','approved_by','analysis_date','approval_date']
+        fields=['status','rejected','approval_date','approved_by','approval_date']
         widgets={'status': RadioSelect(),'approval_date':DateInput()}
 
 class ApproveRequirement(ModelForm):

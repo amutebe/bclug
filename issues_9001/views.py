@@ -19,7 +19,8 @@ from django.views.generic import ListView, CreateView, UpdateView
 from django.urls import reverse_lazy
 import os
 import csv
-
+from .filters import *
+ 
 
 
 
@@ -135,6 +136,34 @@ def issues(request):
     return render(request,'issues.html',context)
 
 @login_required(login_url='login')
+def issues_report(request):
+    
+    issues=mod9001_issues.objects.all() #get all issues in database 
+    myFilter=context_issuesFilter(request.GET, queryset=issues)
+    issues=myFilter.qs
+    if request.method=="POST":
+        issues_list = mod9001_issues.objects.all()
+        myFilter=context_issuesFilter(request.GET, queryset=issues_list)
+        issues=myFilter.qs
+        
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="Issues_Register.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(['IP Number', 'LeadAnalyst','Date','Status', 'Context', 'Int.Issue','Ext.Issue','Process','ProcessIssue','strength/Weakness','Opportunities/Threats','Other Issues','Description','Mitigation','Responsibility',
+'When'])
+
+    
+        for i in issues:
+            
+            writer.writerow([i.issue_number, i.analyst,i.analysis_date, i.status, i.context,i.get_internal_issues_display(),i.get_external_issues_display(),i.get_process_desc_display(),i.get_process_issues_display(),i.process_StrengthWeakness,i.process_OpportunitiesThreats,i.otherIssue,i.description,i.mitigation,i.responsibility,
+i.due])
+        return response
+        
+    else:
+        return render(request,'issues_report.html',{'issues':issues,'myFilter':myFilter})
+
+@login_required(login_url='login')
 def issue_editing(request):
     
     all_issues=mod9001_issues.objects.all() #get all issues in database 
@@ -196,7 +225,7 @@ def approve_issue(request,pk_test):
             request.POST['approved_by']=request.user
             request.POST['approval_date']=date.today()
             form=ApproveIssue(request.POST, instance=pending_issue)
-            
+            print("TESTING FORM",request.POST)
             if form.is_valid():
                 form.save()
                 return redirect('/issues_pending/')
@@ -242,9 +271,44 @@ def interested_parties(request):
     return render(request,'interestedparties.html',context)
 
 @login_required(login_url='login')
+def ip_report(request):
+    
+    ips=mod9001_interestedParties.objects.all() #get all ips in database 
+    myFilter=context_ipFilter(request.GET, queryset=ips)
+    ips=myFilter.qs
+    if request.method=="POST":
+        ips_list = mod9001_interestedParties.objects.all()
+        myFilter=context_ipFilter(request.GET, queryset=ips_list)
+        ips=myFilter.qs
+        print("PRINTING",ips)
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="IPs.csv"'
+
+       # wb = xlwt.Workbook(encoding='utf-8')
+        #ws = wb.add_sheet('Users')
+
+        #row_num = 0
+        #font_style = xlwt.XFStyle()
+        #font_style.font.bold = True
+
+        writer = csv.writer(response)
+        writer.writerow(['IP Number', 'LeadAnalyst', 'Status', 'Context', 'Int.Issue','Ext.Issue','Description','Ip to Co.','Co. to IP','Priority','ActionTaken','Responsibility',
+'When'])
+
+    
+        for i in ips:
+            
+            writer.writerow([i.ip_number, i.analyst, i.status, i.context,i.get_internal_issues_display(),i.get_external_issues_display(),i.description,i.get_interestedparties_display(),i.get_companyinterestedparties_display(),i.get_priority_display(),i.get_actiontaken_display(),i.responsibility,
+i.due])
+        return response
+        
+    else:
+        return render(request,'ip_report.html',{'ips':ips,'myFilter':myFilter})
+
+@login_required(login_url='login')
 def ip_editing(request):
     
-    all_ips=mod9001_interestedParties.objects.all() #get all issues in database 
+    all_ips=mod9001_interestedParties.objects.all() #get all ips in database 
    
     
     context={'all_ips':all_ips} 
@@ -288,7 +352,7 @@ def ip_pending(request):
 
 
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['supervisor'])
+@allowed_users(allowed_roles=['supervisor','Management'])
 def approve_ip(request,pk_test):
     pending_ip=mod9001_interestedParties.objects.get(ip_number=pk_test)
     
@@ -308,10 +372,13 @@ def approve_ip(request,pk_test):
             request.POST['approved_by']=request.user
             request.POST['approval_date']=date.today()
             form=ApproveIp(request.POST, instance=pending_ip)
+            print("TESTING FORM",request.POST)
             if form.is_valid():
+                print("TESTING ip_APPROVAL before")
                 form.save()
+                print("TESTING ip_APPROVAL after")
                 return redirect('/ip_pending/')
-
+            print("FAILED")
     
     context={'form':form}  
 
@@ -353,6 +420,36 @@ def regulatory_requirement(request):
         
     context={'form':form}
     return render(request,'regulatoryrequirement.html',context)
+
+@login_required(login_url='login')
+def regulatory_report(request):
+    
+    regulatory=mod9001_regulatoryReq.objects.all() #get all issues in database 
+    myFilter=context_regulatoryFilter(request.GET, queryset=regulatory)
+    regulatory=myFilter.qs
+    if request.method=="POST":
+        regulatory_list = mod9001_regulatoryReq.objects.all()
+        myFilter=context_regulatoryFilter(request.GET, queryset=regulatory_list)
+        regulatory=myFilter.qs
+        
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="compliance_Register.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(['Reg. Id', 'Analyst','Date Registered','Status', 'Requirement Category', 'OtherCategory','Describe','Document','IP','Other IP','Rejected','Responsibility',
+'When'])
+
+    
+        for i in regulatory:
+            
+            writer.writerow([i.regulatory_number, i.analyst,i.registered, i.status, i.cat_name,i.otherCategory,i.description,i.document,i.get_interestedparty_display(),i.otherInterestedParty,i.rejected,i.responsibility,
+i.due])
+        return response
+        
+    else:
+        return render(request,'regulatory_report.html',{'issues':regulatory,'myFilter':myFilter})
+
+
 
 @login_required(login_url='login')
 def regulatory_editing(request):

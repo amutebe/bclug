@@ -21,6 +21,7 @@ urlpatterns = [
     ##########issues urs####################
     path('issues/', views.issues, name='issues'),
     path('issue_editing/',views.issue_editing,name="issue_editing"),
+    path('issues_report/',views.issues_report,name="issues_report"),
     path('edit_issue/<str:pk_test>/',views.edit_issue,name="edit_issue"),
     path('delete_issue/<str:pk_test>/',views.deleteissue,name="deleteissue"),
     path('issues_pending/',views.issues_pending,name="issues_pending"),
@@ -30,6 +31,7 @@ urlpatterns = [
     #############INTERESTED PARTIES URL#######################
     path('interested_parties/', views.interested_parties, name='interested_parties'),
     path('ip_editing/',views.ip_editing,name="ip_editing"),
+    path('ip_report/',views.ip_report,name="ip_report"),
     path('edit_ip/<str:pk_test>/',views.edit_ip,name="edit_ip"),
     path('delete_ip/<str:pk_test>/',views.deleteip,name="deleteip"),
     path('ip_pending/',views.ip_pending,name="ip_pending"),
@@ -39,6 +41,7 @@ urlpatterns = [
 
     path('regulatory_requirement/', views.regulatory_requirement, name='regulatory_requirement'),
     path('regulatory_editing/',views.regulatory_editing,name="regulatory_editing"),
+    path('regulatory_report/',views.regulatory_report,name="regulatory_report"),
     path('edit_regulatoryreq/<str:pk_test>/',views.edit_regulatoryreq,name="edit_regulatoryreq"),
     path('deleteregulatory/<str:pk_test>/',views.deleteregulatory,name="deleteregulatory"),
     path('requirement_pending/',views.requirement_pending,name="requirement_pending"),

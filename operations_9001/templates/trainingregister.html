@@ -17,185 +17,14 @@ form {
 <form action="/training_register/" method="post">
                      {% csrf_token %}
                     
-               
-<div class="row">
-    <div class="col">
-      <label for="usr">Training Reg. ID No:</label><br>
+   <table border="0">            
+{{form}}
+</table>            
 
-{{form.training_number}}
-<font color="red">{{ form.errors.training_number}}</font>
-
-      
-  
-</div>
-   
-<div class="col">
-<label for="usr">Training Date:</label> <br>
- 
-    {{form.train_date}}
-       
-        <font color="red">{{ form.errors.train_date}}</font>
-      
-       
-</div>
-    
-
-
-
-     <div class="col" id="divnature">
-      <label for="context">Nature: </label><br>  
-        {{form.nature}}  
- <font color="red">{{form.errors.nature}}</font>
-</div>
-    
-</div>
-
-
-
-
-<br>
-<div class="form-group" id="TrainingDescription">
-    
-    <label for="internal">Training Description:</label>
-<br>
-
-<input type="text" class="form-control" id="training_desc"  name="training_desc"{{form.training_desc}}
-  <font color="red">{{form.errors.training_desc}}</font>
-</div>
-
-<div class="form-group" id="divtrainingid">
-    <label for="external">Training Plan ID: </label>
-	<br>
-<input type="text" class="form-control" id="trainingplanid"  name="trainingplanid"{{form.trainingplanid}}
-  <font color="red">{{form.errors.trainingplanid}}</font>
-
-</div>
-
-<div class="col">
-   
-
-<div class="form-group" id="Training">
-    <label for="process">Training:</label>
-	<br>
-<input type="text" class="form-control" id="type"  name="type"{{form.training}}
-  <font color="red">{{form.errors.training}}</font>
-
-</div>
-
-</div>
-
-    <div class="col">
-   
-
-<div class="form-group" id="Location">
-    <label for="process">Location:</label>
-	<br>
-<input type="text" class="form-control" id="type"  name="type"{{form.location}}
-  <font color="red">{{form.errors.location}}</font>
-
-</div>
-
-</div>
-
-    <div class="col">
-   
-
-<div class="form-group" id="trainer">
-    <label for="process">Trainer:</label>
-	<br>
-{{form.trainer}}
-  <font color="red">{{form.errors.trainer}}</font>
-
-</div>
-
-</div>
-
-    <div class="col">
-   
-
-<div class="form-group" id="Training">
-    <label for="process">Trainee:</label>
-	<br>
-<input type="text" class="form-control" id="type"  name="type"{{form.trainee}}
-  <font color="red">{{form.errors.trainee}}</font>
-
-</div>
-
-</div>
-
-    <div class="col">
-   
-
-<div class="form-group" id="tainee_dept">
-    <label for="process">Trainee Dept:</label>
-	<br>
-{{form.tainee_dept}}
-  <font color="red">{{form.errors.tainee_dept}}</font>
-
-</div>
-
-</div>
-
-    <div class="col">
    
 
 <div class="form-group" id="completion_date">
-    <label for="process">Completion Date:</label>
-	<br>{{form.completion_date}}
-  <font color="red">{{form.errors.completion_date}}</font>
 
-</div>
-
-
-    <h4>  <label for="usr">Training Evaluation:</label><br></h4>
-<p class="round2"> 
-
-<div class="row">
-
-    
-
-<label for="usr">•	Employee Job performance level has raised :</label>
-
-{{form.job}}
-<font color="red">{{ form.errors.job}}</font>
-    
-  </div>
-<br>
-<div class="row">
-<label for="usr">•	Training skills applied by trainee :</label>
-{{form.skills}}
-<font color="red">{{ form.errors.skills}}</font>
-</div>
-<br>
-<div class="row">
-<label for="usr">•	Indicators exist that prove the employee benefited from the acquired skills in this Training:</label>
-{{form.indicators}}
-<font color="red">{{ form.errors.indicators}}</font>
-</div>
-<br>
-<div class="row">
-<label for="usr">•	Employee Able to train others:</label>
-{{form.able}}
-<font color="red">{{ form.errors.able}}</font>
-</div>
-<br>
-<div class="row" id="divdecision">
-<label for="usr">Evaluation Decision</label>
-{{form.decision}}
-<font color="red">{{ form.errors.decision}}</font>
-</div>
-<br>
-<div class="row" id="divreason">
-<label for="usr">If Not Effective, Reason:</label>
-{{form.reason}}
-<font color="red">{{ form.errors.reason}}</font>
-</div>
-<br>
-<div class="row" id="divreasonother">
-<label for="usr">If Not Effective, Other Reason:</label>
-<input type="text" class="form-control" id="reasonother"  name="reasonother"{{form.reasonother}}
-<font color="red">{{ form.errors.reasonother}}</font>
-</div>
 
 <br>
 <p class="round2"> 
@@ -203,8 +32,9 @@ form {
 					<table class="form-group">
 					<tr> 
 
-<td><input class="btn btn-danger" type="submit" name="Submit"></td>
-<td align="right"><a class="btn  btn-warning" href="{% url 'home'%}"> Cancel </a></td>
+
+<td ><a class="btn  btn-warning" href="{% url 'home'%}"> Cancel </a></td>
+<td align="right"><input class="btn btn-danger" type="submit" name="Submit"></td>
 					</tr>
           </table>
 </div>

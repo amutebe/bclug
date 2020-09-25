@@ -2,7 +2,7 @@
 
 {% block content %}
 <br>
-<div class="col-md-16">
+<div class="col-md-30">
 		
 		<div class="card card-body">
 			
@@ -14,7 +14,14 @@
 					<th>Status</th>
 					
 					<th>Context</th>
+					<th>INT. ISSUES</th>
+					<th>Ext. ISSUES</th>
+					
+					
+					
 					<th>Description</th>
+					<th>IP to Co.</th>
+					<th>Co. to IP</th>
 					<th>Priority</th>
 					<th>ActionTaken</th>
 					
@@ -23,7 +30,7 @@
 
 
 					<th></th>
-					<th></th>
+					
 				</tr>
 				
 				{% for i in pendingcar %}
@@ -35,7 +42,14 @@
 					<td>{{i.status}}</td>
 					
 					<td>{{i.get_context_display}}</td>
+					<td>{{i.get_internal_issues_display}}</td>
+					<td>{{i.get_external_issues_display}}</td>
+				
 					<td>{{i.description}}</td>
+
+					
+					<td>{{i.get_interestedparties_display}}</td>
+					<td>{{i.get_companyinterestedparties_display}}</td>
 					<td>{{i.get_priority_display}}</td>
 					<td>{{i.get_actiontaken_display}}</td>
 					<td>{{i.responsibility}}</td>

@@ -39,6 +39,9 @@ def incident_no():
 def customer_no():
    return str("CST-MM-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
 
+def emp_perfrev_no():
+   return str("Comp-EA-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
+
 
 
 ####################################################################################
@@ -307,7 +310,10 @@ def training_register(request):
 
                 
             form.save()
-            return redirect('/')
+            form=trainingregister(initial={'training_number': Train_no()})
+            context={'form':form}
+            return render(request,'trainingregister.html',context)
+            #return redirect('/')
             
             
           
@@ -585,7 +591,7 @@ def incidentRegisterStaff(request):
 
 @login_required(login_url='login')
 def providerassessment(request):
-    form=providerassessments()
+    form=providerassessments(initial={'emp_perfrev_no': emp_perfrev_no()})
     providers=mod9001_supplieregistration.objects.values(organisation=F('name'))
     
               

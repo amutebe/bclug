@@ -78,8 +78,8 @@ class trainingregister(ModelForm):
   
     class Meta:
         model = mod9001_trainingregister 
-        fields = '__all__'
-        widgets={'train_date':DateInput(),'completion_date':DateInput()}
+        exclude = ['training_desc','trainingplanid','training','location','trainer','entered_by','date_today']
+        widgets={'train_date':DateInput(),'completion_date':DateInput(),'job':HorizontalRadioSelect(),'skills':HorizontalRadioSelect(),'indicators':HorizontalRadioSelect(),'able':HorizontalRadioSelect()}
 
 class trainingplaner(ModelForm):
   
@@ -133,7 +133,7 @@ class incident_RegisterStaff(ModelForm):
       
      class Meta:
         model = mod9001_incidentregisterStaff 
-        exclude = ['entered_by','date_today']
+        exclude = ['entered_by','date_today','status']
         
         widgets={'date':DateInput(),'completion':DateInput(),'date_posted':DateInput(), 'costdescription':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'status':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'lesson':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'description':forms.Textarea(attrs={'rows': 2, 'cols': 40})}
 

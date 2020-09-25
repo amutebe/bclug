@@ -145,7 +145,16 @@
 
                 <li><a data-icon="&#xf180" href="#">Reports</a>
                     <ul>
-                        <li><a data-icon="&#xf03c" href="#">Customer Satisifaction Index</a></li>
+                        <li><a data-icon="&#xf03c">Context</a>
+                        <ul>
+                        
+                       
+                        <li><a data-icon="&#xf00e" href="{% url 'ip_report'%}">Interested Parties (IPs) Register</a></li>
+                        <li><a data-icon="&#xf040" href="{% url 'issues_report'%}">Issues Register</a></li>
+                        <li><a data-icon="&#xf1db" href="{% url 'regulatory_report'%}">Compliance Register</a></li>
+                      
+                    </ul>
+                        </li>
                         <li><a data-icon="&#xf09d" href="#">Supplier assesment report</a></li>
                         <li><a data-icon="&#xf0c7" href="#">Process risks log</a></li>
                         <li><a data-icon="&#xf1cd" href="#">Organisation risks log</a></li>

@@ -6,10 +6,49 @@ function myFunction() {
 }
 </script>
 <script>
+//TRAINING REGISTER
+$("#id_decision").change(function() {
+			if ($("#id_decision option:selected").text()=="Not Effective") {
+					
+				$('#id_reasond').show();
+				$('#id_reasonother').show();
+				
+				//$('#id_reason').attr('required','');
+				//$('#id_organisation').attr('data-error', 'This field is required.');
+				$('label[for="id_reasond"]').show();
+				$('label[for="id_reasonother"]').show();
+		
+		//$('#id_reasond').attr('required','');
+		//$('#id_reasond').attr('data-error', 'This field is required.');
+
+
+
+					
+				
+			} else {
+				
+				$('#id_reasond').hide();
+				$('#id_reasonother').hide();
+
+				$('#id_reasond').removeAttr('required');
+				$('#id_reasond').removeAttr('data-error');	
+
+				$('#id_reasonother').removeAttr('required');
+				$('#id_reasonother').removeAttr('data-error');	
+
+				$('label[for="id_reasond"]').hide();
+				$('label[for="id_reasonother"]').hide();
+				
+			
+			}
+		});
+		$("#id_decision").trigger("change");
+
 //ASSESMENT PROVIDER SCORE
-$(document).ready(function(){
+$(document).ready(function()
+{
     $('#id_jobknowledge').change(function()
-	{
+{
 if(document.querySelector('input[name="jobknowledge"]:checked').value==""||
 document.querySelector('input[name="adaptability"]:checked').value==""||
 document.querySelector('input[name="problemsolve"]:checked').value==""||
@@ -1451,6 +1490,7 @@ $("#id_context").change(function() {
 
 				$('#id_external_issues').removeAttr('required');
 				$('#id_external_issues').removeAttr('data-error');	
+				$('#id_external_issues option:selected').remove();
 				$('#id_process_issues').removeAttr('required');
 				$('#id_process_issues').removeAttr('data-error');	
 
@@ -1479,7 +1519,8 @@ $("#id_context").change(function() {
 				$('#id_external_description').attr('data-error', 'This field is required.');
 
 				$('#id_internal_issues').removeAttr('required');
-				$('#id_internal_issues').removeAttr('data-error');	
+				$('#id_internal_issues').removeAttr('data-error');
+				$('#id_internal_issues option:selected').remove();	
 				$('#id_process_issues').removeAttr('required');
 				$('#id_process_issues').removeAttr('data-error');	
 				$('#id_process_description').removeAttr('required');
@@ -1510,6 +1551,9 @@ $("#id_context").change(function() {
 				$('#id_internal_issues').removeAttr('data-error');	
 				$('#id_external_issues').removeAttr('required');
 				$('#id_external_issues').removeAttr('data-error');	
+				
+					$('#id_internal_issues option:selected').remove();
+					$('#id_external_issues option:selected').remove();
 				
 				$('#id_internal_description').removeAttr('required');
 				$('#id_internal_description').removeAttr('data-error');

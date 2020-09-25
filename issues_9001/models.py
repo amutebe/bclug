@@ -258,7 +258,6 @@ class mod9001_risks(models.Model):
     
     #verification_status=(('Closed','Close'),('Rejected','Reject'))
    
-    
     verification_status=models.CharField(max_length=200, null=True,blank=True)
     verification_failed=models.TextField("Reason for rejecting:",null=True,blank=True, help_text='If rejected, please give a reason')
 

@@ -7,7 +7,7 @@
 
 
 
-<form action="approve_ip" method="POST">
+<form action="" method="POST">
  {% csrf_token %}
 <div class="col-md-12">
 		
@@ -63,5 +63,5 @@
 </div>
  
 </form>
-
+{{form.errors}}
 {% endblock %} 
