@@ -43,20 +43,19 @@
 					<th>Status</th>
 					
 					<th>Context</th>
-					<th>Int. Issues</th>
-					<th>Ext. Issues</th>
+					<!--<th>Int. Issues</th>
+					<th>Ext. Issues</th>-->
 					<th>Process</th>
 					<th>Process Issue</th>
-					<th>Process strength/Weakness</th>
-					<th>Process Opportunities/Threats</th>
+					<th>Issue Description</th>
 					<th>Other Issues</th>
 									
 					
-					<th>Description</th>
+					<!--<th>Description</th>
 					<th>Mitigation</th>
 									
 					<th>Responsility</th>
-					<th>When</th>
+					<th>When</th> -->
                 
 
 
@@ -73,21 +72,26 @@
 					<td>{{i.status}}</td>
 					
 					<td>{{i.get_context_display}}</td>
-					<td>{{i.get_internal_issues_display}}</td>
-					<td>{{i.get_external_issues_display}}</td>
+					<!--<td>{{i.get_internal_issues_display}}</td>
+					<td>{{i.get_external_issues_display}}</td>-->
 					<td>{{i.get_process_desc_display}}</td>
 					<td>{{i.get_process_issues_display}}</td>
-					<td>{{i.process_StrengthWeakness}}</td>
-					<td>{{i.process_OpportunitiesThreats}}</td>
+					{% if i.get_internal_issues_display != empty %}
+					
+					<td colspan="1">{{i.process_StrengthWeakness}}</td>
+					{% else %}
+					<td colspan="1">{{i.process_OpportunitiesThreats}}</td>
+					{% endif %}
+
 					<td>{{i.otherIssue}}</td>
 				
-					<td>{{i.description}}</td>
+					<!--<td>{{i.description}}</td>
 
 					
 					<td>{{i.mitigation}}</td>
 		
 					<td>{{i.responsibility}}</td>
-					<td>{{i.due}}</td>
+					<td>{{i.due}}</td>-->
 					
 				
 					</tr>

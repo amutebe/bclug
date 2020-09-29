@@ -150,14 +150,16 @@ def issues_report(request):
         response['Content-Disposition'] = 'attachment; filename="Issues_Register.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['IP Number', 'LeadAnalyst','Date','Status', 'Context', 'Int.Issue','Ext.Issue','Process','ProcessIssue','strength/Weakness','Opportunities/Threats','Other Issues','Description','Mitigation','Responsibility',
-'When'])
+        writer.writerow(['Id ', 'LeadAnalyst','DateCreated','Status', 'Context','Process','ProcessIssue','Issue Description','Other Issues'])
 
     
         for i in issues:
-            
-            writer.writerow([i.issue_number, i.analyst,i.analysis_date, i.status, i.context,i.get_internal_issues_display(),i.get_external_issues_display(),i.get_process_desc_display(),i.get_process_issues_display(),i.process_StrengthWeakness,i.process_OpportunitiesThreats,i.otherIssue,i.description,i.mitigation,i.responsibility,
-i.due])
+            if i.process_StrengthWeakness is not None:
+                writer.writerow([i.issue_number, i.analyst,i.analysis_date, i.status, i.get_context_display(),i.get_process_desc_display(),i.get_process_issues_display(),i.process_StrengthWeakness,i.otherIssue])
+            else:
+                writer.writerow([i.issue_number, i.analyst,i.analysis_date, i.status, i.get_context_display(),i.get_process_desc_display(),i.get_process_issues_display(),i.process_OpportunitiesThreats,i.otherIssue])
+    
+
         return response
         
     else:
@@ -291,15 +293,22 @@ def ip_report(request):
         #font_style = xlwt.XFStyle()
         #font_style.font.bold = True
 
+
         writer = csv.writer(response)
-        writer.writerow(['IP Number', 'LeadAnalyst', 'Status', 'Context', 'Int.Issue','Ext.Issue','Description','Ip to Co.','Co. to IP','Priority','ActionTaken','Responsibility',
+        writer.writerow(['IP Number', 'LeadAnalyst', 'Status', 'Context', 'Interested Party','Requirement','Description','Ip to Co.','Co. to IP','Priority','ActionTaken','Responsibility',
 'When'])
+
 
     
         for i in ips:
-            
-            writer.writerow([i.ip_number, i.analyst, i.status, i.context,i.get_internal_issues_display(),i.get_external_issues_display(),i.description,i.get_interestedparties_display(),i.get_companyinterestedparties_display(),i.get_priority_display(),i.get_actiontaken_display(),i.responsibility,
+            if (i.get_internal_issues_display()) is not None :
+                writer.writerow([i.ip_number, i.analyst, i.status, i.get_context_display(),i.get_internal_issues_display(),i.get_quality_needs_display(),i.description,i.get_interestedparties_display(),i.get_companyinterestedparties_display(),i.get_priority_display(),i.get_actiontaken_display(),i.responsibility,
 i.due])
+            else:
+                writer.writerow([i.ip_number, i.analyst, i.status, i.get_context_display(),i.get_external_issues_display(),i.get_quality_needs_display(),i.description,i.get_interestedparties_display(),i.get_companyinterestedparties_display(),i.get_priority_display(),i.get_actiontaken_display(),i.responsibility,
+i.due])
+        
+        
         return response
         
     else:
@@ -436,14 +445,14 @@ def regulatory_report(request):
         response['Content-Disposition'] = 'attachment; filename="compliance_Register.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['Reg. Id', 'Analyst','Date Registered','Status', 'Requirement Category', 'OtherCategory','Describe','Document','IP','Other IP','Rejected','Responsibility',
-'When'])
+        writer.writerow(['Reg. Id', 'Analyst','Date Registered', 'Requirement Category', 'OtherCategory','Describe','Document','IP','Other IP','Responsibility',
+'When','Status'])
 
     
         for i in regulatory:
             
-            writer.writerow([i.regulatory_number, i.analyst,i.registered, i.status, i.cat_name,i.otherCategory,i.description,i.document,i.get_interestedparty_display(),i.otherInterestedParty,i.rejected,i.responsibility,
-i.due])
+            writer.writerow([i.regulatory_number, i.analyst,i.registered,  i.cat_name,i.otherCategory,i.description,i.document,i.get_interestedparty_display(),i.otherInterestedParty,i.responsibility,
+i.due,i.status])
         return response
         
     else:

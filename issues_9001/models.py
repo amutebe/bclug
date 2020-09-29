@@ -110,7 +110,7 @@ class mod9001_interestedParties(models.Model):
     EXTERNAL_ISSUES=(('1','Customers'),('2','Regulators'),('3','Hardware/Equipment Suppliers'),('4','Traning providers'),('5','Security providers'),('6','Internet providers'),('7','Insurance providers'),('8','Auditors'),('9','Certification bodies'),('10','Inspectors'),('11','Business partners'),('12','Competitors'),('13','Neighbourhood'),('14','Local authorities'),('15','Family'))
     external_issues=models.CharField(max_length=200,null=True,blank=True, choices=EXTERNAL_ISSUES)
     Quality_needs=(('1','Communication'),('2','Reporting'),('3','Tax complaince'),('4','CSR'),('5','Time payment for services/products'),('6','Timely delivery'),('7','Safe work enviroment'),('8','Operation support'),('9','Work equipment'),('10','Training'),('11','Clear vision'),('12','Quality support'),('13','Performance feedback'),('14','Contractual complaince'),('15','legal complaince'),('16','Business growth'),('17','Performance'))
-    quality_needs=models.CharField(max_length=200,null=False, choices=Quality_needs)
+    quality_needs=models.CharField("Requirement",max_length=200,null=False, choices=Quality_needs)
     description=models.TextField("Description:",null=True,blank=True, help_text='Please give description if any')
     INTERESTEDPARTIES=(('1','Control'),('2','Influence'),('3','Influence and Control'))
     interestedparties=models.CharField(max_length=200,null=False, choices=INTERESTEDPARTIES)

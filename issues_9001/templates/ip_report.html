@@ -42,12 +42,13 @@
 					<th>Created on</th>
 					<th>Status</th>
 					
-					<th>Context</th>
-					<th>Int. Issues</th>
-					<th>Ext. Issues</th>
+					<th>IP Type</th>
+					
+					<th colspan="1">Interested Party</th>
 					
 					
 					
+					<th>Requirement</th>
 					<th>Description</th>
 					<th>IP to Co.</th>
 					<th>Co. to IP</th>
@@ -72,9 +73,13 @@
 					<td>{{i.status}}</td>
 					
 					<td>{{i.get_context_display}}</td>
-					<td>{{i.get_internal_issues_display}}</td>
-					<td>{{i.get_external_issues_display}}</td>
-				
+					{% if i.get_internal_issues_display != empty %}
+					
+					<td colspan="1">{{i.get_internal_issues_display}}</td>
+					{% else %}
+					<td colspan="1">{{i.get_external_issues_display}}</td>
+					{% endif %}
+					<td>{{i.get_quality_needs_display}}</td>
 					<td>{{i.description}}</td>
 
 					

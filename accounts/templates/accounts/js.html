@@ -1469,6 +1469,9 @@ $("#id_context").change(function() {
 				$('#process_StrengthWeaknessiv').hide();
 				$('#proposedDatediv').hide();
 
+				$("#id_internal_issues option:selected").removeAttr("selected");
+				$("#id_external_issues option:selected").removeAttr("selected");
+
 				}
 				else if ($(this).val()==1)
 				{
@@ -1490,7 +1493,7 @@ $("#id_context").change(function() {
 
 				$('#id_external_issues').removeAttr('required');
 				$('#id_external_issues').removeAttr('data-error');	
-				$('#id_external_issues option:selected').remove();
+				//$('#id_external_issues option:selected').remove();
 				$('#id_process_issues').removeAttr('required');
 				$('#id_process_issues').removeAttr('data-error');	
 
@@ -1501,6 +1504,8 @@ $("#id_context").change(function() {
 				$('#id_external_description').removeAttr('data-error');
 				$('#process_StrengthWeaknessiv').hide();
 				$('#otherIssue').hide();
+			
+				$("#id_external_issues option:selected").removeAttr("selected");
 
 				
 				} 
@@ -1520,7 +1525,7 @@ $("#id_context").change(function() {
 
 				$('#id_internal_issues').removeAttr('required');
 				$('#id_internal_issues').removeAttr('data-error');
-				$('#id_internal_issues option:selected').remove();	
+				//$('#id_internal_issues option:selected').remove();	
 				$('#id_process_issues').removeAttr('required');
 				$('#id_process_issues').removeAttr('data-error');	
 				$('#id_process_description').removeAttr('required');
@@ -1530,6 +1535,7 @@ $("#id_context").change(function() {
 				$('#process_OpportunitiesThreatsdiv').hide();
 				$('#process_StrengthWeaknessiv').hide();
 				$('#otherIssue').hide();
+				$("#id_internal_issues option:selected").removeAttr("selected");
 				
 			
 			}
@@ -1552,8 +1558,8 @@ $("#id_context").change(function() {
 				$('#id_external_issues').removeAttr('required');
 				$('#id_external_issues').removeAttr('data-error');	
 				
-					$('#id_internal_issues option:selected').remove();
-					$('#id_external_issues option:selected').remove();
+					//$('#id_internal_issues option:selected').remove();
+					//$('#id_external_issues option:selected').remove();
 				
 				$('#id_internal_description').removeAttr('required');
 				$('#id_internal_description').removeAttr('data-error');
@@ -1562,6 +1568,8 @@ $("#id_context").change(function() {
 				$('#process_OpportunitiesThreatsdiv').hide();
 				$('#process_StrengthWeaknessiv').hide();
 				$('#otherIssue').hide();
+				$("#id_internal_issues option:selected").removeAttr("selected");
+				$("#id_external_issues option:selected").removeAttr("selected");
 
 			}
 		});
