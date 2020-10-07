@@ -1,0 +1,125 @@
+{%  extends 'accounts/base.html' %}
+
+{% block content %}
+  	
+		<div class="col-md-40">
+
+			<div class="col-md-40">
+            
+		
+				<div class="card card-body">
+ <h4 class="mb-3">Opportunity Register:</h4>
+ <p class="round2"> 
+
+
+<form method="get">
+                     {% csrf_token %}
+                    
+<table  class="tableizer-table" align="left">                
+<thead><tr class="tableizer-firstrow">
+
+
+<th>Summary</th>
+<th>Start Date</th>
+<th>End Date</th>
+<th>Risk Ranking</th>
+<th>Approval</th>
+<th>Verification</th>
+<th></th>
+</tr></thead>
+
+
+<tbody><tr>
+<td>{{myFilter.form.risk_date}}</td>
+<td>{{myFilter.form.start_date}}</td>
+<td>{{myFilter.form.end_date}}</td>
+<td>{{myFilter.form.riskrank}}</td>
+<td>{{myFilter.form.status}}</td>
+<td>{{myFilter.form.verification}}</td>
+<td><button class="btn btn-info btn-sm" type="submit">Search</button></td>
+</tr></tbody>
+</table>
+ </form>
+<form method="post">{% csrf_token %} 
+                    
+<table  class="tableizer-table" align="right">                
+<tbody><tr><td><button class="btn btn-success btn-sm" type="submit">Export to excel</button></td>
+</tr></tbody>
+</table>
+ </form>		
+		 
+		  
+				</div> 
+				</div>
+                </div>
+	
+                
+					<table class="tableizer-table">
+						<thead><tr class="tableizer-firstrow">
+					<th>Opp. No.</th>
+					<th>DateofAnalysis</th>
+					<th>Assessor</th>
+					
+					
+					<th>Context</th>
+                    <th>ContextDescription</th>
+                       <th>Opp.Description</th>
+                          <th>LKHD</th>
+					<th>Rating</th>
+					<th>Ranking</th>
+                       <th>PursuitAction</th>
+                          <th>Mitigation</th>
+                             <th>Responsibility</th>
+					<th>When</th>
+					<th>Approval</th>
+                    <th>Verification</th>
+
+                
+
+
+				
+					
+				</tr></thead><tbody>
+				
+				{% for i in opportunity %}
+				
+					<tr>
+					<td>{{i.risk_number}}</td>
+					<td>{{i.risk_date}}</td>
+					<td>{{i.assessor}}</td>
+				
+						{% if i.ip_number != empty %}
+					
+					<td colspan="1">{{i.ip_number.get_context_display}}</td>
+					{% else %}
+					<td colspan="1">{{i.get_context_display}}</td>
+					{% endif %}
+				
+                    <td>{{i.ip_number.description}}</td>
+                     <td>{{i.description}}</td>
+                     <td>{{i.residuelikelihood}}</td>
+
+				
+					<td>{{i.riskrating}}</td>
+					<td>{{i.riskrank}}</td>
+                    <td>{{i.risktreatment}}</td>
+                     <td>{{i.mitigation}}</td>
+                       <td>{{i.responsibility}}</td>
+					<td>{{i.due}}</td>
+					<td>{{i.status}}</td>
+                    <td>{{i.verification}}</td>
+
+				
+					</tr>
+                    </tbody>
+
+				{%endfor%}
+						
+					</table>
+                  
+         
+			
+		
+		
+
+{% endblock content %}

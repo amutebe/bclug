@@ -445,7 +445,7 @@ def regulatory_report(request):
         response['Content-Disposition'] = 'attachment; filename="compliance_Register.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['Reg. Id', 'Analyst','Date Registered', 'Requirement Category', 'OtherCategory','Describe','Document','IP','Other IP','Responsibility',
+        writer.writerow(['Reg. Id', 'Analyst','Date Registered', 'Requirement', 'OtherRequirement','Description','Document','InterestedParty','Other IP','Responsibility',
 'When','Status'])
 
     
@@ -589,6 +589,40 @@ def risks(request):
         
     context={'form':form}
     return render(request,'risks.html',context)
+@login_required(login_url='login')
+def risks_report(request):
+
+    
+    risks=mod9001_risks.objects.filter(record_type='RISK') #get all RISKS in database
+  
+    
+    
+    myFilter=planning_opportunityFilter(request.GET, queryset=risks)
+    risks=myFilter.qs
+    if request.method=="POST":
+        risks_list = mod9001_risks.objects.filter(record_type='RISK')
+        
+        myFilter=planning_opportunityFilter(request.GET, queryset=risks_list)
+        risks=myFilter.qs
+        
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="Training_planner.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(['Opp. No.', 'DateofAnalysis', 'Assessor', 'Context','ContextDescription','Opp.Description','LKHD','Rating','Ranking','PursuitAction','Mitigation','Responsility','When','Approval','Verification','ResidueLKHD','ResidueSeverity','ResidueRating','ResidueRank'])
+
+    
+        for i in risks:
+            if i.issue_number.get_context_display() is not None:#if the value is none django throws errors
+                writer.writerow([i.risk_number, i.risk_date,i.assessor,i.issue_number.get_context_display(),i.issue_number.description,i.description,i.residuelikelihood,i.riskrating,i.riskrank,i.risktreatment,i.mitigation,i.responsibility,i.due,i.status,i.verification,i.residuelikelihood,i.residueseverity,i.residueriskrating,i.residueriskrank])
+            
+                return response
+        
+    else:
+        return render(request,'risks_report.html',{'risks':risks,'myFilter':myFilter})
+
+
+
 
  ###############   OPPORTUNITY     ###############
 
@@ -638,6 +672,39 @@ def opportunity(request):
         
     context={'form':form}
     return render(request,'opportunity.html',context)
+@login_required(login_url='login')
+def opportunity_report(request):
+
+    
+    opportunity=mod9001_risks.objects.filter(record_type='OPP') #get all opportunity planner in database
+  
+    
+    
+    myFilter=planning_opportunityFilter(request.GET, queryset=opportunity)
+    opportunity=myFilter.qs
+    if request.method=="POST":
+        opportunity_list = mod9001_risks.objects.filter(record_type='OPP')
+        
+        myFilter=planning_opportunityFilter(request.GET, queryset=opportunity_list)
+        opportunity=myFilter.qs
+        
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="Training_planner.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(['Opp. No.', 'DateofAnalysis', 'Assessor', 'Context','ContextDescription','Opp.Description','LKHD','Rating','Ranking','PursuitAction','Mitigation','Responsility','When','Approval','Verification'])
+
+    
+        for i in opportunity:
+            writer.writerow([i.risk_number, i.risk_date,i.assessor,i.ip_number.get_context_display(),i.ip_number.description,i.description,i.residuelikelihood,i.riskrating,i.riskrank,i.risktreatment,i.mitigation,i.responsibility,i.due,i.status,i.verification])
+            
+            return response
+        
+    else:
+        return render(request,'opportunity_report.html',{'opportunity':opportunity,'myFilter':myFilter})
+
+
+
 
 @login_required(login_url='login')
 def risk_pending(request):

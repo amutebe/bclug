@@ -129,6 +129,21 @@ class mod9001_interestedParties(models.Model):
     rejected=models.TextField("Reason for rejecting:",null=True,blank=True, help_text='If rejected, please give a reason')
     approval_date=models.DateField("Date Approved:",null=True,blank=True)
     approved_by=models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='IPApprov_by',on_delete=models.SET_NULL)
+    def __str__(self):
+        return self.ip_number
+
+class department(models.Model):
+    id=models.CharField("IP No.:",max_length=200,default="TEGA-IP-Q-"+car_no(),primary_key=True)
+    name=models.TextField("DeptName:")
+    faculty=models.TextField("Faculty:")
+
+    def __str__(self):
+        return self.id
+
+class student(models.Model):
+    id=models.CharField("ID.:",max_length=200,default="TEGA-IP-Q-"+car_no(),primary_key=True)
+    name=models.TextField("Name:")
+    departments=models.ForeignKey(department,on_delete=models.CASCADE,verbose_name='dept:')
 
 class RequirementCategory(models.Model):
     cat_id=models.CharField("Category ID:",max_length=50,primary_key=True)
@@ -255,9 +270,7 @@ class mod9001_risks(models.Model):
     approved_by=models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='risk_OPPApprov_by',on_delete=models.SET_NULL)
     record_type=models.TextField("Record Type:",null=True,blank=True, help_text='Specifies whether the record is risk or opprotunity entry')
     verification=models.ForeignKey(RISK_OPPverification, on_delete=models.SET_NULL,verbose_name='Verification:',null=True,blank=True)
-    
-    #verification_status=(('Closed','Close'),('Rejected','Reject'))
-   
+
     verification_status=models.CharField(max_length=200, null=True,blank=True)
     verification_failed=models.TextField("Reason for rejecting:",null=True,blank=True, help_text='If rejected, please give a reason')
 

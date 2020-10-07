@@ -50,6 +50,8 @@ urlpatterns = [
     path('ajax/context_description/', views.load_issue_description, name='context_description'),
     path('risks/',views.risks,name="risks"),
     path('opportunity/',views.opportunity,name="opportunity"),
+    path('risks_report/',views.risks_report,name="risks_report"),
+    path('opportunity_report/',views.opportunity_report,name="opportunity_report"),
     path('risk_pending/',views.risk_pending,name="risk_pending"),
     path('opp_pending/',views.opp_pending,name="opp_pending"),
 

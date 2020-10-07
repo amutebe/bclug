@@ -48,3 +48,17 @@ class context_regulatoryFilter(django_filters.FilterSet):
         model=mod9001_regulatoryReq
         fields=['status']
         #widgets={'end_date':DateInput()}
+
+#############################OPPORTUNITY############
+
+
+class planning_opportunityFilter(django_filters.FilterSet):
+    risk_date=DateRangeFilter(field_name="risk_date",label='Summary')
+    start_date=DateFilter(field_name="risk_date",lookup_expr='gte',label='Start Date',widget=DateInput())
+    end_date=DateFilter(field_name="risk_date",lookup_expr='lte',label='End Date',widget=DateInput())
+
+
+    class Meta:
+        model=mod9001_risks
+        fields=['riskrank','status','verification']
+        #widgets={'end_date':DateInput()}

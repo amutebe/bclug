@@ -1,0 +1,118 @@
+{%  extends 'accounts/base.html' %}
+
+{% block content %}
+  	
+		<div class="col-md-40">
+
+			<div class="col-md-40">
+            
+		
+				<div class="card card-body">
+ <h4 class="mb-3">Training Plan:</h4>
+ <p class="round2"> 
+
+
+<form method="get">
+                     {% csrf_token %}
+                    
+<table  class="tableizer-table" align="left">                
+<thead><tr class="tableizer-firstrow">
+
+
+<th>Summary</th>
+<th>Start Date</th>
+<th>End Date</th>
+<th>Type</th>
+<th>Approval</th>
+<th>Verification</th>
+<th></th>
+</tr></thead>
+
+
+<tbody><tr>
+<td>{{myFilter.form.trainng_date}}</td>
+<td>{{myFilter.form.start}}</td>
+<td>{{myFilter.form.end}}</td>
+<td>{{myFilter.form.type}}</td>
+<td>{{myFilter.form.status}}</td>
+<td>{{myFilter.form.trainplannerstatus}}</td>
+<td><button class="btn btn-info btn-sm" type="submit">Search</button></td>
+</tr></tbody>
+</table>
+ </form>
+<form method="post">{% csrf_token %} 
+                    
+<table  class="tableizer-table" align="right">                
+<tbody><tr><td><button class="btn btn-success btn-sm" type="submit">Export to excel</button></td>
+</tr></tbody>
+</table>
+ </form>		
+		 
+		  
+				</div> 
+				</div>
+                </div>
+	
+                
+					<table class="tableizer-table">
+						<thead><tr class="tableizer-firstrow">
+					<th>Planner No.</th>
+					<th>TrainingType</th>
+					<th>Description</th>
+					
+					
+					<th>AdditionalDescription</th>
+                    <th>TrainingDate</th>
+                       <th>Audience</th>
+                          <th>Objective</th>
+					<th>StartDate</th>
+					<th>EndDate</th>
+                       <th>Location</th>
+                          <th>Trainer</th>
+                             <th>Resource</th>
+					<th>Approval</th>
+					<th>Verification</th>
+
+                
+
+
+				
+					
+				</tr></thead><tbody>
+				
+				{% for i in trainingplan %}
+				
+					<tr>
+					<td>{{i.plan_number}}</td>
+					<td>{{i.get_type_display}}</td>
+					<td>{{i.description}}</td>
+				
+					
+					<td>{{i.details}}</td>
+                    <td>{{i.trainng_date}}</td>
+                     <td>{{i.get_trainaudience_display}}</td>
+                     <td>{{i.objective}}</td>
+
+				
+					<td>{{i.start}}</td>
+					<td>{{i.end}}</td>
+                    <td>{{i.get_trainlocation_display}}</td>
+                     <td>{{i.trainer}}</td>
+                       <td>{{i.resources}}</td>
+					<td>{{i.status}}</td>
+					<td>{{i.trainplannerstatus}}</td>
+
+				
+					</tr>
+                    </tbody>
+
+				{%endfor%}
+						
+					</table>
+                  
+         
+			
+		
+		
+
+{% endblock content %}

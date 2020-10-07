@@ -17,6 +17,7 @@ from xlutils.copy import copy # http://pypi.python.org/pypi/xlutils
 from xlrd import open_workbook # http://pypi.python.org/pypi/xlrd
 import os
 import csv
+from .filters import *
 
 # Create your views here.
 
@@ -174,6 +175,33 @@ def qms_planner(request):
         
     context={'form':form}
     return render(request,'qmsplanner.html',context)
+
+@login_required(login_url='login')
+def qms_report(request):
+    
+    qms=mod9001_qmsplanner.objects.all() #get all qms planner in database 
+    myFilter=planning_qmsFilter(request.GET, queryset=qms)
+    qms=myFilter.qs
+    if request.method=="POST":
+        qms_list = mod9001_qmsplanner.objects.all()
+        myFilter=planning_qmsFilter(request.GET, queryset=qms_list)
+        qms=myFilter.qs
+        
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="QMS_planner.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(['Planner No.', 'Plan Date', 'ProgramDescription', 'AdditionalDescription','Planner','StartDate','EndDate','Approval','Verification'])
+
+    
+        for i in qms:
+            
+            writer.writerow([i.planner_number, i.plan_date,i.description,  i.details,i.planner,i.start,i.end,i.status,i.qmsstatus])
+        return response
+        
+    else:
+        return render(request,'qms_report.html',{'qms':qms,'myFilter':myFilter})
+
 
 @login_required(login_url='login')
 def qms_pending(request):
@@ -353,6 +381,34 @@ def training_planner(request):
     return render(request,'trainingplanner.html',context)
 
 @login_required(login_url='login')
+def trainingplan_report(request):
+    
+    trainingplan=mod9001_trainingplanner.objects.all() #get all qms planner in database 
+    myFilter=planning_trainingplannerFilter(request.GET, queryset=trainingplan)
+    trainingplan=myFilter.qs
+    if request.method=="POST":
+        trainingplan_list = mod9001_trainingplanner.objects.all()
+        myFilter=planning_trainingplannerFilter(request.GET, queryset=trainingplan_list)
+        trainingplan=myFilter.qs
+        
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="Training_planner.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(['Planner No.', 'TrainingType', 'Description', 'AdditionalDescription','Date','Audience','Objective','StartDate','EndDate','Location','Trainer','Resources','Approval','Verification'])
+
+    
+        for i in trainingplan:
+            
+            writer.writerow([i.plan_number, i.get_type_display(),i.description,  i.details,i.trainng_date,i.get_trainaudience_display(),i.objective,i.start,i.end,i.get_trainlocation_display(),i.trainer,i.status,i.trainplannerstatus])
+        return response
+        
+    else:
+        return render(request,'trainingplan_report.html',{'trainingplan':trainingplan,'myFilter':myFilter})
+
+
+
+@login_required(login_url='login')
 def trainplanner_pending(request):
     pendingcar=mod9001_trainingplanner.objects.filter(status='5') #get all  pending approval    
     context={'pendingcar':pendingcar} 
@@ -496,6 +552,43 @@ def incidentRegister(request):
         
     context={'form':form}
     return render(request,'incidentRegister.html',context)
+@login_required(login_url='login')
+def incident_report(request):
+
+    
+    incident=mod9001_incidentregisterStaff.objects.all() #get all incident registers by staff
+  
+    
+    
+    myFilter=Operations_incidentRegisterFilter(request.GET, queryset=incident)
+    incident=myFilter.qs
+    if request.method=="POST":
+        incident_list = mod9001_incidentregisterStaff.objects.all()
+        
+        myFilter=Operations_incidentRegisterFilter(request.GET, queryset=incident_list)
+        incident=myFilter.qs
+        
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="IncidentRegister.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(['Incident. No.', 'Date', 'Time', 'Reference','ProcessName','Type','Description','Details','Classification','RootCause','Containment','AsignedTo','DateAssigned','CompletionDate','CostDescription','LessonLearnt'])
+
+    
+        for i in incident:
+            #if i.issue_number.get_context_display() is not None:#if the value is none django throws errors
+            writer.writerow([i.incident_number, i.date,i.incident_number.time,i.incident_number.get_reference_display(),i.incident_number.processname,i.incident_number.incidentype,i.incident_number.incident_description,i.incident_number.other,i.classification,i.rootcause,i.get_correction_display(),i.assigned,i.date,i.completion,i.cost,i.lesson])
+        return response
+        
+    else:
+        return render(request,'incident_report.html',{'incident':incident,'myFilter':myFilter})
+
+
+
+
+
+
+
 
 
 def load_description(request):
@@ -504,10 +597,10 @@ def load_description(request):
     #ids = mod9001_risks.objects.filter(contextdetails_id=context_id)
     #ids = mod9001_issues.objects.all()
    
-    print("context_id incidents", context_id)
+    #print("context_id incidents", context_id)
     ids=incident_description.objects.filter(incident_type_id=context_id)
-    for id in ids:
-        print("ID  Description",id.incident_type_id,  id.description)
+    #or id in ids:
+    #    print("ID  Description",id.incident_type_id,  id.description)
 
     
     return render(request, 'id_dropdown_list_option.html', {'ids': ids})
