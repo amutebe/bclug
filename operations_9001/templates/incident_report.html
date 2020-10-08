@@ -63,6 +63,7 @@
 					<th>Classification</th>
 					<th>RootCause</th>
                     <th>Containment</th>
+					<th>AdditionalDescription</th>
                      <th>AsignedTo</th>
                     <th>Date</th>
 					<th>CompletionDate</th>
@@ -91,10 +92,11 @@
                     <td>{{i.rootcause}}</td>
 
 					<td>{{i.get_correction_display}}</td>
+					<td>{{i.description}}</td>
 					<td>{{i.assigned}}</td>
                     <td>{{i.date}}</td>
                     <td>{{i.completion}}</td>
-                    <td>{{i.cost}}</td>
+                    <td>{{i.get_cost_display}}</td>
                     <td>{{i.lesson}}</td>
 
 

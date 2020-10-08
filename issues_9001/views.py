@@ -606,10 +606,10 @@ def risks_report(request):
         risks=myFilter.qs
         
         response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="Training_planner.csv"'
+        response['Content-Disposition'] = 'attachment; filename="RiskRegister.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['Opp. No.', 'DateofAnalysis', 'Assessor', 'Context','ContextDescription','Opp.Description','LKHD','Rating','Ranking','PursuitAction','Mitigation','Responsility','When','Approval','Verification','ResidueLKHD','ResidueSeverity','ResidueRating','ResidueRank'])
+        writer.writerow(['Risk. No.', 'DateofAnalysis', 'Assessor', 'Context','ContextDescription','Opp.Description','LKHD','Rating','Ranking','PursuitAction','Mitigation','Responsility','When','Approval','Verification','ResidueLKHD','ResidueSeverity','ResidueRating','ResidueRank'])
 
     
         for i in risks:
@@ -689,14 +689,14 @@ def opportunity_report(request):
         opportunity=myFilter.qs
         
         response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="Training_planner.csv"'
+        response['Content-Disposition'] = 'attachment; filename="OpportunityRegister.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['Opp. No.', 'DateofAnalysis', 'Assessor', 'Context','ContextDescription','Opp.Description','LKHD','Rating','Ranking','PursuitAction','Mitigation','Responsility','When','Approval','Verification'])
+        writer.writerow(['Opp. No.', 'DateofAnalysis', 'Assessor', 'Context','ContextDescription','Opp.Description','LKHD','BENEFIT','Rating','Ranking','PursuitAction','Mitigation','Responsility','When','Approval','Verification'])
 
     
         for i in opportunity:
-            writer.writerow([i.risk_number, i.risk_date,i.assessor,i.ip_number.get_context_display(),i.ip_number.description,i.description,i.residuelikelihood,i.riskrating,i.riskrank,i.risktreatment,i.mitigation,i.responsibility,i.due,i.status,i.verification])
+            writer.writerow([i.risk_number, i.risk_date,i.assessor,i.ip_number.get_context_display(),i.ip_number.description,i.description,i.likelihood,i.severity,i.riskrating,i.riskrank,i.risktreatment,i.mitigation,i.responsibility,i.due,i.status,i.verification])
             
             return response
         

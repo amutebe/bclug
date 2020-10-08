@@ -236,7 +236,6 @@ class mod9001_risks(models.Model):
     issue_description=models.TextField("Context Description:",null=True,blank=True)
     contextdetails=models.ForeignKey(contextdetails, on_delete=models.CASCADE,verbose_name='Context:',related_name='contextdetail')
     riskdescription=models.ForeignKey(riskdesc, on_delete=models.CASCADE,verbose_name='Risk Description:',related_name='riskdescription',null=True,blank=True)
-    
     description=models.TextField("Risk Description:",null=True,blank=True)
     likelihood=models.ForeignKey(risklikelihood, on_delete=models.CASCADE,verbose_name='Risk likelihood:',related_name='risklikelihood',null=True,blank=True)
     severity=models.ForeignKey(riskseverity, on_delete=models.CASCADE,verbose_name='Risk Severity:',related_name='riskseverity',null=True,blank=True)
