@@ -371,12 +371,12 @@ def training_register_report(request):
         response['Content-Disposition'] = 'attachment; filename="Training_Evaluation_Report.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['TainingNo.', 'TrainingDescription', 'AdditionalDescription', 'AdditionalDescription','TrainingDate','Nature','Trainee','Dept','CompletionDate','Decision','AssignedTo','Timeline'])
+        writer.writerow(['TainingNo','TrainingDescription.', 'AdditionalDescription', 'TrainingDate', 'Nature','Trainee','Dept','CompletionDate','Decision','NotEffective','Details','ActionPlan','AdditionalDesc.','AssignedTo','Timeline'])
 
     
         for i in trainingreg:
             
-            writer.writerow([i.training_number, i.plan_number.description,i.plan_number.details,  i.train_date,i.nature,i.trainee,i.tainee.dept,i.completion_date,i.get_decision_display(),i.reasonother,i.get_reasond_display,i.actionplan,i.actionplanother,i.assigned,i.timeline])
+            writer.writerow([i.training_number, i.plan_number.description,i.plan_number.details,  i.train_date,i.get_nature_display(),i.trainee,i.trainee.dept,i.completion_date,i.get_decision_display(),i.reasonother,i.reasond,i.actionplan,i.actionplanother,i.assigned,i.timeline])
         return response
         
     else:

@@ -24,7 +24,7 @@ class document_manager(ModelForm):
     class Meta:
         model = mod9001_document_manager 
         fields = '__all__'
-        widgets={'Origin': RadioSelect(),'document_date':DateInput(),'document_id':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'clause':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'doc_name':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'specifyl':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'version':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'Author':forms.Textarea(attrs={'rows': 2, 'cols': 40})}
+        widgets={'author':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'Origin': RadioSelect(),'document_date':DateInput(),'document_id':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'clause':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'doc_name':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'specifyl':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'version':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'Author':forms.Textarea(attrs={'rows': 2, 'cols': 40})}
 
 class calibration(ModelForm):
     
