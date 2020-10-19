@@ -16,9 +16,21 @@ class providers(models.Model):
     description=models.CharField("Provider Name", max_length=50,null=True,blank=True)
     def __str__(self):
         return self.description
+
+class improvementplan(models.Model):
+
+    description=models.CharField("Improvement plan:", max_length=50,null=True,blank=True)
+    def __str__(self):
+        return self.description
+
+class planofaction(models.Model):
+
+    description=models.CharField("Plan of action", max_length=50,null=True,blank=True)
+    def __str__(self):
+        return self.description
 class document_standard(models.Model):
 
-    description=models.CharField("Standard", max_length=50,null=True,blank=True)
+    description=models.CharField("ISO Standard Clause:", max_length=50,null=True,blank=True)
     def __str__(self):
         return self.description
 
@@ -67,24 +79,28 @@ class rootcause(models.Model):
 class mod9001_document_manager(models.Model):
     document_date=models.DateField("Date:")
     document_number=models.CharField("Document no.:",max_length=200,default="TEGA-Q-"+car_no(),primary_key=True)
-    standard= models.ForeignKey('document_standard',on_delete=models.CASCADE,verbose_name='Standard:',related_name='standard')
+    standard= models.ForeignKey('document_standard',on_delete=models.CASCADE,verbose_name='ISO Standard Clause',related_name='standard')
     Origin=(('1','Internal'),('2','External'))
     origin=models.CharField(max_length=200,null=True, choices=Origin)
     doc_type= models.ForeignKey('document_type',on_delete=models.CASCADE,verbose_name='Document Type:',related_name='type')
-    document_id =models.TextField("Document ID:",null=True,blank=True, help_text='Ref No.')
-    doc_name =models.TextField("Document Name:",null=True,blank=True, help_text='Document Name')
+    document_id =models.TextField("Document ID:",null=True,blank=True)
+    doc_name =models.TextField("Document Name:",null=True,blank=True)
 
-    clause =models.TextField("Document ID:",null=True,blank=True, help_text='Document ID')
+    clause =models.TextField("Document ID:",null=True,blank=True)
     format= models.ForeignKey('document_format',on_delete=models.CASCADE,verbose_name='Format:',related_name='format')
-    version =models.TextField("Version No:",null=True,blank=True, help_text='Version')
+    version =models.TextField("Version No:",null=True,blank=True)
     location= models.ForeignKey('document_location',on_delete=models.CASCADE,verbose_name='Location:',related_name='location')
+    specifyl =models.TextField("Specify location:",null=True,blank=True)
+    author =models.TextField("Author:",null=True,blank=True)
+   
+   
     owner= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Owner:',related_name='owner')
-    Retention=(('1','1'),('2','2'),('3','3'),('4','4'),('5','5'),('6','>5'))
-    retention=models.CharField(max_length=200,null=True, choices=Retention)
+    Retention=(('1','1 Year'),('2','2 Years'),('3','3 years'),('4','4 Years'),('5','5 years'),('6','more than 5 Yeas'))
+    retention=models.CharField("Retention time:",max_length=200,null=True, choices=Retention)
     Status=(('1','Current'),('2','Obsolete'))
     status=models.CharField(max_length=200,null=True, choices=Status)
-    document = models.FileField("Please upload relevant document",upload_to ='uploads/',null=True,blank=True)
-
+    document = models.FileField("Upload document:",upload_to='documents/',null=True)
+    uploaded_at = models.DateTimeField(auto_now_add=True,null=True)
 class mod9001_calibration(models.Model):
     calibration_date=models.DateField("Date:")
     calibration_number=models.CharField("Calibration no.:",max_length=200,default="TEGA-C-"+car_no(),primary_key=True)
@@ -275,6 +291,11 @@ class mod9001_trainingregister(models.Model):
     decision=models.CharField("Evaluation Decision:",max_length=200,null=True, choices=decision)
     reasond=models.ForeignKey('noteffective', on_delete=models.CASCADE,verbose_name='If Not Effective, give reason:',related_name='noteffectreason',null=True,blank=True)
     reasonother=models.TextField("Other reasons:",null=True,blank=True)
+    actionplan=models.ForeignKey('planofaction', on_delete=models.CASCADE,verbose_name='Plan of action:',related_name='planofaction',null=True,blank=True)
+    actionplanother=models.TextField("Additional description:",null=True,blank=True)
+    assigned = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='assignedto',verbose_name='Assigned to:',on_delete=models.SET_NULL)
+    timeline=models.DateField("Timeline:",null=True)     
+    
     entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='training_entered_by',on_delete=models.SET_NULL)
     date_today=models.DateField("Date created:",default=datetime.now)
 
@@ -320,7 +341,7 @@ class mod9001_incidentregister(models.Model):
     reference=models.CharField("Reference",max_length=200, choices=REFERENCE)
     processname=models.ForeignKey('process', on_delete=models.SET_NULL,verbose_name='If Process, name:',null=True,blank=True)
     incidentype=models.ForeignKey('incident_type', on_delete=models.SET_NULL,verbose_name='incidentype:',null=True,blank=True)
-    incident_description=models.ForeignKey('incident_description', on_delete=models.SET_NULL,verbose_name='incidentdescription:',null=True,blank=True)
+    incident_description=models.ForeignKey('incident_description', on_delete=models.SET_NULL,verbose_name='Incident description:',null=True,blank=True)
     other=models.TextField("Details",null=True, blank=True)
     entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='register_entered_byy',on_delete=models.SET_NULL)
     date_today=models.DateField("Date created:",default=datetime.now)
@@ -343,8 +364,12 @@ class mod9001_incidentregisterStaff(models.Model):
     costs=(('1','Financial'),('2','Operational'),('3','Legal/Regulatory'),('4','Brand/Reputation'))
     #MY_CHOICES = (('item_key1', 'Item title 1.1'),('item_key2', 'Item title 1.2'),('item_key3', 'Item title 1.3'),('item_key4', 'Item title 1.4'),('item_key5', 'Item title 1.5'))
     cost = MultiSelectField('Incident Cost',choices=costs)
+    currency=(('1','UGX'),('2','USD'),('3','Kshs'),('4','GBP'))
+    currency=models.CharField(verbose_name='Currency:',max_length=50, null=True,blank=True,choices=currency)
+   
     
-    costdescription=models.TextField("Incident Cost Description:",null=True, blank=True)
+    costdescription=models.IntegerField("Incident Cost Amount:")
+
     lesson=models.TextField("Lesson learnt:",null=True, blank=True)
     status=models.TextField("Compliant Status:",null=True, blank=True)
     entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='incidentstaff',on_delete=models.SET_NULL)
@@ -402,7 +427,67 @@ class mod9001_providerassessment(models.Model):
     professionalism=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='11. Professional Contribution Score:',related_name='professionalis',null=True,blank=True)
     rank=models.CharField("Final Ranking: (Scores 1 to 11 are required)",max_length=25,null=True,blank=True)
     comment=models.TextField("Comment",null=True, blank=True)
-    entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='providerentered',on_delete=models.SET_NULL)
+    nonconformity=(('1','Support/Resource'),('2','Planning'),('3','IITS(Information, Instructions, Training, Supervision)'),('4','Performance monitoring'),('5','Evaluation'),('6','Risk/Vulnerability Assessment'),('7','Leadership'),('8','Other'))
+    nonconformity=models.CharField("Reason: cause of nonconformity",max_length=200, choices=nonconformity,null=True,blank=True)
+    nonconfdetails=models.TextField("Additional description",null=True, blank=True)
+
+    jobknowledg=(('1','Technical/Professional skills required'),('2','Application'),('3','Support and training to others'))
+    jobknowledg = MultiSelectField('1. Job Knowledge',choices=jobknowledg,null=True,blank=True)
+
+    flexibility=(('1','Relaibility'),('2','Response to Change'),('3','Ease of taking on other roles'),('4','Attitude towards learning'))
+    flexibility = MultiSelectField('2. Adaptability & Flexibility',choices=flexibility,null=True,blank=True)
+
+    problemsolving=(('1','Response promptness'),('2','Level of Judgement'),('3','Solution Quality'))
+    problemsolving = MultiSelectField('3. Problem solving',choices=problemsolving,null=True,blank=True)
+
+    Initiativenes=(('1','Idea Development'),('2','Effective use of resources'),('3','Self drive/motivation'))
+    Initiativenes = MultiSelectField('4. Initiativeness & Resourcefulness',choices=Initiativenes,null=True,blank=True)
+
+    planing=(('1','Establishing Priorities'),('2','Meeting Deadlines'),('3','Planning of Tasks'))
+    planing = MultiSelectField('5. Planning & Organisation',choices=planing,null=True,blank=True)
+
+    workqualit=(('1','Meeting Company Objectives'),('2','Task Completeness'),('3','Accuracy'))
+    workquality = MultiSelectField('6. Work Quality & Quantity',choices=workqualit,null=True,blank=True)
+
+    skill=(('1','Relationship with Co-workers'),('2','Clients or Team spirit and general work attitude'))
+    interskills = MultiSelectField('7. Interpersonal Skills',choices=skill,null=True,blank=True)
+
+    communication=(('1','Oral and Written'),('2','Clarity of Information shared'),('3','Accuracy of Information shared'))
+    communication = MultiSelectField('8. Communication Skills',choices=communication,null=True,blank=True)
+
+    supervisionm=(('1','Work/task scheduling'),('2','Meeting own/company targets'),('3','Self-Supervision'))
+    supervisionmagt = MultiSelectField('9. Supervision & Management',choices=supervisionm,null=True,blank=True)
+
+    availabilit=(('1','Time keeping'),('2','Commitment to duty'))
+    availabilit = MultiSelectField('10. Availability',choices=availabilit,null=True,blank=True)
+
+    professional=(('1','Attendance of Professional Meetings'),('2','Provision of Professional education/talks'))
+    professional = MultiSelectField('11. Professional Contribution',choices=professional,null=True,blank=True)
+
+    costs=(('1','Financial'),('2','Operational'),('3','Legal/Regulatory'),('4','Brand/Reputation'))
+    cost = MultiSelectField('Incident Cost',choices=costs,null=True,blank=True)
+    currency=(('1','UGX'),('2','USD'),('3','Kshs'),('4','GBP'))
+    currency=models.CharField(verbose_name='Currency:',max_length=50, null=True,blank=True,choices=currency)
+    status=models.ForeignKey('issues_9001.approval_status', on_delete=models.SET_NULL,verbose_name='Status:',null=True,blank=True)
+ 
+    
+    costdescription=models.IntegerField("Incident Cost Amount:",null=True,blank=True)
+
+    lesson=models.TextField("Lesson learnt:",null=True, blank=True)
+    verification=models.ForeignKey('issues_9001.RISK_OPPverification', on_delete=models.SET_NULL,verbose_name='Verification:',null=True,blank=True)
+    verification_status=models.CharField(max_length=200, null=True,blank=True)
+    verification_failed=models.TextField("Reason for rejecting:",null=True,blank=True, help_text='If rejected, please give a reason')
+     
+    qmsstatus=models.ForeignKey(qmsstatus, on_delete=models.SET_NULL,null=True,verbose_name='Verification Status:')
+    
+    completion=models.DateField("Completion Date:",null=True,blank=True)
+    scheduled=models.DateField("Rescheduled Date:",null=True,blank=True)
+   
+    assigned= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Assigned to:',null=True,blank=True)
+  
+    due=models.DateField("When:",null=True,blank=True)
+
+    entered_by= models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='providerentered',on_delete=models.SET_NULL)
     date_today=models.DateField("Date created:",default=datetime.now)
     
   

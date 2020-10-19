@@ -24,7 +24,7 @@ class document_manager(ModelForm):
     class Meta:
         model = mod9001_document_manager 
         fields = '__all__'
-        widgets={'Origin': RadioSelect(),'document_date':DateInput()}
+        widgets={'Origin': RadioSelect(),'document_date':DateInput(),'document_id':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'clause':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'doc_name':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'specifyl':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'version':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'Author':forms.Textarea(attrs={'rows': 2, 'cols': 40})}
 
 class calibration(ModelForm):
     
@@ -79,7 +79,7 @@ class trainingregister(ModelForm):
     class Meta:
         model = mod9001_trainingregister 
         exclude = ['training_desc','trainingplanid','training','location','trainer','entered_by','date_today']
-        widgets={'train_date':DateInput(),'completion_date':DateInput(),'job':HorizontalRadioSelect(),'skills':HorizontalRadioSelect(),'indicators':HorizontalRadioSelect(),'able':HorizontalRadioSelect()}
+        widgets={'actionplanother':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'reasonother':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'timeline':DateInput(),'train_date':DateInput(),'completion_date':DateInput(),'job':HorizontalRadioSelect(),'skills':HorizontalRadioSelect(),'indicators':HorizontalRadioSelect(),'able':HorizontalRadioSelect()}
 
 class trainingplaner(ModelForm):
   
@@ -142,13 +142,16 @@ class providerassessments(ModelForm):
       
      class Meta:
         model = mod9001_providerassessment 
-        exclude = ['entered_by','date_today']
+        exclude = ['lesson','entered_by','date_today','verification','verification_status','verification_failed','qmsstatus','scheduled','completion']
+
+            
+ 
         
 
         #fields = ['emp_perfrev_no','planner_number','date','Provider','organisation','assesment_date','start','end','appraise']
        
         
-        widgets={'comment':TextInput(),'purpose':TextInput(),'date':DateInput(),'assesment_date':DateInput(),'start':DateInput(), 'end':DateInput(),'jobknowledge':HorizontalRadioSelect(),'adaptability':HorizontalRadioSelect(),'problemsolve':HorizontalRadioSelect(),'initiativeness':HorizontalRadioSelect(),'planning':HorizontalRadioSelect(),'work':HorizontalRadioSelect(),'Communication':HorizontalRadioSelect(),'skills':HorizontalRadioSelect(),'supervision':HorizontalRadioSelect(),'availability':HorizontalRadioSelect(),'professionalism':HorizontalRadioSelect()}
+        widgets={'nonconfdetails':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'due':DateInput(),'comment':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'purpose':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'date':DateInput(),'assesment_date':DateInput(),'start':DateInput(), 'end':DateInput(),'jobknowledge':HorizontalRadioSelect(),'adaptability':HorizontalRadioSelect(),'problemsolve':HorizontalRadioSelect(),'initiativeness':HorizontalRadioSelect(),'planning':HorizontalRadioSelect(),'work':HorizontalRadioSelect(),'Communication':HorizontalRadioSelect(),'skills':HorizontalRadioSelect(),'supervision':HorizontalRadioSelect(),'availability':HorizontalRadioSelect(),'professionalism':HorizontalRadioSelect()}
         def clean(self):
             cleaned_data = super().clean()
             start_date = cleaned_data.get("start")
@@ -156,7 +159,12 @@ class providerassessments(ModelForm):
             if end_date < start_date:
                 raise forms.ValidationError("End date should be greater than start date.")
 
-
+class Verifyeproviderassessments(ModelForm):
+    class Meta:
+        model = mod9001_providerassessment 
+        #fields = '__all__'
+        fields=['verification','verification_status','verification_failed','qmsstatus','scheduled','completion']
+        widgets={'completion':DateInput(),'scheduled':DateInput()}        
 
 
 

@@ -87,18 +87,18 @@
                         <!--<li><a data-icon="&#xf0e6" href="{% url 'maintenance'%}">Maintenance Record</a></li>-->
                         
                         <li>
-                                <a data-icon="&#xf016">Incident register</a>
+                                <a data-icon="&#xf016">Incident</a>
                         <ul>
-                                <li><a data-icon="&#xf015" href="{% url 'incidentRegister'%}">Customer</a>
+                                <li><a data-icon="&#xf015" href="{% url 'incidentRegister'%}">Log</a>
                         <ul>
                       
                         </ul>
-                        <a data-icon="&#xf015" href="{% url 'incidentRegisterStaff'%}">Staff</a>
+                        <a data-icon="&#xf015" href="{% url 'incidentRegisterStaff'%}">Analysis</a>
 
                           </li>    
                         </ul>
                         </li>
-                        <li><a data-icon="&#xf1d9">Training Register</a>
+                        <li><a data-icon="&#xf1d9">Training Evaluation</a>
                         <ul>
                         <li><a data-icon="&#xf015" href="{% url 'training_register'%}">Create</a></li>
                         </ul>
@@ -110,6 +110,7 @@
                         <li><a data-icon="&#xf185" href="#">Provide Assessment</a>
                         <ul>
                               <li><a data-icon="&#xf015"  href="{% url 'providerassessment'%}">Create</a></li>
+                              <li><a data-icon="&#xf015"  href="{% url 'providerassessments_due'%}">Verify</a></li>
                                 
 
                           </ul>
@@ -163,14 +164,15 @@
                         <li><a data-icon="&#xf040" href="{% url 'trainingplan_report'%}">Training Plan</a></li>
                         <li><a data-icon="&#xf1db" href="{% url 'opportunity_report'%}">Opportunity Register</a></li>
                         <li><a data-icon="&#xf1db" href="{% url 'risks_report'%}">Risk Register</a></li>
-                      
+               
                     </ul>
                         </li>
                         <li><a data-icon="&#xf09d" href="#">Operations</a>
                         <ul>
                                               
                         <li><a data-icon="&#xf00e" href="{% url 'incident_report'%}">Incident Register</a></li>
-                     
+                              <li><a data-icon="&#xf00e" href="{% url 'training_register_report'%}">Training Evaluation/Register</a></li>
+
                         </ul>
                         
                         </li>

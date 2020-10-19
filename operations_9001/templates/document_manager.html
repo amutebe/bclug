@@ -1,5 +1,6 @@
 
 {% extends "accounts/base.html" %} 
+ {% load static %}
 {% block content %}
 <style>
 form {
@@ -8,13 +9,20 @@ form {
   margin: 0 auto;
 }
 </style>
-<br>
-<h5>Document Manager:</h5>
 
-<form action="/doc_manager/" method="post">
+
+
+
+
+<form action="/doc_manager/" method="post" enctype="multipart/form-data">
                      {% csrf_token %}
-                    
-               
+          <h4 class="mb-3">Document Manager:</h4>
+<p class="round2">   
+
+<table border="0">            
+{{form}}
+</table>
+<!--               
 <div class="row">
     <div class="col">
       <label for="usr">Document No: </label><br>
@@ -60,7 +68,7 @@ form {
 </div>
 
      <div class="col" id="context">
-     <br>
+     
       <label for="context">Document Type: </label><br>  
         {{form.doc_type}}  
  <font color="red">{{form.errors.doc_type}}</font>
@@ -160,9 +168,26 @@ form {
 </div> 
 </div>
 </div>
+-->
+<br>
+<p class="round2"> 
+<div class="card card-body">
+					<table class="form-group">
+					<tr> 
 
-<input class="btn btn-info" type="submit" name="Submit">
+<td ><a class="btn  btn-warning" href="{% url 'home'%}"> Cancel </a></td>
+<td align="right"><input class="btn btn-info" type="submit" name="Submit"></td>
+
+					</tr>
+          </table>
+</div>
+
+
 </form>
+  {% if uploaded_file_url %}
+    <p>File uploaded at: <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></p>
+  {% endif %}
+
 
 {% endblock %} 
 

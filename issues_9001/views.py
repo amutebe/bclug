@@ -150,14 +150,14 @@ def issues_report(request):
         response['Content-Disposition'] = 'attachment; filename="Issues_Register.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['Id ', 'LeadAnalyst','DateCreated','Status', 'Context','Process','ProcessIssue','Issue Description','Other Issues'])
+        writer.writerow(['Id ', 'LeadAnalyst','DateCreated', 'Context','Process','ProcessIssue','Issue Description','Other Issues','Status'])
 
     
         for i in issues:
             if i.process_StrengthWeakness is not None:
-                writer.writerow([i.issue_number, i.analyst,i.analysis_date, i.status, i.get_context_display(),i.get_process_desc_display(),i.get_process_issues_display(),i.process_StrengthWeakness,i.otherIssue])
+                writer.writerow([i.issue_number, i.analyst,i.analysis_date, i.get_context_display(),i.get_process_desc_display(),i.get_process_issues_display(),i.process_StrengthWeakness,i.otherIssue, i.status])
             else:
-                writer.writerow([i.issue_number, i.analyst,i.analysis_date, i.status, i.get_context_display(),i.get_process_desc_display(),i.get_process_issues_display(),i.process_OpportunitiesThreats,i.otherIssue])
+                writer.writerow([i.issue_number, i.analyst,i.analysis_date, i.get_context_display(),i.get_process_desc_display(),i.get_process_issues_display(),i.process_OpportunitiesThreats,i.otherIssue, i.status])
     
 
         return response
@@ -295,18 +295,18 @@ def ip_report(request):
 
 
         writer = csv.writer(response)
-        writer.writerow(['IP Number', 'LeadAnalyst', 'Status', 'Context', 'Interested Party','Requirement','Description','Ip to Co.','Co. to IP','Priority','ActionTaken','Responsibility',
-'When'])
+        writer.writerow(['IP Number', 'LeadAnalyst','Context', 'Interested Party','Requirement','Description','Ip to Co.','Co. to IP','Priority','ActionTaken','Responsibility',
+'When','Status'])
 
 
     
         for i in ips:
             if (i.get_internal_issues_display()) is not None :
-                writer.writerow([i.ip_number, i.analyst, i.status, i.get_context_display(),i.get_internal_issues_display(),i.get_quality_needs_display(),i.description,i.get_interestedparties_display(),i.get_companyinterestedparties_display(),i.get_priority_display(),i.get_actiontaken_display(),i.responsibility,
-i.due])
+                writer.writerow([i.ip_number, i.analyst, i.get_context_display(),i.get_internal_issues_display(),i.get_quality_needs_display(),i.description,i.get_interestedparties_display(),i.get_companyinterestedparties_display(),i.get_priority_display(),i.get_actiontaken_display(),i.responsibility,
+i.due,i.status])
             else:
-                writer.writerow([i.ip_number, i.analyst, i.status, i.get_context_display(),i.get_external_issues_display(),i.get_quality_needs_display(),i.description,i.get_interestedparties_display(),i.get_companyinterestedparties_display(),i.get_priority_display(),i.get_actiontaken_display(),i.responsibility,
-i.due])
+                writer.writerow([i.ip_number, i.analyst, i.get_context_display(),i.get_external_issues_display(),i.get_quality_needs_display(),i.description,i.get_interestedparties_display(),i.get_companyinterestedparties_display(),i.get_priority_display(),i.get_actiontaken_display(),i.responsibility,
+i.due,i.status])
         
         
         return response
@@ -397,7 +397,7 @@ def approve_ip(request,pk_test):
 
     ############# END IP VIEWS#################################
 
-    ###############   REGULATORY REQUIREMENTS       ###############
+    ###############   REGULATORY REQUIREMENTS      ###############
 
 @login_required(login_url='login')
 def regulatory_requirement(request):
@@ -609,14 +609,14 @@ def risks_report(request):
         response['Content-Disposition'] = 'attachment; filename="RiskRegister.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['Risk. No.', 'DateofAnalysis', 'Assessor', 'Context','ContextDescription','Opp.Description','LKHD','Rating','Ranking','PursuitAction','Mitigation','Responsility','When','Approval','Verification','ResidueLKHD','ResidueSeverity','ResidueRating','ResidueRank'])
+        writer.writerow(['Risk. No.', 'DateofAnalysis', 'Assessor', 'Context','ContextDescription','Risk.Description','LKHD','Rating','Ranking','Mitigation','Responsility','When','Approval','Verification','ResidueLKHD','ResidueSeverity','ResidueRating','ResidueRank'])
 
     
         for i in risks:
-            if i.issue_number.get_context_display() is not None:#if the value is none django throws errors
-                writer.writerow([i.risk_number, i.risk_date,i.assessor,i.issue_number.get_context_display(),i.issue_number.description,i.description,i.residuelikelihood,i.riskrating,i.riskrank,i.risktreatment,i.mitigation,i.responsibility,i.due,i.status,i.verification,i.residuelikelihood,i.residueseverity,i.residueriskrating,i.residueriskrank])
+            #if i.issue_number.get_context_display() is not None:#if the value is none django throws errors
+            writer.writerow([i.risk_number, i.risk_date,i.assessor,i.issue_number.get_context_display(),i.issue_number.description,i.description,i.residuelikelihood,i.riskrating,i.riskrank,i.mitigation,i.responsibility,i.due,i.status,i.verification_status,i.residuelikelihood,i.residueseverity,i.residueriskrating,i.residueriskrank])
             
-                return response
+        return response
         
     else:
         return render(request,'risks_report.html',{'risks':risks,'myFilter':myFilter})
@@ -698,7 +698,7 @@ def opportunity_report(request):
         for i in opportunity:
             writer.writerow([i.risk_number, i.risk_date,i.assessor,i.ip_number.get_context_display(),i.ip_number.description,i.description,i.likelihood,i.severity,i.riskrating,i.riskrank,i.risktreatment,i.mitigation,i.responsibility,i.due,i.status,i.verification])
             
-            return response
+        return response
         
     else:
         return render(request,'opportunity_report.html',{'opportunity':opportunity,'myFilter':myFilter})

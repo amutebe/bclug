@@ -12,8 +12,8 @@ form {
 
 </style>
 <div class="col-md-8 order-md-1">
-          <h4 class="mb-3">Incident Register</h4>
-          <customer class="mb-3">Staff Form</customer>
+          <h4 class="mb-3">Incident</h4>
+          <customer class="mb-3">Analysis</customer>
 <p class="round2"> 
 
 <form action="/incidentRegisterStaff/" method="post">
@@ -29,9 +29,9 @@ form {
 <div class="card card-body">
 					<table class="form-group">
 					<tr> 
+<td ><a class="btn  btn-warning" href="{% url 'home'%}"> Cancel </a></td>
+<td align="right"><input class="btn btn-danger" type="submit" name="Submit"></td>
 
-<td><input class="btn btn-danger" type="submit" name="Submit"></td>
-<td align="right"><a class="btn  btn-warning" href="{% url 'home'%}"> Cancel </a></td>
 					</tr>
           </table>
 </div>

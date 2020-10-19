@@ -40,7 +40,7 @@
 					<th>ID</th>
 					<th>Analyst</th>
 					<th>Created on</th>
-					<th>Status</th>
+				
 					
 					<th>Context</th>
 					<!--<th>Int. Issues</th>
@@ -49,7 +49,7 @@
 					<th>Process Issue</th>
 					<th>Issue Description</th>
 					<th>Other Issues</th>
-									
+						<th>Status</th>				
 					
 					<!--<th>Description</th>
 					<th>Mitigation</th>
@@ -69,7 +69,7 @@
 					<td>{{i.issue_number}}</td>
 					<td>{{i.analyst}}</td>
 					<td>{{i.analysis_date}}</td>
-					<td>{{i.status}}</td>
+				
 					
 					<td>{{i.get_context_display}}</td>
 					<!--<td>{{i.get_internal_issues_display}}</td>
@@ -84,6 +84,7 @@
 					{% endif %}
 
 					<td>{{i.otherIssue}}</td>
+						<td>{{i.status}}</td>
 				
 					<!--<td>{{i.description}}</td>
 

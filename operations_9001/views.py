@@ -18,6 +18,8 @@ from xlrd import open_workbook # http://pypi.python.org/pypi/xlrd
 import os
 import csv
 from .filters import *
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
 
 # Create your views here.
 
@@ -42,6 +44,9 @@ def customer_no():
 
 def emp_perfrev_no():
    return str("Comp-EA-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
+
+def document_no():
+   return str("TEGA-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
 
 
 
@@ -111,7 +116,7 @@ def cali(request):
 @login_required(login_url='login')
 def doc_manager(request):
 
-    form=document_manager()
+    form=document_manager(initial={'document_number': document_no()})
     
 
     
@@ -122,8 +127,9 @@ def doc_manager(request):
         request.POST['date_today']=date.today()
         
            
-        form = document_manager(request.POST)
-        print("doc manager",request.POST)
+        form = document_manager(request.POST,request.FILES)
+        #
+        #print("doc manager",request.FILES)
         
          
             
@@ -132,7 +138,8 @@ def doc_manager(request):
            
             
             form.save()
-           
+
+                      
             return redirect('/')
             
             
@@ -348,6 +355,33 @@ def training_register(request):
         
     context={'form':form}
     return render(request,'trainingregister.html',context)
+
+@login_required(login_url='login')
+def training_register_report(request):
+    
+    trainingreg=mod9001_trainingregister.objects.all() #get all training register in the database 
+    myFilter=trainingRegFilter(request.GET, queryset=trainingreg)
+    trainingreg=myFilter.qs
+    if request.method=="POST":
+        trainingreg_list = mod9001_trainingregister.objects.all()
+        myFilter=trainingRegFilter(request.GET, queryset=trainingreg_list)
+        trainingreg=myFilter.qs
+        
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="Training_Evaluation_Report.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(['TainingNo.', 'TrainingDescription', 'AdditionalDescription', 'AdditionalDescription','TrainingDate','Nature','Trainee','Dept','CompletionDate','Decision','AssignedTo','Timeline'])
+
+    
+        for i in trainingreg:
+            
+            writer.writerow([i.training_number, i.plan_number.description,i.plan_number.details,  i.train_date,i.nature,i.trainee,i.tainee.dept,i.completion_date,i.get_decision_display(),i.reasonother,i.get_reasond_display,i.actionplan,i.actionplanother,i.assigned,i.timeline])
+        return response
+        
+    else:
+        return render(request,'Training_Evaluation_Report.html',{'trainingreg':trainingreg,'myFilter':myFilter})
+
 
 
 #######################TRAINING PLANNER ###############################
@@ -691,9 +725,10 @@ def providerassessment(request):
                             
     if request.method=="POST":
         request.POST=request.POST.copy()
-        request.POST['entered_by'] = request.user
+        request.POST['entered_by']=request.user
         request.POST['date_today']=date.today()
-        #request.POST['status'] = 5
+        request.POST['status'] = 1
+#        #print("TEXT",request.POST)
         
         
         form=providerassessments(request.POST)
@@ -712,6 +747,77 @@ def providerassessment(request):
         
     context={'form':form,'providers':providers}
     return render(request,'providerassessment.html',context)
+
+
+@login_required(login_url='login')
+def providerassessments_due(request):
+    carExpire7days=mod9001_providerassessment.objects.filter(status=1).filter(~Q(qmsstatus=1))
+    #carExpire7days=mod9001_providerassessment.objects.filter(status=1)
+    thislist = []
+    for i in carExpire7days:
+        print("printing",i)
+        w=i.due
+        t=w.strftime('%m/%d/%Y')
+        if CARnumbers_7days_expire(t)<0:
+            thislist.append(i.emp_perfrev_no)
+    thisdict={}
+    i=0
+    #creat a dictionary for all car numbers for display
+    for x in thislist:
+        while i<len(thislist):
+            y = str(i)
+            thisdict["emp_perfrev_no"+y] = thislist[i]
+            i+=1
+
+        
+    return render(request,'providerassessments_due.html',{'thisdict':thisdict})
+
+
+
+
+
+@allowed_users(allowed_roles=['supervisor'])
+def Verify_providerassessments(request,pk_test):
+    open_car=mod9001_providerassessment.objects.get(emp_perfrev_no=pk_test)
+    form=Verifyeproviderassessments(instance=open_car)
+    if request.method=="POST":
+            #print("request.POST['qmsstatus']",request.POST['qmsstatus'])
+            
+            if request.POST['qmsstatus'] =="Rejected":
+                request.POST=request.POST.copy()
+                request.POST['status'] = 1 #requires approval first before next verification
+                request.POST['verification']=2 #default verifiaction to Not effective
+                print("request", request.POST)
+            
+            elif request.POST['qmsstatus'] == '1':
+                #print("request.POST['qmsstatus']",request.POST['qmsstatus'])
+                request.POST=request.POST.copy()
+                request.POST['status'] = 1 # keep status approved
+            
+            else:
+                request.POST=request.POST.copy()
+
+
+
+
+
+
+            form=Verifyeproviderassessments(request.POST, instance=open_car)
+            if form.is_valid():
+                form.save()
+                return redirect('/providerassessments_due/')
+
+    context={'form':form}  
+
+
+    return render(request,'providerassesment_verify.html',context)
+
+
+@login_required(login_url='login')
+def providerassesment_7daysToExpiryview(request,pk_test):
+
+    products=mod9001_providerassessment.objects.filter(emp_perfrev_no=pk_test)
+    return render(request,'providerassesment_view_7_days_To_expiry.html',{'products':products})
 
 
 
