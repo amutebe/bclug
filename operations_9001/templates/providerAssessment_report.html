@@ -1,0 +1,160 @@
+{%  extends 'accounts/base.html' %}
+
+{% block content %}
+  	
+		<div class="col-md-40">
+
+			<div class="col-md-40">
+            
+		
+				<div class="card card-body">
+ <h4 class="mb-3">Provider Assessment:</h4>
+ <p class="round2"> 
+
+
+<form method="get">
+                     {% csrf_token %}
+                    
+<table  class="tableizer-table" align="left">                
+<thead><tr class="tableizer-firstrow">
+
+
+<th>Summary</th>
+<th>Start Date</th>
+<th>End Date</th>
+<th>Provider</th>
+<th>Status</th>
+<th></th>
+</tr></thead>
+
+
+<tbody><tr>
+<td>{{myFilter.form.assesment_date}}</td>
+<td>{{myFilter.form.start}}</td>
+<td>{{myFilter.form.end}}</td>
+<td>{{myFilter.form.Provider}}</td>
+<td>{{myFilter.form.qmsstatus}}</td>
+<td><button class="btn btn-info btn-sm" type="submit">Search</button></td>
+</tr></tbody>
+</table>
+ </form>
+<form method="post">{% csrf_token %} 
+                    
+<table  class="tableizer-table" align="right">                
+<tbody><tr><td><button class="btn btn-success btn-sm" type="submit">Export to excel</button></td>
+</tr></tbody>
+</table>
+ </form>		
+		 
+		  
+				</div> 
+				</div>
+                </div>
+	
+                
+					<table class="tableizer-table">
+						<thead><tr class="tableizer-firstrow">
+					<th>Performance Review No.</th>
+					<th>Assesment Date</th>
+					<th>ExternalProvider</th>
+					
+					
+					<th>Requestor</th>
+					<th>Assessment Rating</th>
+					<th>Problem/Issue</th>
+					<th>ImprovementPlan</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+					<th>Timeline</th>
+                    <th>Status</th>
+
+                
+
+
+				
+					
+				</tr></thead><tbody>
+				
+				{% for i in providerassessment %}
+				
+					<tr>
+					<td>{{i.emp_perfrev_no}}</td>
+					<td>{{i.start}}</td>
+					<td>{{i.get_Provider_display}}</td>
+				
+					
+					<td>{{i.appraise}}</td>
+				
+					<td>{{i.rank}}</td>
+					<td>{{i.get_nonconformity_display}}</td>
+					<td colspan="11">
+                                   
+                    <b>1.Job Knowledge:</b>{{i.get_jobknowledg_display}},
+                    {% if i.get_flexibility_display != empty %}
+                  <b>2.Adaptability:</b>  {{i.get_flexibility_display}}
+                    {%else%}
+                    {%endif%} 
+                    {% if i.get_problemsolving_display != empty %}
+                    <b>3.Problem solving:</b>{{i.get_problemsolving_display}}
+                    {%else%}
+                    {%endif%}
+                    {% if i.get_Initiativenes_display != empty %}  
+                    <b>4.Initiativeness:</b>{{i.get_Initiativenes_display}}
+                    {%else%}
+                    {%endif%}
+                    {% if i.get_plaing_display != empty %} 
+                    <b>5. Planning & Org.:</b>{{i.get_plaing_display}}
+                    {%else%}
+                    {%endif%}
+                    {% if i.get_workquality_display != empty %} 
+                    <b>6.Work quality:</b>{{i.get_workquality_display}}
+                    {%else%}
+                    {%endif%}
+                    {% if i.get_interskills_display != empty %} 
+                    <b>7.Interpersonal skills:</b>{{i.get_interskills_display}}
+                    {%else%}
+                    {%endif%}
+                    {% if i.get_communication_display != empty %} 
+                    <b>8.Communication skills:</b>{{i.get_communication_display}}
+                    {%else%}
+                    {%endif%}
+                    {% if i.get_supervisionmagt_display != empty %} 
+                    <b>9.Supervision & Mgt:</b>{{i.get_supervisionmagt_display}}
+                    {%else%}
+                    {%endif%}
+                    {% if i.get_availabilit_display != empty %} 
+                    <b>10. Availability:</b>{{i.get_availabilit_display}}
+                    {%else%}
+                    {%endif%}
+                    {% if i.get_professional_display != empty %} 
+                    <b>11.Professional contribution:</b>{{i.get_professional_display}}
+                    {%else%}
+                    {%endif%}
+                    
+                    
+                    </td>
+					<td>{{i.due}}</td>
+                    <td>{{i.qmsstatus}}</td>
+
+				
+					</tr>
+                    </tbody>
+
+				{%endfor%}
+						
+					</table>
+                  
+         
+			
+		
+		
+
+{% endblock content %}

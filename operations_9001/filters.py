@@ -30,6 +30,24 @@ class planning_qmsFilter(django_filters.FilterSet):
         model=mod9001_qmsplanner
         fields=['status','qmsstatus']
         #widgets={'end_date':DateInput()}
+######################## PROVIDER ASSESSSMENT ##################################
+class providerAssessmentFilter(django_filters.FilterSet):
+    assesment_date=DateRangeFilter(field_name="start",label='Summary')
+    start=DateFilter(field_name="start",lookup_expr='gte',label='Start Date',widget=DateInput())
+    end=DateFilter(field_name="start",lookup_expr='lte',label='End Date',widget=DateInput())
+ 
+
+
+    class Meta:
+        model=mod9001_providerassessment
+        fields=['Provider','qmsstatus']
+        #widgets={'end_date':DateInput()}
+ ###################DOCUMENT MANAGER###########################
+class documentmanagerFilter(django_filters.FilterSet):
+    class Meta:
+        model=mod9001_document_manager
+        fields=['doc_name','doc_type','standard','status']
+        #widgets={'end_date':DateInput()}
     
 ########################TRAINING PLANNER#######################
 class planning_trainingplannerFilter(django_filters.FilterSet):

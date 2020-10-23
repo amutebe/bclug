@@ -152,6 +152,32 @@ def doc_manager(request):
     context={'form':form}
     return render(request,'document_manager.html',context)
 
+@login_required(login_url='login')
+def documentmanager_report(request):
+    
+    docmngr=mod9001_document_manager.objects.all() #get all qms planner in database 
+    myFilter=documentmanagerFilter(request.GET, queryset=docmngr)
+    docmngr=myFilter.qs
+    if request.method=="POST":
+        docmngr_list = mod9001_document_manager.objects.all()
+        myFilter=documentmanagerFilter(request.GET, queryset=docmngr_list)
+        docmngr=myFilter.qs
+        
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="Document_register.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(['DocumentNo.', 'ReferenceNo', 'Name', 'Type','Version','Format','Origin','Standard','StdClause','Location','Owner','Rentention','Status'])
+
+    
+        for i in docmngr:
+            
+            writer.writerow([i.document_number, i.document_id,i.doc_name,  i.doc_type,i.version,i.format,i.origin,i.standard,i.clause,i.location,i.owner,i.retention,i.status])
+        return response
+        
+    else:
+        return render(request,'documentmanager_report.html',{'docmngr':docmngr,'myFilter':myFilter})
+
 
 
 @login_required(login_url='login')
@@ -748,6 +774,37 @@ def providerassessment(request):
     context={'form':form,'providers':providers}
     return render(request,'providerassessment.html',context)
 
+@login_required(login_url='login')
+def providerAssessment_report(request):
+    
+    providerassessment=mod9001_providerassessment.objects.all() #get all qms planner in database 
+    myFilter=providerAssessmentFilter(request.GET, queryset=providerassessment)
+    providerassessment=myFilter.qs
+    if request.method=="POST":
+        providerassessment_list = mod9001_providerassessment.objects.all()
+        myFilter=providerAssessmentFilter(request.GET, queryset=providerassessment_list)
+        providerassessment=myFilter.qs
+        
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="ProviderAssessment.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(['Performance Review No.', 'Date', 'External Provider', 'Requestor','AssessmentRating','Problem/Issue','ImprovementPlan','Timeline','Status'])
+
+    
+        for i in providerassessment:
+            
+            writer.writerow([i.emp_perfrev_no, i.start,i.Provider,  i.appraise,i.rank,i.nonconformity,i.skill,i.due,i.qmsstatus])
+        return response
+        
+    else:
+        return render(request,'providerAssessment_report.html',{'providerassessment':providerassessment,'myFilter':myFilter})
+
+
+
+
+
+
 
 @login_required(login_url='login')
 def providerassessments_due(request):
@@ -755,7 +812,7 @@ def providerassessments_due(request):
     #carExpire7days=mod9001_providerassessment.objects.filter(status=1)
     thislist = []
     for i in carExpire7days:
-        print("printing",i)
+        #print("printing",i)
         w=i.due
         t=w.strftime('%m/%d/%Y')
         if CARnumbers_7days_expire(t)<0:

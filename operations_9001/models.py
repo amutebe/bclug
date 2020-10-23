@@ -86,7 +86,7 @@ class mod9001_document_manager(models.Model):
     document_id =models.TextField("Document ID:",null=True,blank=True)
     doc_name =models.TextField("Document Name:",null=True,blank=True)
 
-    clause =models.TextField("Document ID:",null=True,blank=True)
+    clause =models.TextField("Standard Clause:",null=True,blank=True)
     format= models.ForeignKey('document_format',on_delete=models.CASCADE,verbose_name='Format:',related_name='format')
     version =models.TextField("Version No:",null=True,blank=True)
     location= models.ForeignKey('document_location',on_delete=models.CASCADE,verbose_name='Location:',related_name='location')
@@ -406,7 +406,7 @@ class mod9001_providerassessment(models.Model):
     provider=(('1','External provider'),('2','Internal provider'))
     Provider=models.CharField("Provider Type",max_length=200, choices=provider)
     organisation=models.ForeignKey(mod9001_supplieregistration, on_delete=models.SET_NULL,verbose_name='External Provider Organisation:',related_name='suppliers',null=True,blank=True)
-    assesment_date=models.DateTimeField("Last Assessment Date:",null=True)
+    assesment_date=models.DateField("Last Assessment Date:",null=True)
     start=models.DateField("Start Date:")
     end=models.DateField("End Date:")
     appraise= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Appraise:',related_name='appraise')
@@ -429,8 +429,7 @@ class mod9001_providerassessment(models.Model):
     comment=models.TextField("Comment",null=True, blank=True)
     nonconformity=(('1','Support/Resource'),('2','Planning'),('3','IITS(Information, Instructions, Training, Supervision)'),('4','Performance monitoring'),('5','Evaluation'),('6','Risk/Vulnerability Assessment'),('7','Leadership'),('8','Other'))
     nonconformity=models.CharField("Reason: cause of nonconformity",max_length=200, choices=nonconformity,null=True,blank=True)
-    nonconfdetails=models.TextField("Additional description",null=True, blank=True)
-
+ 
     jobknowledg=(('1','Technical/Professional skills required'),('2','Application'),('3','Support and training to others'))
     jobknowledg = MultiSelectField('1. Job Knowledge',choices=jobknowledg,null=True,blank=True)
 
@@ -463,15 +462,16 @@ class mod9001_providerassessment(models.Model):
 
     professional=(('1','Attendance of Professional Meetings'),('2','Provision of Professional education/talks'))
     professional = MultiSelectField('11. Professional Contribution',choices=professional,null=True,blank=True)
+    nonconfdetails=models.TextField("Additional description",null=True, blank=True)
 
     costs=(('1','Financial'),('2','Operational'),('3','Legal/Regulatory'),('4','Brand/Reputation'))
-    cost = MultiSelectField('Incident Cost',choices=costs,null=True,blank=True)
+    cost = MultiSelectField('Cost',choices=costs,null=True,blank=True)
     currency=(('1','UGX'),('2','USD'),('3','Kshs'),('4','GBP'))
     currency=models.CharField(verbose_name='Currency:',max_length=50, null=True,blank=True,choices=currency)
     status=models.ForeignKey('issues_9001.approval_status', on_delete=models.SET_NULL,verbose_name='Status:',null=True,blank=True)
  
     
-    costdescription=models.IntegerField("Incident Cost Amount:",null=True,blank=True)
+    costdescription=models.IntegerField("Cost Amount:",null=True,blank=True)
 
     lesson=models.TextField("Lesson learnt:",null=True, blank=True)
     verification=models.ForeignKey('issues_9001.RISK_OPPverification', on_delete=models.SET_NULL,verbose_name='Verification:',null=True,blank=True)

@@ -138,11 +138,12 @@ class incident_RegisterStaff(ModelForm):
         widgets={'date':DateInput(),'completion':DateInput(),'date_posted':DateInput(), 'costdescription':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'status':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'lesson':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'description':forms.Textarea(attrs={'rows': 2, 'cols': 40})}
 
 class providerassessments(ModelForm):
+
      #cost = MultiSelectFormField(choices=mod9001_incidentregisterStaff.costs)
       
-     class Meta:
+    class Meta:
         model = mod9001_providerassessment 
-        exclude = ['lesson','entered_by','date_today','verification','verification_status','verification_failed','qmsstatus','scheduled','completion']
+        exclude = ['cost','currency','costdescription','lesson','entered_by','date_today','verification','verification_status','verification_failed','qmsstatus','scheduled','completion']
 
             
  
@@ -151,19 +152,29 @@ class providerassessments(ModelForm):
         #fields = ['emp_perfrev_no','planner_number','date','Provider','organisation','assesment_date','start','end','appraise']
        
         
-        widgets={'nonconfdetails':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'due':DateInput(),'comment':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'purpose':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'date':DateInput(),'assesment_date':DateInput(),'start':DateInput(), 'end':DateInput(),'jobknowledge':HorizontalRadioSelect(),'adaptability':HorizontalRadioSelect(),'problemsolve':HorizontalRadioSelect(),'initiativeness':HorizontalRadioSelect(),'planning':HorizontalRadioSelect(),'work':HorizontalRadioSelect(),'Communication':HorizontalRadioSelect(),'skills':HorizontalRadioSelect(),'supervision':HorizontalRadioSelect(),'availability':HorizontalRadioSelect(),'professionalism':HorizontalRadioSelect()}
-        def clean(self):
-            cleaned_data = super().clean()
-            start_date = cleaned_data.get("start")
-            end_date = cleaned_data.get("end")
-            if end_date < start_date:
-                raise forms.ValidationError("End date should be greater than start date.")
+        widgets={'status':forms.HiddenInput,'nonconfdetails':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'due':DateInput(),'comment':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'purpose':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'date':DateInput(),'assesment_date':DateInput(),'start':DateInput(), 'end':DateInput(),'jobknowledge':HorizontalRadioSelect(),'adaptability':HorizontalRadioSelect(),'problemsolve':HorizontalRadioSelect(),'initiativeness':HorizontalRadioSelect(),'planning':HorizontalRadioSelect(),'work':HorizontalRadioSelect(),'Communication':HorizontalRadioSelect(),'skills':HorizontalRadioSelect(),'supervision':HorizontalRadioSelect(),'availability':HorizontalRadioSelect(),'professionalism':HorizontalRadioSelect()}
+    def clean(self):
+        cleaned_data = super().clean()
+        last_date = cleaned_data.get("assesment_date")
+        start_date = cleaned_data.get("start")
+        end_date = cleaned_data.get("end")
+        due_date = cleaned_data.get("due")
+        if end_date < start_date:
+            raise forms.ValidationError("End date should be greater than start date.")
+        elif last_date>start_date:
+            raise forms.ValidationError("Last assessment date should not be greater than start date.")
+        elif due_date<end_date:
+            raise forms.ValidationError("When date should not be less than end date.")
+
+        
+
+
 
 class Verifyeproviderassessments(ModelForm):
     class Meta:
         model = mod9001_providerassessment 
         #fields = '__all__'
-        fields=['verification','verification_status','verification_failed','qmsstatus','scheduled','completion']
+        fields=['cost','currency','costdescription','verification','verification_status','verification_failed','qmsstatus','scheduled','completion']
         widgets={'completion':DateInput(),'scheduled':DateInput()}        
 
 

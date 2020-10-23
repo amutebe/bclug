@@ -7,6 +7,8 @@ function myFunction() {
 </script>
 <script>
 
+
+
 //TRAINING REGISTER
 $("#id_decision").change(function() {
 			if ($("#id_decision option:selected").text()=="Not Effective") {
@@ -1942,7 +1944,8 @@ $(document).ready(function()
 // sript for RISK/OPP residue risk rating
 $(document).ready(function()
 {
-    $('#id_residuelikelihood').change(function()
+  $('#id_status').attr('readonly', true);
+	$('#id_residuelikelihood').change(function()
 	{
         //alert("The text has been changed.");
 		$('#id_residueriskrating').val($('#id_residuelikelihood').val() * $('#id_residueseverity').val());

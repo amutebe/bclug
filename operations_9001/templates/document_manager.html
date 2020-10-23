@@ -22,153 +22,7 @@ form {
 <table border="0">            
 {{form}}
 </table>
-<!--               
-<div class="row">
-    <div class="col">
-      <label for="usr">Document No: </label><br>
 
-{{form.document_number}}
-<font color="red">{{ form.errors.document_number}}</font>
-
-      
-  
-</div>
-
-
-<div class="col">
-      <label for="usr">Document Date: </label><br>
-
-{{form.document_date}}
-<font color="red">{{ form.errors.document_date}}</font>
-
-      
-  
-</div>
-   
-
-   
-<div class="col">
-<label for="usr">Standard:</label> <br>
- 
-    {{form.standard}}
-       
-        <font color="red">{{ form.errors.standard}}</font>
-      
-       
-</div>
-    
-
-
-
-<div class="col">
-      <label for="usr">Origin: </label><br> 
-     {{form.origin}}
- <font color="red">{{ form.errors.origin}}</font>
-      
-</div>
-
-     <div class="col" id="context">
-     
-      <label for="context">Document Type: </label><br>  
-        {{form.doc_type}}  
- <font color="red">{{form.errors.doc_type}}</font>
-</div>
-    
-</div>
-
-
-
-
-<br>
-<div class="form-group" id="internaldiv">
-    
-    <label for="internal">Reference  Number:</label>
-<br>
-
-<input type="text" class="form-control" id="document_id"  name="document_id"{{form.document_id}}
-  <font color="red">{{form.errors.document_id}}</font>
-</div>
-
-<div class="form-group" id="doc_namediv">
-    
-    <label for="doc_name">Document Name:</label>
-<br>
-
-<input type="text" class="form-control" id="document_id"  name="document_id"{{form.doc_name}}
-  <font color="red">{{form.errors.doc_name}}</font>
-</div>
-
-<div class="form-group" id="externaldiv">
-    <label for="external">ISO Standard Clause - Optional: </label>
-	<br>
-<input type="text" class="form-control" id="clause"  name="clause"{{form.clause}}
-  <font color="red">{{form.errors.clause}}</font>
-
-</div>
-
-<div class="form-group" id="processdiv">
-    <label for="process">Document Format:</label>
-	<br>
-{{form.format}}
-  <font color="red">{{form.errors.format}}</font>
-
-</div>
-
-<div class="form-group" id="process_StrengthWeaknessiv">
-    <label for="process_StrengthWeakness">Document Version:</label>
-	<br>
-<input type="text" class="form-control" id="version"  name="version"{{form.version}}
-  <font color="red">{{form.errors.version}}</font>
-
-</div>
-
-
-<div class="form-group" id="process_StrengthWeaknessiv">
-    <label for="process_StrengthWeakness">Document Location:</label>
-	<br>
-{{form.location}}
-  <font color="red">{{form.errors.location}}</font>
-
-</div>
-
-<div class="row">
-    <div class="col">
-<div class="form-group" id="process_OpportunitiesThreatsdiv">
-    <label for="process_OpportunitiesThreats">Owner:</label>
-	<br>
-{{form.owner}}
-  <font color="red">{{form.errors.owner}}</font>
-
-</div>
-</div>
- <div class="col">
-
-<div class="form-group" id="otherIssue">
-    <label for="otherIssue">Retention Time (Years):</label>
-    <br>
-     {{form.retention}}
-    <font color="red">{{form.errors.retention}}</font>
-</div>
-</div>
- <div class="col"> 
-
-<div class="form-group" id="otherIssue">
-    <label for="otherIssue">Status:</label>
-    <br>
-     {{form.status}}
-    <font color="red">{{form.errors.status}}</font>
-</div> 
-</div>
- <div class="col">
-<div class="form-group" id="otherIssue">
-    <label for="otherIssue">Upload:</label>
-    <br>
-     {{form.document}}
-    <font color="red">{{form.errors.document}}</font>
-</div> 
-</div>
-</div>
--->
 <br>
 <p class="round2"> 
 <div class="card card-body">
@@ -184,10 +38,11 @@ form {
 
 
 </form>
+<!-- print message for successfull upload
   {% if uploaded_file_url %}
     <p>File uploaded at: <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></p>
   {% endif %}
-
+-->
 
 {% endblock %} 
 

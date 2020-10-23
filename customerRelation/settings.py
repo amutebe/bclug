@@ -37,12 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+  
     'accounts',
     'excel_app',
     'django_filters',
     'issues_9001',
     'operations_9001',
     'multiselectfield',
+    
 ]
 
 MIDDLEWARE = [

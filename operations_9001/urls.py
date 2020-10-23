@@ -6,6 +6,7 @@ from django.urls import path, include
 urlpatterns = [
 path('dateValidation/', views.dateValidation, name='dateValidation'),
 path('doc_manager/', views.doc_manager, name='doc_manager'),
+path('documentmanager_report/',views.documentmanager_report,name="documentmanager_report"),
 path('calibration/', views.cali, name='calibration'),
 path('maintenance/', views.maintenance, name='maintenance'),
 path('qms_planner/', views.qms_planner, name='qms_planner'),
@@ -36,6 +37,7 @@ path('ajax/load_process/', views.load_process, name='ajax_load_process'),
 path('customerRegister/', views.customerRegister, name='customerRegister'),
 path('incidentRegisterStaff/', views.incidentRegisterStaff, name='incidentRegisterStaff'),
 path('providerassessment/', views.providerassessment, name='providerassessment'),
+path('providerAssessment_report/', views.providerAssessment_report, name='providerAssessment_report'),
 
 #path('qms_pending/', views.qms_pending, name='qms_pending'),
 path('approve_qms/<str:pk_test>/',views.approve_qms,name="approve_qms"),
