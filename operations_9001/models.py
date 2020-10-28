@@ -359,7 +359,7 @@ class mod9001_incidentregisterStaff(models.Model):
     escalated = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True,verbose_name='Responsible:', related_name='escalated',on_delete=models.SET_NULL)
     description=models.TextField("Additional Description:",null=True, blank=True)
     assigned = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, verbose_name='Assigned:',related_name='asigned',on_delete=models.SET_NULL)
-    #date=models.DateField("Date:",default=datetime.now)
+    date=models.DateField("Date:",default=datetime.now)
     completion=models.DateField("Completion Date:",null=True,blank=True)
     costs=(('1','Financial'),('2','Operational'),('3','Legal/Regulatory'),('4','Brand/Reputation'))
     #MY_CHOICES = (('item_key1', 'Item title 1.1'),('item_key2', 'Item title 1.2'),('item_key3', 'Item title 1.3'),('item_key4', 'Item title 1.4'),('item_key5', 'Item title 1.5'))
