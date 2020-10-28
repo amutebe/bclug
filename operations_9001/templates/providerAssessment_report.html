@@ -54,14 +54,14 @@
                 
 					<table class="tableizer-table">
 						<thead><tr class="tableizer-firstrow">
-					<th>Performance Review No.</th>
-					<th>Assesment Date</th>
-					<th>ExternalProvider</th>
+					<th>Review No.</th>
+					<th>Date</th>
+					<th>Provider</th>
+                    <th>Organisation</th>
 					
 					
-					<th>Requestor</th>
-					<th>Assessment Rating</th>
-					<th>Problem/Issue</th>
+					<th>Appraisee</th>
+					<th>Rating</th>
 					<th>ImprovementPlan</th>
                     <th></th>
                     <th></th>
@@ -73,6 +73,8 @@
                     <th></th>
                     <th></th>
                     <th></th>
+                    <th>Addit.Details</th>
+                    <th>AssignedTo</th>
 					<th>Timeline</th>
                     <th>Status</th>
 
@@ -89,58 +91,62 @@
 					<td>{{i.emp_perfrev_no}}</td>
 					<td>{{i.start}}</td>
 					<td>{{i.get_Provider_display}}</td>
+                    <td>{{i.organisation}}</td>
 				
 					
 					<td>{{i.appraise}}</td>
 				
 					<td>{{i.rank}}</td>
-					<td>{{i.get_nonconformity_display}}</td>
+					
 					<td colspan="11">
-                                   
-                    <b>1.Job Knowledge:</b>{{i.get_jobknowledg_display}},
-                    {% if i.get_flexibility_display != empty %}
-                  <b>2.Adaptability:</b>  {{i.get_flexibility_display}}
-                    {%else%}
+                     {% if i.get_jobknowledg_display  %}
+                 <b>Job Knowledge:</b>{{i.get_jobknowledg_display}} 
+                    {%endif%}               
+                    {% if i.get_flexibility_display %}
+                  <b> Adaptability:</b>  {{i.get_flexibility_display}}
+                    
                     {%endif%} 
-                    {% if i.get_problemsolving_display != empty %}
-                    <b>3.Problem solving:</b>{{i.get_problemsolving_display}}
-                    {%else%}
+                    {% if i.get_problemsolving_display %}
+                    <b> Problem solving:</b>{{i.get_problemsolving_display}}
+                    
                     {%endif%}
-                    {% if i.get_Initiativenes_display != empty %}  
-                    <b>4.Initiativeness:</b>{{i.get_Initiativenes_display}}
-                    {%else%}
+                    {% if i.get_Initiativenes_display %}  
+                    <b> Initiativeness:</b>{{i.get_Initiativenes_display}}
+                    
                     {%endif%}
-                    {% if i.get_plaing_display != empty %} 
-                    <b>5. Planning & Org.:</b>{{i.get_plaing_display}}
-                    {%else%}
+                    {% if i.get_planing_display %} 
+                    <b> Planning & Org.:</b>{{i.get_planing_display}}
+                    
                     {%endif%}
-                    {% if i.get_workquality_display != empty %} 
-                    <b>6.Work quality:</b>{{i.get_workquality_display}}
-                    {%else%}
+                    {% if i.get_workquality_display %} 
+                    <b> Work quality:</b>{{i.get_workquality_display}}
+                    
                     {%endif%}
-                    {% if i.get_interskills_display != empty %} 
-                    <b>7.Interpersonal skills:</b>{{i.get_interskills_display}}
-                    {%else%}
+                    {% if i.get_interskills_display %} 
+                    <b> Interpersonal skills:</b>{{i.get_interskills_display}}
+                    
                     {%endif%}
-                    {% if i.get_communication_display != empty %} 
-                    <b>8.Communication skills:</b>{{i.get_communication_display}}
-                    {%else%}
+                    {% if i.get_communication_display %} 
+                    <b> Communication skills:</b>{{i.get_communication_display}}
+                    
                     {%endif%}
-                    {% if i.get_supervisionmagt_display != empty %} 
-                    <b>9.Supervision & Mgt:</b>{{i.get_supervisionmagt_display}}
-                    {%else%}
+                    {% if i.get_supervisionmagt_display %} 
+                    <b> Supervision & Mgt:</b>{{i.get_supervisionmagt_display}}
+                    
                     {%endif%}
-                    {% if i.get_availabilit_display != empty %} 
-                    <b>10. Availability:</b>{{i.get_availabilit_display}}
-                    {%else%}
+                    {% if i.get_availabilit_display %} 
+                    <b> Availability:</b>{{i.get_availabilit_display}}
+                    
                     {%endif%}
-                    {% if i.get_professional_display != empty %} 
-                    <b>11.Professional contribution:</b>{{i.get_professional_display}}
-                    {%else%}
+                    {% if i.get_professional_display %} 
+                    <b> Professional contribution:</b>{{i.get_professional_display}}
+                    
                     {%endif%}
                     
                     
                     </td>
+                    	<td>{{i.nonconfdetails}}</td>
+                    <td>{{i.assigned}}</td>
 					<td>{{i.due}}</td>
                     <td>{{i.qmsstatus}}</td>
 

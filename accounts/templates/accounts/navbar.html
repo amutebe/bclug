@@ -90,17 +90,18 @@
                                 <a data-icon="&#xf016">Incident</a>
                         <ul>
                                 <li><a data-icon="&#xf015" href="{% url 'incidentRegister'%}">Log</a>
-                        <ul>
+                       
                       
-                        </ul>
-                        <a data-icon="&#xf015" href="{% url 'incidentRegisterStaff'%}">Analysis</a>
-
+                  
+                       <li> <a data-icon="&#xf015" href="{% url 'incidentRegisterStaff'%}">Analysis</a></li>
+                        <li><a data-icon="&#xf015"  href="{% url 'incidentregister_due'%}">Verify</a></li>
+</ul>
                           </li>    
-                        </ul>
+                        
                         </li>
                         <li><a data-icon="&#xf1d9">Training Evaluation</a>
                         <ul>
-                        <li><a data-icon="&#xf015" href="{% url 'training_register'%}">Create</a></li>
+                        <li><a data-icon="&#xf015" href="{% url 'trainingReg'%}">Create</a></li>
                         </ul>
                         </li>
                      
@@ -146,6 +147,9 @@
 
                 <li><a data-icon="&#xf180" href="#">Reports</a>
                     <ul>
+                    <li>
+                    <a data-icon="&#xf02d" href="{% url 'documentmanager_report'%}">Document Register</a>
+                    </li>
                         <li><a data-icon="&#xf03c">Context</a>
                         <ul>
                         
@@ -158,8 +162,7 @@
                         </li>
                         <li><a data-icon="&#xf03c">Planning</a>
                         <ul>
-                        
-                       
+                                              
                         <li><a data-icon="&#xf00e" href="{% url 'qms_report'%}">QMS Planner</a></li>
                         <li><a data-icon="&#xf040" href="{% url 'trainingplan_report'%}">Training Plan</a></li>
                         <li><a data-icon="&#xf1db" href="{% url 'opportunity_report'%}">Opportunity Register</a></li>
@@ -179,9 +182,7 @@
                         </li>
                         
                     </ul>
-                    <ul>
-                     <li><a data-icon="&#xf02d" href="{% url 'documentmanager_report'%}">Document Register</a></li>
-                    </ul>
+     
                 </li>
                
                 <li><a data-icon="&#xf02d" href="#">Documents managment</a>

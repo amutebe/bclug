@@ -20,6 +20,7 @@ import csv
 from .filters import *
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
+from django.http import HttpResponse, Http404
 
 # Create your views here.
 
@@ -178,6 +179,11 @@ def documentmanager_report(request):
     else:
         return render(request,'documentmanager_report.html',{'docmngr':docmngr,'myFilter':myFilter})
 
+def download(request, id):
+    obj = your_model_name.objects.get(id=id)
+    filename = obj.model_attribute_name.path
+    response = FileResponse(open(filename, 'rb'))
+    return response
 
 
 @login_required(login_url='login')
@@ -355,8 +361,8 @@ def verify_qms(request,pk_test):
 
 #######################TRAINING REGISTER###############################
 @login_required(login_url='login')
-def training_register(request):
-              
+def trainingReg(request):
+    print("PRINTING PRINTING")        
     form=trainingregister(initial={'training_number': Train_no()})
                           
     if request.method=="POST":
@@ -721,6 +727,7 @@ def incidentRegisterStaff(request):
         request.POST=request.POST.copy()
         request.POST['entered_by'] = request.user
         request.POST['date_today']=date.today()
+        request.POST['status'] = 1
         #request.POST['status'] = 5
         
         form=incident_RegisterStaff(request.POST)
@@ -739,6 +746,77 @@ def incidentRegisterStaff(request):
         
     context={'form':form}
     return render(request,'incidentRegisterStaff.html',context)
+
+@login_required(login_url='login')
+def incidentregister_due(request):
+    carExpire7days=mod9001_incidentregisterStaff.objects.filter(status=1).filter(~Q(qmsstatus=1))
+    #carExpire7days=mod9001_providerassessment.objects.filter(status=1)
+    thislist = []
+    for i in carExpire7days:
+        #print("printing",i)
+        w=i.due
+        t=w.strftime('%m/%d/%Y')
+        if CARnumbers_7days_expire(t)<0:
+            thislist.append(i.incident_number)
+    thisdict={}
+    i=0
+    #creat a dictionary for all car numbers for display
+    for x in thislist:
+        while i<len(thislist):
+            y = str(i)
+            thisdict["incident_number"+y] = thislist[i]
+            i+=1
+
+        
+    return render(request,'incidentregister_due.html',{'thisdict':thisdict})
+
+
+
+
+
+@allowed_users(allowed_roles=['supervisor'])
+def Verify_incidentregister(request,pk_test):
+    open_car=mod9001_incidentregisterStaff.objects.get(incident_number=pk_test)
+    form=Verifyincidentregister(instance=open_car)
+    if request.method=="POST":
+            #print("request.POST['qmsstatus']",request.POST['qmsstatus'])
+            
+            if request.POST['qmsstatus'] =="Rejected":
+                request.POST=request.POST.copy()
+                request.POST['status'] = 1 #requires approval first before next verification
+                request.POST['verification']=2 #default verifiaction to Not effective
+                print("request", request.POST)
+            
+            elif request.POST['qmsstatus'] == '1':
+                #print("request.POST['qmsstatus']",request.POST['qmsstatus'])
+                request.POST=request.POST.copy()
+                request.POST['status'] = 1 # keep status approved
+            
+            else:
+                request.POST=request.POST.copy()
+
+
+
+
+
+
+            form=Verifyincidentregister(request.POST, instance=open_car)
+            if form.is_valid():
+                form.save()
+                return redirect('/incidentregister_due/')
+
+    context={'form':form}  
+
+
+    return render(request,'incidentregister_verify.html',context)
+
+
+@login_required(login_url='login')
+def incidentregister_7daysToExpiryview(request,pk_test):
+
+    products=mod9001_incidentregisterStaff.objects.filter(incident_number=pk_test)
+    return render(request,'incidentregister_view_7_days_To_expiry.html',{'products':products})
+
 
 
 
@@ -789,12 +867,75 @@ def providerAssessment_report(request):
         response['Content-Disposition'] = 'attachment; filename="ProviderAssessment.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['Performance Review No.', 'Date', 'External Provider', 'Requestor','AssessmentRating','Problem/Issue','ImprovementPlan','Timeline','Status'])
+       
+        writer.writerow(['Review No.', 'Date', 'Provider', 'Organisation','Appraisee','Rating','ImprovementPlan','Addit.Details','AssignedTo','Timeline','Status'])
 
     
         for i in providerassessment:
+            #def improvementPlan():
+            #    if i.jobknowledg:
+            #        return "Organisation:"
+            #   else:
+            #        return " "
+            def jobknowledg():
+                if i.jobknowledg:
+                    return " Job Knowledge:"
+                else:
+                    return " "
+            def flexibility():
+                if i.flexibility:
+                    return " ,Adaptability:"
+                else:
+                    return " "                         
+            def problemsolving():
+                if i.problemsolving:
+                    return " ,Problem solving:"
+                else:
+                    return " "                    
+            def Initiativenes():
+                if i.Initiativenes:
+                    return " ,Initiativenes:"
+                else:
+                    return " " 
+            def planning():
+                if i.planing:
+                    return " ,Planning & Org.:"
+                else:
+                    return " "                            
+            def workquality():
+                if i.workquality:
+                    return " ,Work Quality:"
+                else:
+                    return " " 
+            def interskills():
+                if i.interskills:
+                    return " ,Interpersonal skills:"
+                else:
+                    return " " 
+            def communication():
+                if i.communication:
+                    return " ,Communication skills:"
+                else:
+                    return " " 
+            def supervisionmagt():
+                if i.supervisionmagt:
+                    return " ,Supervision & mngt:"
+                else:
+                    return " " 
+            def availabilit():
+                if i.availabilit:
+                    return " ,Availability:"
+                else:
+                    return " " 
+            def professional():
+                if i.professional:
+                    return " ,Professional contribution:"
+                else:
+                    return " " 
+        
+            writer.writerow([i.emp_perfrev_no, i.start,i.get_Provider_display(),i.organisation,i.appraise,i.rank,jobknowledg()+ i.get_jobknowledg_display() + flexibility()+ i.get_flexibility_display()+ problemsolving()+ i.get_problemsolving_display()+ Initiativenes()+ i.get_Initiativenes_display()+ planning()+ i.get_planing_display()+ workquality()+ i.get_workquality_display()+ interskills()+ i.get_interskills_display()+ communication()+ i.get_communication_display()+ supervisionmagt()+ i.get_supervisionmagt_display()+ availabilit()+ i.get_availabilit_display()+ professional()+ i.get_professional_display()
+            ,i.nonconfdetails,i.assigned,i.due,i.qmsstatus])
             
-            writer.writerow([i.emp_perfrev_no, i.start,i.Provider,  i.appraise,i.rank,i.nonconformity,i.skill,i.due,i.qmsstatus])
         return response
         
     else:

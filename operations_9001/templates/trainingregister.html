@@ -13,17 +13,18 @@ form {
 </style>
 <div class="col-md-8 order-md-1">
           <h4 class="mb-3">Training Register</h4>
+         
 <p class="round2"> 
-<form action="/training_register/" method="post">
+
+<form action="/trainingReg/" method="post">
                      {% csrf_token %}
                     
-   <table border="0">            
+<table border="0">
+{% for errors in form.errors %}
+<div class="alert alert-danger"> {{form.errors}}</div>
+{%endfor%}            
 {{form}}
-</table>            
-
-   
-
-<div class="form-group" id="completion_date">
+</table>
 
 
 <br>
@@ -34,13 +35,17 @@ form {
 
 
 <td ><a class="btn  btn-warning" href="{% url 'home'%}"> Cancel </a></td>
-<td align="right"><input class="btn btn-danger" type="submit" name="Submit"></td>
+<td align="right"><input class="btn btn-info" type="submit" name="Submit"></td>
 					</tr>
           </table>
 </div>
 
 </form>
 </div>
+
+
+
+
 
 {% endblock %} 
 

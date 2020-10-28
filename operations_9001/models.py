@@ -294,7 +294,7 @@ class mod9001_trainingregister(models.Model):
     actionplan=models.ForeignKey('planofaction', on_delete=models.CASCADE,verbose_name='Plan of action:',related_name='planofaction',null=True,blank=True)
     actionplanother=models.TextField("Additional description:",null=True,blank=True)
     assigned = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='assignedto',verbose_name='Assigned to:',on_delete=models.SET_NULL)
-    timeline=models.DateField("Timeline:",null=True)     
+    timeline=models.DateField("Timeline:",null=True,blank=True)     
     
     entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='training_entered_by',on_delete=models.SET_NULL)
     date_today=models.DateField("Date created:",default=datetime.now)
@@ -359,8 +359,8 @@ class mod9001_incidentregisterStaff(models.Model):
     escalated = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True,verbose_name='Responsible:', related_name='escalated',on_delete=models.SET_NULL)
     description=models.TextField("Additional Description:",null=True, blank=True)
     assigned = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, verbose_name='Assigned:',related_name='asigned',on_delete=models.SET_NULL)
-    date=models.DateField("Date:",default=datetime.now)
-    completion=models.DateField("Completion Date:")
+    #date=models.DateField("Date:",default=datetime.now)
+    completion=models.DateField("Completion Date:",null=True,blank=True)
     costs=(('1','Financial'),('2','Operational'),('3','Legal/Regulatory'),('4','Brand/Reputation'))
     #MY_CHOICES = (('item_key1', 'Item title 1.1'),('item_key2', 'Item title 1.2'),('item_key3', 'Item title 1.3'),('item_key4', 'Item title 1.4'),('item_key5', 'Item title 1.5'))
     cost = MultiSelectField('Incident Cost',choices=costs)
@@ -368,13 +368,25 @@ class mod9001_incidentregisterStaff(models.Model):
     currency=models.CharField(verbose_name='Currency:',max_length=50, null=True,blank=True,choices=currency)
    
     
-    costdescription=models.IntegerField("Incident Cost Amount:")
+    costdescription=models.IntegerField("Cost Amount:",null=True,blank=True)
 
     lesson=models.TextField("Lesson learnt:",null=True, blank=True)
-    status=models.TextField("Compliant Status:",null=True, blank=True)
+    verification=models.ForeignKey('issues_9001.RISK_OPPverification', on_delete=models.SET_NULL,verbose_name='Verification:',null=True,blank=True)
+    verification_status=models.CharField(max_length=200, null=True,blank=True)
+    verification_failed=models.TextField("Reason for rejecting:",null=True,blank=True, help_text='If rejected, please give a reason')
+    qmsstatus=models.ForeignKey(qmsstatus, on_delete=models.SET_NULL,null=True,verbose_name='Verification Status:')
+    
+  
+    scheduled=models.DateField("Rescheduled Date:",null=True,blank=True)
+   
+    assigned= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Assigned to:',null=True,blank=True)
+    due=models.DateField("When:",null=True,blank=True)      
+    #status=models.TextField("Compliant Status:",null=True, blank=True)
     entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='incidentstaff',on_delete=models.SET_NULL)
     date_today=models.DateField("Date created:",default=datetime.now)
-
+    status=models.ForeignKey('issues_9001.approval_status', on_delete=models.SET_NULL,verbose_name='Status:',null=True,blank=True)
+ 
+    
 
 class mod9001_processtable(models.Model):
     process_number=models.CharField("Process ID:",max_length=200,default="Comp-Pr-"+car_no(),primary_key=True)
@@ -411,24 +423,24 @@ class mod9001_providerassessment(models.Model):
     end=models.DateField("End Date:")
     appraise= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Appraise:',related_name='appraise')
     #year_in_school = models.CharField(max_length=10,choices='mod9001_supplieregistration.name',verbose_name='Test:')   
-    purpose=models.TextField("Purpose",null=True, blank=True)
-  # owner= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Owner:',related_name='own')
-    jobknowledge=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='1. Job Knowledge Score:',related_name='jobknowledg',null=True,blank=True)
-    adaptability=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='2.	Adaptability & Flexibility Score:',related_name='adaptabilit',null=True,blank=True)
-    problemsolve=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='3.	Problem Solving Score:',related_name='problemsolve',null=True,blank=True)
-    initiativeness=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='4.	Initiativeness & Resourcefulness Score:',related_name='initiative',null=True,blank=True)
-    planning=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='5. Planning & Organisation Score:',related_name='plannin',null=True,blank=True)
-    work=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='6.	Work Quality & Quantity Score:',related_name='problemsolv',null=True,blank=True)
+    #purpose=models.TextField("Purpose",null=True, blank=True)
+    #owner= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Owner:',related_name='own')
+    jobknowledge=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='1. Job Knowledge:',related_name='jobknowledg',null=True,blank=True)
+    adaptability=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='2.	Adaptability & Flexibility:',related_name='adaptabilit',null=True,blank=True)
+    problemsolve=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='3.	Problem Solving:',related_name='problemsolve',null=True,blank=True)
+    initiativeness=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='4.	Initiativeness & Resourcefulness:',related_name='initiative',null=True,blank=True)
+    planning=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='5. Planning & Organisation:',related_name='plannin',null=True,blank=True)
+    work=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='6.	Work Quality & Quantity:',related_name='problemsolv',null=True,blank=True)
     
-    skills=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='7.	Interpersonal Skills Score:',related_name='skill',null=True,blank=True)
-    Communication=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='8. Communication Skills Score:',related_name='communicatin',null=True,blank=True)
-    supervision=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='9. Supervision & Management Score:',related_name='supervisio',null=True,blank=True)
-    availability=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='10.	Availability Score:',related_name='availabilit',null=True,blank=True)
-    professionalism=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='11. Professional Contribution Score:',related_name='professionalis',null=True,blank=True)
+    skills=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='7.	Interpersonal Skills:',related_name='skill',null=True,blank=True)
+    Communication=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='8. Communication Skills:',related_name='communicatin',null=True,blank=True)
+    supervision=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='9. Supervision & Management:',related_name='supervisio',null=True,blank=True)
+    availability=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='10.	Availability:',related_name='availabilit',null=True,blank=True)
+    professionalism=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='11. Professional Contribution:',related_name='professionalis',null=True,blank=True)
     rank=models.CharField("Final Ranking: (Scores 1 to 11 are required)",max_length=25,null=True,blank=True)
     comment=models.TextField("Comment",null=True, blank=True)
-    nonconformity=(('1','Support/Resource'),('2','Planning'),('3','IITS(Information, Instructions, Training, Supervision)'),('4','Performance monitoring'),('5','Evaluation'),('6','Risk/Vulnerability Assessment'),('7','Leadership'),('8','Other'))
-    nonconformity=models.CharField("Reason: cause of nonconformity",max_length=200, choices=nonconformity,null=True,blank=True)
+    #nonconformity=(('1','Support/Resource'),('2','Planning'),('3','IITS(Information, Instructions, Training, Supervision)'),('4','Performance monitoring'),('5','Evaluation'),('6','Risk/Vulnerability Assessment'),('7','Leadership'),('8','Other'))
+    #nonconformity=models.CharField("Reason: cause of nonconformity",max_length=200, choices=nonconformity,null=True,blank=True)
  
     jobknowledg=(('1','Technical/Professional skills required'),('2','Application'),('3','Support and training to others'))
     jobknowledg = MultiSelectField('1. Job Knowledge',choices=jobknowledg,null=True,blank=True)

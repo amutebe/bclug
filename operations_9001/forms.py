@@ -80,6 +80,19 @@ class trainingregister(ModelForm):
         model = mod9001_trainingregister 
         exclude = ['training_desc','trainingplanid','training','location','trainer','entered_by','date_today']
         widgets={'actionplanother':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'reasonother':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'timeline':DateInput(),'train_date':DateInput(),'completion_date':DateInput(),'job':HorizontalRadioSelect(),'skills':HorizontalRadioSelect(),'indicators':HorizontalRadioSelect(),'able':HorizontalRadioSelect()}
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        training_date = cleaned_data.get("train_date")
+        completion_date = cleaned_data.get("completion_date")
+
+        if completion_date < training_date:
+            raise forms.ValidationError("Training date should be less than completion date.")
+        
+
+
+
+
 
 class trainingplaner(ModelForm):
   
@@ -119,7 +132,7 @@ class incident_Register(ModelForm):
     class Meta:
         model = mod9001_incidentregister 
         exclude = ['entered_by','date_today']
-        widgets={'date':DateInput(),'time':TimeInput()}
+        widgets={'date':DateInput(),'time':TimeInput(),'other':forms.Textarea(attrs={'rows': 2, 'cols': 40})}
 
 class customer_Register(ModelForm):
   
@@ -133,9 +146,20 @@ class incident_RegisterStaff(ModelForm):
       
      class Meta:
         model = mod9001_incidentregisterStaff 
-        exclude = ['entered_by','date_today','status']
+        #exclude = ['entered_by','date_today','status']
+        exclude = ['cost','currency','costdescription','lesson','entered_by','date_today','verification','verification_status','verification_failed','qmsstatus','scheduled','completion']
+
+    
         
-        widgets={'date':DateInput(),'completion':DateInput(),'date_posted':DateInput(), 'costdescription':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'status':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'lesson':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'description':forms.Textarea(attrs={'rows': 2, 'cols': 40})}
+        widgets={'status':forms.HiddenInput,'due':DateInput(),'date':DateInput(),'completion':DateInput(),'date_posted':DateInput(), 'costdescription':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'status':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'lesson':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'description':forms.Textarea(attrs={'rows': 2, 'cols': 40})}
+class Verifyincidentregister(ModelForm):
+    class Meta:
+        model = mod9001_incidentregisterStaff 
+        #fields = '__all__'
+        fields=['cost','currency','costdescription','verification','verification_status','verification_failed','qmsstatus','scheduled','completion']
+        widgets={'completion':DateInput(),'scheduled':DateInput()}        
+
+
 
 class providerassessments(ModelForm):
 

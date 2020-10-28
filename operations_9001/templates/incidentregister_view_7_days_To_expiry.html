@@ -1,0 +1,59 @@
+{%  extends 'accounts/base.html' %}
+
+{% block content %}
+
+		<br>
+
+		<div class="row">
+			<div class="col-md">
+				
+				
+				<div class="card card-body">
+					<table class="table-bordered">
+						<tr>
+							
+					<th>ID</th>
+					<th>Created on</th>
+					<th>Classification</th>
+					<th>Status</th>
+					<th>Start</th>
+					<th>End</th>
+					<th>Appraise</th>
+                    <th>RootCause</th>
+					
+                            
+						
+						</tr>
+						{% for i in products %}
+						<tr>
+					<td>{{i.incident_number}}</td>
+					<td>{{i.date}}</td>
+					<td>{{i.classification}}</td>
+					<td>{{i.status}}</td>
+					<td>{{i.start}}</td>
+					<td>{{i.end}}</td>
+					<td>{{i.appraise}}</td>
+					<td>{{i.rootcause}}</td>
+                       
+
+										
+                        
+						
+						</tr>
+                        
+
+
+						{% endfor %}
+					
+						
+					</table>
+				
+			</div>
+			<div class="text-right">
+                    <a href="{%url 'incidentregister_due' %}"><h6><< Back</h6></a>
+                    </div>
+			
+		</div>
+		
+
+{% endblock content %}

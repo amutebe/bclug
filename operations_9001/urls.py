@@ -16,7 +16,7 @@ path('approve_qms/<str:pk_test>/',views.approve_qms,name="approve_qms"),
 path('verify_qms/<str:pk_test>/',views.verify_qms,name="verify_qms"),
 path('qms_due/',views.qms_due,name="qms_due"),
 path('qms_7daysToExpiryview/<str:pk_test>/',views.qms_7daysToExpiryview,name="qms_7daysToExpiryview"),
-path('training_register/', views.training_register, name='training_register'),
+path('trainingReg/', views.trainingReg, name='trainingReg'),
 path('training_register_report/',views.training_register_report,name="training_register_report"),
 
 path('training_planner/', views.training_planner, name='training_planner'),
@@ -36,6 +36,13 @@ path('ajax/load_process/', views.load_process, name='ajax_load_process'),
 
 path('customerRegister/', views.customerRegister, name='customerRegister'),
 path('incidentRegisterStaff/', views.incidentRegisterStaff, name='incidentRegisterStaff'),
+path('Verify_incidentregister/<str:pk_test>/',views.Verify_incidentregister,name="Verify_incidentregister"),
+path('incidentregister_due/',views.incidentregister_due,name="incidentregister_due"),
+path('incidentregister_7daysToExpiryview/<str:pk_test>/',views.incidentregister_7daysToExpiryview,name="incidentregister_7daysToExpiryview"),
+
+
+
+
 path('providerassessment/', views.providerassessment, name='providerassessment'),
 path('providerAssessment_report/', views.providerAssessment_report, name='providerAssessment_report'),
 

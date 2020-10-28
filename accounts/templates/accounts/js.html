@@ -64,14 +64,16 @@ $("#id_decision").change(function() {
 				$('label[for="id_timeline"]').hide();
 
 				$('#id_assigned').removeAttr('required');
+				$("#id_timeline").val("");
 				$('#id_timeline').removeAttr('data-error');	
+				$('#id_timeline').removeAttr('required');	
 
 				$('#id_actionplan').removeAttr('required');
 				$('#id_actionplanother').removeAttr('data-error')
 
 				$("#id_actionplan").val("");
 				$("#id_actionplanother").val("");
-				$("#id_timeline").val("");
+			
 				$("#id_assigned").val("");
 				$("#id_reasond").val("");
 				$("#id_reasonother").val("");

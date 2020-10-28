@@ -55,23 +55,23 @@
 					<th>Incident No.</th>
 					<th>Date</th>
 					<th>Time</th>					
-					<th>Reference</th>
-                    <th>ProcessName</th>
+					
+                    <th>Process</th>
                     <th>Type</th>
                     <th>Description</th>
                     <th>Details</th>
 					<th>Classification</th>
-					<th>RootCause</th>
+				
                     <th>Containment</th>
-					<th>AdditionalDescription</th>
-                     <th>AsignedTo</th>
+					<th>Addit.Desc</th>
+                     <th>AssignedTo</th>
                     <th>Date</th>
-					<th>CompletionDate</th>
+					<th>Comp.Date</th>
 					<th>Cost</th>
 					<th>Currency</th>
 					<th>Amount</th>
 					
-                    <th>LessonLearnt</th>
+                    <th>Lession</th>
                     
 					
 				</tr></thead><tbody>
@@ -85,14 +85,14 @@
 				
 
 					
-					<td>{{i.incident_number.get_reference_display}}</td>
+			
 				
                      <td>{{i.incident_number.processname}}</td>
                     <td>{{i.incident_number.incidentype}}</td>
                     <td>{{i.incident_number.incident_description}}</td>
                     <td>{{i.incident_number.other}}</td>
                     <td>{{i.classification}}</td>
-                    <td>{{i.rootcause}}</td>
+                  
 
 					<td>{{i.get_correction_display}}</td>
 					<td>{{i.description}}</td>
