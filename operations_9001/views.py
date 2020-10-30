@@ -410,7 +410,7 @@ def training_register_report(request):
     
         for i in trainingreg:
             
-            writer.writerow([i.training_number, i.plan_number.description,i.plan_number.details,  i.train_date,i.get_nature_display(),i.trainee,i.trainee.dept,i.completion_date,i.get_decision_display(),i.reasonother,i.reasond,i.actionplan,i.actionplanother,i.assigned,i.timeline])
+            writer.writerow([i.training_number, i.plan_number.description,i.plan_number.details, i.train_date,i.get_nature_display(),i.trainee,i.trainee.dept,i.completion_date,i.get_decision_display(),i.reasond,i.reasonother,i.actionplan,i.actionplanother,i.assigned,i.timeline])
         return response
         
     else:
