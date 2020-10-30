@@ -640,7 +640,7 @@ def incident_report(request):
         response['Content-Disposition'] = 'attachment; filename="IncidentRegister.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['Incident. No.', 'Date', 'Time', 'Reference','ProcessName','Type','Description','Details','Classification','RootCause','Containment','AdditionalDescription','AsignedTo','DateAssigned','CompletionDate','CostDescription','LessonLearnt'])
+        writer.writerow(['Incident. No.', 'Date', 'Time', 'Reference','ProcessName','Type','Description','Details','Classification','RootCause','Containment','AdditionalDescription','AsignedTo','When','CompletionDate','CostDescription','LessonLearnt'])
 
     
         for i in incident:
