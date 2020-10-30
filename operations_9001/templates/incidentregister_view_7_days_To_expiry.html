@@ -12,14 +12,18 @@
 					<table class="table-bordered">
 						<tr>
 							
-					<th>ID</th>
-					<th>Created on</th>
-					<th>Classification</th>
-					<th>Status</th>
-					<th>Start</th>
-					<th>End</th>
-					<th>Appraise</th>
-                    <th>RootCause</th>
+					<th>IncidentNo.</th>
+					<th>Date</th>
+					<th>time</th>
+					<th>Process</th>
+					<th>Type</th>
+					<th>Description</th>
+					<th>Details</th>
+                    <th>Classification</th>
+					<th>Containment</th>
+					<th>Addit.Desc</th>
+                    <th>AssignedTo</th>
+					<th>Due</th>
 					
                             
 						
@@ -27,13 +31,18 @@
 						{% for i in products %}
 						<tr>
 					<td>{{i.incident_number}}</td>
-					<td>{{i.date}}</td>
+					<td>{{i.incident_number.date}}</td>
+					<td>{{i.incident_number.time}}</td>
+					<td>{{i.incident_number.processname}}</td>
+					<td>{{i.incident_number.incidentype}}</td>
+					<td>{{i.incident_number.incident_description}}</td>
+					<td>{{i.incident_number.other}}</td>
 					<td>{{i.classification}}</td>
-					<td>{{i.status}}</td>
-					<td>{{i.start}}</td>
-					<td>{{i.end}}</td>
-					<td>{{i.appraise}}</td>
-					<td>{{i.rootcause}}</td>
+					<td>{{i.get_correction_display}}</td>
+					<td>{{i.description}}</td>
+					<td>{{i.assigned}}</td>
+                    <td>{{i.due}}</td>
+        
                        
 
 										

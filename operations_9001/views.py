@@ -26,6 +26,8 @@ from django.http import HttpResponse, Http404
 
 ##FUNCTIONS TO GENERATE IDs###########
 
+
+
 def QMS_no():
    return str("Comp-QP-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
 
@@ -403,7 +405,7 @@ def training_register_report(request):
         response['Content-Disposition'] = 'attachment; filename="Training_Evaluation_Report.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['TainingNo','TrainingDescription.', 'AdditionalDescription', 'TrainingDate', 'Nature','Trainee','Dept','CompletionDate','Decision','NotEffective','Details','ActionPlan','AdditionalDesc.','AssignedTo','Timeline'])
+        writer.writerow(['TainingNo','TrainingDescription.', 'AdditionalDescription', 'TrainingDate', 'Nature','Trainee','Dept','CompletionDate','Decision','Reason','Details','ActionPlan','AdditionalDesc.','AssignedTo','Timeline'])
 
     
         for i in trainingreg:
@@ -720,6 +722,7 @@ def customerRegister(request):
 
 @login_required(login_url='login')
 def incidentRegisterStaff(request):
+
     form=incident_RegisterStaff()
               
                             
