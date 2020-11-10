@@ -1,0 +1,57 @@
+{% extends "accounts/base.html" %} 
+
+{% block content %}
+<br>
+<div class="col-md-24">
+		
+		<div class="card card-body">
+			
+			<table class="table table-sm">
+				<tr class="table-info">
+					<th>RequestNo</th>
+					<th>Date</th>
+					<th>RaisedBy</th>
+					<th>Source</th>
+					<th>Process</th>
+					<th>ChangeType</th>
+                    <th>Currency</th>
+                    <th>Cost</th>
+					<th>AssignedTo</th>
+					<th>When</th>
+					<th>Status</th>
+					
+					
+					<th></th>
+				</tr>
+				
+				{% for i in pendingcar %}
+				
+					<tr>
+					<td>{{i.req_no}}</td>
+					<td>{{i.date}}</td>
+					<td>{{i.raisedby}}</td>
+					<td>{{i.trigger}}</td>
+					<td>{{i.process}}</td>
+					<td>{{i.changetype}}</td>									
+					<td>{{i.currency}}</td>
+					<td>{{i.cost}}</td>
+					<td>{{i.assignedto}}</td>
+                    <td>{{i.due}}</td>
+					<td>{{i.status}}</td>
+					
+					
+					
+					<td><a class="btn btn-sm btn-info" href="{%url 'approve_changerequest' i.req_no %}">Action</a></td>
+
+					</tr>
+
+				{%endfor%}
+		
+			</table>
+		</div>
+	</div>
+
+</div>
+
+
+{% endblock %} 

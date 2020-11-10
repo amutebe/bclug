@@ -1,0 +1,93 @@
+
+{% extends "accounts/base.html" %} 
+{% block content %}
+
+
+<style>
+form {
+  max-width: 900px;
+  display: block;
+  margin: 0 auto;
+}
+
+
+</style>
+<div class="col-md-8 order-md-1">
+          <h4 class="mb-3">Customer Satisfaction</h4>
+          <customer class="mb-3"> </customer>
+<p class="round2"> 
+
+<form action="/customersatisfaction/" method="post">
+                     {% csrf_token %}
+                    
+<table border="0">            
+{% for errors in form.errors %}
+<div class="alert alert-danger"> {{form.errors}}</div>
+{%endfor%}
+{% for field in form.visible_fields %}
+   
+      
+      <tr>
+           {% if "1. Response Time:" in field.label_tag  %}
+					<th colspan="2" >
+         <h7><br><customer class="mb-3">Ratings: Excellent (5), Good (4), Satisfactory (3), Improvement (2), Poor (1)</customer></h5><p class="round2"> 
+					</th>
+         
+          <td>
+          
+          <td>
+        
+         {% endif %}
+         
+     
+
+</tr>
+
+<tr>
+       				
+        <th>{{ field.label_tag }}</th>
+
+
+        <td>
+          {{ field.errors }}
+          {{ field }}
+          {{ field.help_text }}
+          
+        </td>
+        
+      </tr>
+    {% endfor %}
+
+
+</table>
+
+<br>
+<p class="round2"> 
+<div class="card card-body">
+					<table class="form-group">
+					<tr> 
+
+<td><a class="btn  btn-warning" href="{% url 'home'%}"> Cancel </a></td>
+<td align="right"><input class="btn btn-info" type="submit" name="Submit"></td>
+					</tr>
+          </table>
+</div>
+
+</form>
+</div>
+
+
+
+
+
+{% endblock %} 
+
+
+
+
+
+
+
+
+
+

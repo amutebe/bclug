@@ -1,0 +1,53 @@
+{% extends "accounts/base.html" %} 
+
+{% block content %}
+<br>
+<div class="col-md-24">
+		
+		<div class="card card-body">
+			
+			<table class="table table-sm">
+				<tr class="table-info">
+					<th>CAR ID</th>
+					<th>Containment</th>
+					<th>Root Cause</th>
+					<th>Decision</th>
+					<th>Details</th>
+					<th>Proposedby</th>
+					 <th>AssignedTo</th>
+					<th>When</th>
+					<th>Status</th>
+					
+					
+					<th></th>
+				</tr>
+				
+				{% for i in pendingcar %}
+				
+					<tr>
+					<td>{{i.car_no}}</td>
+					<td>{{i.containment}}</td>
+					<td>{{i.rootcause}}</td>
+					<td>{{i.decision}}</td>
+					<td>{{i.details}}</td>
+					<td>{{i.proposedby}}</td>									
+					<td>{{i.assignedto}}</td>
+					<td>{{i.due}}</td>
+					<td>{{i.status}}</td>
+					
+					
+					
+					<td><a class="btn btn-sm btn-info" href="{%url 'approve_planning' i.car_no %}">Action</a></td>
+
+					</tr>
+
+				{%endfor%}
+		
+			</table>
+		</div>
+	</div>
+
+</div>
+
+
+{% endblock %} 

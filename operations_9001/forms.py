@@ -24,7 +24,7 @@ class document_manager(ModelForm):
     class Meta:
         model = mod9001_document_manager 
         fields = '__all__'
-        widgets={'author':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'Origin': RadioSelect(),'document_date':DateInput(),'document_id':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'clause':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'doc_name':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'specifyl':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'version':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'Author':forms.Textarea(attrs={'rows': 2, 'cols': 40})}
+        widgets={'author':forms.Textarea(attrs={'rows': 1, 'cols': 40}),'Origin': RadioSelect(),'document_date':DateInput(),'document_id':forms.Textarea(attrs={'rows': 1, 'cols': 40}),'clause':forms.Textarea(attrs={'rows': 1, 'cols': 40}),'doc_name':forms.Textarea(attrs={'rows': 1, 'cols': 40}),'specifyl':forms.Textarea(attrs={'rows': 1, 'cols': 40}),'version':forms.Textarea(attrs={'rows': 1, 'cols': 40}),'Author':forms.Textarea(attrs={'rows': 1, 'cols': 40})}
 
 class calibration(ModelForm):
     
@@ -202,7 +202,116 @@ class Verifyeproviderassessments(ModelForm):
         widgets={'completion':DateInput(),'scheduled':DateInput()}        
 
 
+class corrective_action(ModelForm):
+    
+    class Meta:
+        model = mod9001_correctiveaction 
+        exclude = ['entered_by','date_today']
+        widgets = {
 
+            'date': DateInput(),'reference':TextInput(),'addesc':TextInput()
+        }
 
+class mod9001planning(ModelForm):
+    
+    class Meta:
+        model = mod9001_planning 
+        exclude = ['completion','qmsstatus','scheduled','entered_by','date_today','verification','verification_status','verification_failed','rejected','approval_date','approved_by']
+        widgets = {
+
+            'due': DateInput(),'rootcause_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'details':forms.Textarea(attrs={'rows': 2, 'cols': 40})
+        }
 
    
+class VerifyPlanning(ModelForm):
+    
+    class Meta:
+        model = mod9001_planning 
+        #fields = '__all__'
+        fields=['verification','verification_status','verification_failed','qmsstatus','scheduled','completion']
+        widgets={'completion':DateInput(),'scheduled':DateInput()} 
+
+
+class ApprovePlanning(ModelForm):
+    
+    
+    class Meta:
+        model = mod9001_planning 
+        #fields = '__all__'
+        fields = ['status','rejected','approval_date','approved_by']
+        widgets={'status': RadioSelect(),'approval_date':DateInput()}
+
+
+class change_request(ModelForm):
+    
+    class Meta:
+        model = mod9001_changeRegister 
+        exclude = ['completion','qmsstatus','scheduled','entered_by','date_today','verification','verification_status','verification_failed','rejected','approval_date','approved_by']
+        widgets = {
+
+            'date': DateInput(),'due': DateInput(),'changedesc':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'evaldesc':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'add_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40})
+        }
+
+class ApproveChangeRequest(ModelForm):
+    
+    
+    class Meta:
+        model = mod9001_changeRegister 
+        #fields = '__all__'
+        fields = ['status','rejected','approval_date','approved_by']
+        widgets={'status': RadioSelect(),'approval_date':DateInput()}
+
+
+class Verifychangerequest(ModelForm):
+    
+    class Meta:
+        model = mod9001_changeRegister 
+        #fields = '__all__'
+        fields=['verification','verification_status','verification_failed','qmsstatus','scheduled','completion']
+        widgets={'completion':DateInput(),'scheduled':DateInput()} 
+
+
+class customer_complaint(ModelForm):
+     #cost = MultiSelectFormField(choices=mod9001_incidentregisterStaff.costs)
+      
+     class Meta:
+        model = mod9001_customerComplaint
+        #exclude = ['entered_by','date_today','status']
+        exclude = ['entered_by','date_today','verification','verification_status','verification_failed','qmsstatus','scheduled','completion']
+ 
+        widgets={'time':TimeInput(),'status':forms.HiddenInput,'due':DateInput(),'date':DateInput(),'completion':DateInput(),'date_posted':DateInput(), 'complaint_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'add_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'complaint':forms.Textarea(attrs={'rows': 2, 'cols': 40})}
+
+
+class Verifycustomercomplaint(ModelForm):
+    class Meta:
+        model = mod9001_customerComplaint 
+        #fields = '__all__'
+        fields=['verification','verification_status','verification_failed','qmsstatus','scheduled','completion']
+        widgets={'completion':DateInput(),'scheduled':DateInput()}        
+
+
+class customer_satisfaction(ModelForm):
+
+     #cost = MultiSelectFormField(choices=mod9001_incidentregisterStaff.costs)
+      
+    class Meta:
+        model = mod9001_customerSatisfaction 
+        exclude = ['entered_by','date_today','verification','verification_status','verification_failed','qmsstatus','scheduled','completion']
+
+            
+ 
+        
+
+        #fields = ['emp_perfrev_no','planner_number','date','Provider','organisation','assesment_date','start','end','appraise']
+       
+        
+        widgets={'year':DateInput(),'status':forms.HiddenInput,'comment':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'due':DateInput(),'details':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'date':DateInput(),'responsetime':HorizontalRadioSelect(),'resolution':HorizontalRadioSelect(),'delivery':HorizontalRadioSelect(),'communication':HorizontalRadioSelect(),'compliant':HorizontalRadioSelect(),'quality':HorizontalRadioSelect(),'infosecurity':HorizontalRadioSelect(),'customerservice':HorizontalRadioSelect()}
+
+
+class Verifyecustomersatisfaction(ModelForm):
+    class Meta:
+        model = mod9001_customerSatisfaction 
+        #fields = '__all__'
+        fields=['verification','verification_status','verification_failed','qmsstatus','scheduled','completion']
+        widgets={'completion':DateInput(),'scheduled':DateInput()}        
+

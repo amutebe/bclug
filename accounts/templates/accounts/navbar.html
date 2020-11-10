@@ -79,13 +79,7 @@
                 </li>
                 <li><a data-icon="&#xf1b9" href="#">Operations</a>
                     <ul>
-                        
 
-                     
-                     <!--  <li><a data-icon="&#xf015" href="{% url 'calibration'%}">Calibration Record</a></li>--> 
-                        
-                        <!--<li><a data-icon="&#xf0e6" href="{% url 'maintenance'%}">Maintenance Record</a></li>-->
-                        
                         <li>
                                 <a data-icon="&#xf016">Incident</a>
                         <ul>
@@ -104,6 +98,48 @@
                         <li><a data-icon="&#xf015" href="{% url 'trainingReg'%}">Create</a></li>
                         </ul>
                         </li>
+                        <li><a data-icon="&#xf1d9">Corrective Action</a>
+                        <ul>
+                        <li><a data-icon="&#xf015" href="{% url 'correctiveaction'%}">Create</a></li>
+                        </ul>
+                        </li>
+                        <li><a data-icon="&#xf1d9">Planning</a>
+                        <ul>
+                        <li><a data-icon="&#xf015" href="{% url 'planning'%}">Create</a></li>
+                        <li><a data-icon="&#xf015" href="{% url 'planning_pending'%}">Approve</a></li>
+                        <li><a data-icon="&#xf015"  href="{% url 'planning_due'%}">Verify</a></li>
+                        
+                        </ul>
+                        </li>
+
+                        <li><a data-icon="&#xf1d9">Change Register</a>
+                        <ul>
+                        <li><a data-icon="&#xf015" href="{% url 'changerequest'%}">Create</a></li>
+                        <li><a data-icon="&#xf015" href="{% url 'changerequest_pending'%}">Approve</a></li>
+                         <li><a data-icon="&#xf015"  href="{% url 'changerequest_due'%}">Verify</a></li>
+                        </ul>
+                        </li>
+
+                        <li><a data-icon="&#xf1d9">Customer Satisfaction</a>
+                        <ul>
+                        <li><a data-icon="&#xf015" href="{% url 'customersatisfaction'%}">Create</a></li>
+                   
+                         <li><a data-icon="&#xf015"  href="{% url 'customersatisfaction_due'%}">Verify</a></li>
+                        </ul>
+                        </li>
+
+<li><a data-icon="&#xf1d9">Customer Complaint</a>
+                        <ul>
+                        <li><a data-icon="&#xf015" href="{% url 'customercomplaint'%}">Create</a></li>
+                         
+                         <li><a data-icon="&#xf015"  href="{% url 'customercomplaint_due'%}">Verify</a></li>
+                     
+                        </ul>
+                        </li>
+
+
+
+
                      
                         <li><a data-icon="&#xf06c" href="#">Leave Application</a></li>
                         <li><a data-icon="&#xf1aa" href="#">Project-Job tracker</a></li>

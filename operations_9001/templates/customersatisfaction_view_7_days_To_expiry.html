@@ -1,0 +1,59 @@
+{%  extends 'accounts/base.html' %}
+
+{% block content %}
+
+		<br>
+
+		<div class="row">
+			<div class="col-md">
+				
+				
+				<div class="card card-body">
+					<table class="table-bordered">
+						<tr>
+							
+					<th>Survey No</th>
+					<th>Created on</th>
+					<th>Organisation</th>
+					<th>Survey Period</th>
+					<th>FinalRank</th>
+					<th>Comment</th>
+					<th>Improv.Plan</th>
+                    <th>Status</th>
+					
+                            
+						
+						</tr>
+						{% for i in products %}
+						<tr>
+					<td>{{i.satis_no}}</td>
+					<td>{{i.date}}</td>
+					<td>{{i.organisation}}</td>
+					<td>{{i.year}}</td>
+					<td>{{i.rank}}</td>
+					<td>{{i.comment}}</td>
+					<td>{{i.get_improvplan_display}}</td>
+					<td>{{i.status}}</td>
+                       
+
+										
+                        
+						
+						</tr>
+                        
+
+
+						{% endfor %}
+					
+						
+					</table>
+				
+			</div>
+			<div class="text-right">
+                    <a href="{%url 'customersatisfaction_due' %}"><h6><< Back</h6></a>
+                    </div>
+			
+		</div>
+		
+
+{% endblock content %}

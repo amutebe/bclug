@@ -11,6 +11,11 @@ def car_no():
     now = datetime.now()
     return str((date.today()).strftime("%d%m%Y"))+str(randrange(100, 299))
 
+
+def correction_no():
+    now = datetime.now()
+    return str((date.today()).strftime("%d%m%Y"))+str(randrange(100, 299))
+
 class providers(models.Model):
 
     description=models.CharField("Provider Name", max_length=50,null=True,blank=True)
@@ -68,7 +73,11 @@ class classification(models.Model):
     description=models.CharField("Incident Classification", max_length=50,null=True,blank=True)
     def __str__(self):
         return self.description
+class correction(models.Model):
 
+    description=models.CharField("Correction/Containment:", max_length=50,null=True,blank=True)
+    def __str__(self):
+        return self.description
 
 class rootcause(models.Model):
 
@@ -354,8 +363,10 @@ class mod9001_incidentregisterStaff(models.Model):
     classification=models.ForeignKey('classification', on_delete=models.SET_NULL,verbose_name='Incident Classification:',null=True,blank=True)
     rootcause=models.ForeignKey('rootcause', on_delete=models.SET_NULL,verbose_name='Root Cause:',null=True,blank=True)
     otherootcause=models.TextField("Other Root Cause:",null=True, blank=True)
-    correction=(('1','Redo/Rework'),('2','Replace'),('3','Refund'),('4','Repair'),('5','Suspend'),('6','Customer Concession obtained'),('7','Escalated'),('8','Other'))    
-    correction=models.CharField(verbose_name='Short Term Correction/Containment:',max_length=50, null=True,blank=True,choices=correction)
+    #correction=(('1','Redo/Rework'),('2','Replace'),('3','Refund'),('4','Repair'),('5','Suspend'),('6','Customer Concession obtained'),('7','Escalated'),('8','Other'))    
+    #correction=models.CharField(verbose_name='Short Term Correction/Containment:',max_length=50, null=True,blank=True,choices=correction)
+    correction=models.ForeignKey('correction', on_delete=models.SET_NULL,verbose_name='Correction/Containment:',null=True,blank=True)
+
     escalated = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True,verbose_name='Responsible:', related_name='escalated',on_delete=models.SET_NULL)
     description=models.TextField("Additional Description:",null=True, blank=True)
     assigned = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, verbose_name='Assigned:',related_name='asigned',on_delete=models.SET_NULL)
@@ -385,7 +396,8 @@ class mod9001_incidentregisterStaff(models.Model):
     entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='incidentstaff',on_delete=models.SET_NULL)
     date_today=models.DateField("Date created:",default=datetime.now)
     status=models.ForeignKey('issues_9001.approval_status', on_delete=models.SET_NULL,verbose_name='Status:',null=True,blank=True)
- 
+
+
     
 
 class mod9001_processtable(models.Model):
@@ -425,7 +437,7 @@ class mod9001_providerassessment(models.Model):
     #year_in_school = models.CharField(max_length=10,choices='mod9001_supplieregistration.name',verbose_name='Test:')   
     #purpose=models.TextField("Purpose",null=True, blank=True)
     #owner= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Owner:',related_name='own')
-    jobknowledge=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='1. Job Knowledge:',related_name='jobknowledg',null=True,blank=True)
+    jobknowledge=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='1. Job Knowledge Score:',related_name='jobknowledg',null=True,blank=True)
     adaptability=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='2.	Adaptability & Flexibility:',related_name='adaptabilit',null=True,blank=True)
     problemsolve=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='3.	Problem Solving:',related_name='problemsolve',null=True,blank=True)
     initiativeness=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='4.	Initiativeness & Resourcefulness:',related_name='initiative',null=True,blank=True)
@@ -501,8 +513,203 @@ class mod9001_providerassessment(models.Model):
 
     entered_by= models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='providerentered',on_delete=models.SET_NULL)
     date_today=models.DateField("Date created:",default=datetime.now)
+
+class car_source(models.Model):
+
+    description=models.CharField("CAR Source:", max_length=50,null=True,blank=True)
+    def __str__(self):
+        return self.description
     
+class element(models.Model):
+
+    description=models.CharField("Element:", max_length=50,null=True,blank=True)
+    def __str__(self):
+        return self.description
+
+class containment(models.Model):
+
+    description=models.CharField("Containment Action:", max_length=50,null=True,blank=True)
+    def __str__(self):
+        return self.description
+
+
+class root_cause(models.Model):
+
+    description=models.CharField("Root Cause Analysis:", max_length=50,null=True,blank=True)
+    def __str__(self):
+        return self.description
+
+
+class decision(models.Model):
+
+    description=models.CharField("Decision or Action plan:", max_length=50,null=True,blank=True)
+    def __str__(self):
+        return self.description
+
+
+
+
+
+class mod9001_correctiveaction(models.Model):
+    car_no=models.CharField("CAR No.:",max_length=200,default="Comp-CAR-Q-"+ correction_no(),primary_key=True)
+    date=models.DateTimeField("CAR Date:",null=True)
+    process=models.ForeignKey('process', on_delete=models.SET_NULL,verbose_name='Process:',null=True,blank=True)
+    car_source=models.ForeignKey('car_source', on_delete=models.SET_NULL,verbose_name='CAR source:',null=True,blank=True)
+    element=models.ForeignKey('element', on_delete=models.SET_NULL,verbose_name='element:',null=True,blank=True)
+    reference=models.TextField("Reference",null=True, blank=True)      
+    findings=(('1','Non Conformity'),('2','Observation'))
+    finding=models.CharField("Finding",max_length=200, choices=findings)
+    addesc=models.TextField("Additional Description",null=True, blank=True)
+    requesto= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Request to:',null=True,blank=True)
+    entered_by= models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='correctiveactionentered',on_delete=models.SET_NULL)
+    date_today=models.DateField("Date created:",default=datetime.now)
+    def __str__(self):
+        return self.car_no
+
+class mod9001_planning(models.Model):
+    car_no=models.OneToOneField('mod9001_correctiveaction', on_delete=models.SET_NULL,verbose_name='CAR ID:',null=True,blank=True)
+    containment=models.ForeignKey('containment', on_delete=models.SET_NULL,verbose_name='containment:',null=True,blank=True)
+    rootcause=models.ForeignKey('root_cause', on_delete=models.SET_NULL,verbose_name='rootcause:',null=True,blank=True)
+    rootcause_desc=models.TextField("Root Cause Description",null=True, blank=True)
+    decision=models.ForeignKey('decision', on_delete=models.SET_NULL,verbose_name='decision:',null=True,blank=True)
+    details=models.TextField("Additional Details",null=True, blank=True)   
+    proposedby= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Proposed by:',related_name='proposed_to',null=True,blank=True)
+    assignedto= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Assigned to:',related_name='asigned_to',null=True,blank=True)
+    due=models.DateTimeField("Due Date:",null=True)
+    status=models.ForeignKey('issues_9001.approval_status', on_delete=models.SET_NULL,verbose_name='Status:',null=True,blank=True)
+    rejected=models.TextField("Reason for rejecting:",null=True,blank=True, help_text='If rejected, please give a reason')
+    approval_date=models.DateField("Date Approved:",null=True,blank=True)
+    approved_by=models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='Approved_by',on_delete=models.SET_NULL)
+    entered_by= models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='planningentered',on_delete=models.SET_NULL)
+    date_today=models.DateField("Date created:",default=datetime.now)
+    verification=models.ForeignKey('accounts.carsverification', on_delete=models.SET_NULL,verbose_name='Verification:',null=True,blank=True)
+    verification_status=models.CharField(max_length=200, null=True,blank=True)
+    verification_failed=models.TextField("Reason for rejecting:",null=True,blank=True, help_text='If rejected, please give a reason')
+
+    qmsstatus=models.ForeignKey(qmsstatus, on_delete=models.SET_NULL,null=True,verbose_name='Verification Status:')
+    
+    completion=models.DateField("Completion Date:",null=True,blank=True)
+    scheduled=models.DateField("Rescheduled Date:",null=True,blank=True)
+          
+################CHANGE REQUEST #########################
+class change_type(models.Model):
+
+    description=models.CharField("Change type:", max_length=50,null=True,blank=True)
+    def __str__(self):
+        return self.description
+
+class evaluation(models.Model):
+
+    description=models.CharField("Evaluation:", max_length=50,null=True,blank=True)
+    def __str__(self):
+        return self.description
+
+
+class mod9001_changeRegister(models.Model):
+    req_no=models.CharField("Request No.:",max_length=200,default="Comp-RFC-Q-"+ correction_no(),primary_key=True)
+    date=models.DateField("Date:",null=True)    
+    raisedby= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Raised by:',related_name='raised_by',null=True,blank=True)
+    
+    trigger=models.ForeignKey('car_source', on_delete=models.SET_NULL,verbose_name='CAR Source:',null=True,blank=True)
+    process=models.ForeignKey('process', on_delete=models.SET_NULL,verbose_name='Process:',null=True,blank=True)
+    changetype=models.ForeignKey('change_type', on_delete=models.SET_NULL,verbose_name='Change Type:',null=True,blank=True)
+    changedesc=models.TextField("Change Description",null=True, blank=True)    
+    evaluation=models.ForeignKey('evaluation', on_delete=models.SET_NULL,verbose_name='evaluation:',null=True,blank=True)
+    evaldesc=models.TextField("Additional Description",null=True, blank=True) 
+    costs=(('1','Financial'),('2','Operational'),('3','Legal/Regulatory'),('4','Brand/Reputation'),('5','Product/Service'),('6','Customer Satisfaction'))
+    cost = MultiSelectField('Cost',choices=costs,null=True,blank=True)
+    currency=(('1','UGX'),('2','USD'),('3','Kshs'),('4','GBP'))
+    currency=models.CharField(verbose_name='Currency:',max_length=50, null=True,blank=True,choices=currency)
+    costdescription=models.IntegerField("Cost Amount:",null=True,blank=True)
+    
+    add_desc=models.TextField("Additional Description",null=True, blank=True)    
+    status=models.ForeignKey('issues_9001.approval_status', on_delete=models.SET_NULL,verbose_name='Status:',null=True,blank=True)
+ 
+    rejected=models.TextField("Reason for rejecting:",null=True,blank=True, help_text='If rejected, please give a reason')
+    approval_date=models.DateField("Date Approved:",null=True,blank=True)
+    approved_by=models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True,on_delete=models.SET_NULL, related_name='Approved_by2')
+    entered_by= models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True,on_delete=models.SET_NULL, related_name='enter_by')
+    date_today=models.DateField("Date created:",default=datetime.now)
+    verification=models.ForeignKey('accounts.carsverification', on_delete=models.SET_NULL,verbose_name='Verification:',null=True,blank=True)
+    verification_status=models.CharField(max_length=200, null=True,blank=True)
+    verification_failed=models.TextField("Reason for rejecting:",null=True,blank=True, help_text='If rejected, please give a reason')
   
+    qmsstatus=models.ForeignKey(qmsstatus, on_delete=models.SET_NULL,null=True,verbose_name='Verification Status:')
+    
+    completion=models.DateField("Completion Date:",null=True,blank=True)
+    scheduled=models.DateField("Rescheduled Date:",null=True,blank=True) 
+
+    proposedby= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Proposed by:',related_name='proposed',null=True,blank=True)
+    assignedto= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Assigned to:',related_name='asigned',null=True,blank=True)
+    due=models.DateTimeField("Due Date:",null=True)    
+    
+
+######################CUSTOMER COMPLAINT########################
+class complaint_type(models.Model):
+
+    description=models.CharField("Complaint Type:", max_length=50,null=True,blank=True)
+    def __str__(self):
+        return self.description
+class mod9001_customerComplaint(models.Model):
+    comp_no=models.CharField("Complaint No.:",max_length=200,default="Comp-COMP-Q-"+ correction_no(),primary_key=True)
+    date=models.DateField("Date:",null=True)
+    time=models.TimeField("Time (24Hr):",null=True)
+    complaint=models.TextField("Complaint",null=True, blank=True)   
+    organisation=models.ForeignKey(mod9001_supplieregistration, on_delete=models.SET_NULL,verbose_name='External Provider Organisation:',related_name='org',null=True,blank=True)
+    process=models.ForeignKey('process', on_delete=models.SET_NULL,verbose_name='Process:',null=True,blank=True)    
+    type=models.ForeignKey('complaint_type', on_delete=models.SET_NULL,verbose_name='Complaint Type:',null=True,blank=True) 
+    complaint_desc=models.TextField("Complaint Description",null=True, blank=True)
+    classification=models.ForeignKey('classification', on_delete=models.SET_NULL,verbose_name='Incident Classification:',null=True,blank=True)
+    correction=models.ForeignKey('correction', on_delete=models.SET_NULL,verbose_name='Correction/Containment:',null=True,blank=True)
+    add_desc=models.TextField("Additional Description",null=True, blank=True)       
+    assignedto= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Assigned to:',null=True,blank=True)
+    due=models.DateTimeField("Due Date:",null=True)    
+    entered_by= models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True,on_delete=models.SET_NULL, related_name='entered')
+    date_today=models.DateField("Date created:",default=datetime.now)
+    verification=models.ForeignKey('issues_9001.RISK_OPPverification', on_delete=models.SET_NULL,verbose_name='Verification:',null=True,blank=True)
+    verification_status=models.CharField(max_length=200, null=True,blank=True)
+    verification_failed=models.TextField("Reason for rejecting:",null=True,blank=True, help_text='If rejected, please give a reason')
+    qmsstatus=models.ForeignKey(qmsstatus, on_delete=models.SET_NULL,null=True,verbose_name='Verification Status:')
+    status=models.ForeignKey('issues_9001.approval_status', on_delete=models.SET_NULL,verbose_name='Status:',null=True,blank=True)
+    scheduled=models.DateField("Rescheduled Date:",null=True,blank=True)
+    completion=models.DateField("Completion Date:",null=True,blank=True)
+   
+
+class mod9001_customerSatisfaction(models.Model):
+    satis_no=models.CharField("Satisfaction Survey No.:",max_length=200,default="Comp-CS-Q-"+ correction_no(),primary_key=True)
+    date=models.DateField("Date created:",default=datetime.now)
+    organisation=models.ForeignKey(mod9001_supplieregistration, on_delete=models.SET_NULL,verbose_name='Customer Organisation:',null=True,blank=True)
+    year=models.DateField("Survey Period:",null=True)
+
+    responsetime=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='1. Response Time:',related_name='resptime',null=True,blank=True)
+    resolution=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='2. Ressolution Time:',related_name='resotime',null=True,blank=True)
+    delivery=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='3. Delivery Time:',related_name='delivtime',null=True,blank=True)
+    communication=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='4. Communication:',related_name='comm',null=True,blank=True)
+    compliant=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='5. Complaint Handling:',related_name='handlin',null=True,blank=True)
+    quality=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='6. Quality of Product/Service:',related_name='serv',null=True,blank=True)
+    
+    infosecurity=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='7. Information Security:',related_name='securit',null=True,blank=True)
+    customerservice=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='8. Customer Services:',related_name='cus',null=True,blank=True)
+   
+    rank=models.CharField("Final Ranking: (Scores 1 to 11 are required)",max_length=25,null=True,blank=True)
+    comment=models.TextField("Comment",null=True, blank=True)
+      
+    improvement=(('1','Response Time'),('2','Ressolution Time'),('3','Delivery Time'),('4','Communication'),('5','Complaint Handling'),('6','Quality of Product/Service'),('7','Information Security'),('8','Customer Services'),('9','Other'))
+    improvplan = MultiSelectField('Improvement Plan',choices=improvement,null=True,blank=True) 
+    details=models.TextField("Additional Details",null=True, blank=True)   
+    assignedto= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Assigned to:',null=True,blank=True)
+    due=models.DateTimeField("Due Date:",null=True)    
+    entered_by= models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True,on_delete=models.SET_NULL, related_name='ente')
+    date_today=models.DateField("Date created:",default=datetime.now)
+ 
+    verification=models.ForeignKey('issues_9001.RISK_OPPverification', on_delete=models.SET_NULL,verbose_name='Verification:',null=True,blank=True)
+    verification_status=models.CharField(max_length=200, null=True,blank=True)
+    verification_failed=models.TextField("Reason for rejecting:",null=True,blank=True, help_text='If rejected, please give a reason')
+    qmsstatus=models.ForeignKey(qmsstatus, on_delete=models.SET_NULL,null=True,verbose_name='Verification Status:')
+    status=models.ForeignKey('issues_9001.approval_status', on_delete=models.SET_NULL,verbose_name='Status:',null=True,blank=True)
+    scheduled=models.DateField("Rescheduled Date:",null=True,blank=True)
+    completion=models.DateField("Completion Date:",null=True,blank=True)
+   
 
 
 

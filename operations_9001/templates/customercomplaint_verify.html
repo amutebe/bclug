@@ -1,0 +1,98 @@
+
+
+{% extends "accounts/base.html" %} 
+{%load static%}
+{% block content %}
+<br>
+<div class="row">
+<div class="col-md-6">
+<div class="card card-body">
+
+
+<form action="" method="POST">
+ 
+ {% csrf_token %}
+
+
+<div class="form-group" id="cost">
+    
+    <label for="cost">Cost:</label><br>
+  {{form.cost}}
+<font color="red">{{form.errors.cost}}</font>
+</div>
+
+ <div class="form-group" id="currency">
+    
+    <label for="currency">Currency:</label><br>
+  {{form.currency}}
+<font color="red">{{form.errors.currency}}</font>
+</div>
+
+
+ <div class="form-group" id="costdescription">
+    
+    <label for="currency">Cost:</label><br>
+  {{form.costdescription}}
+<font color="red">{{form.errors.costdescription}}</font>
+</div>
+
+
+<div class="form-group" id="verification">
+    
+    <label for="exampleFormControlSelect1">Verification status:</label><br>
+  {{form.qmsstatus}}
+<font color="red">{{form.errors.qmsstatus}}</font>
+</div>
+<div class="form-group" id="completiondateDIV">
+    
+    <label for="exampleFormControlSelect1">Completion Date:</label><br>
+    {{form.completion}}
+    <font color="red">{{form.errors.completion}}</font>
+
+
+</div>
+
+<div class="form-group" id="scheduledDIV">
+    
+    <label for="exampleFormControlSelect1">Rescheduled:</label><br>
+    {{form.scheduled}}
+    <font color="red">{{form.errors.scheduled}}</font>
+
+
+</div>
+
+
+<div class="form-group" id="commentDIV">
+    
+    <label for="exampleFormControlSelect1">Comment/Lesson Learnt:</label><br>
+ 
+      <input type="text" class="form-control" id="verification_failed" placeholder="" name="verification_failed" {{form.verification_failed}}
+
+<font color="red">{{form.errors.verification_failed}}</font>
+</div>
+<br>
+
+<p class="round2"> 
+<div class="card card-body">
+					<table class="form-group">
+					<tr> 
+
+
+<td ><a class="btn btn-warning" href="{%url 'customercomplaint_due' %}">Cancel</a></td>
+<td align="right"> <input class="btn btn-danger" type="submit" name="Confirm" value="Close"></td>
+					</tr>
+          </table>
+</div>
+</form>
+</div>
+</div>
+</div>
+{% endblock %} 
+
+<script>
+
+
+
+ 
+
+</script>

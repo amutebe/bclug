@@ -51,6 +51,11 @@ def emp_perfrev_no():
 def document_no():
    return str("TEGA-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
 
+def comp_no():
+   return str("Comp-COMP-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
+
+def satis_survey_no():
+   return str("Comp-CS-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
 
 
 ####################################################################################
@@ -1020,12 +1025,501 @@ def providerassesment_7daysToExpiryview(request,pk_test):
     products=mod9001_providerassessment.objects.filter(emp_perfrev_no=pk_test)
     return render(request,'providerassesment_view_7_days_To_expiry.html',{'products':products})
 
+def car_no():
+   return str("Comp-CAR-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
 
+
+@login_required(login_url='login')
+def correctiveaction(request):
+              
+    form=corrective_action(initial={'car_no': car_no()})
+                          
+    if request.method=="POST":
+
+        request.POST=request.POST.copy()
+        request.POST['entered_by'] = request.user
+        request.POST['date_today']=date.today()
+        #request.POST['status'] = 5
+        
+        form=corrective_action(request.POST)
+                        
+        if form.is_valid():
+
+                
+            form.save()
+            form=corrective_action(initial={'car_no': car_no()})
+            context={'form':form}
+            return render(request,'correctiveaction.html',context)
+            
+            
+    context={'form':form}
+    return render(request,'correctiveaction.html',context)
+
+            
+@login_required(login_url='login')
+def planning(request):
+              
+    form=mod9001planning()
+                          
+    if request.method=="POST":
+
+        request.POST=request.POST.copy()
+        request.POST['entered_by'] = request.user
+        request.POST['date_today']=date.today()
+        request.POST['status'] = 5
+        
+        form=mod9001planning(request.POST)
+                        
+        if form.is_valid():
+
+                
+            form.save()
+            form=mod9001planning()
+            context={'form':form}
+            return render(request,'planning.html',context)
+            
+            
+    context={'form':form}
+    return render(request,'planning.html',context)
+#######################APPROVE PLANNING###################################################
+@login_required(login_url='login')
+def planning_pending(request):
+    pendingcar=mod9001_planning.objects.filter(status='5') #get all planning  pending approval    
+    context={'pendingcar':pendingcar} 
+    return render(request,'planning_pending.html',context)
+
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['supervisor'])
+def approve_planning(request,pk_test):
+    pending_planning=mod9001_planning.objects.get(car_no=pk_test)
+    form=ApprovePlanning(instance=pending_planning)
+
+    if request.method=="POST":
+
+            
+            
+            request.POST=request.POST.copy()
+            request.POST['approved_by']=request.user
+            request.POST['approval_date']=date.today()                      
+
+            form=ApprovePlanning(request.POST, instance=pending_planning)
+            if form.is_valid():
+                form.save()
+                return redirect('/planning_pending/')
+
+    context={'form':form}  
+
+
+    return render(request,'planning_approve.html',context)    
+#####################VERIFY PLANNING ########################################
+def CARnumbers_7days_expire(*x):
+    date_str = x[0]
+    date_object = datetime.strptime(date_str, '%m/%d/%Y').date()
+    delta =date_object - date.today()
+    return delta.days
+
+@login_required(login_url='login')
+def planning_due(request):
+    carExpire7days=mod9001_planning.objects.filter(status=1).filter(~Q(qmsstatus=1))
+    thislist = []
+   
+    for i in carExpire7days:
+        w=i.due
+        t=w.strftime('%m/%d/%Y')
+        if CARnumbers_7days_expire(t)<0:
+            thislist.append(i.car_no)
+    thisdict={}
+    i=0
+    #creat a dictionary for all car numbers for display
+    for x in thislist:
+        while i<len(thislist):
+            y = str(i)
+            thisdict["car_no"+y] = thislist[i]
+            i+=1
+
+        
+    return render(request,'planning_due.html',{'thisdict':thisdict})
+
+
+
+@login_required(login_url='login')
+def planning_7daysToExpiryview(request,pk_test):
+
+    products=mod9001_planning.objects.filter(car_no=pk_test)
+    return render(request,'planning_view_7_days_To_expiry.html',{'products':products})
+
+@allowed_users(allowed_roles=['supervisor'])
+def verify_planning(request,pk_test):
+
+    open_car=mod9001_planning.objects.get(car_no=pk_test)
+    form=VerifyPlanning(instance=open_car)
+    if request.method=="POST":
+            #print("request.POST['verification']",request.POST['qmsstatus'])
+            
+            if request.POST['qmsstatus'] =="Rejected":
+                request.POST=request.POST.copy()
+                request.POST['status'] = 5 #requires approval first before next verification
+                request.POST['verification']=2 #default verifiaction to Not effective
+                print("request", request.POST)
+            
+            elif request.POST['qmsstatus'] == '1':
+                print("request.POST['qmsstatus']",request.POST['qmsstatus'])
+                request.POST=request.POST.copy()
+                request.POST['status'] = 1 # keep status approved
+            
+            else:
+                request.POST=request.POST.copy()
+
+
+
+
+
+
+            form=VerifyPlanning(request.POST, instance=open_car)
+            if form.is_valid():
+                form.save()
+                return redirect('/planning_due/')
+
+    context={'form':form}  
+
+
+    return render(request,'planning_verify.html',context) 
+          
+###########################CHANGE REQUEST###########################################       
+def req_no():
+   return str("Comp-RFC-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
+
+
+
+@login_required(login_url='login')
+def changerequest(request):
+              
+    form=change_request(initial={'req_no': req_no()})
+                          
+    if request.method=="POST":
+
+        request.POST=request.POST.copy()
+        request.POST['entered_by'] = request.user
+        request.POST['date_today']=date.today()
+        request.POST['status'] = 5
+        
+        form=change_request(request.POST)
+                        
+        if form.is_valid():
+
+                
+            form.save()
+            form=change_request(initial={'req_no': req_no()})
+            context={'form':form}
+            return render(request,'changerequest.html',context)
+            
+            
+    context={'form':form}
+    return render(request,'changerequest.html',context)
+
+
+#######################CHANGE REQUEST###################################################
+@login_required(login_url='login')
+def changerequest_pending(request):
+    pendingcar=mod9001_changeRegister.objects.filter(status='5') #get all planning  pending approval    
+    context={'pendingcar':pendingcar} 
+    return render(request,'changerequest_pending.html',context)
+
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['supervisor'])
+def approve_changerequest(request,pk_test):
+    pending_planning=mod9001_changeRegister.objects.get(req_no=pk_test)
+    form=ApproveChangeRequest(instance=pending_planning)
+
+    if request.method=="POST":
+
+            
+            
+            request.POST=request.POST.copy()
+            request.POST['approved_by']=request.user
+            request.POST['approval_date']=date.today()                      
+
+            form=ApproveChangeRequest(request.POST, instance=pending_planning)
+            if form.is_valid():
+                form.save()
+                return redirect('/changerequest_pending/')
+
+    context={'form':form}  
+
+
+    return render(request,'changerequest_approve.html',context) 
+
+#####################VERIFY CHANGE REQUEST ########################################
+@login_required(login_url='login')
+def changerequest_due(request):
+    carExpire7days=mod9001_changeRegister.objects.filter(status=1).filter(~Q(qmsstatus=1))
+    thislist = []
+   
+    for i in carExpire7days:
+        w=i.due
+        t=w.strftime('%m/%d/%Y')
+        if CARnumbers_7days_expire(t)<0:
+            thislist.append(i.req_no)
+    thisdict={}
+    i=0
+    #creat a dictionary for all car numbers for display
+    for x in thislist:
+        while i<len(thislist):
+            y = str(i)
+            thisdict["req_no"+y] = thislist[i]
+            i+=1
+
+        
+    return render(request,'changerequest_due.html',{'thisdict':thisdict})
+
+
+
+@login_required(login_url='login')
+def changerequest_7daysToExpiryview(request,pk_test):
+
+    products=mod9001_changeRegister.objects.filter(req_no=pk_test)
+    return render(request,'changerequest_view_7_days_To_expiry.html',{'products':products})
+
+@allowed_users(allowed_roles=['supervisor'])
+def verify_changerequest(request,pk_test):
+
+    open_car=mod9001_changeRegister.objects.get(req_no=pk_test)
+    form=Verifychangerequest(instance=open_car)
+    if request.method=="POST":
+            #print("request.POST['verification']",request.POST['qmsstatus'])
+            
+            if request.POST['qmsstatus'] =="Rejected":
+                request.POST=request.POST.copy()
+                request.POST['status'] = 5 #requires approval first before next verification
+                request.POST['verification']=2 #default verifiaction to Not effective
+                print("request", request.POST)
+            
+            elif request.POST['qmsstatus'] == '1':
+                print("request.POST['qmsstatus']",request.POST['qmsstatus'])
+                request.POST=request.POST.copy()
+                request.POST['status'] = 1 # keep status approved
+            
+            else:
+                request.POST=request.POST.copy()
+
+
+
+
+
+
+            form=Verifychangerequest(request.POST, instance=open_car)
+            if form.is_valid():
+                form.save()
+                return redirect('/changerequest_due/')
+
+    context={'form':form}  
+
+
+    return render(request,'changerequest_verify.html',context) 
+########################### CUSTOMER COMPLAINT##################################
+@login_required(login_url='login')
+def customercomplaint(request):
+              
+    form=customer_complaint(initial={'comp_no': comp_no()})
+                          
+    if request.method=="POST":
+
+        request.POST=request.POST.copy()
+        request.POST['entered_by'] = request.user
+        request.POST['date_today']=date.today()
+        request.POST['status'] = 1
+        
+        form=customer_complaint(request.POST)
+                        
+        if form.is_valid():
+
+                
+            form.save()
+            form=customer_complaint(initial={'comp_no': comp_no()})
+            context={'form':form}
+            return render(request,'customercomplaint.html',context)
+            
+            
+          
+        
+    context={'form':form}
+    return render(request,'customercomplaint.html',context)
+
+
+@login_required(login_url='login')
+def customercomplaint_due(request):
+    carExpire7days=mod9001_customerComplaint.objects.filter(status=1).filter(~Q(qmsstatus=1))
+    #carExpire7days=mod9001_providerassessment.objects.filter(status=1)
+    thislist = []
+    for i in carExpire7days:
+        #print("printing",i)
+        w=i.due
+        t=w.strftime('%m/%d/%Y')
+        if CARnumbers_7days_expire(t)<0:
+            thislist.append(i.comp_no)
+    thisdict={}
+    i=0
+    #creat a dictionary for all car numbers for display
+    for x in thislist:
+        while i<len(thislist):
+            y = str(i)
+            thisdict["comp_no"+y] = thislist[i]
+            i+=1
+
+        
+    return render(request,'customerComplaint_due.html',{'thisdict':thisdict})
+
+
+
+
+
+@allowed_users(allowed_roles=['supervisor'])
+def Verify_customercomplaint(request,pk_test):
+    open_car=mod9001_customerComplaint.objects.get(comp_no=pk_test)
+    form=Verifycustomercomplaint(instance=comp_no)
+    if request.method=="POST":
+            #print("request.POST['qmsstatus']",request.POST['qmsstatus'])
+            
+            if request.POST['qmsstatus'] =="Rejected":
+                request.POST=request.POST.copy()
+                request.POST['status'] = 1 #requires approval first before next verification
+                request.POST['verification']=2 #default verifiaction to Not effective
+                print("request", request.POST)
+            
+            elif request.POST['qmsstatus'] == '1':
+                #print("request.POST['qmsstatus']",request.POST['qmsstatus'])
+                request.POST=request.POST.copy()
+                request.POST['status'] = 1 # keep status approved
+            
+            else:
+                request.POST=request.POST.copy()
+
+
+
+
+
+
+            form=Verifycustomercomplaint(request.POST, instance=comp_no)
+            if form.is_valid():
+                form.save()
+                return redirect('/customercomplaint_due/')
+
+    context={'form':form}  
+
+
+    return render(request,'customercomplaint_verify.html',context)
+
+
+@login_required(login_url='login')
+def customercomplaint_7daysToExpiryview(request,pk_test):
+
+    products=mod9001_customerComplaint.objects.filter(comp_no=pk_test)
+    return render(request,'customercomplaint_view_7_days_To_expiry.html',{'products':products})
+
+##########################CUSTOMER SATISFACTION########################################
+
+@login_required(login_url='login')
+def customersatisfaction(request):
+    form=customer_satisfaction(initial={'satis_no': satis_survey_no()})
+    
+              
+                            
+    if request.method=="POST":
+        request.POST=request.POST.copy()
+        request.POST['entered_by']=request.user
+        request.POST['date_today']=date.today()
+        request.POST['status'] = 1
+#        #print("TEXT",request.POST)
+        
+        
+        form=customer_satisfaction(request.POST)
+                        
+        if form.is_valid():
+
+                
+            form.save()
+            form=customer_satisfaction()
+            context={'form':form}
+            return render(request,'customersatisfaction.html',context)
 
             
             
           
         
+    context={'form':form,'providers':providers}
+    return render(request,'customersatisfaction.html',context)
+
+
+@login_required(login_url='login')
+def customersatisfaction_due(request):
+    carExpire7days=mod9001_customerSatisfaction.objects.filter(status=1).filter(~Q(qmsstatus=1))
+    #carExpire7days=mod9001_providerassessment.objects.filter(status=1)
+    thislist = []
+    for i in carExpire7days:
+        #print("printing",i)
+        w=i.due
+        t=w.strftime('%m/%d/%Y')
+        if CARnumbers_7days_expire(t)<0:
+            thislist.append(i.satis_no)
+    thisdict={}
+    i=0
+    #creat a dictionary for all car numbers for display
+    for x in thislist:
+        while i<len(thislist):
+            y = str(i)
+            thisdict["satis_no"+y] = thislist[i]
+            i+=1
+
+        
+    return render(request,'customersatisfaction_due.html',{'thisdict':thisdict})
 
 
 
+
+
+@allowed_users(allowed_roles=['supervisor'])
+def Verify_customersatisfaction(request,pk_test):
+    open_car=mod9001_customerSatisfaction.objects.get(satis_no=pk_test)
+    form=Verifyecustomersatisfaction(instance=open_car)
+    if request.method=="POST":
+            #print("request.POST['qmsstatus']",request.POST['qmsstatus'])
+            
+            if request.POST['qmsstatus'] =="Rejected":
+                request.POST=request.POST.copy()
+                request.POST['status'] = 1 #requires approval first before next verification
+                request.POST['verification']=2 #default verifiaction to Not effective
+                print("request", request.POST)
+            
+            elif request.POST['qmsstatus'] == '1':
+                #print("request.POST['qmsstatus']",request.POST['qmsstatus'])
+                request.POST=request.POST.copy()
+                request.POST['status'] = 1 # keep status approved
+            
+            else:
+                request.POST=request.POST.copy()
+
+
+
+
+
+
+            form=Verifyecustomersatisfaction(request.POST, instance=open_car)
+            if form.is_valid():
+                form.save()
+                return redirect('/customersatisfaction_due/')
+
+    context={'form':form}  
+
+
+    return render(request,'customersatisfaction_verify.html',context)
+
+
+@login_required(login_url='login')
+def customersatisfaction_7daysToExpiryview(request,pk_test):
+
+    products=mod9001_customerSatisfaction.objects.filter(satis_no=pk_test)
+    return render(request,'customersatisfaction_view_7_days_To_expiry.html',{'products':products})
