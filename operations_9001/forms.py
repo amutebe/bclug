@@ -306,6 +306,12 @@ class customer_satisfaction(ModelForm):
        
         
         widgets={'end':DateInput(),'start':DateInput(),'status':forms.HiddenInput,'comment':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'due':DateInput(),'details':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'date':DateInput(),'responsetime':HorizontalRadioSelect(),'resolution':HorizontalRadioSelect(),'delivery':HorizontalRadioSelect(),'communication':HorizontalRadioSelect(),'compliant':HorizontalRadioSelect(),'quality':HorizontalRadioSelect(),'infosecurity':HorizontalRadioSelect(),'customerservice':HorizontalRadioSelect()}
+    def clean(self):
+        cleaned_data = super().clean()
+        start_date = cleaned_data.get("start")
+        end_date = cleaned_data.get("end")
+        if end_date < start_date:
+            raise forms.ValidationError("End date should be greater than start date.")
 
 
 class Verifyecustomersatisfaction(ModelForm):
