@@ -1380,7 +1380,7 @@ def customercomplaint_due(request):
 @allowed_users(allowed_roles=['supervisor'])
 def Verify_customercomplaint(request,pk_test):
     open_car=mod9001_customerComplaint.objects.get(comp_no=pk_test)
-    form=Verifycustomercomplaint(instance=comp_no)
+    form=Verifycustomer_complaint(instance=open_car)
     if request.method=="POST":
             #print("request.POST['qmsstatus']",request.POST['qmsstatus'])
             
@@ -1403,7 +1403,7 @@ def Verify_customercomplaint(request,pk_test):
 
 
 
-            form=Verifycustomercomplaint(request.POST, instance=comp_no)
+            form=Verifycustomer_complaint(request.POST, instance=open_car)
             if form.is_valid():
                 form.save()
                 return redirect('/customercomplaint_due/')

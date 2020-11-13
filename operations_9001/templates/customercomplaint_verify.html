@@ -14,27 +14,12 @@
  {% csrf_token %}
 
 
-<div class="form-group" id="cost">
-    
-    <label for="cost">Cost:</label><br>
-  {{form.cost}}
-<font color="red">{{form.errors.cost}}</font>
-</div>
-
- <div class="form-group" id="currency">
-    
-    <label for="currency">Currency:</label><br>
-  {{form.currency}}
-<font color="red">{{form.errors.currency}}</font>
-</div>
 
 
- <div class="form-group" id="costdescription">
-    
-    <label for="currency">Cost:</label><br>
-  {{form.costdescription}}
-<font color="red">{{form.errors.costdescription}}</font>
-</div>
+ 
+
+
+ 
 
 
 <div class="form-group" id="verification">
@@ -79,7 +64,7 @@
 
 
 <td ><a class="btn btn-warning" href="{%url 'customercomplaint_due' %}">Cancel</a></td>
-<td align="right"> <input class="btn btn-danger" type="submit" name="Confirm" value="Close"></td>
+<td align="right"> <input class="btn btn-info" type="submit" name="Confirm" value="Close"></td>
 					</tr>
           </table>
 </div>

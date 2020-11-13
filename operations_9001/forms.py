@@ -209,7 +209,7 @@ class corrective_action(ModelForm):
         exclude = ['entered_by','date_today']
         widgets = {
 
-            'date': DateInput(),'reference':TextInput(),'addesc':TextInput()
+            'date': DateInput(),'reference':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'addesc':forms.Textarea(attrs={'rows': 2, 'cols': 40})
         }
 
 class mod9001planning(ModelForm):
@@ -219,7 +219,7 @@ class mod9001planning(ModelForm):
         exclude = ['completion','qmsstatus','scheduled','entered_by','date_today','verification','verification_status','verification_failed','rejected','approval_date','approved_by']
         widgets = {
 
-            'due': DateInput(),'rootcause_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'details':forms.Textarea(attrs={'rows': 2, 'cols': 40})
+           'status':forms.HiddenInput, 'due': DateInput(),'rootcause_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'details':forms.Textarea(attrs={'rows': 2, 'cols': 40})
         }
 
    
@@ -246,7 +246,7 @@ class change_request(ModelForm):
     
     class Meta:
         model = mod9001_changeRegister 
-        exclude = ['completion','qmsstatus','scheduled','entered_by','date_today','verification','verification_status','verification_failed','rejected','approval_date','approved_by']
+        exclude = ['status','proposedby','assignedto','due','completion','qmsstatus','scheduled','entered_by','date_today','verification','verification_status','verification_failed','rejected','approval_date','approved_by']
         widgets = {
 
             'date': DateInput(),'due': DateInput(),'changedesc':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'evaldesc':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'add_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40})
@@ -279,10 +279,10 @@ class customer_complaint(ModelForm):
         #exclude = ['entered_by','date_today','status']
         exclude = ['entered_by','date_today','verification','verification_status','verification_failed','qmsstatus','scheduled','completion']
  
-        widgets={'time':TimeInput(),'status':forms.HiddenInput,'due':DateInput(),'date':DateInput(),'completion':DateInput(),'date_posted':DateInput(), 'complaint_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'add_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'complaint':forms.Textarea(attrs={'rows': 2, 'cols': 40})}
+        widgets={'complaint':TextInput(),'time':TimeInput(),'status':forms.HiddenInput,'due':DateInput(),'date':DateInput(),'completion':DateInput(),'date_posted':DateInput(), 'complaint_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'add_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40})}
 
 
-class Verifycustomercomplaint(ModelForm):
+class Verifycustomer_complaint(ModelForm):
     class Meta:
         model = mod9001_customerComplaint 
         #fields = '__all__'
@@ -305,7 +305,7 @@ class customer_satisfaction(ModelForm):
         #fields = ['emp_perfrev_no','planner_number','date','Provider','organisation','assesment_date','start','end','appraise']
        
         
-        widgets={'year':DateInput(),'status':forms.HiddenInput,'comment':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'due':DateInput(),'details':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'date':DateInput(),'responsetime':HorizontalRadioSelect(),'resolution':HorizontalRadioSelect(),'delivery':HorizontalRadioSelect(),'communication':HorizontalRadioSelect(),'compliant':HorizontalRadioSelect(),'quality':HorizontalRadioSelect(),'infosecurity':HorizontalRadioSelect(),'customerservice':HorizontalRadioSelect()}
+        widgets={'end':DateInput(),'start':DateInput(),'status':forms.HiddenInput,'comment':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'due':DateInput(),'details':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'date':DateInput(),'responsetime':HorizontalRadioSelect(),'resolution':HorizontalRadioSelect(),'delivery':HorizontalRadioSelect(),'communication':HorizontalRadioSelect(),'compliant':HorizontalRadioSelect(),'quality':HorizontalRadioSelect(),'infosecurity':HorizontalRadioSelect(),'customerservice':HorizontalRadioSelect()}
 
 
 class Verifyecustomersatisfaction(ModelForm):
