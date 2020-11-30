@@ -1,0 +1,99 @@
+{%  extends 'accounts/base.html' %}
+
+{% block content %}
+  	
+		<div class="col-md-40">
+
+			<div class="col-md-40">
+            
+		
+				<div class="card card-body">
+ <h4 class="mb-3">Corrective Action Register:</h4>
+ <p class="round2"> 
+
+
+<form method="get">
+                     {% csrf_token %}
+                    
+<table  class="tableizer-table" align="left">                
+<thead><tr class="tableizer-firstrow">
+
+
+<th>Summary</th>
+<th>Start Date</th>
+<th>End Date</th>
+<th>CAR source</th>
+<th></th>
+</tr></thead>
+
+
+<tbody><tr>
+<td>{{myFilter.form.date}}</td>
+<td>{{myFilter.form.start}}</td>
+<td>{{myFilter.form.end}}</td>
+<td>{{myFilter.form.car_source}}</td>
+<td><button class="btn btn-info btn-sm" type="submit">Search</button></td>
+</tr></tbody>
+</table>
+ </form>
+<form method="post">{% csrf_token %} 
+                    
+<table  class="tableizer-table" align="right">                
+<tbody><tr><td><button class="btn btn-success btn-sm" type="submit">Export to excel</button></td>
+</tr></tbody>
+</table>
+ </form>		
+		 
+		  
+				</div> 
+				</div>
+                </div>
+	
+                
+					<table class="tableizer-table">
+						<thead><tr class="tableizer-firstrow">
+					<th>CAR No.</th>
+					<th>Date</th>
+					<th>Process</th>					
+					<th>CAR Source</th>
+                    <th>Element</th>
+                    <th>Reference</th>
+                    <th>Findings</th>
+					<th>Add. Desc.</th>
+				    <th>Request To</th>
+
+					
+                    
+					
+				</tr></thead><tbody>
+				
+				{% for i in docmngr %}
+				
+					<tr>
+					<td>{{i.car_no}}</td>
+					<td>{{i.date}}</td>
+					<td>{{i.process}}</td>						
+				    <td>{{i.car_source}}</td>
+                    <td>{{i.element}}</td>
+                    <td>{{i.reference}}</td>
+                    <td>{{i.get_finding_display}}</td>
+                    <td>{{i.addesc}}</td>                
+					<td>{{i.requesto}}</td>
+
+
+
+
+				
+					</tr>
+                    </tbody>
+
+				{%endfor%}
+						
+					</table>
+                  
+         
+			
+		
+		
+
+{% endblock content %}

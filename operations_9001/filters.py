@@ -73,3 +73,45 @@ class Operations_incidentRegisterFilter(django_filters.FilterSet):
     class Meta:
         model=mod9001_incidentregisterStaff
         fields=['classification']
+
+
+
+########################CUSTOMER SATISFACTION SURVEY ##################################
+class customerSatisfactionFilter(django_filters.FilterSet):
+    date=DateRangeFilter(field_name="date",label='Summary')
+    start=DateFilter(field_name="start",lookup_expr='gte',label='Start Date',widget=DateInput())
+    end=DateFilter(field_name="end",lookup_expr='lte',label='End Date',widget=DateInput())
+ 
+
+
+    class Meta:
+        model=mod9001_customerSatisfaction   
+        fields=['rank','status','qmsstatus']
+
+########################CUSTOMER COMPLAINT ##################################
+class customer_complaintFilter(django_filters.FilterSet):
+    date=DateRangeFilter(field_name="date",label='Summary')
+    start=DateFilter(field_name="date",lookup_expr='gte',label='Start Date',widget=DateInput())
+    end=DateFilter(field_name="date",lookup_expr='lte',label='End Date',widget=DateInput())
+    class Meta:
+        model=mod9001_customerComplaint
+        fields=['classification']
+
+
+########################CORRECTIVE ACTION##################################
+class correctiveactionFilter(django_filters.FilterSet):
+    date=DateRangeFilter(field_name="date",label='Summary')
+    start=DateFilter(field_name="date",lookup_expr='gte',label='Start Date',widget=DateInput())
+    end=DateFilter(field_name="date",lookup_expr='lte',label='End Date',widget=DateInput())
+    class Meta:
+        model=mod9001_correctiveaction
+        fields=['car_source']
+
+########################CHANGE REQUEST##################################
+class changeRegisterFilter(django_filters.FilterSet):
+    date=DateRangeFilter(field_name="date",label='Summary')
+    start=DateFilter(field_name="date",lookup_expr='gte',label='Start Date',widget=DateInput())
+    end=DateFilter(field_name="date",lookup_expr='lte',label='End Date',widget=DateInput())
+    class Meta:
+        model=mod9001_changeRegister
+        fields=['trigger','status','qmsstatus']

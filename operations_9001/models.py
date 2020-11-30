@@ -548,14 +548,14 @@ class decision(models.Model):
 
 
 
-
+##########################CORRECTIVE ACTIVE #############################################################
 
 class mod9001_correctiveaction(models.Model):
     car_no=models.CharField("CAR No.:",max_length=200,default="Comp-CAR-Q-"+ correction_no(),primary_key=True)
     date=models.DateTimeField("CAR Date:",null=True)
     process=models.ForeignKey('process', on_delete=models.SET_NULL,verbose_name='Process:',null=True,blank=True)
     car_source=models.ForeignKey('car_source', on_delete=models.SET_NULL,verbose_name='CAR source:',null=True,blank=True)
-    element=models.ForeignKey('element', on_delete=models.SET_NULL,verbose_name='element:',null=True,blank=True)
+    element=models.ForeignKey('element', on_delete=models.SET_NULL,verbose_name='Element:',null=True,blank=True)
     reference=models.TextField("Reference",null=True, blank=True)      
     findings=(('1','Non Conformity'),('2','Observation'))
     finding=models.CharField("Finding",max_length=200, choices=findings)

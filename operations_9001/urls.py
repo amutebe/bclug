@@ -42,6 +42,10 @@ path('incidentregister_7daysToExpiryview/<str:pk_test>/',views.incidentregister_
 
 
 path('correctiveaction/', views.correctiveaction, name='correctiveaction'),
+path('correctiveaction_report/', views.correctiveaction_report, name='correctiveaction_report'),
+
+
+
 path('planning/', views.planning, name='planning'),
 path('planning_pending/', views.planning_pending, name='planning_pending'),
 path('approve_planning/<str:pk_test>/',views.approve_planning,name="approve_planning"),
@@ -54,9 +58,15 @@ path('changerequest_pending/', views.changerequest_pending, name='changerequest_
 path('approve_changerequest/<str:pk_test>/',views.approve_changerequest,name="approve_changerequest"),
 path('changerequest_due/',views.changerequest_due,name="changerequest_due"), 
 path('changerequest_7daysToExpiryview/<str:pk_test>/',views.changerequest_7daysToExpiryview,name="changerequest_7daysToExpiryview"),
+path('changeRegister_report/', views.changeRegister_report, name='changeRegister_report'),
+
+
 path('verify_changerequest/<str:pk_test>/',views.verify_changerequest,name="verify_changerequest"),
 
 path('customercomplaint/', views.customercomplaint, name='customercomplaint'),
+path('customer_complaint_report/', views.customer_complaint_report, name='customer_complaint_report'),
+
+
 path('customercomplaint_due/',views.customercomplaint_due,name="customercomplaint_due"), 
 path('customercomplaint_7daysToExpiryview/<str:pk_test>/',views.customercomplaint_7daysToExpiryview,name="customercomplaint_7daysToExpiryview"),
 path('Verify_customercomplaint/<str:pk_test>/',views.Verify_customercomplaint,name="Verify_customercomplaint"),
@@ -71,6 +81,10 @@ path('providerassessments_due/',views.providerassessments_due,name="providerasse
 path('providerassesment_7daysToExpiryview/<str:pk_test>/',views.providerassesment_7daysToExpiryview,name="providerassesment_7daysToExpiryview"),
 
 path('customersatisfaction/', views.customersatisfaction, name='customersatisfaction'),
+path('customersatisfaction_report/', views.customersatisfaction_report, name='customersatisfaction_report'),
+
+
+
 path('Verify_customersatisfaction/<str:pk_test>/',views.Verify_customersatisfaction,name="Verify_customersatisfaction"),
 path('customersatisfaction_due/',views.customersatisfaction_due,name="customersatisfaction_due"),
 path('customersatisfaction_7daysToExpiryview/<str:pk_test>/',views.customersatisfaction_7daysToExpiryview,name="customersatisfaction_7daysToExpiryview"),

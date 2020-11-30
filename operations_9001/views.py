@@ -1028,7 +1028,7 @@ def providerassesment_7daysToExpiryview(request,pk_test):
 def car_no():
    return str("Comp-CAR-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
 
-
+#########################CORRECTIVE ACTION##################################
 @login_required(login_url='login')
 def correctiveaction(request):
               
@@ -1054,6 +1054,34 @@ def correctiveaction(request):
             
     context={'form':form}
     return render(request,'correctiveaction.html',context)
+
+@login_required(login_url='login')
+def correctiveaction_report(request):
+    
+    docmngr=mod9001_correctiveaction.objects.all() #get all corrective action in database 
+    myFilter=correctiveactionFilter(request.GET, queryset=docmngr)
+    docmngr=myFilter.qs
+    if request.method=="POST":
+        docmngr_list = mod9001_correctiveaction.objects.all()
+        myFilter=correctiveactionFilter(request.GET, queryset=docmngr_list)
+        docmngr=myFilter.qs
+        
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="CorrectiveAction_register.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(['CAR No.', 'Date', 'Process', 'CAR Source','Reference','Element','Findings','Add. Desc.','RequestTo'])
+
+    
+        for i in docmngr:
+            
+            writer.writerow([i.car_no, i.date,i.process,i.car_source, i.reference,i.element,i.get_finding_display(),i.addesc,i.requesto])
+        return response
+        
+    else:
+        return render(request,'CorrectiveAction_report.html',{'docmngr':docmngr,'myFilter':myFilter})
+
+
 
             
 @login_required(login_url='login')
@@ -1219,6 +1247,37 @@ def changerequest(request):
     context={'form':form}
     return render(request,'changerequest.html',context)
 
+@login_required(login_url='login')
+def changeRegister_report(request):
+    
+    docmngr=mod9001_changeRegister.objects.all() #get all customer satisfaction in database 
+    myFilter=changeRegisterFilter(request.GET, queryset=docmngr)
+    docmngr=myFilter.qs
+    if request.method=="POST":
+        docmngr_list = mod9001_changeRegister.objects.all()
+        myFilter=changeRegisterFilter(request.GET, queryset=docmngr_list)
+        docmngr=myFilter.qs
+        
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="Change_Request.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(['RequestNo.', 'Date', 'RaisedBy', 'CARsource','Process','ChangeType','ChangeDesc.','Evaluation','Eval.Desc.','Cost','Currency','CostDesc.','Add.Desc.','Approved','Verified','ProposedBy','AssignedTo','When'])
+
+    
+        for i in docmngr:
+            
+            writer.writerow([i.req_no, i.date,i.raisedby,i.trigger,i.process,i.changetype,i.changedesc,i.get_evaluation_display(),i.evaldesc,i.cost,i.get_currency_display(),i.costdescription,i.add_desc,i.status,i.qmsstatus,i.proposedby,i.assignedto,i.due])
+        return response
+        
+    else:
+        return render(request,'changeRequest_report.html',{'docmngr':docmngr,'myFilter':myFilter})
+
+
+
+
+
+
 
 #######################CHANGE REQUEST###################################################
 @login_required(login_url='login')
@@ -1348,6 +1407,38 @@ def customercomplaint(request):
         
     context={'form':form}
     return render(request,'customercomplaint.html',context)
+
+@login_required(login_url='login')
+def customer_complaint_report(request):
+    
+    docmngr=mod9001_customerComplaint.objects.all() #get all customer satisfaction in database 
+    myFilter=customer_complaintFilter(request.GET, queryset=docmngr)
+    docmngr=myFilter.qs
+    if request.method=="POST":
+        docmngr_list = mod9001_customerComplaint.objects.all()
+        myFilter=customer_complaintFilter(request.GET, queryset=docmngr_list)
+        docmngr=myFilter.qs
+        
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="customer_complaint_register.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(['ComplaintNo.', 'Date', 'Time', 'complainant','Organisation','Process','CompalintType','Desc.','Classification','Correction','Add. Desc.','AssignedTo','When','Approved','Verified'])
+
+    
+        for i in docmngr:
+            
+            writer.writerow([i.comp_no, i.date,i.time,  i.complaint,i.organisation,i.process,i.type,i.complaint_desc,i.classification,i.correction,i.add_desc,i.assignedto,i.due,i.status,i.qmsstatus])
+        return response
+        
+    else:
+        return render(request,'customerComplaint_report.html',{'docmngr':docmngr,'myFilter':myFilter})
+
+
+
+
+
+
 
 
 @login_required(login_url='login')
@@ -1523,3 +1614,31 @@ def customersatisfaction_7daysToExpiryview(request,pk_test):
 
     products=mod9001_customerSatisfaction.objects.filter(satis_no=pk_test)
     return render(request,'customersatisfaction_view_7_days_To_expiry.html',{'products':products})
+
+
+
+@login_required(login_url='login')
+def customersatisfaction_report(request):
+    
+    docmngr=mod9001_customerSatisfaction.objects.all() #get all customer satisfaction in database 
+    myFilter=customerSatisfactionFilter(request.GET, queryset=docmngr)
+    docmngr=myFilter.qs
+    if request.method=="POST":
+        docmngr_list = mod9001_customerSatisfaction.objects.all()
+        myFilter=customerSatisfactionFilter(request.GET, queryset=docmngr_list)
+        docmngr=myFilter.qs
+        
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="customerSatisfaction_register.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(['SurveyNo.', 'Createdon', 'Organisation', 'Start','End','ResponseTime','ResolutionTime','DeliveryTime','Communication','Complaint','Quality','Info.Security','CustomerService','Rank','Comment','ImprovementPlan','Details','AssignedTo','When','Approved','Verified'])
+
+    
+        for i in docmngr:
+            
+            writer.writerow([i.satis_no, i.date,i.organisation,  i.start,i.end,i.responsetime,i.resolution,i.delivery,i.communication,i.compliant,i.quality,i.infosecurity,i.customerservice,i.rank,i.comment,i.improvplan,i.details,i.assignedto,i.due,i.status,i.qmsstatus])
+        return response
+        
+    else:
+        return render(request,'customerSatisfaction_report.html',{'docmngr':docmngr,'myFilter':myFilter})

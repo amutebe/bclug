@@ -1,0 +1,110 @@
+{%  extends 'accounts/base.html' %}
+
+{% block content %}
+  	
+		<div class="col-md-40">
+
+			<div class="col-md-40">
+            
+		
+				<div class="card card-body">
+ <h4 class="mb-3">Complaints Register:</h4>
+ <p class="round2"> 
+
+
+<form method="get">
+                     {% csrf_token %}
+                    
+<table  class="tableizer-table" align="left">                
+<thead><tr class="tableizer-firstrow">
+
+
+<th>Summary</th>
+<th>Start Date</th>
+<th>End Date</th>
+<th>Classification</th>
+<th></th>
+</tr></thead>
+
+
+<tbody><tr>
+<td>{{myFilter.form.date}}</td>
+<td>{{myFilter.form.start}}</td>
+<td>{{myFilter.form.end}}</td>
+<td>{{myFilter.form.classification}}</td>
+<td><button class="btn btn-info btn-sm" type="submit">Search</button></td>
+</tr></tbody>
+</table>
+ </form>
+<form method="post">{% csrf_token %} 
+                    
+<table  class="tableizer-table" align="right">                
+<tbody><tr><td><button class="btn btn-success btn-sm" type="submit">Export to excel</button></td>
+</tr></tbody>
+</table>
+ </form>		
+		 
+		  
+				</div> 
+				</div>
+                </div>
+	
+                
+					<table class="tableizer-table">
+						<thead><tr class="tableizer-firstrow">
+					<th>ComplaintNo.</th>
+					<th>Date</th>
+					<th>Time</th>					
+					<th>Complainant</th>
+                    <th>Organisation</th>
+                    <th>Process</th>
+                    <th>CompalintType</th>
+					<th>ComplaintDesc.</th>
+				    <th>Classification</th>
+					<th>Correction</th>
+                    <th>Add.Desc.</th>
+
+                    <th>AssignedTo</th>
+					<th>When</th>
+                    <th>Approved</th>
+					<th>Verified</th>
+					
+                    
+					
+				</tr></thead><tbody>
+				
+				{% for i in docmngr %}
+				
+					<tr>
+					<td>{{i.comp_no}}</td>
+					<td>{{i.date}}</td>
+					<td>{{i.time}}</td>						
+				    <td>{{i.complaint}}</td>
+                    <td>{{i.organisation}}</td>
+                    <td>{{i.process}}</td>
+                    <td>{{i.type}}</td>
+                    <td>{{i.complaint_desc}}</td>                
+					<td>{{i.classification}}</td>
+					<td>{{i.correction}}</td>
+					<td>{{i.add_desc}}</td>
+					<td>{{i.assignedto}}</td>
+					<td>{{i.due}}</td>
+                    <td>{{i.status}}</td>
+                    <td>{{i.qmsstatus}}</td>
+
+
+
+				
+					</tr>
+                    </tbody>
+
+				{%endfor%}
+						
+					</table>
+                  
+         
+			
+		
+		
+
+{% endblock content %}
