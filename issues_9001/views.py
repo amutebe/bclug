@@ -636,6 +636,7 @@ def opportunity(request):
         request.POST['entered_by'] = request.user
         request.POST['status'] = 5 #flaging status as pending OPP 
         request.POST['record_type'] = "OPP" #specifiing type of entry
+        request.POST['riskrank'] = request.POST['opprank'] #specifiing type of entry
 
 
         request.POST['date_today']=date.today()

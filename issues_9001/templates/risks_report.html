@@ -60,7 +60,10 @@
 					<th>DateofAnalysis</th>
 					<th>Assessor</th>					
 					<th>Context</th>
-                    <th>ContextDesc.</th>
+                    <th>ProcessDesc.</th>
+					<th>SWOT</th>
+					<th>IssueDesc.</th>
+					<th>Details</th>
                     <th>RiskDesc.</th>
                     <th>LKHD</th>
                         <th>Severity</th>
@@ -95,7 +98,10 @@
 					<td colspan="1">{{i.get_context_display}}</td>
 					{% endif %}
 				
-                    <td>{{i.issue_number.description}}</td>
+                    <td>{{i.issue_number.get_process_desc_display}}</td>
+					<td>{{i.issue_number.get_process_issues_display}}</td>
+					<td>{{i.issue_number.process_StrengthWeakness}}</td>
+					<td>{{i.issue_number.description}}</td>
                     <td>{{i.riskdescription}}</td>
                     <td>{{i.likelihood}}</td>
                     <td>{{i.severity}}</td>

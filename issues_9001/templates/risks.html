@@ -9,6 +9,7 @@ form
   margin: 0 auto;
 }
 </style>
+
 <div class="col-md-10 order-md-1">
           <h4 class="mb-3">Risk Assessment</h4>
 <p class="round2"> 
@@ -19,7 +20,7 @@ form
                
 <div class="row">
     <div class="col">
-      <label for="usr">Risk no: </label><br>
+      <label for="usr"><h6> Risk no: </h6></label><br>
 
      
 {{form.risk_number}}
@@ -29,7 +30,7 @@ form
 </div>
 
 <div class="col">
-<label for="usr">Date of Analysis:</label> <br>
+<label for="usr"><h6>Date of Analysis:</h6></label> <br>
 
  
 
@@ -44,21 +45,21 @@ form
 
 
 <div class="col">
-      <label for="usr">Assessor: </label><br> 
+      <label for="usr"><h6>Assessor:</h6> </label><br> 
      {{form.assessor}}
  <font color="red">{{ form.errors.assessor }}</font>
       
 </div>
 
  <div class="col" id="context">
-      <label for="context">Context: </label><br>  
+      <label for="context"><h6>Context:</h6> </label><br>  
         {{form.contextdetails}}  
  <font color="red">{{form.errors.contextdetails}}</font>
 </div>    
     
 
-<div class="col"><br>
-      <label for="usr">ID:</label>
+<div class="form-group"><br>
+      <label for="usr"><h6>ID:</h6></label>
      {{form.issue_number}}
  <font color="red">{{ form.errors.issue_number }}</font>
       
@@ -66,7 +67,7 @@ form
   
     
 
-<div class="col"><br>
+<div class="form-group"><br>
  
 <div class="form-group" id="contextdescription">
 <input type="text" id="contextdescription" name="contextdescription" value="" >
@@ -76,7 +77,7 @@ form
 
 <div class="form-group" id="riskdescription">
     
-    <label for="riskdescription">Risk description:</label>
+    <label for="riskdescription"><h6>Risk Description:</h6></label>
 <br>
 
 {{form.riskdescription}}
@@ -85,7 +86,7 @@ form
 
 <div class="form-group" id="internal">
     
-    <label for="internal">Please describe:</label>
+    <label for="internal"><h6>Please describe:</h6></label>
 <br>
     <input type="text" class="form-control" id="description"  name="description" {{form.description}}
 
@@ -96,44 +97,38 @@ form
 <div class="row">
  <div class="col">
 <div class="form-group">
-    <label for="likelihood"> Likelihood:</label>
+    <label for="likelihood"><h6> Likelihood:</h6></label>
 	<br>
 {{form.likelihood}}
   <font color="red">{{form.errors.likelihood}}</font>
 
 </div>
 </div>
-<div class="col">
+
+
+
+</div>
 <div class="form-group">
-    <label for="severity"> Severity:</label>
+    <label for="severity"> <h6>Severity:</h6></label>
 	<br>
 {{form.severity}}
   <font color="red">{{form.errors.severity}}</font>
 
 </div>
-</div>
-
-<div class="col">
 <div class="form-group">
-<label for="severity"> Risk Rating:</label>
+<label for="severity"><h6> Risk Rating:</h6></label><br>
 {{form.riskrating}}
 
 </div>
-</div>
- <div class="col">
+
  <div class="form-group">
-<label  for="severity"> Risk Rank:</label>
+<label  for="severity"><h6> Risk Rank:</h6></label><br>
 {{form.riskrank}}
 
 </div>
-</div>
-</div>
-
-
-
 <div class="form-group" id="risktreatment">
     
-    <label for="risktreatment">Risk Treatment Option:</label>
+    <label for="risktreatment"><h6>Risk Treatment Option:</h6></label>
 <br>
 {{form.risktreatment}}
   <font color="red">{{form.errors.risktreatment}}</font>
@@ -141,7 +136,7 @@ form
 
 <div class="form-group" id="retainreason">
     
-    <label for="retainreason"> Please give Reason:</label>
+    <label for="retainreason"> <h6>Please give Reason:</h6></label>
 <br>
 
     <input type="text" class="form-control" id="retainreason"  name="retainreason" {{form.retainreason}}
@@ -151,7 +146,7 @@ form
 
 <div class="form-group" id="riskmitigation">
     
-    <label for="riskmitigation">Risk mitigation:</label>
+    <label for="riskmitigation"><h6>Risk mitigation:</h6></label>
 <br>
 
 {{form.riskmitigation}}
@@ -160,7 +155,7 @@ form
 
 <div class="form-group" id="mitigation">
     
-    <label for="mitigation">If other, please specify mitigation:</label>
+    <label for="mitigation"><h6>If other, please specify mitigation:</h6></label>
 <br>
     <input type="text" class="form-control" id="mitigation"  name="mitigation" {{form.mitigation}}
 
@@ -170,7 +165,7 @@ form
 
 <div class="form-group" id="mitigationdesc">
     
-    <label for="internal">Please give risk mitigation details:</label>
+    <label for="internal"><h6>Please give risk mitigation details:</h6></label>
 <br>
     <input type="text" class="form-control" id="mitigationdesc"  name="mitigationdesc" {{form.mitigationdesc}}
 
@@ -183,7 +178,7 @@ form
 
 <div class="form-group" id="responsibility">
     
-    <label for="proposedby">Responsibility:</label><br>
+    <label for="proposedby"><h6>Responsibility:</h6></label><br>
    {{form.responsibility}}
 <font color="red">{{form.errors.responsibility}}</font>
     
@@ -191,7 +186,7 @@ form
   
 <div class="form-group" id="when">
    
-  <label for="proposedDate" >When:</label>
+  <label for="proposedDate" ><h6>When:</h6></label>
   <br>
     {{form.due}}
     <font color="red">{{form.errors.due}}</font>

@@ -86,7 +86,9 @@ $("#id_decision").change(function() {
 //ASSESMENT PROVIDER SCORE
 $(document).ready(function()
 {
-    $('#id_jobknowledge').change(function()
+   // $('#id_status').hide();
+	//$('label[for="id_status"]').hide();
+	$('#id_jobknowledge').change(function()
 {
 if(document.querySelector('input[name="jobknowledge"]:checked').value==""||
 document.querySelector('input[name="adaptability"]:checked').value==""||
@@ -125,12 +127,7 @@ parseInt(document.querySelector('input[name="professionalism"]:checked').value))
 		
 		if (percent_score <=20 )
 		{
-			//var form = document.getElementById("id_jobknowledge");
-			//alert(document.getElementById($("id_jobknowledge").val()));
-			//alert(document.querySelector('input[name="jobknowledge"]:checked').value);
-			
-			
-		
+
 			$('#id_rank').css("background-color", "#FF0000");
 			$('#id_rank').val(Math.round(percent_score)+"%: Poor");
 
@@ -1348,7 +1345,7 @@ $("#id_riskdescription").change(function() {
 
 /*script for risk mitigation options dropdown*/
 $("#id_riskmitigation").change(function() {
-			if ($(this).val()==2) {
+			if ($(this).val()==18) {
 					
 				$('#mitigation').show();
 				
@@ -1488,6 +1485,14 @@ $("#id_context").change(function() {
 				$('#internaldiv').hide();
 				$('#externaldiv').hide();
 				$('#processdiv').hide();
+				$('#id_internal_issues').val("");
+				$('#id_external_issues').val("");
+				$('#id_process_desc').val("");
+				$('#id_process_issues').val("");
+				$('#id_process_StrengthWeakness').val("");
+				$('#id_process_OpportunitiesThreats').val("");
+
+
 				$('#external_descriptiondiv').hide();
 				$('#internal_descriptiondiv').hide();
 				$('#process_descriptiondiv').hide();
@@ -1522,7 +1527,13 @@ $("#id_context").change(function() {
 					
 				$('#internaldiv').show();
 				$('#externaldiv').hide();
+				$('#id_external_issues').val("");
 				$('#processdiv').hide();
+				$('#id_process_desc').val("");
+				$('#id_process_issues').val("");
+				$('#id_process_StrengthWeakness').val("");
+				$('#id_process_OpportunitiesThreats').val("");
+
 				$('#external_descriptiondiv').hide();
 				$('#internal_descriptiondiv').show();
 				$('#process_descriptiondiv').hide();
@@ -1557,8 +1568,14 @@ $("#id_context").change(function() {
 			{
 				
 				$('#internaldiv').hide();
+				$('#id_internal_issues').val("");
 				$('#externaldiv').show();
 				$('#processdiv').hide();
+				$('#id_process_desc').val("");
+				$('#id_process_issues').val("");
+				$('#id_process_StrengthWeakness').val("");
+				$('#id_process_OpportunitiesThreats').val("");
+
 				$('#external_descriptiondiv').show();
 				$('#internal_descriptiondiv').hide();
 				$('#process_descriptiondiv').hide();
@@ -1588,6 +1605,8 @@ $("#id_context").change(function() {
 
 				$('#internaldiv').hide();
 				$('#externaldiv').hide();
+				$('#id_external_issues').val("");
+				$('#id_internal_issues').val("");
 				$('#processdiv').show();
 				$('#external_descriptiondiv').hide();
 				$('#internal_descriptiondiv').hide();
@@ -1849,6 +1868,8 @@ $(document).ready(function()
 		{
 			$('#id_riskrank').css("background-color", "#FFC300 ");
 			$('#id_riskrank').val("Medium");
+						$('#opprank').css("background-color", "#FFC300 ");
+			$('#opprank').val("Medium");
 			$('#risktreatment').show();
 			$('#retainreason').show();
 			$('#riskmitigation').show();
@@ -1863,6 +1884,8 @@ $(document).ready(function()
 		{
 			$('#id_riskrank').css("background-color", "#FF0000");
 			$('#id_riskrank').val("High");
+			$('#opprank').css("background-color", "#00FF82");
+			$('#opprank').val("High");
 			$('#risktreatment').show();
 			$('#retainreason').show();
 			$('#riskmitigation').show();
@@ -1877,6 +1900,8 @@ $(document).ready(function()
 		{
 			$('#id_riskrank').css("background-color", "#00FF82");
 			$('#id_riskrank').val("Low");
+			$('#opprank').css("background-color", "#FF0000");
+			$('#rank').val("Low");
 			$('#risktreatment').hide();
 			$('#retainreason').hide();
 			$('#riskmitigation').hide();
@@ -1902,7 +1927,9 @@ $(document).ready(function()
 		if ($('#id_riskrating').val() >= 9 && $('#id_riskrating').val()<=16 )
 		{
 			$('#id_riskrank').css("background-color", "#FFC300 ");
+			$('#opprank').css("background-color", "#FFC300 ");
 			$('#id_riskrank').val("Medium");
+			$('#opprank').val("Medium");
 			$('#risktreatment').show();
 			$('#retainreason').show();
 			$('#riskmitigation').show();
@@ -1915,7 +1942,9 @@ $(document).ready(function()
 		else if ($('#id_riskrating').val() >= 17 && $('#id_riskrating').val()<=25 )
 		{
 			$('#id_riskrank').css("background-color", "#FF0000");
+			$('#opprank').css("background-color", "#00FF82");
 			$('#id_riskrank').val("High");
+			$('#opprank').val("High");
 			$('#risktreatment').show();
 			$('#retainreason').show();
 			$('#riskmitigation').show();
@@ -1928,7 +1957,9 @@ $(document).ready(function()
 		else
 		{
 			$('#id_riskrank').css("background-color", "#00FF82");
+			$('#opprank').css("background-color", "#FF0000");
 			$('#id_riskrank').val("Low");
+			$('#opprank').val("Low");
 			$('#risktreatment').hide();
 			$('#retainreason').hide();
 			$('#riskmitigation').hide();

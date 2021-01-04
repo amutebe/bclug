@@ -88,7 +88,7 @@ class rootcause(models.Model):
 class mod9001_document_manager(models.Model):
     document_date=models.DateField("Date:")
     document_number=models.CharField("Document no.:",max_length=200,default="TEGA-Q-"+car_no(),primary_key=True)
-    standard= models.ForeignKey('document_standard',on_delete=models.CASCADE,verbose_name='ISO Standard Clause',related_name='standard')
+    standard= models.ForeignKey('document_standard',on_delete=models.CASCADE,verbose_name='Standard',related_name='standard')
     Origin=(('1','Internal'),('2','External'))
     origin=models.CharField(max_length=200,null=True, choices=Origin)
     doc_type= models.ForeignKey('document_type',on_delete=models.CASCADE,verbose_name='Document Type:',related_name='type')
@@ -548,7 +548,7 @@ class decision(models.Model):
 
 
 
-##########################CORRECTIVE ACTIVE #############################################################
+##########################CORRECTIVE ACTION #############################################################
 
 class mod9001_correctiveaction(models.Model):
     car_no=models.CharField("CAR No.:",max_length=200,default="Comp-CAR-Q-"+ correction_no(),primary_key=True)
@@ -567,7 +567,8 @@ class mod9001_correctiveaction(models.Model):
         return self.car_no
 
 class mod9001_planning(models.Model):
-    car_no=models.OneToOneField('mod9001_correctiveaction', on_delete=models.SET_NULL,verbose_name='CAR ID:',null=True,blank=True)
+    #car_no=models.OneToOneField('mod9001_correctiveaction', on_delete=models.SET_NULL,verbose_name='CAR ID:',null=True,blank=True)
+    car_no=models.ForeignKey('mod9001_correctiveaction', on_delete=models.SET_NULL,verbose_name='CarNo:',null=True,blank=True)
     containment=models.ForeignKey('containment', on_delete=models.SET_NULL,verbose_name='containment:',null=True,blank=True)
     rootcause=models.ForeignKey('root_cause', on_delete=models.SET_NULL,verbose_name='rootcause:',null=True,blank=True)
     rootcause_desc=models.TextField("Root Cause Description",null=True, blank=True)
@@ -590,6 +591,8 @@ class mod9001_planning(models.Model):
     
     completion=models.DateField("Completion Date:",null=True,blank=True)
     scheduled=models.DateField("Rescheduled Date:",null=True,blank=True)
+    comment=models.TextField("Comment:",null=True,blank=True, help_text='')
+
           
 ################CHANGE REQUEST #########################
 class change_type(models.Model):
@@ -608,17 +611,14 @@ class evaluation(models.Model):
 class mod9001_changeRegister(models.Model):
     req_no=models.CharField("Request No.:",max_length=200,default="Comp-RFC-Q-"+ correction_no(),primary_key=True)
     date=models.DateField("Date:",null=True)    
-    raisedby= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Raised by:',related_name='raised_by',null=True,blank=True)
-    
-    trigger=models.ForeignKey('car_source', on_delete=models.SET_NULL,verbose_name='CAR Source:',null=True,blank=True)
+    raisedby= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Raised by:',related_name='raised_by',null=True,blank=True)  
+    trigger=models.ForeignKey('car_source', on_delete=models.SET_NULL,verbose_name='Source:',null=True,blank=True)
     process=models.ForeignKey('process', on_delete=models.SET_NULL,verbose_name='Process:',null=True,blank=True)
     changetype=models.ForeignKey('change_type', on_delete=models.SET_NULL,verbose_name='Change Type:',null=True,blank=True)
     changedesc=models.TextField("Change Description",null=True, blank=True)    
     #evaluation=models.ForeignKey('evaluation', on_delete=models.SET_NULL,verbose_name='evaluation:',null=True,blank=True)
     Evaluation=(('1','Change affects existing products or services'),('2','Change absolutely necessary'),('3','Change impacts existing documents'),('4','Personnel training/re-training required'))
     evaluation = MultiSelectField('Evaluation',choices=Evaluation,null=True,blank=True)
-    
-    
     evaldesc=models.TextField("Additional Description",null=True, blank=True) 
     costs=(('1','Financial'),('2','Operational'),('3','Legal/Regulatory'),('4','Brand/Reputation'),('5','Product/Service'),('6','Customer Satisfaction'))
     cost = MultiSelectField('Risks or Business Impacts',choices=costs,null=True,blank=True)
@@ -626,7 +626,7 @@ class mod9001_changeRegister(models.Model):
     currency=models.CharField(verbose_name='Currency:',max_length=50, null=True,blank=True,choices=currency)
     costdescription=models.IntegerField("Cost Amount:",null=True,blank=True)
     
-    add_desc=models.TextField("Additional Description",null=True, blank=True)    
+    add_desc=models.TextField("Details",null=True, blank=True)    
     status=models.ForeignKey('issues_9001.approval_status', on_delete=models.SET_NULL,verbose_name='Status:',null=True,blank=True)
  
     rejected=models.TextField("Reason for rejecting:",null=True,blank=True, help_text='If rejected, please give a reason')
@@ -663,6 +663,9 @@ class mod9001_customerComplaint(models.Model):
     process=models.ForeignKey('process', on_delete=models.SET_NULL,verbose_name='Process:',null=True,blank=True)    
     type=models.ForeignKey('complaint_type', on_delete=models.SET_NULL,verbose_name='Complaint Type:',null=True,blank=True) 
     complaint_desc=models.TextField("Complaint Description",null=True, blank=True)
+    reoccurance=(('1','Yes'),('2','No'))
+    re_occurance=models.CharField(verbose_name='Re-Occurance:',max_length=50, null=True,blank=True,choices=reoccurance)
+   
     classification=models.ForeignKey('classification', on_delete=models.SET_NULL,verbose_name='Complaint Classification:',null=True,blank=True)
     correction=models.ForeignKey('correction', on_delete=models.SET_NULL,verbose_name='Correction/Containment:',null=True,blank=True)
     add_desc=models.TextField("Additional Description",null=True, blank=True)       
@@ -696,7 +699,7 @@ class mod9001_customerSatisfaction(models.Model):
     infosecurity=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='7. Information Security:',related_name='securit',null=True,blank=True)
     customerservice=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='8. Customer Services:',related_name='cus',null=True,blank=True)
    
-    rank=models.CharField("Final Ranking: (Scores 1 to 11 are required)",max_length=25,null=True,blank=True)
+    rank=models.CharField("Final Rating: (Scores 1 to 11 are required)",max_length=25,null=True,blank=True)
     comment=models.TextField("Comment",null=True, blank=True)
       
     improvement=(('1','Response Time'),('2','Ressolution Time'),('3','Delivery Time'),('4','Communication'),('5','Complaint Handling'),('6','Quality of Product/Service'),('7','Information Security'),('8','Customer Services'),('9','Other'))

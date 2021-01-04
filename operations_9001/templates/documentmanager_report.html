@@ -53,19 +53,22 @@
                 
 					<table class="tableizer-table">
 					<thead><tr class="tableizer-firstrow">
-					<th>DocumentNo</th>
-					<th>ReferenceNo</th>
-					<th>Name</th>
-					<th>Type</th>
-					<th>Version</th>
-					<th>Format</th>
+					<th>UploadDate</>
+					<th>Doc.No</th>
+					<th>Std.Ref</th>
 					<th>Origin</th>
-					<th>Standard</th>
-                    <th>StdClause</th>
+					<th>Type</th>
+					<th>Ref.No</th>
+					<th>Doc.Name</th>
+					<th>StdClause</th>
+					<th>Format</th>
+					<th>Version</th>
 					<th>Location</th>
+					<th>Spec.Location</th>
+					<th>Author</th>
 					<th>Owner</th>
 					<th>Retention</th>
-					<th>Status</th>
+               		<th>Status</th>
 					<th>Attachment</th>
 
                 
@@ -78,20 +81,21 @@
 				{% for i in docmngr %}
 				
 					<tr>
+					<td>{{i.document_date}}</td>
 					<td>{{i.document_number}}</td>
+					<td>{{i.standard}}</td>
+						<td>{{i.get_origin_display}}</td>
+						<td>{{i.doc_type}}</td>
 					<td>{{i.document_id}}</td>
 					<td>{{i.doc_name}}</td>
-				
-					
-					<td>{{i.doc_type}}</td>
-				
-					<td>{{i.version}}</td>
+					<td>{{i.clause}}</td>
 					<td>{{i.format}}</td>
-					<td>{{i.get_origin_display}}</td>
-					<td>{{i.standard}}</td>
-                    <td>{{i.clause}}</td>
-				
-					<td>{{i.location}}</td>
+						<td>{{i.version}}</td>
+					
+				<td>{{i.location}}</td>
+					<td>{{i.specifyl}}</td>
+					<td>{{i.author}}</td>
+					
 					<td>{{i.owner}}</td>
 					<td>{{i.get_retention_display}}</td>
 					<td>{{i.get_status_display}}</td>

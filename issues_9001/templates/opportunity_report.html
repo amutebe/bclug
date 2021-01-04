@@ -62,15 +62,18 @@
 					
 					
 					<th>Context</th>
-                    <th>ContextDescription</th>
-                       <th>Opp.Description</th>
-                          <th>LKHD</th>
-						  <th>BENEFIT</th>
+ 					<th>ProcessDesc.</th>
+					<th>SWOT</th>
+					<th>IssueDesc.</th>
+					<th>Details</th>
+                    <th>OPP.Desc.</th>
+                    <th>LKHD</th>
+					<th>BENEFIT</th>
 					<th>Rating</th>
 					<th>Ranking</th>
-                       <th>PursuitAction</th>
+                    <th>PursuitAction</th>
                       
-                             <th>Responsibility</th>
+                    <th>Responsibility</th>
 					<th>When</th>
 					<th>Approval</th>
                     <th>Verification</th>
@@ -89,15 +92,18 @@
 					<td>{{i.risk_date}}</td>
 					<td>{{i.assessor}}</td>
 				
-						{% if i.ip_number != empty %}
+						{% if i.issue_number != empty %}
 					
-					<td colspan="1">{{i.ip_number.get_context_display}}</td>
+					<td colspan="1">{{i.issue_number.get_context_display}}</td>
 					{% else %}
 					<td colspan="1">{{i.get_context_display}}</td>
 					{% endif %}
 				
-                    <td>{{i.ip_number.description}}</td>
-                     <td>{{i.description}}</td>
+                   <td>{{i.issue_number.get_process_desc_display}}</td>
+					<td>{{i.issue_number.get_process_issues_display}}</td>
+					<td>{{i.issue_number.process_StrengthWeakness}}</td>
+					<td>{{i.issue_number.description}}</td>
+                    <td>{{i.riskdescription}}</td>
                      <td>{{i.likelihood}}</td>
 					   <td>{{i.severity}}</td>
 

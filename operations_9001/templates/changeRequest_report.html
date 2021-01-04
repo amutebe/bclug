@@ -8,7 +8,7 @@
             
 		
 				<div class="card card-body">
- <h4 class="mb-3">Change Request:</h4>
+ <h4 class="mb-3">Change Register:</h4>
  <p class="round2"> 
 
 
@@ -55,14 +55,14 @@
 					<th>RequestNo.</th>
 					<th>Date</th>
 					<th>RaisedBy</th>					
-					<th>CARSource</th>
+					<th>Source</th>
                     <th>Process</th>
                     <th>ChangeType</th>
                     <th>ChangeDesc.</th>
 					<th>Evaluation.</th>
-				    <th>cost</th>
-					<th>currency</th>
-                    <th>Cost.Desc.</th>
+				    <th>Risk</th>
+					<th>Currency</th>
+                    <th>Amount</th>
 
                     <th>Add.Desc.</th>
 					<th>When</th>
@@ -87,8 +87,8 @@
                     <td>{{i.changetype}}</td>
                     <td>{{i.changedesc}}</td>
                     <td>{{i.get_evaluation_display}}</td>                
-					<td>{{i.cost}}</td>
-					<td>{{i.currency}}</td>
+					<td>{{i.get_cost_display}}</td>
+					<td>{{i.get_currency_display}}</td>
 					<td>{{i.costdescription}}</td>
 					<td>{{i.add_desc}}</td>
 					<td>{{i.due}}</td>

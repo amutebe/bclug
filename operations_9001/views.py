@@ -1058,11 +1058,11 @@ def correctiveaction(request):
 @login_required(login_url='login')
 def correctiveaction_report(request):
     
-    docmngr=mod9001_correctiveaction.objects.all() #get all corrective action in database 
+    docmngr=mod9001_planning.objects.all() #get all corrective action in database 
     myFilter=correctiveactionFilter(request.GET, queryset=docmngr)
     docmngr=myFilter.qs
     if request.method=="POST":
-        docmngr_list = mod9001_correctiveaction.objects.all()
+        docmngr_list = mod9001_planning.objects.all()
         myFilter=correctiveactionFilter(request.GET, queryset=docmngr_list)
         docmngr=myFilter.qs
         
@@ -1070,12 +1070,12 @@ def correctiveaction_report(request):
         response['Content-Disposition'] = 'attachment; filename="CorrectiveAction_register.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['CAR No.', 'Date', 'Process', 'CAR Source','Reference','Element','Findings','Add. Desc.','RequestTo'])
+        writer.writerow(['CAR No.', 'Date', 'Process', 'CAR Source','Reference','Element','Findings','Add. Desc.','RequestTo','Containment','RootCause','Action','Add.Details','ProposedBy','AssignedTo','When','Approval','Verification','Completion','Reschduled','Comment'])
 
     
         for i in docmngr:
             
-            writer.writerow([i.car_no, i.date,i.process,i.car_source, i.reference,i.element,i.get_finding_display(),i.addesc,i.requesto])
+            writer.writerow([i.car_no, i.car_no.date,i.car_no.process,i.car_no.car_source, i.car_no.reference,i.car_no.element,i.car_no.get_finding_display(),i.car_no.addesc,i.car_no.requesto,i.containment,i.rootcause,i.decision,i.details,i.proposedby,i.assignedto,i.due,i.status,i.qmsstatus,i.completion,i.scheduled,i.comment])
         return response
         
     else:
@@ -1113,6 +1113,9 @@ def planning(request):
 @login_required(login_url='login')
 def planning_pending(request):
     pendingcar=mod9001_planning.objects.filter(status='5') #get all planning  pending approval    
+    #pendingcar=mod9001_correctiveaction.objects.all()#get all from corrective action table   
+ 
+    
     context={'pendingcar':pendingcar} 
     return render(request,'planning_pending.html',context)
 
@@ -1234,7 +1237,7 @@ def changerequest(request):
         request.POST['status'] = 5
         
         form=change_request(request.POST)
-                        
+        print(request.POST)                
         if form.is_valid():
 
                 

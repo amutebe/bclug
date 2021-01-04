@@ -55,12 +55,24 @@
 					<th>CAR No.</th>
 					<th>Date</th>
 					<th>Process</th>					
-					<th>CAR Source</th>
+					<th>Source</th>
                     <th>Element</th>
                     <th>Reference</th>
                     <th>Findings</th>
-					<th>Add. Desc.</th>
-				    <th>Request To</th>
+					<th>Add.Desc.</th>
+				    <th>RequestTo</th>
+					<th>Containment</th>
+					<th>RootCause</th>
+					<th>Action</th>
+					<th>Add.Details</th>
+					<th>ProposedBy</th>
+					<th>AssignedTo</th>
+					<th>When</th>
+					<th>Approval</th>
+					<th>Verification</th>
+					<th>Completion</th>
+					<th>Reschduled</th>
+					<th>Comment</th>
 
 					
                     
@@ -70,15 +82,27 @@
 				{% for i in docmngr %}
 				
 					<tr>
-					<td>{{i.car_no}}</td>
-					<td>{{i.date}}</td>
-					<td>{{i.process}}</td>						
-				    <td>{{i.car_source}}</td>
-                    <td>{{i.element}}</td>
-                    <td>{{i.reference}}</td>
-                    <td>{{i.get_finding_display}}</td>
-                    <td>{{i.addesc}}</td>                
-					<td>{{i.requesto}}</td>
+						<td>{{i.car_no}}</td>
+					<td>{{i.car_no.date}}</td>
+					<td>{{i.car_no.process}}</td>						
+				    <td>{{i.car_no.car_source}}</td>
+                    <td>{{i.car_no.element}}</td>
+                    <td>{{i.car_no.reference}}</td>
+                    <td>{{i.car_no.get_finding_display}}</td>
+                    <td>{{i.car_no.addesc}}</td>                
+					<td>{{i.car_no.requesto}}</td>
+					<td>{{i.containment}}</td>
+					<td>{{i.rootcause}}</td>
+                    <td>{{i.decision}}</td>
+                    <td>{{i.details}}</td>                
+					<td>{{i.proposedby}}</td>
+					<td>{{i.assignedto}}</td>
+					<td>{{i.due}}</td>
+                    <td>{{i.status}}</td>
+                    <td>{{i.qmsstatus}}</td>                
+					<td>{{i.completion}}</td>
+					<td>{{i.scheduled}}</td>
+					<td>{{i.comment}}</td>
 
 
 

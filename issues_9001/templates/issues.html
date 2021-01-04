@@ -78,16 +78,16 @@ form {
 
 
 <div class="form-group" id="processdiv">
-<div class="row">
-<div class="col">
+
+<div class="form-group">
 <label for="process">Process Description:</label>
 <br>
 {{form.process_desc}}
 <font color="red">{{form.errors.process_desc}}</font>
 
 </div>
-<div class="col">
-<label for="process">Process Issue:</label>
+<div class="form-group">
+<label for="process">SWOT:</label>
 <br>
 {{form.process_issues}}
 <font color="red">{{form.errors.process_issues}}</font>
@@ -95,10 +95,10 @@ form {
 
 
 </div>
-</div>
+
 
 <div class="form-group" id="process_StrengthWeaknessiv">
-    <label for="process_StrengthWeakness">Please select Strength/Weakness:</label>
+    <label for="process_StrengthWeakness">Issue Description:</label>
 	<br>
 {{form.process_StrengthWeakness}}
   <font color="red">{{form.errors.process_StrengthWeakness}}</font>
@@ -106,7 +106,7 @@ form {
 </div>
 
 <div class="form-group" id="process_OpportunitiesThreatsdiv">
-    <label for="process_OpportunitiesThreats">Please select Opportunities/Threats:</label>
+    <label for="process_OpportunitiesThreats">Issue description:</label>
 	<br>
 {{form.process_OpportunitiesThreats}}
   <font color="red">{{form.errors.process_OpportunitiesThreats}}</font>
@@ -121,7 +121,7 @@ form {
 
 
 <div class="form-group" id="description">
-    <label for="description">Comment:</label>
+    <label for="description">Details:</label>
     <input type="text" class="form-control" id="description"  name="description" {{form.description}}
     <font color="red">{{form.errors.description}}</font>
 </div> 

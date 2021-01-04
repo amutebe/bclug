@@ -9,14 +9,16 @@
 			<table class="table table-sm">
 				<tr class="table-info">
 					<th>ID </th>
-					<th>Lead Analyst</th>
-					<th>Created on</th>
+					<th>Analyst</th>
+					<th>Created</th>
 					<th>Status</th>
 					
-					<th>Context Description</th>
-					<th>External Issue</th>
-					<th>Internal Issue</th>
-					<th>Process Issue</th>
+					<th>Context</th>
+					<th>Ext.Issue</th>
+					<th>Int.Issue</th>
+					<th>ProcessDesc.</th>
+					<th>ProcessIssue</th>
+				
 				
 					
 					<th>Description </th>
@@ -39,7 +41,9 @@
 
 					<td>{{i.get_external_issues_display}}</td>
 					<td>{{i.get_internal_issues_display}}</td>
+					<td>{{i.get_process_desc_display}}</td>
 					<td>{{i.get_process_issues_display}}</td>
+					
 					<td>{{i.description}}</td>
 					
 					<td></td>

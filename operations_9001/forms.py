@@ -157,7 +157,7 @@ class Verifyincidentregister(ModelForm):
         model = mod9001_incidentregisterStaff 
         #fields = '__all__'
         fields=['cost','currency','costdescription','verification','verification_status','verification_failed','qmsstatus','scheduled','completion']
-        widgets={'completion':DateInput(),'scheduled':DateInput()}        
+        widgets={'completion':DateInput(),'scheduled':DateInput(),'verification_failed':forms.Textarea(attrs={'rows': 2, 'cols': 40})}        
 
 
 
@@ -246,7 +246,8 @@ class change_request(ModelForm):
     
     class Meta:
         model = mod9001_changeRegister 
-        exclude = ['status','proposedby','assignedto','due','completion','qmsstatus','scheduled','entered_by','date_today','verification','verification_status','verification_failed','rejected','approval_date','approved_by']
+        fields = ['req_no','date','raisedby','trigger','process','changetype','changedesc','evaluation','evaldesc','cost','currency','costdescription','add_desc','assignedto','due','status']
+        #exclude = ['status','proposedby','assignedto','due','completion','qmsstatus','scheduled','entered_by','date_today','verification','verification_status','verification_failed','rejected','approval_date','approved_by']
         widgets = {
 
             'date': DateInput(),'due': DateInput(),'changedesc':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'evaldesc':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'add_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40})
