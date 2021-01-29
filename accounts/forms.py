@@ -72,7 +72,7 @@ class CAReditForm(ModelForm):
     
     class Meta:
         model = car 
-        exclude=['car_date','status','rejected','verification','verification_status','verification_failed']
+        exclude=['risk_date','status','rejected','verification','verification_status','verification_failed']
         widgets = {
             'car_dateoccur': DateInput(), 'car_time':TimeInput(),'proposedDate': DateInput(),
             'deadline': DateInput(),'car_date': DateInput()

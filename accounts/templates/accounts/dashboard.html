@@ -1,37 +1,48 @@
 
-{%  extends 'accounts/base.html' %}
-
-
+{% extends 'accounts/base.html' %}
 {% block content %}
-{%load static%}
-
-{%  include 'accounts/status.html' %}
+{% load static %}
+{% include 'accounts/status.html' %}
 
 <br>
 
 <div class="row">
 	<div class="col-md-5">
-		<h5>Corrective Action Requests:</h5>
+		<h5>JOBS PENDING APPROVAL:</h5>
 			<hr>
-		<div id="container"></div>
 		
-		<script src="{% static 'js/highcharts.src.js' %}"></script>
 		
-		<script>  Highcharts.chart('container', {{ chart|safe }}); </script>
+		
+		<div class="table table-sm">
+			    	<a href="{% url 'ip_pending'%}">IPs: {{total_IPS}}</a><br>
+					<a href="{% url 'issues_pending'%}">Issues: {{total_ISSUES}}</a><br>
+					<a href="{% url 'requirement_pending'%}">Complaince: {{total_COMPLAINCE}}</a><br>
+			    	<a href="{% url 'risk_pending'%}">Risks: {{total_RISKS}}</a><br>
+					<a href="{% url 'opp_pending'%}">Opportunity: {{total_OPPORTUNITY}}</a><br>
+					<a href="{% url 'qms_pending'%}">QMS Planner: {{total_QMSplanner}}</a><br>
+					<a href="{% url 'trainplanner_pending'%}">Training Planner: {{total_Trainingplanner}}</a><br>
+					<a href="{% url 'incidentregister_due'%}">Incident: {{total_INCIDENTREGISTER}}</a><br>
+					<a href="{% url 'planning_pending'%}">Corrective Action: {{total_CORRECTIVEACTION}}</a><br>
+			    	<a href="{% url 'changerequest_pending'%}">Change Request: {{total_CHANGEREQUEST}}</a><br>
+					<a href="{% url 'customersatisfaction_due'%}">Customer Satisfaction: {{total_CUSTOMERSATISFACTION}}</a><br>
+					<a href="{% url 'customercomplaint_due'%}">Customer Complaint: {{total_CUSTOMERCOMPLAINT}}</a><br>
+			    	<a href="{% url 'providerassessments_due'%}">Provider Assessment: {{total_PROVIDERASSESSMENT}}</a><br>
+		</div>
+			  
 		
 		
 	</div>
 
 	<div class="col-md-7">
-		<h5>LAST 5 CAR </h5>
+		<h5>RECENT 5 RISKS/OPPORTUNITIES </h5>
 		<hr>
 		<div class="card card-body">
-			<a class="btn btn-primary  btn-sm btn-block" href="">CAR Matrix</a>
+			
 			<table class="table table-sm">
-				<tr>
-					<th>CAR Number</th>
-					<th>Non Conformity</th>
-					<th>Created on</th>
+				<tr class="table-info">
+					<th>ID</th>
+					<th>DateCreated</th>
+					<th>Description</th>
 					<th>Status</th>
 					
 					<th></th>
@@ -41,15 +52,15 @@
 				{% for i in carstatus %}
 				
 					<tr>
-					<td>{{i.car_number}}</td>
+					<td>{{i.risk_number}}</td>
 					
 					
-					<td>{{i.car_issue}}</td>
-					<td>{{i.car_date}}</td>
+					<td>{{i.risk_date}}</td>
+					<td>{{i.ip_number.description}}</td>
 					
 					<td>{{i.status}}</td>
-					<td><a class="btn btn-sm btn-info" href="{%url 'edit_car' i.car_number %}">Update</a></td>
-					<td><a class="btn btn-sm btn-danger" href="{%url 'deletecar' i.car_number %}">Delete</a></td>
+					<!--<td><a class="btn btn-sm btn-info" href="{%url 'edit_car' i.risk_number %}">Update</a></td>
+					<td><a class="btn btn-sm btn-danger" href="{%url 'deletecar' i.risk_number %}">Delete</a></td> -->
 
 					</tr>
 
@@ -61,5 +72,224 @@
 
 </div>
 
+<div class="row">
+<div class="col-md-5">
+<hr>
+<div id="containers"></div>
+<script src="{% static 'js/highcharts.src.js' %}"></script>
+
+<script>
+//CUSTOMER SURVEY PIE CHART
+
+// Build the chart
+Highcharts.chart('containers', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: 'Customer Satisfaction Survey'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    accessibility: {
+        point: {
+            valueSuffix: '%'
+        }
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: false
+            },
+            showInLegend: true
+        }
+    },
+    series: [{
+        name: 'Brands',
+        colorByPoint: true,
+        data: [{
+            name: 'Poor',
+            y: {{poor}},
+            sliced: true,
+            selected: true
+        }, {
+            name: 'Improvement',
+            y: {{improvement}}
+        }, {
+            name: 'Satisfactory',
+            y: {{satisfactory}}
+        }, {
+            name: 'Good',
+            y: {{good}}
+        }, {
+            name: 'Excellent',
+            y: {{excellent}}
+        }]
+    }]
+});
+              
+
+     
+
+</script>
+</div>
+
+<div class="col-md-5">
+<hr>
+<div id="containerse"></div>
+<script src="{% static 'js/highcharts.src.js' %}"></script>
+
+<script>
+
+//NUMBER OF INCIDENTS AND CUSTOMER COMPLAINTS LINE GRAPH
+// Build the chart
+Highcharts.chart('containerse', {
+
+    title: {
+        text: 'Incident and Complaints in last 6 Months'
+    },
+
+    subtitle: {
+        text: 'Source: AndySystems'
+    },
+
+    yAxis: {
+        title: {
+            text: 'Number'
+        }
+    },
+
+    xAxis: {
+        accessibility: {
+            rangeDescription: 'Range: 1 to 6'
+        }
+    },
+
+    legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'middle'
+    },
+
+    plotOptions: {
+        series: {
+            label: {
+                connectorAllowed: false
+            },
+            pointStart: 1
+        }
+    },
+
+    series: [{
+        name: 'Incidents',
+        data: [{{first}}, {{second}}, {{third}}, {{forth}}, {{fifth}}, {{sixth}}]
+    }, {
+        name: 'Complaints',
+        data: [{{firstt}}, {{secondd}}, {{thirdd}}, {{forthh}}, {{fifthh}}, {{sixthh}}]
+    }],
+
+    responsive: {
+        rules: [{
+            condition: {
+                maxWidth: 500
+            },
+            chartOptions: {
+                legend: {
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'bottom'
+                }
+            }
+        }]
+    }
+
+});
+              
+
+     
+
+</script>
+</div>
+<div class="col-md-5">
+<hr>
+<div id="containersee"></div>
+<script src="{% static 'js/highcharts.src.js' %}"></script>
+
+<script>
+
+//NUMBER OF INCIDENTS AND CUSTOMER COMPLAINTS LINE GRAPH
+// Build the chart
+Highcharts.chart('containersee', {
+
+    title: {
+        text: 'Incidents cost in last 6 Months'
+    },
+
+    subtitle: {
+        text: 'Source: AndySystems'
+    },
+
+    yAxis: {
+        title: {
+            text: 'Total cost'
+        }
+    },
+
+    xAxis: {
+        accessibility: {
+            rangeDescription: 'Range: 1 to 6'
+        }
+    },
+
+    legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'middle'
+    },
+
+    plotOptions: {
+        series: {
+            label: {
+                connectorAllowed: false
+            },
+            pointStart: 1
+        }
+    },
+
+    series: [{
+        name: 'Incidents Cost',
+        data: [{{first_cost}}, {{second_cost}}, {{third_cost}}, {{forth_cost}}, {{fifth_cost}}, {{sixth_cost}}]
+    }],
+
+    responsive: {
+        rules: [{
+            condition: {
+                maxWidth: 500
+            },
+            chartOptions: {
+                legend: {
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'bottom'
+                }
+            }
+        }]
+    }
+
+});
+              
+
+     
+
+</script>
+</div>
+</div>
+</div>
 {% endblock %}
 

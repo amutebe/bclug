@@ -1,27 +1,15 @@
-<br>
-
+{% load static %}
 <div class="row">
-	<div class="col">
-		<div class="col-md">
-			<div class="card text-center text-white  mb-3" id="total-orders">
-			  	<div class="card-header">
-			  		<h5 class="card-title">Due CARs</h5>
-			  	</div>
-			  	<div class="card-body">
-			    	<a href="{% url 'cars_due'%}">{{due}}</a></h5>
-			  	</div>
-			</div>
-		</div>
-	</div>
+	
 
 	<div class="col">
 		<div class="col-md">
 			<div class="card text-center text-white  mb-3" id="orders-delivered">
 			  	<div class="card-header">
-			  		<h5 class="card-title">Total Approved</h5>
+			  		<h5 class="card-title">Total Tasks</h5>
 			  	</div>
 			  	<div class="card-body">
-			    	<h3 class="card-title">{{total_approved}}</h3>
+			    	<h3 class="card-title">{{total_jobs_created}}</h3>
 			  	</div>
 			</div>
 		</div>
@@ -31,10 +19,10 @@
 		<div class="col-md">
 			<div class="card text-center text-white  mb-3" id="orders-pending">
 			  	<div class="card-header">
-			  		<h5 class="card-title">Total Pending</h5>
+			  		<h5 class="card-title">Completed</h5>
 			  	</div>
 			  	<div class="card-body">
-			    	<h3 class="card-title">{{total_pending}}</h3>
+			    	<h3 class="card-title">{{total_jobs_completed}}</h3>
 			  	</div>
 			</div>
 		</div>
@@ -42,11 +30,12 @@
 	<div class="col">
 		<div class="col-md">
 			<div class="card text-center text-white  mb-3" id="total-orders">
-			  	<div class="card-header">7 DAYS TO EXPIRE</h5>
+			  	<div class="card-header">
+				  <h5>Pending</h5>
 			  	</div>
 			  	<div class="card-body">
 			    	
-					<a href="{% url 'cars_7daystoEpirepending'%}">{{counts}}</a></h5>
+					<h3 class="card-title">{{total_jobs_pending}}</a></h3>
 					  	
 				
 					
@@ -58,6 +47,26 @@
 	</div>
 </div>
 
+<div class="row">
+	
+
+	<div class="col">
+		<div class="col-md">
+		
+			
+		<div id="container"></div>
+		
+		<script src="{% static 'js/highcharts.src.js' %}"></script>
+		
+		<script>  Highcharts.chart('container', {{ chart|safe }}); </script>
+		</div>
+	</div>
+
+	
+	
+</div>
+
+	
 	
 
 

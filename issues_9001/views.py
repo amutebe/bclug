@@ -104,6 +104,7 @@ def load_contextdesc(request):
 ##########################end#############################################
 ##################### ISSUES VIEWS###########################################
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['ManagementRepresentative'])
 def issues(request):
     form=IssuesForm(initial={'issue_number': Issue_no()})
     
@@ -213,7 +214,7 @@ def issues_pending(request):
 
 
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['supervisor'])
+@allowed_users(allowed_roles=['TopManager'])
 def approve_issue(request,pk_test):
     pending_issue=mod9001_issues.objects.get(issue_number=pk_test)
     form=ApproveIssue(instance=pending_issue)
@@ -242,6 +243,7 @@ def approve_issue(request,pk_test):
 #############INTERESTED PARTIES VIEWS##########################################
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['ManagementRepresentative'])
 def interested_parties(request):
     form=interestedPartiesFORM(initial={'ip_number': IP_no()})
    
@@ -330,7 +332,7 @@ def edit_ip(request,pk_test):
     form=IPEdit(instance=ip)
 
     if request.method=="POST":
-            print('Printing ips:', request.POST)
+            #print('Printing ips:', request.POST)
             form=IPEdit(request.POST, instance=ip)
             if form.is_valid():
                 form.save()
@@ -361,7 +363,7 @@ def ip_pending(request):
 
 
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['supervisor','Management'])
+@allowed_users(allowed_roles=['TopManager'])
 def approve_ip(request,pk_test):
     pending_ip=mod9001_interestedParties.objects.get(ip_number=pk_test)
     
@@ -381,13 +383,13 @@ def approve_ip(request,pk_test):
             request.POST['approved_by']=request.user
             request.POST['approval_date']=date.today()
             form=ApproveIp(request.POST, instance=pending_ip)
-            print("TESTING FORM",request.POST)
+            #print("TESTING FORM",request.POST)
             if form.is_valid():
-                print("TESTING ip_APPROVAL before")
+                #print("TESTING ip_APPROVAL before")
                 form.save()
-                print("TESTING ip_APPROVAL after")
+                #print("TESTING ip_APPROVAL after")
                 return redirect('/ip_pending/')
-            print("FAILED")
+            #print("FAILED")
     
     context={'form':form}  
 
@@ -400,6 +402,7 @@ def approve_ip(request,pk_test):
     ###############   REGULATORY REQUIREMENTS      ###############
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['ManagementRepresentative'])
 def regulatory_requirement(request):
     form=regulatoryRequirmentFORM(initial={'regulatory_number': Regulatory_no()})
     
@@ -508,7 +511,7 @@ def requirement_pending(request):
 
 
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['supervisor'])
+@allowed_users(allowed_roles=['TopManager'])
 def approve_requirement(request,pk_test):
     pending_requirement=mod9001_regulatoryReq.objects.get(regulatory_number=pk_test)
     form=ApproveRequirement(instance=pending_requirement)
@@ -536,14 +539,15 @@ def approve_requirement(request,pk_test):
 #lookup for context description based on selected context ID
 def load_issue_description(request):
     context_id = request.GET.get('issue_number')
-    print("request.GET",request.GET)
-    print("context_id",context_id)
+    #print("request.GET",request.GET)
+    #print("context_id",context_id)
     issue_description = mod9001_issues.objects.filter(issue_number=context_id)
     messages.success(request, 'Form submission successful')
 
 
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['ManagementRepresentative'])
 def risks(request):
     form=risk(initial={'risk_number': Risk_no()})
     
@@ -627,6 +631,7 @@ def risks_report(request):
  ###############   OPPORTUNITY     ###############
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['ManagementRepresentative'])
 def opportunity(request):
     form=risk(initial={'risk_number': opportunity_no()})
     
@@ -722,7 +727,7 @@ def opp_pending(request):
 
 
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['supervisor'])
+@allowed_users(allowed_roles=['TopManager'])
 def approve_risk(request,pk_test):
     pending_risk=mod9001_risks.objects.get(risk_number=pk_test)
     form=ApproveRisk(instance=pending_risk)
@@ -746,7 +751,7 @@ def approve_risk(request,pk_test):
     return render(request,'risk_approve.html',context)
 
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['supervisor'])
+@allowed_users(allowed_roles=['TopManager'])
 def approve_opp(request,pk_test):
     pending_opp=mod9001_risks.objects.get(risk_number=pk_test)
     form=ApproveOpp(instance=pending_opp)
@@ -806,7 +811,7 @@ def risks_7daysToExpiryview(request,pk_test):
     products=mod9001_risks.objects.filter(risk_number=pk_test)
     return render(request,'risk_view_7_days_To_expiry.html',{'products':products})
 
-@allowed_users(allowed_roles=['supervisor'])
+@allowed_users(allowed_roles=['Auditor'])
 def verify_risk(request,pk_test):
     open_car=mod9001_risks.objects.get(risk_number=pk_test)
     
@@ -872,7 +877,7 @@ def opp_7daysToExpiryview(request,pk_test):
     products=mod9001_risks.objects.filter(risk_number=pk_test)
     return render(request,'opp_view_7_days_To_expiry.html',{'products':products})
 
-@allowed_users(allowed_roles=['supervisor'])
+@allowed_users(allowed_roles=['Auditor'])
 def verify_opp(request,pk_test):
     open_car=mod9001_risks.objects.get(risk_number=pk_test)
     form=VerifyOpp(instance=open_car)

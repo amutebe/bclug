@@ -665,7 +665,6 @@ class mod9001_customerComplaint(models.Model):
     complaint_desc=models.TextField("Complaint Description",null=True, blank=True)
     reoccurance=(('1','Yes'),('2','No'))
     re_occurance=models.CharField(verbose_name='Re-Occurance:',max_length=50, null=True,blank=True,choices=reoccurance)
-   
     classification=models.ForeignKey('classification', on_delete=models.SET_NULL,verbose_name='Complaint Classification:',null=True,blank=True)
     correction=models.ForeignKey('correction', on_delete=models.SET_NULL,verbose_name='Correction/Containment:',null=True,blank=True)
     add_desc=models.TextField("Additional Description",null=True, blank=True)       
@@ -699,7 +698,9 @@ class mod9001_customerSatisfaction(models.Model):
     infosecurity=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='7. Information Security:',related_name='securit',null=True,blank=True)
     customerservice=models.ForeignKey(providerparameters, on_delete=models.CASCADE,verbose_name='8. Customer Services:',related_name='cus',null=True,blank=True)
    
-    rank=models.CharField("Final Rating: (Scores 1 to 11 are required)",max_length=25,null=True,blank=True)
+    rank=models.CharField("Final Rating:(Scores 1 to 11 are required)",max_length=25,null=True,blank=True)
+    rankdesc_survey=models.CharField("",max_length=25,null=True,blank=True)
+
     comment=models.TextField("Comment",null=True, blank=True)
       
     improvement=(('1','Response Time'),('2','Ressolution Time'),('3','Delivery Time'),('4','Communication'),('5','Complaint Handling'),('6','Quality of Product/Service'),('7','Information Security'),('8','Customer Services'),('9','Other'))

@@ -21,6 +21,7 @@ from .filters import *
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse, Http404
+from accounts.utils import *
 
 # Create your views here.
 
@@ -122,6 +123,7 @@ def cali(request):
 
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['DocumentController'])
 def doc_manager(request):
 
     form=document_manager(initial={'document_number': document_no()})
@@ -194,6 +196,7 @@ def download(request, id):
 
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['ManagementRepresentative'])
 def qms_planner(request):
               
     form=qmsplanner(initial={'planner_number': QMS_no()})
@@ -251,13 +254,18 @@ def qms_report(request):
 
 @login_required(login_url='login')
 def qms_pending(request):
-    pendingcar=mod9001_qmsplanner.objects.filter(status='5') #get all qms pending approval    
+    if is_Auditor(request.user):
+        pendingcar=mod9001_qmsplanner.objects.all().filter(status='5').filter(~Q(verification_status='Closed')) #get all qms pending approval    
+        
+    else:
+        pendingcar=mod9001_qmsplanner.objects.filter(status='5') #get all qms pending approval
+    
     context={'pendingcar':pendingcar} 
     return render(request,'qms_pending.html',context)
 
 
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['supervisor'])
+@allowed_users(allowed_roles=['TopManager'])
 def approve_qms(request,pk_test):
     pending_risk=mod9001_qmsplanner.objects.get(planner_number=pk_test)
     form=ApproveQMS(instance=pending_risk)
@@ -328,7 +336,7 @@ def qms_7daysToExpiryview(request,pk_test):
     products=mod9001_qmsplanner.objects.filter(planner_number=pk_test)
     return render(request,'qms_view_7_days_To_expiry.html',{'products':products})
 
-@allowed_users(allowed_roles=['supervisor'])
+@allowed_users(allowed_roles=['Auditor'])
 def verify_qms(request,pk_test):
     open_car=mod9001_qmsplanner.objects.get(planner_number=pk_test)
     form=VerifyQMS(instance=open_car)
@@ -345,6 +353,7 @@ def verify_qms(request,pk_test):
                 print("request.POST['qmsstatus']",request.POST['qmsstatus'])
                 request.POST=request.POST.copy()
                 request.POST['status'] = 1 # keep status approved
+                request.POST['verification_status']='Closed'
             
             else:
                 request.POST=request.POST.copy()
@@ -368,8 +377,9 @@ def verify_qms(request,pk_test):
 
 #######################TRAINING REGISTER###############################
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['HRManager'])
 def trainingReg(request):
-    print("PRINTING PRINTING")        
+    #print("PRINTING PRINTING")        
     form=trainingregister(initial={'training_number': Train_no()})
                           
     if request.method=="POST":
@@ -425,6 +435,7 @@ def training_register_report(request):
 
 #######################TRAINING PLANNER ###############################
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['HRManager'])
 def training_planner(request):
               
     form=trainingplaner(initial={'plan_number': plan_no()})
@@ -489,7 +500,7 @@ def trainplanner_pending(request):
 
 
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['supervisor'])
+@allowed_users(allowed_roles=['TopManager'])
 def approve_trainplanner(request,pk_test):
     pending_risk=mod9001_trainingplanner.objects.get(plan_number=pk_test)
     form=ApproveTrainingPlanner(instance=pending_risk)
@@ -554,7 +565,7 @@ def qms_7daysToExpiryview(request,pk_test):
     products=mod9001_qmsplanner.objects.filter(planner_number=pk_test)
     return render(request,'qms_view_7_days_To_expiry.html',{'products':products})
 
-@allowed_users(allowed_roles=['supervisor'])
+@allowed_users(allowed_roles=['Auditor'])
 def verify_training(request,pk_test):
     open_car=mod9001_trainingplanner.objects.get(plan_number=pk_test)
     form=VerifyTraining(instance=open_car)
@@ -571,6 +582,7 @@ def verify_training(request,pk_test):
                 #print("request.POST['qmsstatus']",request.POST['qmsstatus'])
                 request.POST=request.POST.copy()
                 request.POST['status'] = 1 # keep status approved
+                request.POST['verification_status']='Closed'
             
             else:
                 request.POST=request.POST.copy()
@@ -599,6 +611,7 @@ def training_7daysToExpiryview(request,pk_test):
 
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['IncidentManager'])
 def incidentRegister(request):
               
     form=incident_Register(initial={'incident_number': incident_no()})
@@ -700,6 +713,7 @@ def load_process(request):
 
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['ManagementRepresentative'])
 def customerRegister(request):
               
     form=customer_Register(initial={'customer_number': customer_no()})
@@ -726,6 +740,7 @@ def customerRegister(request):
     return render(request,'customeRegister.html',context)
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['IncidentManager'])
 def incidentRegisterStaff(request):
 
     form=incident_RegisterStaff()
@@ -782,7 +797,7 @@ def incidentregister_due(request):
 
 
 
-@allowed_users(allowed_roles=['supervisor'])
+@allowed_users(allowed_roles=['Auditor'])
 def Verify_incidentregister(request,pk_test):
     open_car=mod9001_incidentregisterStaff.objects.get(incident_number=pk_test)
     form=Verifyincidentregister(instance=open_car)
@@ -799,6 +814,7 @@ def Verify_incidentregister(request,pk_test):
                 #print("request.POST['qmsstatus']",request.POST['qmsstatus'])
                 request.POST=request.POST.copy()
                 request.POST['status'] = 1 # keep status approved
+                request.POST['verification_status']='Closed'
             
             else:
                 request.POST=request.POST.copy()
@@ -829,6 +845,7 @@ def incidentregister_7daysToExpiryview(request,pk_test):
 
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['Assessor'])
 def providerassessment(request):
     form=providerassessments(initial={'emp_perfrev_no': emp_perfrev_no()})
     providers=mod9001_supplieregistration.objects.values(organisation=F('name'))
@@ -982,7 +999,7 @@ def providerassessments_due(request):
 
 
 
-@allowed_users(allowed_roles=['supervisor'])
+@allowed_users(allowed_roles=['Auditor'])
 def Verify_providerassessments(request,pk_test):
     open_car=mod9001_providerassessment.objects.get(emp_perfrev_no=pk_test)
     form=Verifyeproviderassessments(instance=open_car)
@@ -999,6 +1016,7 @@ def Verify_providerassessments(request,pk_test):
                 #print("request.POST['qmsstatus']",request.POST['qmsstatus'])
                 request.POST=request.POST.copy()
                 request.POST['status'] = 1 # keep status approved
+                request.POST['verification_status']='Closed'
             
             else:
                 request.POST=request.POST.copy()
@@ -1030,6 +1048,7 @@ def car_no():
 
 #########################CORRECTIVE ACTION##################################
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['CorrectiveActionRequestor'])
 def correctiveaction(request):
               
     form=corrective_action(initial={'car_no': car_no()})
@@ -1122,7 +1141,6 @@ def planning_pending(request):
 
 
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['supervisor'])
 def approve_planning(request,pk_test):
     pending_planning=mod9001_planning.objects.get(car_no=pk_test)
     form=ApprovePlanning(instance=pending_planning)
@@ -1181,7 +1199,7 @@ def planning_7daysToExpiryview(request,pk_test):
     products=mod9001_planning.objects.filter(car_no=pk_test)
     return render(request,'planning_view_7_days_To_expiry.html',{'products':products})
 
-@allowed_users(allowed_roles=['supervisor'])
+@allowed_users(allowed_roles=['Auditor'])
 def verify_planning(request,pk_test):
 
     open_car=mod9001_planning.objects.get(car_no=pk_test)
@@ -1193,12 +1211,13 @@ def verify_planning(request,pk_test):
                 request.POST=request.POST.copy()
                 request.POST['status'] = 5 #requires approval first before next verification
                 request.POST['verification']=2 #default verifiaction to Not effective
-                print("request", request.POST)
+                #print("request", request.POST)
             
             elif request.POST['qmsstatus'] == '1':
-                print("request.POST['qmsstatus']",request.POST['qmsstatus'])
+                #print("request.POST['qmsstatus']",request.POST['qmsstatus'])
                 request.POST=request.POST.copy()
                 request.POST['status'] = 1 # keep status approved
+                request.POST['verification_status']='Closed'
             
             else:
                 request.POST=request.POST.copy()
@@ -1225,6 +1244,7 @@ def req_no():
 
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['ChangeRequestor'])
 def changerequest(request):
               
     form=change_request(initial={'req_no': req_no()})
@@ -1292,7 +1312,7 @@ def changerequest_pending(request):
 
 
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['supervisor'])
+@allowed_users(allowed_roles=['TopManager'])
 def approve_changerequest(request,pk_test):
     pending_planning=mod9001_changeRegister.objects.get(req_no=pk_test)
     form=ApproveChangeRequest(instance=pending_planning)
@@ -1346,7 +1366,7 @@ def changerequest_7daysToExpiryview(request,pk_test):
     products=mod9001_changeRegister.objects.filter(req_no=pk_test)
     return render(request,'changerequest_view_7_days_To_expiry.html',{'products':products})
 
-@allowed_users(allowed_roles=['supervisor'])
+@allowed_users(allowed_roles=['Auditor'])
 def verify_changerequest(request,pk_test):
 
     open_car=mod9001_changeRegister.objects.get(req_no=pk_test)
@@ -1358,12 +1378,13 @@ def verify_changerequest(request,pk_test):
                 request.POST=request.POST.copy()
                 request.POST['status'] = 5 #requires approval first before next verification
                 request.POST['verification']=2 #default verifiaction to Not effective
-                print("request", request.POST)
+                #print("request", request.POST)
             
             elif request.POST['qmsstatus'] == '1':
-                print("request.POST['qmsstatus']",request.POST['qmsstatus'])
+                #print("request.POST['qmsstatus']",request.POST['qmsstatus'])
                 request.POST=request.POST.copy()
                 request.POST['status'] = 1 # keep status approved
+                request.POST['verification_status']='Closed'
             
             else:
                 request.POST=request.POST.copy()
@@ -1384,6 +1405,7 @@ def verify_changerequest(request,pk_test):
     return render(request,'changerequest_verify.html',context) 
 ########################### CUSTOMER COMPLAINT##################################
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['RelationsManager'])
 def customercomplaint(request):
               
     form=customer_complaint(initial={'comp_no': comp_no()})
@@ -1471,7 +1493,7 @@ def customercomplaint_due(request):
 
 
 
-@allowed_users(allowed_roles=['supervisor'])
+@allowed_users(allowed_roles=['Auditor'])
 def Verify_customercomplaint(request,pk_test):
     open_car=mod9001_customerComplaint.objects.get(comp_no=pk_test)
     form=Verifycustomer_complaint(instance=open_car)
@@ -1488,6 +1510,7 @@ def Verify_customercomplaint(request,pk_test):
                 #print("request.POST['qmsstatus']",request.POST['qmsstatus'])
                 request.POST=request.POST.copy()
                 request.POST['status'] = 1 # keep status approved
+                request.POST['verification_status']='Closed'
             
             else:
                 request.POST=request.POST.copy()
@@ -1517,6 +1540,7 @@ def customercomplaint_7daysToExpiryview(request,pk_test):
 ##########################CUSTOMER SATISFACTION########################################
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['RelationsManager'])
 def customersatisfaction(request):
     form=customer_satisfaction(initial={'satis_no': satis_survey_no()})
     
@@ -1528,7 +1552,25 @@ def customersatisfaction(request):
         request.POST['date_today']=date.today()
         request.POST['status'] = 1
 #        #print("TEXT",request.POST)
+##########################GET RANK DESCRIPTION FROM RATING SUBSTRING#####################################
+        if "Poor" in request.POST['rank']:
+            request.POST['rankdesc_survey'] = "Poor"
+        elif "Improvement" in request.POST['rank']:
+            request.POST['rankdesc_survey'] = "Improvement"
+     
+        elif "Satisfactory" in request.POST['rank']:
+            request.POST['rankdesc_survey'] = "Satisfactory"
         
+        elif "Good" in request.POST['rank']:
+            request.POST['rankdesc_survey'] = "Good"
+        
+        elif "Excellent" in request.POST['rank']:
+            request.POST['rankdesc_survey'] = "Excellent"
+        
+        else:
+            pass
+####################END#######################################
+
         
         form=customer_satisfaction(request.POST)
                         
@@ -1575,7 +1617,7 @@ def customersatisfaction_due(request):
 
 
 
-@allowed_users(allowed_roles=['supervisor'])
+@allowed_users(allowed_roles=['Auditor'])
 def Verify_customersatisfaction(request,pk_test):
     open_car=mod9001_customerSatisfaction.objects.get(satis_no=pk_test)
     form=Verifyecustomersatisfaction(instance=open_car)
@@ -1592,6 +1634,7 @@ def Verify_customersatisfaction(request,pk_test):
                 #print("request.POST['qmsstatus']",request.POST['qmsstatus'])
                 request.POST=request.POST.copy()
                 request.POST['status'] = 1 # keep status approved
+                request.POST['verification_status']='Closed'
             
             else:
                 request.POST=request.POST.copy()

@@ -96,6 +96,8 @@
                         <li><a data-icon="&#xf1d9">Training Evaluation</a>
                         <ul>
                         <li><a data-icon="&#xf015" href="{% url 'trainingReg'%}">Create</a></li>
+                        <li><a data-icon="&#xf015"  href="">Verify</a></li>
+                
                         </ul>
                         </li>
                         <li><a data-icon="&#xf1d9">Corrective Action</a>
@@ -241,13 +243,20 @@
         </li>
         <li><a data-icon="&#xf108;" href="">IT-SMS</a></li>
         <li><a data-icon="&#xf10B;" href="http://">ISMS</a></li>
-        <li><a data-icon="&#xf03A;" href="http://">BCMS</a></li>
+        
            
         <li><a data-icon="&#xf015" href="{% url 'doc_manager'%}">Document Manager</a></li>
       
         
         <li><a data-icon="&#xf007" href="{% url 'admin:index' %}">Admin Account</a></li>
-         <li><welcome>Welcome,{{request.user}}!</welcome></li>
+         <li>Welcome: {{request.user}}!</li>
+         <li>
+         <a href="" class="notification">
+  <span><i class="fa fa-envelope" style="font-size:24px;color:red"></i></span>
+  <span class="badge">{{total_tasks}}</span>
+</a>
+        
+        </li>
         <li><a data-icon="&#xf08b" href="{% url 'logout'%}">Signout</a></li>
     </ul>
 </div>

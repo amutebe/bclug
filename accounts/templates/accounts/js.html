@@ -2124,7 +2124,10 @@ $("#id_verification").change(function() {
 
 $(document).ready(function()
 {
-    $('#id_responsetime').change(function()
+    
+	$('#id_rankdesc_survey').hide();
+	$('label[for="id_rankdesc_survey"]').hide();
+	$('#id_responsetime').change(function()
 {
 if(document.querySelector('input[name="responsetime"]:checked').value==""||
 document.querySelector('input[name="resolution"]:checked').value==""||
@@ -2139,6 +2142,7 @@ document.querySelector('input[name="customerservice"]:checked').value=="")
 //alert("All fields require to be filled");
 $('#id_rank').css("background-color", "");
 $('#id_rank').val("");
+
 	}
 else
 {
@@ -2151,7 +2155,7 @@ parseInt(document.querySelector('input[name="communication"]:checked').value)+
 parseInt(document.querySelector('input[name="compliant"]:checked').value)+
 parseInt(document.querySelector('input[name="quality"]:checked').value)+
 parseInt(document.querySelector('input[name="infosecurity"]:checked').value)+
-parseInt(document.querySelector('input[name="customerservice"]:checked').value))/55)*100));
+parseInt(document.querySelector('input[name="customerservice"]:checked').value))/40)*100));
 	
 
 
@@ -2228,7 +2232,7 @@ parseInt(document.querySelector('input[name="communication"]:checked').value)+
 parseInt(document.querySelector('input[name="compliant"]:checked').value)+
 parseInt(document.querySelector('input[name="quality"]:checked').value)+
 parseInt(document.querySelector('input[name="infosecurity"]:checked').value)+
-parseInt(document.querySelector('input[name="customerservice"]:checked').value))/55)*100));
+parseInt(document.querySelector('input[name="customerservice"]:checked').value))/40)*100));
 	
 
 
@@ -2304,7 +2308,7 @@ parseInt(document.querySelector('input[name="communication"]:checked').value)+
 parseInt(document.querySelector('input[name="compliant"]:checked').value)+
 parseInt(document.querySelector('input[name="quality"]:checked').value)+
 parseInt(document.querySelector('input[name="infosecurity"]:checked').value)+
-parseInt(document.querySelector('input[name="customerservice"]:checked').value))/55)*100));
+parseInt(document.querySelector('input[name="customerservice"]:checked').value))/40)*100));
 	
 
 
@@ -2379,7 +2383,7 @@ parseInt(document.querySelector('input[name="communication"]:checked').value)+
 parseInt(document.querySelector('input[name="compliant"]:checked').value)+
 parseInt(document.querySelector('input[name="quality"]:checked').value)+
 parseInt(document.querySelector('input[name="infosecurity"]:checked').value)+
-parseInt(document.querySelector('input[name="customerservice"]:checked').value))/55)*100));
+parseInt(document.querySelector('input[name="customerservice"]:checked').value))/40)*100));
 	
 
 
@@ -2455,7 +2459,7 @@ parseInt(document.querySelector('input[name="communication"]:checked').value)+
 parseInt(document.querySelector('input[name="compliant"]:checked').value)+
 parseInt(document.querySelector('input[name="quality"]:checked').value)+
 parseInt(document.querySelector('input[name="infosecurity"]:checked').value)+
-parseInt(document.querySelector('input[name="customerservice"]:checked').value))/55)*100));
+parseInt(document.querySelector('input[name="customerservice"]:checked').value))/40)*100));
 
 
 		
@@ -2530,7 +2534,7 @@ parseInt(document.querySelector('input[name="communication"]:checked').value)+
 parseInt(document.querySelector('input[name="compliant"]:checked').value)+
 parseInt(document.querySelector('input[name="quality"]:checked').value)+
 parseInt(document.querySelector('input[name="infosecurity"]:checked').value)+
-parseInt(document.querySelector('input[name="customerservice"]:checked').value))/55)*100));
+parseInt(document.querySelector('input[name="customerservice"]:checked').value))/40)*100));
 	
 
 
@@ -2606,7 +2610,7 @@ parseInt(document.querySelector('input[name="communication"]:checked').value)+
 parseInt(document.querySelector('input[name="compliant"]:checked').value)+
 parseInt(document.querySelector('input[name="quality"]:checked').value)+
 parseInt(document.querySelector('input[name="infosecurity"]:checked').value)+
-parseInt(document.querySelector('input[name="customerservice"]:checked').value))/55)*100));
+parseInt(document.querySelector('input[name="customerservice"]:checked').value))/40)*100));
 
 
 		
@@ -2681,7 +2685,7 @@ parseInt(document.querySelector('input[name="communication"]:checked').value)+
 parseInt(document.querySelector('input[name="compliant"]:checked').value)+
 parseInt(document.querySelector('input[name="quality"]:checked').value)+
 parseInt(document.querySelector('input[name="infosecurity"]:checked').value)+
-parseInt(document.querySelector('input[name="customerservice"]:checked').value))/55)*100));
+parseInt(document.querySelector('input[name="customerservice"]:checked').value))/40)*100));
 	
 
 
