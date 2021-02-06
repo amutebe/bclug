@@ -6,7 +6,6 @@ from django.contrib import messages
 from django.contrib.auth import authenticate,login, logout
 from django.contrib.auth import get_user_model
 from .decorators import unauthenticated_user,allowed_users
-
 from django.contrib.auth.decorators import login_required
 from datetime import date
 import json

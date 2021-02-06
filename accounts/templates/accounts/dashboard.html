@@ -7,8 +7,8 @@
 <br>
 
 <div class="row">
-	<div class="col-md-5">
-		<h5>JOBS PENDING APPROVAL:</h5>
+	<div class="col-md-3">
+		<h6>TASKS PENDING APPROVAL:</h6>
 			<hr>
 		
 		
@@ -33,47 +33,69 @@
 		
 	</div>
 
-	<div class="col-md-7">
-		<h5>RECENT 5 RISKS/OPPORTUNITIES </h5>
-		<hr>
-		<div class="card card-body">
-			
-			<table class="table table-sm">
-				<tr class="table-info">
-					<th>ID</th>
-					<th>DateCreated</th>
-					<th>Description</th>
-					<th>Status</th>
-					
-					<th></th>
-					<th></th>
-				</tr>
-				
-				{% for i in carstatus %}
-				
-					<tr>
-					<td>{{i.risk_number}}</td>
-					
-					
-					<td>{{i.risk_date}}</td>
-					<td>{{i.ip_number.description}}</td>
-					
-					<td>{{i.status}}</td>
-					<!--<td><a class="btn btn-sm btn-info" href="{%url 'edit_car' i.risk_number %}">Update</a></td>
-					<td><a class="btn btn-sm btn-danger" href="{%url 'deletecar' i.risk_number %}">Delete</a></td> -->
 
-					</tr>
+<div class="col-md-4">
+<hr>
+<div id="containeres"></div>
+<script src="{% static 'js/highcharts.src.js' %}"></script>
 
-				{%endfor%}
-		
-			</table>
-		</div>
-	</div>
+<script>
+//RESIDUAL RISK PIE CHART
 
+// Build the chart
+Highcharts.chart('containeres', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: 'Residual Risks'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    accessibility: {
+        point: {
+            valueSuffix: '%'
+        }
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: false
+            },
+            showInLegend: true
+        }
+    },
+    series: [{
+        name: 'Brands',
+        colorByPoint: true,
+        data: [{
+            name: 'Low',
+            y: {{low}},
+            sliced: true,
+            selected: true
+        }, {
+            name: 'Medium',
+            y: {{medium}}
+        }, {
+            name: 'High',
+            y: {{high}}
+        }
+        ]
+    }]
+});
+              
+
+     
+
+</script>
 </div>
-
-<div class="row">
-<div class="col-md-5">
+<div class="col-md-4">
 <hr>
 <div id="containers"></div>
 <script src="{% static 'js/highcharts.src.js' %}"></script>
@@ -140,7 +162,12 @@ Highcharts.chart('containers', {
 </script>
 </div>
 
-<div class="col-md-5">
+</div>
+
+<div class="row">
+
+
+<div class="col-md-6">
 <hr>
 <div id="containerse"></div>
 <script src="{% static 'js/highcharts.src.js' %}"></script>
@@ -210,13 +237,83 @@ Highcharts.chart('containerse', {
     }
 
 });
+          
+</script>
+</div>
+<div class="col-md-6">
+<hr>
+<div id="containersee"></div>
+<script src="{% static 'js/highcharts.src.js' %}"></script>
+
+<script>
+
+//NUMBER OF INCIDENTS AND CUSTOMER COMPLAINTS LINE GRAPH
+// Build the chart
+Highcharts.chart('containersee', {
+
+    title: {
+        text: 'Incidents cost in last 6 Months'
+    },
+
+    subtitle: {
+        text: 'Source: AndySystems'
+    },
+
+    yAxis: {
+        title: {
+            text: 'Total cost'
+        }
+    },
+
+    xAxis: {
+        accessibility: {
+            rangeDescription: 'Range: 1 to 6'
+        }
+    },
+
+    legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'middle'
+    },
+
+    plotOptions: {
+        series: {
+            label: {
+                connectorAllowed: false
+            },
+            pointStart: 1
+        }
+    },
+
+    series: [{
+        name: 'Incidents Cost',
+        data: [{{first_cost}}, {{second_cost}}, {{third_cost}}, {{forth_cost}}, {{fifth_cost}}, {{sixth_cost}}]
+    }],
+
+    responsive: {
+        rules: [{
+            condition: {
+                maxWidth: 500
+            },
+            chartOptions: {
+                legend: {
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'bottom'
+                }
+            }
+        }]
+    }
+
+});
               
 
      
 
 </script>
 </div>
-<div class="col-md-5">
+<div class="col-md-4">
 <hr>
 <div id="containersee"></div>
 <script src="{% static 'js/highcharts.src.js' %}"></script>
@@ -290,6 +387,26 @@ Highcharts.chart('containersee', {
 </script>
 </div>
 </div>
+
+
+
+<div class="row">
+	
+
+	<div class="col">
+		<div class="col-md">
+		
+			
+		<div id="container"></div>
+		
+		<script src="{% static 'js/highcharts.src.js' %}"></script>
+		
+		<script>  Highcharts.chart('container', {{ chart|safe }}); </script>
+		</div>
+	</div>
+
+	
+	
 </div>
 {% endblock %}
 

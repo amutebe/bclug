@@ -381,6 +381,29 @@ def home(request):
 
 
     
+    ################PIE CHART DATA FOR RESIDUAL RISKS#################################
+    residual_risks=mod9001_risks.objects.all()
+
+    low=0 #Low
+    high=0 #High
+    medium=0 #Medium
+
+
+    for i in residual_risks:
+        if i.residueriskrank=='Low':
+            low+=1
+        elif i.residueriskrank=='High':
+            high+=1
+        elif i.residueriskrank=='Medium':
+            medium+=1
+        else:
+            pass
+
+
+
+
+
+    
     ################PIE CHART DATA FOR CUSTOMER SATISFACTION SURVEY#################################
     customer_survey=mod9001_customerSatisfaction.objects.all()
 
@@ -406,7 +429,7 @@ def home(request):
     #print("PRINTING X Y Z W I", w, x, y, z, s )
     ###########################END##########################################
     #print("PRINTING MONTHS aa bb cc dd ee fff ", aa, bb, cc, dd , ee ,ff )
-    context={'total_jobs_pending':total_jobs_pending,'total_jobs_created':total_jobs_created,'total_jobs_completed':total_jobs_completed,'first_cost':g,'second_cost':h,'third_cost':m,'forth_cost':j,'fifth_cost':k,'sixth_cost':l,'firstt':aa,'secondd':bb,'thirdd':cc,'forthh':dd,'fifthh':ee,'sixthh':ff,'first':a,'second':b,'third':c,'forth':d,'fifth':e,'sixth':f,'poor':w,'improvement':x,'satisfactory':y,'good':z,'excellent':s,'browser_stats':browser_stats,'total_PROVIDERASSESSMENT':total_PROVIDERASSESSMENT,'total_CUSTOMERCOMPLAINT':total_CUSTOMERCOMPLAINT,'total_CUSTOMERSATISFACTION':total_CUSTOMERSATISFACTION,'total_CHANGEREQUEST':total_CHANGEREQUEST,'total_CORRECTIVEACTION':total_CORRECTIVEACTION,'total_INCIDENTREGISTER':total_INCIDENTREGISTER,'total_Trainingplanner':total_Trainingplanner,'total_QMSplanner':total_QMSplanner,'carstatus':carstatus,'cars':cars, 'customers':customers,'total_cars':total_cars,'total_approved':total_approved,'total_pending':total_pending,'counts':counts,'due':due,'chart': dump,'charts': dump2,'total_tasks':total_tasks,'total_IPS':total_IPS,'total_ISSUES':total_ISSUES,'total_COMPLAINCE':total_COMPLAINCE,'total_RISKS':total_RISKS,'total_OPPORTUNITY':total_OPPORTUNITY}
+    context={'low':low,'high':high,'medium':medium,'total_jobs_pending':total_jobs_pending,'total_jobs_created':total_jobs_created,'total_jobs_completed':total_jobs_completed,'first_cost':g,'second_cost':h,'third_cost':m,'forth_cost':j,'fifth_cost':k,'sixth_cost':l,'firstt':aa,'secondd':bb,'thirdd':cc,'forthh':dd,'fifthh':ee,'sixthh':ff,'first':a,'second':b,'third':c,'forth':d,'fifth':e,'sixth':f,'poor':w,'improvement':x,'satisfactory':y,'good':z,'excellent':s,'browser_stats':browser_stats,'total_PROVIDERASSESSMENT':total_PROVIDERASSESSMENT,'total_CUSTOMERCOMPLAINT':total_CUSTOMERCOMPLAINT,'total_CUSTOMERSATISFACTION':total_CUSTOMERSATISFACTION,'total_CHANGEREQUEST':total_CHANGEREQUEST,'total_CORRECTIVEACTION':total_CORRECTIVEACTION,'total_INCIDENTREGISTER':total_INCIDENTREGISTER,'total_Trainingplanner':total_Trainingplanner,'total_QMSplanner':total_QMSplanner,'carstatus':carstatus,'cars':cars, 'customers':customers,'total_cars':total_cars,'total_approved':total_approved,'total_pending':total_pending,'counts':counts,'due':due,'chart': dump,'charts': dump2,'total_tasks':total_tasks,'total_IPS':total_IPS,'total_ISSUES':total_ISSUES,'total_COMPLAINCE':total_COMPLAINCE,'total_RISKS':total_RISKS,'total_OPPORTUNITY':total_OPPORTUNITY}
 
 
  

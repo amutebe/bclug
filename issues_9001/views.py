@@ -504,7 +504,7 @@ def deleteregulatory(request,pk_test):
 
 @login_required(login_url='login')
 def requirement_pending(request):
-    pendingcar=mod9001_regulatoryReq.objects.filter(status='5') #get all requirement pending approval    
+    pendingcar=mod9001_regulatoryReq.objects.filter(status='5').order_by('responsibility') #get all requirement pending approval    
     context={'pendingcar':pendingcar} 
     return render(request,'requirement_pending.html',context)
 

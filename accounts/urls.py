@@ -22,7 +22,6 @@ urlpatterns = [
     path('car_editing/',views.car_editing,name="car_editing"),
     path('approve_car/<str:pk_test>/',views.approve_car,name="approve_car"),
     path('verify_car/<str:pk_test>/',views.verify_car,name="verify_car"),
-
     path('cars_view/',views.cars_view,name="cars_view"),
     path('cars_7daysToExpiryview/<str:pk_test>/',views.cars_7daysToExpiryview,name="cars_7daysToExpiryview"),
     path('cars_pending/',views.cars_pending,name="cars_pending"), 
