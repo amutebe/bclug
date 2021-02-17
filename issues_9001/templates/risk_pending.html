@@ -8,19 +8,25 @@
 			
 			<table class="table table-sm">
 				<tr class="table-info">
-					<th>ID</th>
-					<th>Analyst</th>
-					<th>Created</th>
-					<th>Status</th>
+				<th>ID</th>
+					<th>Date</th>
+					<th>Assessor</th>					
 					<th>Context</th>
-					<th>Risk Desc.</th>
-					 
-					<th>Ranking</th>
-					<th>Treatment</th>
-					<th>Mitigation</th>
+                    <th>ProcessDesc.</th>
+					<th>SWOT</th>
+					<th>IssueDesc.</th>
 					<th>Details</th>
-					<th>Who</th>
-					<th>Deadline</th>
+                    <th>Desc.</th>
+                   
+                       
+				
+					<th>Ranking</th>
+                       <th>Treatment</th>
+                          <th>Mitigation</th>
+                            <th>MitigationDetails</th>
+                             <th>Responsibility</th>
+					<th>When</th>
+				
 					
 					
 				
@@ -33,19 +39,30 @@
 				
 					<tr>
 					<td>{{i.risk_number}}</td>
-					<td>{{i.assessor}}</td>
 					<td>{{i.risk_date}}</td>
-					<td>{{i.status}}</td>
-						<td>{{i.contextdetails}}</td>
-						<td>{{i.riskdescription}}</td>
+					<td>{{i.assessor}}</td>
+				
+						{% if i.issue_number != empty %}
 					
-						<td>{{i.riskrank}}</td>
-					<td>{{i.risktreatment}}</td>
-						<td>{{i.riskmitigation}}</td>
-						<td>{{i.mitigationdesc}}</td>
-					<td>{{i.responsibility}}</td>
+					<td colspan="1">{{i.issue_number.get_context_display}}</td>
+					{% else %}
+					<td colspan="1">{{i.get_context_display}}</td>
+					{% endif %}
+				
+                    <td>{{i.issue_number.get_process_desc_display}}</td>
+					<td>{{i.issue_number.get_process_issues_display}}</td>
+					<td>{{i.issue_number.process_StrengthWeakness}}</td>
+					<td>{{i.issue_number.description}}</td>
+                    <td>{{i.riskdescription}}</td>
+                  
+               
+			
+					<td>{{i.riskrank}}</td>
+                    <td>{{i.risktreatment}}</td>
+                    <td>{{i.riskmitigation}}</td>
+                     <td>{{i.mitigationdesc}}</td>
+                    <td>{{i.responsibility}}</td>
 					<td>{{i.due}}</td>
-					
 					
 					<td><a class="btn btn-sm btn-info" href="{%url 'approve_risk' i.risk_number %}">Action</a></td>
 

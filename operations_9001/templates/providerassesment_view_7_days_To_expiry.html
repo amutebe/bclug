@@ -9,42 +9,109 @@
 				
 				
 				<div class="card card-body">
-					<table class="table-bordered">
-						<tr>
-							
-					<th>ID</th>
-					<th>Created on</th>
+					<table class="table-bordered" >
+						<thead><tr class="table-info">
+					<th>Review No.</th>
+					<th>Date</th>
 					<th>Provider</th>
-					<th>Status</th>
-					<th>Start</th>
-					<th>End</th>
-					<th>Appraise</th>
-                    <th>Purpose</th>
+                    <th>Organisation</th>
 					
-                            
-						
-						</tr>
-						{% for i in products %}
-						<tr>
+					
+					<th>Appraisee</th>
+					<th>Rating</th>
+					<th>ImprovementPlan</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th>Addit.Details</th>
+                    <th>AssignedTo</th>
+					<th>Timeline</th>
+                    <th>Status</th>
+
+                
+
+
+				
+					
+				</tr></thead><tbody>
+				
+				{% for i in products %}
+				
+					<tr>
 					<td>{{i.emp_perfrev_no}}</td>
-					<td>{{i.date}}</td>
-					<td>{{i.get_Provider_display}}</td>
-					<td>{{i.status}}</td>
 					<td>{{i.start}}</td>
-					<td>{{i.end}}</td>
-					<td>{{i.appraise}}</td>
-					<td>{{i.purpose}}</td>
-                       
-
-										
-                        
-						
-						</tr>
-                        
-
-
-						{% endfor %}
+					<td>{{i.get_Provider_display}}</td>
+                    <td>{{i.organisation}}</td>
+				
 					
+					<td>{{i.appraise}}</td>
+				
+					<td>{{i.rank}}</td>
+					
+					<td colspan="11">
+                     {% if i.get_jobknowledg_display  %}
+                 <b>Job Knowledge:</b>{{i.get_jobknowledg_display}} 
+                    {%endif%}               
+                    {% if i.get_flexibility_display %}
+                  <b> Adaptability:</b>  {{i.get_flexibility_display}}
+                    
+                    {%endif%} 
+                    {% if i.get_problemsolving_display %}
+                    <b> Problem solving:</b>{{i.get_problemsolving_display}}
+                    
+                    {%endif%}
+                    {% if i.get_Initiativenes_display %}  
+                    <b> Initiativeness:</b>{{i.get_Initiativenes_display}}
+                    
+                    {%endif%}
+                    {% if i.get_planing_display %} 
+                    <b> Planning & Org.:</b>{{i.get_planing_display}}
+                    
+                    {%endif%}
+                    {% if i.get_workquality_display %} 
+                    <b> Work quality:</b>{{i.get_workquality_display}}
+                    
+                    {%endif%}
+                    {% if i.get_interskills_display %} 
+                    <b> Interpersonal skills:</b>{{i.get_interskills_display}}
+                    
+                    {%endif%}
+                    {% if i.get_communication_display %} 
+                    <b> Communication skills:</b>{{i.get_communication_display}}
+                    
+                    {%endif%}
+                    {% if i.get_supervisionmagt_display %} 
+                    <b> Supervision & Mgt:</b>{{i.get_supervisionmagt_display}}
+                    
+                    {%endif%}
+                    {% if i.get_availabilit_display %} 
+                    <b> Availability:</b>{{i.get_availabilit_display}}
+                    
+                    {%endif%}
+                    {% if i.get_professional_display %} 
+                    <b> Professional contribution:</b>{{i.get_professional_display}}
+                    
+                    {%endif%}
+                    
+                    
+                    </td>
+                    	<td>{{i.nonconfdetails}}</td>
+                    <td>{{i.assigned}}</td>
+					<td>{{i.due}}</td>
+                    <td>{{i.qmsstatus}}</td>
+
+				
+					</tr>
+                    </tbody>
+
+				{%endfor%}
 						
 					</table>
 				

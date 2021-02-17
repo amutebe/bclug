@@ -7,16 +7,15 @@
 <br>
 
 <div class="row">
-	<div class="col-md-3">
-		<h6>TASKS PENDING APPROVAL:</h6>
-			<hr>
+	<div class="col-md">
+		<h6>Tasks Pending Approval:</h6>
 		
 		
 		
 		<div class="table table-sm">
 			    	<a href="{% url 'ip_pending'%}">IPs: {{total_IPS}}</a><br>
 					<a href="{% url 'issues_pending'%}">Issues: {{total_ISSUES}}</a><br>
-					<a href="{% url 'requirement_pending'%}">Complaince: {{total_COMPLAINCE}}</a><br>
+					<a href="{% url 'requirement_pending'%}">Compliance: {{total_COMPLAINCE}}</a><br>
 			    	<a href="{% url 'risk_pending'%}">Risks: {{total_RISKS}}</a><br>
 					<a href="{% url 'opp_pending'%}">Opportunity: {{total_OPPORTUNITY}}</a><br>
 					<a href="{% url 'qms_pending'%}">QMS Planner: {{total_QMSplanner}}</a><br>
@@ -35,7 +34,7 @@
 
 
 <div class="col-md-4">
-<hr>
+
 <div id="containeres"></div>
 <script src="{% static 'js/highcharts.src.js' %}"></script>
 
@@ -51,7 +50,7 @@ Highcharts.chart('containeres', {
         type: 'pie'
     },
     title: {
-        text: 'Residual Risks'
+        text: 'Residual Risk'
     },
     tooltip: {
         pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -96,7 +95,7 @@ Highcharts.chart('containeres', {
 </script>
 </div>
 <div class="col-md-4">
-<hr>
+
 <div id="containers"></div>
 <script src="{% static 'js/highcharts.src.js' %}"></script>
 
@@ -112,7 +111,7 @@ Highcharts.chart('containers', {
         type: 'pie'
     },
     title: {
-        text: 'Customer Satisfaction Survey'
+        text: 'Customer Satisfaction'
     },
     tooltip: {
         pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -163,12 +162,12 @@ Highcharts.chart('containers', {
 </div>
 
 </div>
-
+<br>
 <div class="row">
 
 
 <div class="col-md-6">
-<hr>
+
 <div id="containerse"></div>
 <script src="{% static 'js/highcharts.src.js' %}"></script>
 
@@ -183,7 +182,7 @@ Highcharts.chart('containerse', {
     },
 
     subtitle: {
-        text: 'Source: AndySystems'
+        text: ''
     },
 
     yAxis: {
@@ -241,7 +240,7 @@ Highcharts.chart('containerse', {
 </script>
 </div>
 <div class="col-md-6">
-<hr>
+
 <div id="containersee"></div>
 <script src="{% static 'js/highcharts.src.js' %}"></script>
 
@@ -256,7 +255,7 @@ Highcharts.chart('containersee', {
     },
 
     subtitle: {
-        text: 'Source: AndySystems'
+        text: ''
     },
 
     yAxis: {
@@ -313,8 +312,8 @@ Highcharts.chart('containersee', {
 
 </script>
 </div>
-<div class="col-md-4">
-<hr>
+<div class="col-md">
+<br>
 <div id="containersee"></div>
 <script src="{% static 'js/highcharts.src.js' %}"></script>
 
@@ -329,7 +328,7 @@ Highcharts.chart('containersee', {
     },
 
     subtitle: {
-        text: 'Source: AndySystems'
+        text: ''
     },
 
     yAxis: {
@@ -393,7 +392,7 @@ Highcharts.chart('containersee', {
 <div class="row">
 	
 
-	<div class="col">
+	
 		<div class="col-md">
 		
 			
@@ -403,7 +402,7 @@ Highcharts.chart('containersee', {
 		
 		<script>  Highcharts.chart('container', {{ chart|safe }}); </script>
 		</div>
-	</div>
+	
 
 	
 	

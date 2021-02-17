@@ -523,7 +523,7 @@ def approve_trainplanner(request,pk_test):
     return render(request,'trainingplanner_approve.html',context)
 
 
-#####################################TRAIN PLANNER VERIFICATION##############################
+#####################################TRAINING PLANNER VERIFICATION##############################
 
 
 

@@ -2,22 +2,29 @@
 
 {% block content %}
 <br>
-<div class="col-md-24">
+<div class="col-md-26">
 		
-		<div class="card card-body">
+		<div >
 			
 			<table class="table table-sm">
 				<tr class="table-info">
 					<th>ID</th>
-					<th>Analyst</th>
-					<th>Created</th>
-					<th>Status</th>
+					<th>Date</th>
+					<th>Assessor</th>					
 					<th>Context</th>
-					<th>Opp.Desc</th>
-					<th>Opp.Rank</th>
-					<th>Action</th>
-					<th>Who</th>
-					<th>Deadline</th>
+                    <th>ProcessDesc.</th>
+					<th>SWOT</th>
+					<th>IssueDesc.</th>
+					<th>Details</th>
+                    <th>OPP.Desc.</th>
+                   
+                       
+				
+					<th>Ranking</th>
+                       <th>OPP.Action</th>
+                       
+                             <th>Responsibility</th>
+					<th>When</th>
 					
 					<th></th>
 				</tr>
@@ -26,14 +33,28 @@
 				
 					<tr>
 					<td>{{i.risk_number}}</td>
-					<td>{{i.assessor}}</td>
 					<td>{{i.risk_date}}</td>
-					<td>{{i.status}}</td>
-					<td>{{i.contextdetails}}</td>
-					<td>{{i.description}}</td>									
+					<td>{{i.assessor}}</td>
+				
+						{% if i.issue_number != empty %}
+					
+					<td colspan="1">{{i.issue_number.get_context_display}}</td>
+					{% else %}
+					<td colspan="1">{{i.get_context_display}}</td>
+					{% endif %}
+				
+                    <td>{{i.issue_number.get_process_desc_display}}</td>
+					<td>{{i.issue_number.get_process_issues_display}}</td>
+					<td>{{i.issue_number.process_StrengthWeakness}}</td>
+					<td>{{i.issue_number.description}}</td>
+                    <td>{{i.riskdescription}}</td>
+                  
+               
+			
 					<td>{{i.riskrank}}</td>
-					<td>{{i.mitigation}}</td>
-					<td>{{i.responsibility}}</td>
+                    <td>{{i.risktreatment}}</td>
+                  
+                    <td>{{i.responsibility}}</td>
 					<td>{{i.due}}</td>
 					
 					
