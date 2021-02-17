@@ -246,28 +246,35 @@ def home(request):
         #print("printing dates ranges",get_7days_expire(t))
         if get_7days_expire(t)<=30 and get_7days_expire(t)>=0:
             a+=1
-            g+=i.costdescription
+            if i.costdescription is not None:
+                g+=i.costdescription
+            
             #print("printing cost",g, i.costdescription)
             
         elif get_7days_expire(t)>30 and get_7days_expire(t)<=60:
             b+=1
-            h+=i.costdescription
+            if i.costdescription is not None:
+                h+=i.costdescription
             #print("printing cost",h, i.costdescription)
         elif get_7days_expire(t)>60 and get_7days_expire(t)<=90:
             c+=1
-            m+=i.costdescription
+            if i.costdescription is not None:
+                m+=i.costdescription
             #print("printing cost",i, i.costdescription)
         elif get_7days_expire(t)>90 and get_7days_expire(t)<=120:
             d+=1
-            j+=i.costdescription
+            if i.costdescription is not None:
+                j+=i.costdescription
             #print("printing cost",j, i.costdescription)
         elif get_7days_expire(t)>120 and get_7days_expire(t)<=150:
             e+=1
-            k+=i.costdescription
+            if i.costdescription is not None:
+                k+=i.costdescription
             #print("printing cost",k, i.costdescription)
         elif get_7days_expire(t)>150 and get_7days_expire(t)<=180:
             f+=1
-            l+=i.costdescription
+            if i.costdescription is not None:
+                l+=i.costdescription
             #print("printing cost",l, i.costdescription)
         else:
             pass
