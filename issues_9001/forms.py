@@ -84,7 +84,7 @@ class IssuesForm(ModelForm):
     
     class Meta:
         model = mod9001_issues 
-        exclude=['approval_date']
+        exclude=['approval_date','responsibility','due']
         widgets = {
             'analysis_date': DateInput(),'due':DateInput()
         }

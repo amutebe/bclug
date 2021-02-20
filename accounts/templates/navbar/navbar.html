@@ -1,0 +1,245 @@
+{%load static%}
+<nav class="navbar navbar-expand-lg">
+
+<div id="swimbi">
+    <ul>
+        <!--<img src="{% static 'images/AndyMSLogo.png'%}">-->
+        <li><a data-icon="&#xf015" href="{% url 'home'%}">Home</a></li>
+        <li><a data-icon="&#xf13C;" >QMS</a>
+            <ul>
+               
+                <li><a data-icon="&#xf0e4" href="{% url 'home'%}">DashBoard</a></li>
+                <li><a data-icon="&#xf12e">Context</a>
+                    <ul>
+                        
+                        <li><a data-icon="&#xf08e">Interested Parties</a>
+                          <ul>
+                              <li><a data-icon="&#xf015" href="{% url 'interested_parties'%}">Create</a></li>
+                               <li><a data-icon="&#xf015" href="{% url 'ip_pending'%}">Approve</a></li>
+                          </ul>
+                        </li>
+                        <li><a data-icon="&#xf022" >Issues</a>
+                        <ul>
+                              <li><a data-icon="&#xf015" href="{% url 'issues'%}">Create</a></li>
+                              <li><a data-icon="&#xf015" href="{% url 'issues_pending'%}">Approve</a></li>
+                          </ul>
+                        </li>
+                        <li><a data-icon="&#xf047" >Compliance</a>
+                        <ul>
+                              <li><a data-icon="&#xf015" href="{% url 'regulatory_requirement'%}">Create</a></li>
+                              <li><a data-icon="&#xf015" href="{% url 'requirement_pending'%}">Approve</a></li>
+                              
+                          </ul>
+                        </li>
+                        
+                    </ul>
+                </li>
+                
+                <li><a data-icon="&#xf072" href="#">Planning</a>
+                    <ul>
+                        <li><a data-icon="&#xf069" href="#">Risks Assessment</a>
+                        <ul>
+                              <li><a data-icon="&#xf015" href="{% url 'risks'%}">Create</a></li>
+                              <li><a data-icon="&#xf015" href="{% url 'risk_pending'%}">Approve</a></li>
+                              <li><a data-icon="&#xf12e" href="{% url 'risks_due'%}">Verification</a>
+
+                          </ul>
+                        </li>
+                        <li><a data-icon="&#xf14e">Opp. Assessment</a>
+                         <ul>
+                              <li><a data-icon="&#xf015"  href="{% url 'opportunity'%}">Create</a></li>
+                                <li><a data-icon="&#xf015" href="{% url 'opp_pending'%}">Approve</a></li>
+                              <li><a data-icon="&#xf12e" href="{% url 'opp_due'%}">Verification</a>
+
+                          </ul>
+                          </li>
+                        
+                        
+                        
+                        <li><a data-icon="&#xf013">QMS Planner</a>
+                        <ul>
+                              <li><a data-icon="&#xf015"  href="{% url 'qms_planner'%}">Create</a></li>
+                                <li><a data-icon="&#xf015" href="{% url 'qms_pending'%}">Approve</a></li>
+                              <li><a data-icon="&#xf12e" href="{% url 'qms_due'%}">Verification</a>
+
+                          </ul>
+                        
+                        </li>
+
+                         <li><a data-icon="&#xf013">Training Planner</a>
+                        <ul>
+                              <li><a data-icon="&#xf015"  href="{% url 'training_planner'%}">Create</a></li>
+                                <li><a data-icon="&#xf015" href="{% url 'trainplanner_pending'%}">Approve</a></li>
+                              <li><a data-icon="&#xf12e" href="{% url 'training_due'%}">Verification</a>
+
+                          </ul>
+                        
+                        </li>
+                    </ul>
+                </li>
+                <li><a data-icon="&#xf1b9" href="#">Operations</a>
+                    <ul>
+
+                        <li>
+                                <a data-icon="&#xf016">Incident</a>
+                        <ul>
+                                <li><a data-icon="&#xf015" href="{% url 'incidentRegister'%}">Log</a>
+                       
+                      
+                  
+                       <li> <a data-icon="&#xf015" href="{% url 'incidentRegisterStaff'%}">Analysis</a></li>
+                        <li><a data-icon="&#xf015"  href="{% url 'incidentregister_due'%}">Verify</a></li>
+</ul>
+                          </li>    
+                        
+                        </li>
+                        <li><a data-icon="&#xf1d9">Training Evaluation</a>
+                        <ul>
+                        <li><a data-icon="&#xf015" href="{% url 'trainingReg'%}">Create</a></li>
+                        <li><a data-icon="&#xf015"  href="">Verify</a></li>
+                
+                        </ul>
+                        </li>
+                        <li><a data-icon="&#xf1d9">Corrective Action</a>
+                        <ul>
+                        <li><a data-icon="&#xf015" href="{% url 'correctiveaction'%}">Request</a></li>
+                          <li><a data-icon="&#xf015" href="{% url 'planning'%}">Planning</a></li>
+                        <li><a data-icon="&#xf015" href="{% url 'planning_pending'%}">Approve</a></li>
+                        <li><a data-icon="&#xf015"  href="{% url 'planning_due'%}">Verify</a></li>
+                      
+                        
+                        </ul>
+                        </li>
+                   
+
+                        <li><a data-icon="&#xf1d9">Change Request</a>
+                        <ul>
+                        <li><a data-icon="&#xf015" href="{% url 'changerequest'%}">Create</a></li>
+                        <li><a data-icon="&#xf015" href="{% url 'changerequest_pending'%}">Approve</a></li>
+                         <li><a data-icon="&#xf015"  href="{% url 'changerequest_due'%}">Verify</a></li>
+                        </ul>
+                        </li>
+
+                        <li><a data-icon="&#xf1d9">Customer Satisfaction</a>
+                        <ul>
+                        <li><a data-icon="&#xf015" href="{% url 'customersatisfaction'%}">Create</a></li>
+                   
+                         <li><a data-icon="&#xf015"  href="{% url 'customersatisfaction_due'%}">Verify</a></li>
+                        </ul>
+                        </li>
+
+<li><a data-icon="&#xf1d9">Customer Complaint</a>
+                        <ul>
+                        <li><a data-icon="&#xf015" href="{% url 'customercomplaint'%}">Create</a></li>
+                         
+                         <li><a data-icon="&#xf015"  href="{% url 'customercomplaint_due'%}">Verify</a></li>
+                     
+                        </ul>
+                        </li>
+
+
+
+
+                     
+                
+                        <li><a data-icon="&#xf185" href="#">Provide Assessment</a>
+                        <ul>
+                              <li><a data-icon="&#xf015"  href="{% url 'providerassessment'%}">Create</a></li>
+                              <li><a data-icon="&#xf015"  href="{% url 'providerassessments_due'%}">Verify</a></li>
+                                
+
+                          </ul>
+                        
+                        
+                        </li>
+
+                    </ul>
+                </li>
+                
+                <li><a data-icon="&#xf194" href="#">Miscellaneous</a>
+                    <ul>
+                        <li><a data-icon="&#xf122" href="#">Asset Tracker</a></li>
+                        <li><a data-icon="&#xf066" href="#">Job Tracker</a></li>
+                        <li><a data-icon="&#xf066" href="#">Account Tracker</a></li>
+                    </ul>
+                </li>
+
+                    
+
+
+
+                <li><a data-icon="&#xf180" href="#">Reports</a>
+                    <ul>
+                    <li>
+                    <a data-icon="&#xf02d" href="{% url 'documentmanager_report'%}">Document Register</a>
+                    </li>
+                        <li><a data-icon="&#xf03c">Context</a>
+                        <ul>
+                        
+                       
+                        <li><a data-icon="&#xf00e" href="{% url 'ip_report'%}">Interested Parties (IPs) Register</a></li>
+                        <li><a data-icon="&#xf040" href="{% url 'issues_report'%}">Issues Register</a></li>
+                        <li><a data-icon="&#xf1db" href="{% url 'regulatory_report'%}">Compliance Register</a></li>
+                      
+                    </ul>
+                        </li>
+                        <li><a data-icon="&#xf03c">Planning</a>
+                        <ul>
+                                              
+                        <li><a data-icon="&#xf00e" href="{% url 'qms_report'%}">QMS Planner</a></li>
+                        <li><a data-icon="&#xf040" href="{% url 'trainingplan_report'%}">Training Plan</a></li>
+                        <li><a data-icon="&#xf1db" href="{% url 'opportunity_report'%}">Opportunity Register</a></li>
+                        <li><a data-icon="&#xf1db" href="{% url 'risks_report'%}">Risk Register</a></li>
+               
+                    </ul>
+                        </li>
+                        <li><a data-icon="&#xf09d" href="#">Operations</a>
+                        <ul>
+                                              
+                        <li><a data-icon="&#xf00e" href="{% url 'incident_report'%}">Incident Register</a></li>
+                        <li><a data-icon="&#xf00e" href="{% url 'training_register_report'%}">Training Evaluation/Register</a></li>
+                        <li><a data-icon="&#xf00e" href="{% url 'providerAssessment_report'%}">Provider Assessment</a></li>
+                        <li><a data-icon="&#xf00e" href="{% url 'customersatisfaction_report'%}">Customer Satisfaction Survey</a></li>
+                        <li><a data-icon="&#xf00e" href="{% url 'customer_complaint_report'%}">Complaints Register</a></li>
+<li><a data-icon="&#xf00e" href="{% url 'changeRegister_report'%}">Change Register</a></li>
+                        </ul>
+                        
+                        </li>
+                        <li><a data-icon="&#xf09d" href="#">Evaluation</a>
+                        <ul>
+                                              
+                        <li><a data-icon="&#xf00e" href="{% url 'correctiveaction_report'%}">Corrective Action Register</a></li>
+                        
+
+
+                        </ul>
+                        
+                        </li>
+                        
+                    </ul>
+     
+                </li>
+               
+               
+            </ul>
+        </li>
+        <li><a data-icon="&#xf108;" href="">IT-SMS</a></li>
+        <li><a data-icon="&#xf10B;" href="http://">ISMS</a></li>
+        
+           
+        <li><a data-icon="&#xf015" href="{% url 'doc_manager'%}">Document Manager</a></li>
+      
+        
+        <li><a data-icon="&#xf007" href="{% url 'admin:index' %}">Admin Account</a></li>
+         <li>Welcome: {{request.user}}!</li>
+         <li>
+         <a  class="notification">
+  <span><i class="fa fa-envelope" style="font-size:24px;color:red"></i></span>
+  <span class="badge">{{total_tasks}}</span>
+</a>
+        
+        </li>
+        <li><a data-icon="&#xf08b" href="{% url 'logout'%}">Signout</a></li>
+    </ul>
+</div>
+</nav>

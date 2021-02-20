@@ -42,13 +42,14 @@
 					<th>Created on</th>
 				
 					
-					<th>Context</th>
+					<th>Issue</th>
 					<!--<th>Int. Issues</th>
 					<th>Ext. Issues</th>-->
 					<th>Process</th>
-					<th>Process Issue</th>
+					<th>SWOT</th>
 					<th>Issue Description</th>
 					<th>Other Issues</th>
+						<th>Details</th>
 						<th>Status</th>				
 					
 					<!--<th>Description</th>
@@ -84,6 +85,7 @@
 					{% endif %}
 
 					<td>{{i.otherIssue}}</td>
+						<td>{{i.description}}</td>
 						<td>{{i.status}}</td>
 				
 					<!--<td>{{i.description}}</td>

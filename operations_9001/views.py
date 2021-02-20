@@ -29,33 +29,33 @@ from accounts.utils import *
 
 
 def QMS_no():
-   return str("Comp-QP-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
+   return str("TEGA-QP-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
 
 
 def Train_no():
-   return str("Comp-TR-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
+   return str("TEGA-TR-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
 
 def plan_no():
-   return str("Comp-TP-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
+   return str("TEGA-TP-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
 
 def incident_no():
-   return str("Comp-INC-IS-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
+   return str("TEGA-INC-IS-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
 
 
 def customer_no():
    return str("CST-MM-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
 
 def emp_perfrev_no():
-   return str("Comp-EA-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
+   return str("TEGA-EA-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
 
 def document_no():
    return str("TEGA-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
 
 def comp_no():
-   return str("Comp-COMP-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
+   return str("TEGA-COMP-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
 
 def satis_survey_no():
-   return str("Comp-CS-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
+   return str("TEGA-CS-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
 
 
 ####################################################################################
@@ -1043,7 +1043,7 @@ def providerassesment_7daysToExpiryview(request,pk_test):
     return render(request,'providerassesment_view_7_days_To_expiry.html',{'products':products})
 
 def car_no():
-   return str("Comp-CAR-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
+   return str("TEGA-CAR-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
 
 #########################CORRECTIVE ACTION##################################
 @login_required(login_url='login')

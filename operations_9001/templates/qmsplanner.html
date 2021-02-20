@@ -86,7 +86,7 @@ form {
 <div class="form-group" id="processdiv">
     <label for="process">Additional Description:</label>
 	<br>
-<input type="text" class="form-control" id="type"  name="type"{{form.details}}
+<input type="text" class="form-control" id="details"  name="details"{{form.details}}
   <font color="red">{{form.errors.details}}</font>
 
 </div>
@@ -100,7 +100,7 @@ form {
 					<tr> 
 
 <td ><a class="btn  btn-warning" href="{% url 'home'%}"> Cancel </a></td>
-<td align="right"><input class="btn btn-danger" type="submit" name="Submit"></td>
+<td align="right"><input class="btn btn-info" type="submit" name="Submit"></td>
 
 					</tr>
           </table>

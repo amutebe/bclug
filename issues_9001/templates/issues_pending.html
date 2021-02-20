@@ -8,21 +8,20 @@
 			
 			<table class="table table-sm">
 				<tr class="table-info">
-					<th>ID </th>
+					<th>ID</th>
 					<th>Analyst</th>
 					<th>Created</th>
-					<th>Status</th>
-					
-					<th>Context</th>
-					<th>Ext.Issue</th>
-					<th>Int.Issue</th>
-					<th>ProcessDesc.</th>
-					<th>ProcessIssue</th>
-				
 				
 					
-					<th>Description </th>
-
+					<th>Issue</th>
+					<!--<th>Int. Issues</th>
+					<th>Ext. Issues</th>-->
+					<th>Process</th>
+					<th>SWOT</th>
+					<th>Issue.Desc.</th>
+					<th>OtherIssues</th>
+						<th>Details</th>
+						<th>Status</th>		
 
 					
 					<th></th>
@@ -35,16 +34,23 @@
 					<td>{{i.issue_number}}</td>
 					<td>{{i.analyst}}</td>
 					<td>{{i.analysis_date}}</td>
-					<td>{{i.status}}</td>
+				
 					
 					<td>{{i.get_context_display}}</td>
-
-					<td>{{i.get_external_issues_display}}</td>
-					<td>{{i.get_internal_issues_display}}</td>
+					<!--<td>{{i.get_internal_issues_display}}</td>
+					<td>{{i.get_external_issues_display}}</td>-->
 					<td>{{i.get_process_desc_display}}</td>
 					<td>{{i.get_process_issues_display}}</td>
+					{% if i.get_internal_issues_display != empty %}
 					
-					<td>{{i.description}}</td>
+					<td colspan="1">{{i.process_StrengthWeakness}}</td>
+					{% else %}
+					<td colspan="1">{{i.process_OpportunitiesThreats}}</td>
+					{% endif %}
+
+					<td>{{i.otherIssue}}</td>
+						<td>{{i.description}}</td>
+						<td>{{i.status}}</td>
 					
 					<td></td>
 
