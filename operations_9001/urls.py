@@ -2,6 +2,8 @@ from django.urls import path
 from . import views
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
 path('dateValidation/', views.dateValidation, name='dateValidation'),
@@ -90,3 +92,6 @@ path('customersatisfaction_due/',views.customersatisfaction_due,name="customersa
 path('customersatisfaction_7daysToExpiryview/<str:pk_test>/',views.customersatisfaction_7daysToExpiryview,name="customersatisfaction_7daysToExpiryview"),
 
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

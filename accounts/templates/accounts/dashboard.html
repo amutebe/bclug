@@ -65,7 +65,7 @@ Highcharts.chart('containeres', {
             allowPointSelect: true,
             cursor: 'pointer',
             dataLabels: {
-                enabled: false
+                enabled: true,format:'{point.name} {point.percentage:.1f}%'
             },
             showInLegend: true
         }
@@ -76,14 +76,18 @@ Highcharts.chart('containeres', {
         data: [{
             name: 'Low',
             y: {{low}},
-            sliced: true,
-            selected: true
+            sliced: false,
+            selected: true,
+            color: 'green'
         }, {
             name: 'Medium',
-            y: {{medium}}
+            y: {{medium}},
+            color: 'yellow'
         }, {
             name: 'High',
-            y: {{high}}
+            y: {{high}},
+            color: 'red'
+
         }
         ]
     }]
@@ -126,7 +130,7 @@ Highcharts.chart('containers', {
             allowPointSelect: true,
             cursor: 'pointer',
             dataLabels: {
-                enabled: false
+                enabled: true,format:'{point.name} {point.percentage:.1f}%'
             },
             showInLegend: true
         }
@@ -140,7 +144,7 @@ Highcharts.chart('containers', {
             sliced: true,
             selected: true
         }, {
-            name: 'Improvement',
+            name: 'Improve',
             y: {{improvement}}
         }, {
             name: 'Satisfactory',

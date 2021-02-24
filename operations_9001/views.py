@@ -194,6 +194,7 @@ def download(request, id):
     return response
 
 
+
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['ManagementRepresentative'])
 def qms_planner(request):
@@ -429,7 +430,7 @@ def training_register_report(request):
         
     else:
         return render(request,'Training_Evaluation_Report.html',{'trainingreg':trainingreg,'myFilter':myFilter})
-
+######################TRAINING REGISTER VERIFICATION ############################################################
 
 
 #######################TRAINING PLANNER ###############################
@@ -525,9 +526,6 @@ def approve_trainplanner(request,pk_test):
 
 #####################################TRAINING PLANNER VERIFICATION##############################
 
-
-
-
 def CARnumbers_7days_expire(*x):
     date_str = x[0]
     date_object = datetime.strptime(date_str, '%m/%d/%Y').date()
@@ -608,7 +606,7 @@ def training_7daysToExpiryview(request,pk_test):
     products=mod9001_trainingplanner.objects.filter(plan_number=pk_test)
     return render(request,'training_view_7_days_To_expiry.html',{'products':products})
 
-
+########################INCIDENT REGISTER################################################
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['IncidentManager'])
 def incidentRegister(request):

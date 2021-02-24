@@ -12967,7 +12967,7 @@
                  * @sample {highmaps} maps/credits/customized/
                  *         Custom URL and text
                  */
-                text: 'Highcharts.com'
+                text: ''
             }
         };
         /**

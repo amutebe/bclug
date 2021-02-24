@@ -613,13 +613,17 @@ def risks_report(request):
         response['Content-Disposition'] = 'attachment; filename="RiskRegister.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['Risk. No.', 'DateofAnalysis', 'Assessor', 'Context','ContextDescription','Risk.Description','LKHD','Rating','Ranking','Mitigation','Responsility','When','Approval','Verification','ResidueLKHD','ResidueSeverity','ResidueRating','ResidueRank'])
+        writer.writerow(['Risk. No.', 'DateofAnalysis', 'Assessor', 'Context','ContextDescription','SWOT','IssueDesc','Details','RiskDescription','LKHD','Severity','Rating','Ranking','RiskTreatment','Mitigation','MitigationDetails','Responsility','When','Approval','Verification','ResidueLKHD','ResidueSeverity','ResidueRating','ResidueRank'])
 
     
         for i in risks:
-            #if i.issue_number.get_context_display() is not None:#if the value is none django throws errors
-            writer.writerow([i.risk_number, i.risk_date,i.assessor,i.issue_number.get_context_display(),i.issue_number.description,i.description,i.residuelikelihood,i.riskrating,i.riskrank,i.mitigation,i.responsibility,i.due,i.status,i.verification_status,i.residuelikelihood,i.residueseverity,i.residueriskrating,i.residueriskrank])
-            
+            if i.issue_number is not None:
+                writer.writerow([i.risk_number,i.risk_date,i.assessor,i.issue_number.get_context_display(),i.issue_number.get_process_desc_display(),i.issue_number.get_process_issues_display(),i.issue_number.process_StrengthWeakness,i.issue_number.description,i.riskdescription,i.likelihood,i.severity,i.riskrating,i.riskrank,i.risktreatment,i.riskmitigation,i.mitigationdesc,i.responsibility,i.due,i.status,i.verification_status,i.residuelikelihood,i.residueseverity,i.residueriskrating,i.residueriskrank])
+            else:
+                writer.writerow([i.risk_number,i.risk_date,i.assessor,"","","","","",i.riskdescription,i.likelihood,i.severity,i.riskrating,i.riskrank,i.risktreatment,i.riskmitigation,i.mitigationdesc,i.responsibility,i.due,i.status,i.verification_status,i.residuelikelihood,i.residueseverity,i.residueriskrating,i.residueriskrank])
+        
+                
+
         return response
         
     else:
@@ -698,12 +702,16 @@ def opportunity_report(request):
         response['Content-Disposition'] = 'attachment; filename="OpportunityRegister.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['Opp. No.', 'DateofAnalysis', 'Assessor', 'Context','ContextDescription','Opp.Description','LKHD','BENEFIT','Rating','Ranking','PursuitAction','Mitigation','Responsility','When','Approval','Verification'])
+        writer.writerow(['OPP. No.', 'DateofAnalysis', 'Assessor', 'Context','ProcessDescription','SWOT','IssueDesc','Details','OPPDescription','LKHD','BENEFIT','Rating','Ranking','PursuitAction','Responsility','When','Approval','Verification'])
 
     
         for i in opportunity:
-            writer.writerow([i.risk_number, i.risk_date,i.assessor,i.ip_number.get_context_display(),i.ip_number.description,i.description,i.likelihood,i.severity,i.riskrating,i.riskrank,i.risktreatment,i.mitigation,i.responsibility,i.due,i.status,i.verification])
-            
+            if i.issue_number is not None:
+                writer.writerow([i.risk_number,i.risk_date,i.assessor,i.issue_number.get_context_display(),i.issue_number.get_process_desc_display(),i.issue_number.get_process_issues_display(),i.issue_number.process_StrengthWeakness,i.issue_number.description,i.riskdescription,i.likelihood,i.severity,i.riskrating,i.riskrank,i.mitigation,i.responsibility,i.due,i.status,i.verification])
+            else:
+                writer.writerow([i.risk_number,i.risk_date,i.assessor,"","","","","",i.riskdescription,i.likelihood,i.severity,i.riskrating,i.riskrank,i.mitigation,i.responsibility,i.due,i.status,i.verification])
+
+
         return response
         
     else:

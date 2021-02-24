@@ -1,0 +1,65 @@
+
+
+<th>Risk. No.</th>
+					<th>DateofAnalysis</th>
+					<th>Assessor</th>					
+					<th>Context</th>
+                    <th>ProcessDesc.</th>
+					<th>SWOT</th>
+					<th>IssueDesc.</th>
+					<th>Details</th>
+                    <th>RiskDesc.</th>
+                    <th>LKHD</th>
+                        <th>Severity</th>
+					<th>Rating</th>
+					<th>Ranking</th>
+                       <th>RiskTreatment</th>
+                          <th>Mitigation</th>
+                            <th>MitigationDetails</th>
+                             <th>Responsibility</th>
+					<th>When</th>
+					<th>Approval</th>
+                    <th>Verification</th>
+                    
+                    <th>ResidueLikelihood</th>
+					<th>ResidueSeverity</th>
+					<th>ResidualRating</th>
+                    <th>ResidualRanking</th>
+					
+writer.writerow(['Risk. No.', 'DateofAnalysis', 'Assessor', 'Context','ContextDescription','SWOT','IssueDesc','Details','RiskDescription','LKHD','Severity','Rating','Ranking','RiskTreatment','Mitigation','MitigationDetails','Responsility','When','Approval','Verification','ResidueLKHD','ResidueSeverity','ResidueRating','ResidueRank'])
+
+writer.writerow([i.risk_number, i.risk_date,i.assessor,i.issue_number,i.issue_number.description,i.description,i.residuelikelihood,i.riskrating,i.riskrank,i.mitigation,i.responsibility,i.due,i.status,i.verification_status,i.residuelikelihood,i.residueseverity,i.residueriskrating,i.residueriskrank])
+            					
+					
+<td>{{i.risk_number}}</td>
+					<td>{{i.risk_date}}</td>
+					<td>{{i.assessor}}</td>
+				
+						{% if i.issue_number != empty %}
+					
+					<td colspan="1">{{i.issue_number.get_context_display}}</td>
+					{% else %}
+					<td colspan="1">{{i.get_context_display}}</td>
+					{% endif %}
+				
+                    <td>{{i.issue_number.get_process_desc_display}}</td>
+					<td>{{i.issue_number.get_process_issues_display}}</td>
+					<td>{{i.issue_number.process_StrengthWeakness}}</td>
+					<td>{{i.issue_number.description}}</td>
+                    <td>{{i.riskdescription}}</td>
+                    <td>{{i.likelihood}}</td>
+                    <td>{{i.severity}}</td>
+					<td>{{i.riskrating}}</td>
+					<td>{{i.riskrank}}</td>
+                    <td>{{i.risktreatment}}</td>
+                    <td>{{i.riskmitigation}}</td>
+                     <td>{{i.mitigationdesc}}</td>
+                    <td>{{i.responsibility}}</td>
+					<td>{{i.due}}</td>
+					<td>{{i.status}}</td>
+                    <td>{{i.verification_status}}</td>
+
+                    <td>{{i.residuelikelihood}}</td>
+					<td>{{i.residueseverity}}</td>
+					<td>{{i.residueriskrating}}</td>
+                    <td>{{i.residueriskrank}}</td>

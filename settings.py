@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '^ierzn^w=%e)oyzw_ecfb_usv&#1y^80ffnxlo&aod1)!o7-9a'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['andysystems.pythonanywhere.com','127.0.0.1','localhost']
 
@@ -129,7 +129,7 @@ os.path.join(BASE_DIR,'static'),
 ]
 #STATIC_ROOT=os.path.join(BASE_DIR,'graphics')
 STATIC_ROOT='/home/andysystems/managementsystem/static'
-MEDIA_URL='/images/'
-#MEDIA_ROOT=os.path.join(BASE_DIR,'media')
-MEDIA_ROOT='/home/andysystems/managementsystem/media'
+MEDIA_URL='/media/'
+MEDIA_ROOT=os.path.join(BASE_DIR,'media')
+#MEDIA_ROOT='/home/andysystems/managementsystem/media'
 
