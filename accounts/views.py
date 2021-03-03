@@ -300,8 +300,6 @@ def home(request):
     for i in customer_complaint:
         w=i.date
         t=w.strftime('%m/%d/%Y')
-        #print("printing dates",t)
-        #print("printing dates ranges",get_7days_expire(t))
         if get_7days_expire(t)<=30 and get_7days_expire(t)>=0:
             aa+=1
         elif get_7days_expire(t)>30 and get_7days_expire(t)<=60:
@@ -322,9 +320,7 @@ def home(request):
 
 
 
-#############################################################################
-
-
+###########################################################################
 
     categories = ['IPs','Issues','Compliance','Risks','Opportunity','QMSplanner','TrainingPlanner','Incident','CorrectiveAction','ChangeRequest','CustomerSatisfaction','CustomerComplaint','ProviderAssesment']
     #survived_series_data = [total_pending,total_approved,12]
@@ -372,7 +368,33 @@ def home(request):
 
         'color': ''
     }
-    
+ ################NON CONFORMITY BAR CHART#################################
+    nonconf=mod9001_planning.objects.all()
+    nonconf2=list(nonconf)
+    print("printing querysetlist",nonconf2)
+    process=[]
+    finding=[]
+    for i in nonconf:
+        process.append(i.car_no.process)
+        finding.append(i.car_no.finding)
+
+    print(process)
+    print(finding)
+    nonconfs = {
+        'name': 'nonconfs',
+        'data':finding,
+        'color': ''
+    }
+    nonconfcharts = {
+        'chart': {'type': 'column'},
+        'title': {'text': 'Non Conformity'},
+        'xAxis': {'process': process},
+        'series': [nonconfs],
+        
+    }
+
+    print("printing processes",process)
+   
        
     charts = {
         'chart': {'type': 'pie'},
@@ -381,8 +403,10 @@ def home(request):
         'series': [Created2],
         
     }
+    print("printing categories",categories)
     dump = json.dumps(chart)
     dump2=json.dumps(charts)
+    #dump3=json.dumps(nonconfcharts)
     browser_stats = [('Chrome', 52.9), ('Firefox', 27.7), ('Opera', 1.6),
                  ('Internet Explorer', 12.6), ('Safari', 4)]
 
@@ -405,6 +429,10 @@ def home(request):
             medium+=1
         else:
             pass
+
+
+
+
 
 
 
@@ -433,15 +461,20 @@ def home(request):
             s+=1
         else:
             pass
-    #print("PRINTING X Y Z W I", w, x, y, z, s )
-    ###########################END##########################################
-    #print("PRINTING MONTHS aa bb cc dd ee fff ", aa, bb, cc, dd , ee ,ff )
-    context={'low':low,'high':high,'medium':medium,'total_jobs_pending':total_jobs_pending,'total_jobs_created':total_jobs_created,'total_jobs_completed':total_jobs_completed,'first_cost':g,'second_cost':h,'third_cost':m,'forth_cost':j,'fifth_cost':k,'sixth_cost':l,'firstt':aa,'secondd':bb,'thirdd':cc,'forthh':dd,'fifthh':ee,'sixthh':ff,'first':a,'second':b,'third':c,'forth':d,'fifth':e,'sixth':f,'poor':w,'improvement':x,'satisfactory':y,'good':z,'excellent':s,'browser_stats':browser_stats,'total_PROVIDERASSESSMENT':total_PROVIDERASSESSMENT,'total_CUSTOMERCOMPLAINT':total_CUSTOMERCOMPLAINT,'total_CUSTOMERSATISFACTION':total_CUSTOMERSATISFACTION,'total_CHANGEREQUEST':total_CHANGEREQUEST,'total_CORRECTIVEACTION':total_CORRECTIVEACTION,'total_INCIDENTREGISTER':total_INCIDENTREGISTER,'total_Trainingplanner':total_Trainingplanner,'total_QMSplanner':total_QMSplanner,'carstatus':carstatus,'cars':cars, 'customers':customers,'total_cars':total_cars,'total_approved':total_approved,'total_pending':total_pending,'counts':counts,'due':due,'chart': dump,'charts': dump2,'total_tasks':total_tasks,'total_IPS':total_IPS,'total_ISSUES':total_ISSUES,'total_COMPLAINCE':total_COMPLAINCE,'total_RISKS':total_RISKS,'total_OPPORTUNITY':total_OPPORTUNITY}
+   
+
+
+    context={'finding':finding,'low':low,'high':high,'medium':medium,'total_jobs_pending':total_jobs_pending,'total_jobs_created':total_jobs_created,'total_jobs_completed':total_jobs_completed,'first_cost':g,'second_cost':h,'third_cost':m,'forth_cost':j,'fifth_cost':k,'sixth_cost':l,'firstt':aa,'secondd':bb,'thirdd':cc,'forthh':dd,'fifthh':ee,'sixthh':ff,'first':a,'second':b,'third':c,'forth':d,'fifth':e,'sixth':f,'poor':w,'improvement':x,'satisfactory':y,'good':z,'excellent':s,'browser_stats':browser_stats,'total_PROVIDERASSESSMENT':total_PROVIDERASSESSMENT,'total_CUSTOMERCOMPLAINT':total_CUSTOMERCOMPLAINT,'total_CUSTOMERSATISFACTION':total_CUSTOMERSATISFACTION,'total_CHANGEREQUEST':total_CHANGEREQUEST,'total_CORRECTIVEACTION':total_CORRECTIVEACTION,'total_INCIDENTREGISTER':total_INCIDENTREGISTER,'total_Trainingplanner':total_Trainingplanner,'total_QMSplanner':total_QMSplanner,'carstatus':carstatus,'cars':cars, 'customers':customers,'total_cars':total_cars,'total_approved':total_approved,'total_pending':total_pending,'counts':counts,'due':due,'chart': dump,'charts': dump2,'total_tasks':total_tasks,'total_IPS':total_IPS,'total_ISSUES':total_ISSUES,'total_COMPLAINCE':total_COMPLAINCE,'total_RISKS':total_RISKS,'total_OPPORTUNITY':total_OPPORTUNITY}
 
 
  
 
     return render(request,'accounts/dashboard.html',context)
+
+
+
+
+
 
 ############# MSEM                   ##########################################
 ########FUNCTION TO FETCH CAR NON CONFORMITY LIST FROM NonConformityList TABLE BASED ON THE SOURCE SELECTED BY USER####
@@ -453,7 +486,7 @@ def car_approval(request):
 
 
 def CARerror(request):
-    print("PRINTING MESSAGES",messages)
+    #print("PRINTING MESSAGES",messages)
     return render(request,'accounts/errors.html')
 
 @login_required(login_url='login')

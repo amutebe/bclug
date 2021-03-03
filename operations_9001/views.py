@@ -430,10 +430,10 @@ def training_register_report(request):
         
     else:
         return render(request,'Training_Evaluation_Report.html',{'trainingreg':trainingreg,'myFilter':myFilter})
-######################TRAINING REGISTER VERIFICATION ############################################################
+###################### TRAINING REGISTER VERIFICATION ############################################################
 
 
-#######################TRAINING PLANNER ###############################
+####################### TRAINING PLANNER ###############################
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['HRManager'])
 def training_planner(request):

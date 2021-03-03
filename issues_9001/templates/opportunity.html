@@ -25,6 +25,7 @@ form {
            
   
 </div>
+
    
 <div class="col">
 <label for="usr">Date of Analysis:</label> <br>
@@ -51,32 +52,47 @@ form {
     
 
 <div class="col" id="context">
-      <label for="context">Context: </label><br>  
-  <p><i>{{form.contextdetails}}  </i></p><br>
+      <label for="context">Context: </label>  <br>
+{{form.contextdetails}} 
  <font color="red">{{form.errors.contextdetails}}</font>
 </div>    
-    
-
-<div class="col">
-      <label for="usr">ID: </label>
-     {{form.issue_number}}
- <font color="red">{{ form.errors.issue_number }}</font>
-      
-</div>
-
-
-
-     
-    
-</div>
-
+ <!--
 <label for="contextdescription"></label>
 <div class="form-group" id="contextdescription">
 
 <input type="text" id="contextdescription" name="contextdescription" value="" >
 
 </div>
-    
+ -->
+ </div> 
+  
+<br>
+<div class="row">
+<div class="col">
+ <label for="usr">ID:</label>{{form.issue_number}}<font color="red">{{ form.errors.issue_number }}</font>
+</div>
+
+<div class="col" id="divissues_register">
+<table class="form-group">
+					<tr> 
+<td align="right"><a class="btn  btn-light" href="{% url 'issues_report'%}"><font color="green">---Issues register--- </font></a></td>
+	
+          
+ </tr>
+</table>
+</div>
+<div class="col" id="divip_register">
+<table class="form-group">
+					<tr> 
+<td align="right"><a class="btn  btn-light" href="{% url 'ip_report'%}"><font color="green"> ---IP register---</font> </a></td>
+				
+          
+          </tr>
+</table>
+</div>
+
+</div>
+
 
 
 
@@ -87,7 +103,6 @@ form {
     <label for="internal">Opportunity description:</label>
 <br>
 <input type="text" class="form-control" id="contextdescription"  name="description" {{form.description}}
-
 
   <font color="red">{{form.errors.description}}</font>
 </div>
@@ -122,9 +137,6 @@ form {
  <div class="col">
 <label for="severity"> Opportunity Rank:</label><br>
  <input type="text" class="form-control" id="opprank"  name="opprank">
-
-
-<br>
 </div>
 </div>
 <div class="form-group" id="mitigation">
@@ -159,6 +171,7 @@ form {
   
 </div>
 <br>
+<div>
 <p class="round2"> 
 <div class="card card-body">
 					<table class="form-group">
@@ -170,6 +183,8 @@ form {
 					</tr>
           </table>
 </div>
+</div>
+
 </form>
 </div>
 

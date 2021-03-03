@@ -100,12 +100,11 @@ class customer_complaintFilter(django_filters.FilterSet):
 
 ########################CORRECTIVE ACTION##################################
 class correctiveactionFilter(django_filters.FilterSet):
-    date=DateRangeFilter(field_name="date",label='Summary')
-    start=DateFilter(field_name="date",lookup_expr='gte',label='Start Date',widget=DateInput())
-    end=DateFilter(field_name="date",lookup_expr='lte',label='End Date',widget=DateInput())
-    class Meta:
-        model=mod9001_correctiveaction
-        fields=['car_source']
+    date=DateRangeFilter(field_name="completion",label='Summary')
+    start=DateFilter(field_name="completion",lookup_expr='gte',label='Start Date',widget=DateInput())
+    end=DateFilter(field_name="completion",lookup_expr='lte',label='End Date',widget=DateInput())
+
+    
 
 ########################CHANGE REQUEST##################################
 class changeRegisterFilter(django_filters.FilterSet):

@@ -6,7 +6,34 @@ function myFunction() {
 }
 </script>
 <script>
+//RSIK ASSESSMENT
+$("#id_contextdetails").change(function() {
+			if ($(this).val()==1) {
+					
+				$('#divissues_register').show();
+				$('#divip_register').hide();
 
+				
+
+
+					
+				
+			} else if ($(this).val()==2) {
+				
+				$('#divissues_register').hide();
+				$('#divip_register').show();
+
+				
+				
+			
+			}
+			else
+			{
+							$('#divissues_register').hide();
+				$('#divip_register').hide();	
+			}
+		});
+		$("#id_contextdetails").trigger("change");
 
 
 //TRAINING REGISTER
@@ -89,6 +116,7 @@ $(document).ready(function()
    // $('#id_status').hide();
 	//$('label[for="id_status"]').hide();
 	$('#id_jobknowledge').change(function()
+	
 {
 if(document.querySelector('input[name="jobknowledge"]:checked').value==""||
 document.querySelector('input[name="adaptability"]:checked').value==""||

@@ -55,17 +55,10 @@ form
       <label for="context"><h6>Context:</h6> </label><br>  
         {{form.contextdetails}}  
  <font color="red">{{form.errors.contextdetails}}</font>
-</div>    
-    
-
-<div class="form-group"><br>
-      <label for="usr"><h6>ID:</h6></label>
-     {{form.issue_number}}
- <font color="red">{{ form.errors.issue_number }}</font>
-      
+</div>     
 </div>
-  
-    
+ 
+<!--    
 
 <div class="form-group"><br>
  
@@ -73,6 +66,37 @@ form
 <input type="text" id="contextdescription" name="contextdescription" value="" >
 </div>
 </div>
+
+-->
+<br>
+<div class="row">
+<div class="col">
+ <label for="usr"><h6>ID:</h6></label>{{form.issue_number}}<font color="red">{{ form.errors.issue_number }}</font>
+</div>
+<div class="col" id="divissues_register">
+<table class="form-group">
+					<tr> 
+<td align="right"><a class="btn  btn-light" href="{% url 'issues_report'%}"> <font color="green">---Issues register--- </font></a></td>
+	
+          
+ </tr>
+</table>
+</div>
+<div class="col" id="divip_register">
+<table class="form-group">
+					<tr> 
+<td align="right"><a class="btn  btn-light" href="{% url 'ip_report'%}"><font color="green"> ---IP register---</font> </a></td>
+				
+          
+          </tr>
+</table>
+</div>
+
+<div class="col" >
+
+</div>
+
+
 </div>
 
 <div class="form-group" id="riskdescription">
@@ -213,6 +237,8 @@ form
     $("#id_contextdetails").change(function () {
       var url = $("#riskForm").attr("data-ids-url");
       var contextId = $(this).val();
+
+
    $('#contextdescription').hide();
 
       $.ajax({
