@@ -655,12 +655,11 @@ def incident_report(request):
         response['Content-Disposition'] = 'attachment; filename="IncidentRegister.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['Incident. No.', 'Date', 'Time', 'Reference','ProcessName','Type','Description','Details','Classification','RootCause','Containment','AdditionalDescription','AsignedTo','When','CompletionDate','CostDescription','LessonLearnt'])
-
+        writer.writerow(['Incident. No.', 'Date', 'Time', 'Process','Type','Description','Details','Classification','Containment','Addit.Desc','AssignedTo','When','Comp.Date','Cost','currency','Amount','Lesson'])
     
         for i in incident:
             #if i.issue_number.get_context_display() is not None:#if the value is none django throws errors
-            writer.writerow([i.incident_number, i.incident_number.date,i.incident_number.time,i.incident_number.get_reference_display(),i.incident_number.processname,i.incident_number.incidentype,i.incident_number.incident_description,i.incident_number.other,i.classification,i.rootcause,i.get_correction_display(),i.description,i.assigned,i.due,i.completion,i.get_cost_display(),i.lesson])
+            writer.writerow([i.incident_number, i.incident_number.date,i.incident_number.time,i.incident_number.processname,i.incident_number.incidentype,i.incident_number.incident_description,i.incident_number.other,i.classification,i.correction,i.description,i.assigned,i.due,i.completion,i.get_cost_display(),i.get_currency_display(),i.costdescription,i.lesson])
         return response
         
     else:
