@@ -47,6 +47,11 @@ customer {
   border: 2px solid green;
 
 }
+		p.round1
+{
+  border: 2px  #7abecc;
+
+}
 .highcharts-figure, .highcharts-data-table table {
     min-width: 320px; 
     max-width: 660px;
@@ -111,15 +116,34 @@ customer {
  <div class="container">
 	{%  include 'accounts/navbar.html' %}
 	<br>
-	<br>
+	<img src="{% static 'images/logos/logo.png'%}" class="center"> 
+	
 	<div class="container-fluid">
 	{% block content %}
 	
 	{% endblock %}
     </div>
 	<hr>
-<center>	Andy Systems Copy Right &#169 2021</center>
+
+
 </div>	
+
+ <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <script>document.write(new Date().getFullYear())</script> © AndyMS - <a href="https://andysystems.net/">Andy Systems </a>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="text-md-right footer-links d-none d-md-block">
+                                    <a href="https://andysystems.net/management-system-software">About</a>
+                                    <a href="https://andysystems.net/">Support</a>
+                                    <a href="https://andysystems.net/contact">Contact Us</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
 </body>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

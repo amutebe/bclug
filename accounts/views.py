@@ -104,7 +104,7 @@ def home(request):
         total_PROVIDERASSESSMENT= mod9001_providerassessment.objects.all().filter(status='1').filter(~Q(qmsstatus='1')).count()      
 
     total_tasks= total_IPS + total_ISSUES + total_COMPLAINCE + total_RISKS + total_OPPORTUNITY + total_QMSplanner + total_Trainingplanner + total_INCIDENTREGISTER + total_CORRECTIVEACTION + total_CHANGEREQUEST + total_CUSTOMERSATISFACTION + total_CUSTOMERCOMPLAINT + total_PROVIDERASSESSMENT
-
+    #request.session['total_tasks'] = total_tasks
     
 #####################END##################################
 
@@ -355,8 +355,10 @@ def home(request):
     chart = {
         'chart': {'type': 'column'},
         'title': {'text': 'Tasks by status'},
+ 
         'xAxis': {'categories': categories},
         'series': [Created,Approved,Verified,Completed],
+        
         
     }
     
@@ -371,15 +373,15 @@ def home(request):
  ################NON CONFORMITY BAR CHART#################################
     nonconf=mod9001_planning.objects.all()
     nonconf2=list(nonconf)
-    print("printing querysetlist",nonconf2)
+    #print("printing querysetlist",nonconf2)
     process=[]
     finding=[]
     for i in nonconf:
         process.append(i.car_no.process)
         finding.append(i.car_no.finding)
 
-    print(process)
-    print(finding)
+    #print(process)
+    #print(finding)
     nonconfs = {
         'name': 'nonconfs',
         'data':finding,
@@ -393,7 +395,7 @@ def home(request):
         
     }
 
-    print("printing processes",process)
+    #print("printing processes",process)
    
        
     charts = {
@@ -403,7 +405,7 @@ def home(request):
         'series': [Created2],
         
     }
-    print("printing categories",categories)
+    #print("printing categories",categories)
     dump = json.dumps(chart)
     dump2=json.dumps(charts)
     #dump3=json.dumps(nonconfcharts)
@@ -557,7 +559,7 @@ def SaveCAR(request):
         request.POST=request.POST.copy()
         
         request.POST['entered_by'] = request.user
-        print("PRINTING request.POST['entered_by']",request.POST['entered_by'])
+        #print("PRINTING request.POST['entered_by']",request.POST['entered_by'])
         form=CARFormSave(request.POST)
         #Set CAR status to pending before saving
         
@@ -618,7 +620,7 @@ i.proposedby,i.proposedDate,i.deadline, i.priority,i.implementedby,i.car_date,i.
         return response
         
     else:
-        print("PRINTING",products)
+        #print("PRINTING",products)
         return render(request,'accounts/car_view.html',{'products':products,'myFilter':myFilter})
 
 

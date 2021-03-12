@@ -4,37 +4,39 @@
 {% load static %}
 {% include 'accounts/status.html' %}
 
-<br>
 
+ 
 <div class="row">
-	<div class="col-md">
+	
+    <div class="col-md">
 		<h6>Tasks Pending Approval:</h6>
-		
+		<p class="round2">
 		
 		
 		<div class="table table-sm">
-			    	<a href="{% url 'ip_pending'%}">IPs: {{total_IPS}}</a><br>
-					<a href="{% url 'issues_pending'%}">Issues: {{total_ISSUES}}</a><br>
-					<a href="{% url 'requirement_pending'%}">Compliance: {{total_COMPLAINCE}}</a><br>
-			    	<a href="{% url 'risk_pending'%}">Risks: {{total_RISKS}}</a><br>
-					<a href="{% url 'opp_pending'%}">Opportunity: {{total_OPPORTUNITY}}</a><br>
-					<a href="{% url 'qms_pending'%}">QMS Planner: {{total_QMSplanner}}</a><br>
-					<a href="{% url 'trainplanner_pending'%}">Training Planner: {{total_Trainingplanner}}</a><br>
-					<a href="{% url 'incidentregister_due'%}">Incident: {{total_INCIDENTREGISTER}}</a><br>
-					<a href="{% url 'planning_pending'%}">Corrective Action: {{total_CORRECTIVEACTION}}</a><br>
-			    	<a href="{% url 'changerequest_pending'%}">Change Request: {{total_CHANGEREQUEST}}</a><br>
-					<a href="{% url 'customersatisfaction_due'%}">Customer Satisfaction: {{total_CUSTOMERSATISFACTION}}</a><br>
-					<a href="{% url 'customercomplaint_due'%}">Customer Complaint: {{total_CUSTOMERCOMPLAINT}}</a><br>
-			    	<a href="{% url 'providerassessments_due'%}">Provider Assessment: {{total_PROVIDERASSESSMENT}}</a><br>
+			    	<li><a href="{% url 'ip_pending'%}">IPs: {{total_IPS}}</a><br></li>
+					<li><a href="{% url 'issues_pending'%}">Issues: {{total_ISSUES}}</a><br></li>
+					<li><a href="{% url 'requirement_pending'%}">Compliance: {{total_COMPLAINCE}}</a><br></li>
+			    	<li><a href="{% url 'risk_pending'%}">Risks: {{total_RISKS}}</a><br></li>
+					<li><a href="{% url 'opp_pending'%}">Opportunity: {{total_OPPORTUNITY}}</a><br></li>
+					<li><a href="{% url 'qms_pending'%}">QMS Planner: {{total_QMSplanner}}</a><br></li>
+					<li><a href="{% url 'trainplanner_pending'%}">Training Planner: {{total_Trainingplanner}}</a><br></li>
+					<li><a href="{% url 'incidentregister_due'%}">Incident: {{total_INCIDENTREGISTER}}</a><br></li>
+					<li><a href="{% url 'planning_pending'%}">Corrective Action: {{total_CORRECTIVEACTION}}</a><br></li>
+			    	<li><a href="{% url 'changerequest_pending'%}">Change Request: {{total_CHANGEREQUEST}}</a><br></li>
+					<li><a href="{% url 'customersatisfaction_due'%}">Customer Satisfaction: {{total_CUSTOMERSATISFACTION}}</a><br></li>
+					<li><a href="{% url 'customercomplaint_due'%}">Customer Complaint: {{total_CUSTOMERCOMPLAINT}}</a><br></li>
+			    	<li><a href="{% url 'providerassessments_due'%}">Provider Assessment: {{total_PROVIDERASSESSMENT}}</a><br></li>
 		</div>
 			  
 		
 		
-	</div>
 
+
+</div>
 
 <div class="col-md-4">
-
+<div class="card">
 <div id="containeres"></div>
 <script src="{% static 'js/highcharts.src.js' %}"></script>
 
@@ -47,13 +49,19 @@ Highcharts.chart('containeres', {
         plotBackgroundColor: null,
         plotBorderWidth: null,
         plotShadow: false,
-        type: 'pie'
+        type: 'pie',
+        //backgroundColor: ""
     },
+credits: {
+    enabled: false
+  },
+
+
     title: {
         text: 'Residual Risk'
     },
     tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        pointFormat: '{series.name}: {point.percentage:.1f}%'
     },
     accessibility: {
         point: {
@@ -65,7 +73,7 @@ Highcharts.chart('containeres', {
             allowPointSelect: true,
             cursor: 'pointer',
             dataLabels: {
-                enabled: true,format:'{point.name} {point.percentage:.1f}%'
+            enabled: true,format:'{point.name} {point.percentage:.1f}%'
             },
             showInLegend: true
         }
@@ -98,6 +106,7 @@ Highcharts.chart('containeres', {
 
 </script>
 </div>
+</div>
 <div class="col-md-4">
 
 <div id="containers"></div>
@@ -112,8 +121,12 @@ Highcharts.chart('containers', {
         plotBackgroundColor: null,
         plotBorderWidth: null,
         plotShadow: false,
-        type: 'pie'
+        type: 'pie',
+        //backgroundColor: ""
     },
+    credits: {
+    enabled: false
+  },
     title: {
         text: 'Customer Satisfaction'
     },
@@ -184,6 +197,9 @@ Highcharts.chart('containerse', {
     title: {
         text: 'Incident and Complaints in last 6 Months'
     },
+    credits: {
+    enabled: false
+  },
 
     subtitle: {
         text: ''
@@ -257,6 +273,10 @@ Highcharts.chart('containersee', {
     title: {
         text: 'Incidents cost in last 6 Months'
     },
+    credits: {
+    enabled: false
+  },
+
 
     subtitle: {
         text: ''
@@ -330,7 +350,9 @@ Highcharts.chart('containersee', {
     title: {
         text: 'Incidents cost in last 6 Months'
     },
-
+credits: {
+    enabled: false
+  },
     subtitle: {
         text: ''
     },
