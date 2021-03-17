@@ -110,12 +110,20 @@ customer {
 </head>
 
 <body class="bg-light">
- <div class="container">
+
+ <header class="header">
+  <div class="row">
+    <div class="col-md-0">
+<img src="{% static 'images/logos/logo.png'%}">	
+</div>
+  <div class="col-md">
 	{%  include 'accounts/navbar.html' %}
-	<br>
-	<img src="{% static 'images/logos/logo.png'%}" class="center">
-	
+</div>
+</header>
+</div>
+	<div class="card">
 	<div class="container-fluid">
+	<br>
 	{% block content %}
 	
 	{% endblock %}
@@ -129,10 +137,12 @@ customer {
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-6">
+							<div class="text-md-center footer-links d-none d-md-block">
                                 <script>document.write(new Date().getFullYear())</script> © AndyMS - <a href="https://andysystems.net/">Andy Systems </a>
                             </div>
+							</div>
                             <div class="col-md-6">
-                                <div class="text-md-right footer-links d-none d-md-block">
+                                <div class="text-md-center footer-links d-none d-md-block">
                                     <a href="https://andysystems.net/management-system-software">About</a>
                                     <a href="https://andysystems.net/">Support</a>
                                     <a href="https://andysystems.net/contact">Contact Us</a>
@@ -140,7 +150,7 @@ customer {
                             </div>
                         </div>
                     </div>
-                </footer>
+</footer>
 </body>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

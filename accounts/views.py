@@ -350,17 +350,19 @@ def home(request):
         'data': [0,0,0,total_RISKS_created,total_OPPORTUNITY_completed,total_QMSplanner_completed,total_Trainingplanner_completed,total_INCIDENTREGISTER_completed,total_CORRECTIVEACTION_completed,total_CHANGEREQUEST_completed,total_CUSTOMERSATISFACTION_completed,total_CUSTOMERCOMPLAINT_completed,total_PROVIDERASSESSMENT_completed],
         'color': 'yellow'
     }
-   
+    
+  
 
     chart = {
         'chart': {'type': 'column'},
         'title': {'text': 'Tasks by status'},
- 
+        'credits': 'false',
+       
         'xAxis': {'categories': categories},
         'series': [Created,Approved,Verified,Completed],
-        
-        
+           
     }
+ 
     
     Created2 = {
         'name': 'Created',

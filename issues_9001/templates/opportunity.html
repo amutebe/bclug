@@ -15,10 +15,10 @@ form {
 <form action="/opportunity/" method="post" id="riskForm" data-ids-url="{% url 'ajax_load_ids' %}" data-contextdesc-url="{% url 'ajax_load_contextdesc' %}" >
                      {% csrf_token %}
                     
-               
+<div class="card-header">             
 <div class="row">
     <div class="col">
-      <label for="usr" id='usr'>Opportunity no: </label><br>
+      <label for="usr" id='usr'><h6>Opportunity no:</h6> </label><br>
 
      
 {{form.risk_number}}
@@ -28,7 +28,7 @@ form {
 
    
 <div class="col">
-<label for="usr">Date of Analysis:</label> <br>
+<label for="usr"><h6>Date of Analysis:</h6></label> <br>
 
  
 
@@ -43,7 +43,7 @@ form {
 
 
 <div class="col">
-      <label for="usr">Lead Assessor: </label><br> 
+      <label for="usr"><h6>Lead Assessor: </h6></label><br> 
      {{form.assessor}}
  <font color="red">{{ form.errors.assessor }}</font>
       
@@ -52,7 +52,7 @@ form {
     
 
 <div class="col" id="context">
-      <label for="context">Context: </label>  <br>
+      <label for="context"><h6>Context:</h6> </label>  <br>
 {{form.contextdetails}} 
  <font color="red">{{form.errors.contextdetails}}</font>
 </div>    
@@ -69,13 +69,14 @@ form {
 <br>
 <div class="row">
 <div class="col">
- <label for="usr">ID:</label>{{form.issue_number}}<font color="red">{{ form.errors.issue_number }}</font>
+ <label for="usr">Context ID:</label><br>
+ {{form.issue_number}}<font color="red">{{ form.errors.issue_number }}</font>
 </div>
 
 <div class="col" id="divissues_register">
 <table class="form-group">
 					<tr> 
-<td align="right"><a class="btn  btn-light" href="{% url 'issues_report'%}"><font color="green">---Issues register--- </font></a></td>
+<td align="right"><a class="btn  btn-light" href="{% url 'issues_report'%}"><font color="green">---Details--- </font></a></td>
 	
           
  </tr>
@@ -84,19 +85,18 @@ form {
 <div class="col" id="divip_register">
 <table class="form-group">
 					<tr> 
-<td align="right"><a class="btn  btn-light" href="{% url 'ip_report'%}"><font color="green"> ---IP register---</font> </a></td>
+<td align="right"><a class="btn  btn-light" href="{% url 'ip_report'%}"><font color="green"> ---Details---</font> </a></td>
 				
           
           </tr>
 </table>
 </div>
 
+<div class="col" >
+
 </div>
-
-
-
-
-
+</div>
+<br>
 
 <div class="form-group" id="internal">
     
@@ -170,8 +170,10 @@ form {
     <font color="red">{{form.errors.due}}</font>
   
 </div>
+
 <br>
-<div>
+
+
 <p class="round2"> 
 <div class="card card-body">
 					<table class="form-group">
@@ -183,11 +185,8 @@ form {
 					</tr>
           </table>
 </div>
-</div>
-
 </form>
 </div>
-
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script>
     $("#id_contextdetails").change(function () {

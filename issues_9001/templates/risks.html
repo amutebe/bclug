@@ -17,7 +17,7 @@ form
 <form action="/risks/" method="post" id="riskForm" data-ids-url="{% url 'ajax_load_ids' %}" data-contextdesc-url="{% url 'ajax_load_contextdesc' %}" >
                      {% csrf_token %}
                     
-               
+<div class="card-header">             
 <div class="row">
     <div class="col">
       <label for="usr"><h6> Risk no: </h6></label><br>
@@ -57,7 +57,7 @@ form
  <font color="red">{{form.errors.contextdetails}}</font>
 </div>     
 </div>
- 
+
 <!--    
 
 <div class="form-group"><br>
@@ -71,21 +71,24 @@ form
 <br>
 <div class="row">
 <div class="col">
- <label for="usr"><h6>ID:</h6></label>{{form.issue_number}}<font color="red">{{ form.errors.issue_number }}</font>
+ <label for="usr">Context ID:</label><br>{{form.issue_number}} <font color="red">{{ form.errors.issue_number }}</font>
+
 </div>
+
 <div class="col" id="divissues_register">
 <table class="form-group">
 					<tr> 
-<td align="right"><a class="btn  btn-light" href="{% url 'issues_report'%}"> <font color="green">---Issues register--- </font></a></td>
+<td align="right"><a class="btn  btn-light" href="{% url 'issues_report'%}"> <font color="green">---Details--- </font></a></td>
 	
           
  </tr>
 </table>
 </div>
+
 <div class="col" id="divip_register">
 <table class="form-group">
 					<tr> 
-<td align="right"><a class="btn  btn-light" href="{% url 'ip_report'%}"><font color="green"> ---IP register---</font> </a></td>
+<td align="right"><a class="btn  btn-light" href="{% url 'ip_report'%}"><font color="green"> ---Details---</font> </a></td>
 				
           
           </tr>
@@ -95,13 +98,11 @@ form
 <div class="col" >
 
 </div>
-
-
 </div>
-
+<br>
 <div class="form-group" id="riskdescription">
     
-    <label for="riskdescription"><h6>Risk Description:</h6></label>
+    <label for="riskdescription">Risk Description:</label>
 <br>
 
 {{form.riskdescription}}
@@ -110,7 +111,7 @@ form
 
 <div class="form-group" id="internal">
     
-    <label for="internal"><h6>Please describe:</h6></label>
+    <label for="internal">Please describe:</label>
 <br>
     <input type="text" class="form-control" id="description"  name="description" {{form.description}}
 
@@ -121,7 +122,7 @@ form
 <div class="row">
  <div class="col">
 <div class="form-group">
-    <label for="likelihood"><h6> Likelihood:</h6></label>
+    <label for="likelihood"> Likelihood:</label>
 	<br>
 {{form.likelihood}}
   <font color="red">{{form.errors.likelihood}}</font>
@@ -130,37 +131,37 @@ form
 </div>
 
 
-
-</div>
-<div class="form-group">
-    <label for="severity"> <h6>Severity:</h6></label>
+<div class="col">
+    <label for="severity"> Severity:</label>
 	<br>
 {{form.severity}}
   <font color="red">{{form.errors.severity}}</font>
 
 </div>
-<div class="form-group">
-<label for="severity"><h6> Risk Rating:</h6></label><br>
+<div class="col">
+<label for="severity">Risk Rating:</label><br>
 {{form.riskrating}}
 
 </div>
 
- <div class="form-group">
-<label  for="severity"><h6> Risk Rank:</h6></label><br>
+ <div class="col">
+<label  for="severity">Risk Rank:</label><br>
 {{form.riskrank}}
 
 </div>
-<div class="form-group" id="risktreatment">
+</div>
+<div class="row">
+<div class="col" id="risktreatment">
     
-    <label for="risktreatment"><h6>Risk Treatment Option:</h6></label>
+    <label for="risktreatment">Risk Treatment Option:</label>
 <br>
 {{form.risktreatment}}
   <font color="red">{{form.errors.risktreatment}}</font>
 </div>
 
-<div class="form-group" id="retainreason">
+<div class="col" id="retainreason">
     
-    <label for="retainreason"> <h6>Please give Reason:</h6></label>
+    <label for="retainreason"> Please give Reason </label>
 <br>
 
     <input type="text" class="form-control" id="retainreason"  name="retainreason" {{form.retainreason}}
@@ -168,29 +169,29 @@ form
   <font color="red">{{form.errors.retainreason}}</font>
 </div>
 
-<div class="form-group" id="riskmitigation">
+<div class="col" id="riskmitigation">
     
-    <label for="riskmitigation"><h6>Risk mitigation:</h6></label>
+    <label for="riskmitigation">Risk mitigation:</label>
 <br>
 
 {{form.riskmitigation}}
   <font color="red">{{form.errors.riskmitigation}}</font>
 </div> 
 
-<div class="form-group" id="mitigation">
+<div class="col" id="mitigation">
     
-    <label for="mitigation"><h6>If other, please specify mitigation:</h6></label>
+    <label for="mitigation">If other, please specify mitigation:</label>
 <br>
     <input type="text" class="form-control" id="mitigation"  name="mitigation" {{form.mitigation}}
 
   <font color="red">{{form.errors.mitigation}}</font>
 </div>
-
+</div>
 
 <div class="form-group" id="mitigationdesc">
-    
-    <label for="internal"><h6>Please give risk mitigation details:</h6></label>
-<br>
+   <br> 
+    <label for="internal">Please give risk mitigation details:</label>
+
     <input type="text" class="form-control" id="mitigationdesc"  name="mitigationdesc" {{form.mitigationdesc}}
 
   <font color="red">{{form.errors.mitigationdesc}}</font>
@@ -198,24 +199,25 @@ form
 
 
  
-   
-
-<div class="form-group" id="responsibility">
+ <div class="row">
+<div class="col" id="responsibility">
     
-    <label for="proposedby"><h6>Responsibility:</h6></label><br>
+    <label for="proposedby">Responsibility:</label><br>
    {{form.responsibility}}
 <font color="red">{{form.errors.responsibility}}</font>
     
 </div>
   
-<div class="form-group" id="when">
+<div class="col" id="when">
    
-  <label for="proposedDate" ><h6>When:</h6></label>
+  <label for="proposedDate" >When:</label>
   <br>
     {{form.due}}
     <font color="red">{{form.errors.due}}</font>
   
 </div>
+</div>
+
 
 <br>
 <p class="round2"> 

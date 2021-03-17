@@ -1,6 +1,5 @@
 {%load static%}
 <nav class="navbar navbar-expand-lg">
-
 <!-- swimbi code start -->
 <link rel="stylesheet" type="text/css" href="menu_files/swimbi.css"/>
 <div id="swimbi">
@@ -19,14 +18,14 @@
                         </li>
                         <li><a data-icon="&#xF022;" >Issues</a>
                             <ul>
-                                <li><a data-icon="&#xF015;" href="{% url 'issues'%}">Create</a></li>
-                                <li><a data-icon="&#xF015;" href="{% url 'issues_pending'%}">Approve</a></li>
+                                <li><a data-icon="&#xF14B;" href="{% url 'issues'%}">Create</a></li>
+                                <li><a data-icon="&#xF00C;" href="{% url 'issues_pending'%}">Approve</a></li>
                             </ul>
                         </li>
                         <li><a data-icon="&#xF0A3;" >Compliance</a>
                             <ul>
-                                <li><a data-icon="&#xF015;" href="{% url 'regulatory_requirement'%}">Create</a></li>
-                                <li><a data-icon="&#xF015;" href="{% url 'requirement_pending'%}">Approve</a></li>
+                                <li><a data-icon="&#xF14B;" href="{% url 'regulatory_requirement'%}">Create</a></li>
+                                <li><a data-icon="&#xF00C;" href="{% url 'requirement_pending'%}">Approve</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -35,29 +34,29 @@
                     <ul>
                         <li><a data-icon="&#xF12D;" >Risks Assessment</a>
                             <ul>
-                                <li><a data-icon="&#xF015;" href="{% url 'risks'%}">Create</a></li>
-                                <li><a data-icon="&#xF015;" href="{% url 'risk_pending'%}">Approve</a></li>
+                                <li><a data-icon="&#xF14B;" href="{% url 'risks'%}">Create</a></li>
+                                <li><a data-icon="&#xF00C;" href="{% url 'risk_pending'%}">Approve</a></li>
                                 <li><a data-icon="&#xF12E;" href="{% url 'risks_due'%}">Verification</a></li>
                             </ul>
                         </li>
                         <li><a data-icon="&#xF14E;" >Opp. Assessment</a>
                             <ul>
-                                <li><a data-icon="&#xF015;" href="{% url 'opportunity'%}">Create</a></li>
-                                <li><a data-icon="&#xF015;" href="{% url 'opp_pending'%}">Approve</a></li>
+                                <li><a data-icon="&#xF14B;" href="{% url 'opportunity'%}">Create</a></li>
+                                <li><a data-icon="&#xF00C;" href="{% url 'opp_pending'%}">Approve</a></li>
                                 <li><a data-icon="&#xF12E;" href="{% url 'opp_due'%}">Verification</a></li>
                             </ul>
                         </li>
                         <li><a data-icon="&#xF013;" >QMS Planner</a>
                             <ul>
-                                <li><a data-icon="&#xF015;" href="{% url 'qms_planner'%}">Create</a></li>
-                                <li><a data-icon="&#xF015;" href="{% url 'qms_pending'%}">Approve</a></li>
+                                <li><a data-icon="&#xF14B;" href="{% url 'qms_planner'%}">Create</a></li>
+                                <li><a data-icon="&#xF00C;" href="{% url 'qms_pending'%}">Approve</a></li>
                                 <li><a data-icon="&#xF12E;" href="{% url 'qms_due'%}">Verification</a></li>
                             </ul>
                         </li>
                         <li><a data-icon="&#xF0C0;" >Training Planner</a>
                             <ul>
-                                <li><a data-icon="&#xF015;" href="{% url 'training_planner'%}">Create</a></li>
-                                <li><a data-icon="&#xF015;" href="{% url 'trainplanner_pending'%}">Approve</a></li>
+                                <li><a data-icon="&#xF14B;" href="{% url 'training_planner'%}">Create</a></li>
+                                <li><a data-icon="&#xF00C;" href="{% url 'trainplanner_pending'%}">Approve</a></li>
                                 <li><a data-icon="&#xF12E;" href="{% url 'training_due'%}">Verification</a></li>
                             </ul>
                         </li>
@@ -69,46 +68,46 @@
                             <ul>
                                 <li><a data-icon="&#xf0c5" href="{% url 'incidentRegister'%}">Log</a></li>
                                 <li><a data-icon="&#xf029" href="{% url 'incidentRegisterStaff'%}">Analysis</a></li>
-                                <li><a data-icon="&#xF058;" href="{% url 'incidentregister_due'%}">Verify</a></li>
+                                <li><a data-icon="&#xF12E;" href="{% url 'incidentregister_due'%}">Verify</a></li>
                             </ul>
                         </li>
                         <li><a data-icon="&#xf19b" >Training Evaluation</a>
                             <ul>
-                                <li><a data-icon="&#xF015;" href="{% url 'trainingReg'%}">Create</a></li>
+                                <li><a data-icon="&#xF14B;" href="{% url 'trainingReg'%}">Create</a></li>
                                 <!--<li><a data-icon="&#xF015;" href="">Verify</a></li> -->
                             </ul>
                         </li>
                         <li><a data-icon="&#xf0a5" >Corrective Action</a>
                             <ul>
-                                <li><a data-icon="&#xF015;" href="{% url 'correctiveaction'%}">Request</a></li>
-                                <li><a data-icon="&#xF015;" href="{% url 'planning'%}">Planning</a></li>
-                                <li><a data-icon="&#xF015;" href="{% url 'planning_pending'%}">Approve</a></li>
-                                <li><a data-icon="&#xF015;" href="{% url 'planning_due'%}">Verify</a></li>
+                                <li><a data-icon="&#xF017;" href="{% url 'correctiveaction'%}">Request</a></li>
+                                <li><a data-icon="&#xF016;" href="{% url 'planning'%}">Planning</a></li>
+                                <li><a data-icon="&#xF00C;" href="{% url 'planning_pending'%}">Approve</a></li>
+                                <li><a data-icon="&#xF12E;" href="{% url 'planning_due'%}">Verify</a></li>
                             </ul>
                         </li>
                         <li><a data-icon="&#xF1D9;" >Change Request</a>
                             <ul>
-                                <li><a data-icon="&#xF015;" href="{% url 'changerequest'%}">Create</a></li>
-                                <li><a data-icon="&#xF015;" href="{% url 'changerequest_pending'%}">Approve</a></li>
-                                <li><a data-icon="&#xF015;" href="{% url 'changerequest_due'%}">Verify</a></li>
+                                <li><a data-icon="&#xF14B;" href="{% url 'changerequest'%}">Create</a></li>
+                                <li><a data-icon="&#xF00C;" href="{% url 'changerequest_pending'%}">Approve</a></li>
+                                <li><a data-icon="&#xF12E;" href="{% url 'changerequest_due'%}">Verify</a></li>
                             </ul>
                         </li>
                         <li><a data-icon="&#xf005" >Customer Satisfaction</a>
                             <ul>
-                                <li><a data-icon="&#xF015;" href="{% url 'customersatisfaction'%}">Create</a></li>
-                                <li><a data-icon="&#xF015;" href="{% url 'customersatisfaction_due'%}">Verify</a></li>
+                                <li><a data-icon="&#xF14B;" href="{% url 'customersatisfaction'%}">Create</a></li>
+                                <li><a data-icon="&#xF12E;" href="{% url 'customersatisfaction_due'%}">Verify</a></li>
                             </ul>
                         </li>
                         <li><a data-icon="&#xf01c" >Customer Complaint</a>
                             <ul>
-                                <li><a data-icon="&#xF015;" href="{% url 'customercomplaint'%}">Create</a></li>
-                                <li><a data-icon="&#xF015;" href="{% url 'customercomplaint_due'%}">Verify</a></li>
+                                <li><a data-icon="&#xF14B;" href="{% url 'customercomplaint'%}">Create</a></li>
+                                <li><a data-icon="&#xF12E;" href="{% url 'customercomplaint_due'%}">Verify</a></li>
                             </ul>
                         </li>
                         <li><a data-icon="&#xF185;" >Provide Assessment</a>
                             <ul>
-                                <li><a data-icon="&#xF015;" href="{% url 'providerassessment'%}">Create</a></li>
-                                <li><a data-icon="&#xF015;" href="{% url 'providerassessments_due'%}">Verify</a></li>
+                                <li><a data-icon="&#xF14B;" href="{% url 'providerassessment'%}">Create</a></li>
+                                <li><a data-icon="&#xF12E;" href="{% url 'providerassessments_due'%}">Verify</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -158,9 +157,9 @@
             </ul>
         </li>
         <li><a data-icon="&#xF13E;" >ISMS</a></li>
-        <li><a data-icon="&#xF108;" >ITSMS</a></li>
+        <li><a data-icon="&#xF108;" >ITSMS</a></li> 
         <li><a data-icon="&#xF02D;" href="{% url 'doc_manager'%}">DocumentManager</a></li>
-        <li><a data-icon="&#xF007;" href="{% url 'admin:index' %}">AdminAccount</a></li>
+        <li><a data-icon="&#xF007;" href="{% url 'admin:index' %}">Admin</a></li>
         <li>Hello: {{request.user}}</li>
         <li><a class="notification" >
   <span><i class="fa fa-envelope" style="font-size:24px;color:red"></i></span>

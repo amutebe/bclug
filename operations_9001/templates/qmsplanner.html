@@ -11,13 +11,13 @@ form {
 
 
 </style>
-<div class="col-md-8 order-md-1">
+<div class="col-md-10 order-md-1">
           <h4 class="mb-3">QMS Planner</h4>
 <p class="round2"> 
 <form action="/qms_planner/" method="post">
                      {% csrf_token %}
                     
-               
+<div class="card-header">            
 <div class="row">
     <div class="col">
       <label for="usr">Planner No.: </label><br>
@@ -88,12 +88,10 @@ form {
 	<br>
 <input type="text" class="form-control" id="details"  name="details"{{form.details}}
   <font color="red">{{form.errors.details}}</font>
-
 </div>
 
-
-
 <br>
+
 <p class="round2"> 
 <div class="card card-body">
 					<table class="form-group">
@@ -106,6 +104,7 @@ form {
           </table>
 </div>
 </form>
+</div>
 </div>
 
 
