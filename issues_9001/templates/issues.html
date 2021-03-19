@@ -8,13 +8,13 @@ form {
   margin: 0 auto;
 }
 </style>
-<div class="col-md-8 order-md-1">
+    <div class="col-md-8 order-md-1">
           <h4 class="mb-3">Issues</h4>
 <p class="round2"> 
 <form action="/issues/" method="post">
                      {% csrf_token %}
                     
-               
+ <div class="card-header">                
 <div class="row">
     <div class="col">
       <label for="usr">Issue no: </label><br>
@@ -163,8 +163,7 @@ form {
           </table>
 				
 </div>
-          
-          </form>
+</form>
 </div>
 
 {% endblock %} 

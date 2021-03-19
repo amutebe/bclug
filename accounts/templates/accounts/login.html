@@ -79,7 +79,25 @@
 			padding: 10px;
 			margin-top: 10px;
 		}
+h10 {
+  color: white;
+}
+ul {
+  list-style: none; /* Remove HTML bullets */
+  padding: 0;
+  margin: 0;
+}
 
+li { 
+  padding-left: 16px;  
+}
+
+li::before {
+  content: "•"; /* Insert content that looks like bullets */
+  padding-right: 8px;
+  color: white; /* Or a color you prefer */
+  
+}
 		
 	</style>
 <style>
@@ -120,19 +138,39 @@ a:active {
 
 
 <div class="col-md-10 order-md-1">
-         <img src="{% static 'images/logos/resized_50.png'%}" class="left">
-<p class="round2"> 
-</div>
+         <img src="{% static 'images/logos/AndyMS Menu Logo4.png'%}" class="left">
 
-<div class="col-md-10 order-md-1">
-         <div class="card-header">   <h5 class="mb-3">Simplifying Management Systems:</h5>
+</div>
+<header class="header">
+
+         <div class="card-header">   <h10 class="mb-3">Management System Software</h10>
 		 </div>
  
-</div>
 
+</header>
+<br>
+<center>
+<table border="0" cellpadding="0" cellspacing="0" class="loginBoxes">
+        
+       <tr>
+            <td class="loginBox">
+<div class="col-md">
 
-
-	<div class="container h-50">
+	<div class="container h-100">
+		<div class="d-flex justify-content-center h-100">
+		
+				
+		
+				<img src="{% static 'images/logos/119739.png'%}">
+		
+			
+			
+		</div>
+		</div>
+		</div>	
+            </td>
+            <td class="loginBox">
+           <div class="container h-50">
 		<div class="d-flex justify-content-center h-100">
 			<div class="user_card">
 				<div class="d-flex justify-content-center">
@@ -167,38 +205,82 @@ a:active {
                 <p id="messages">{{message}}<p>
                 {%endfor%}
 		
-				<!--<div class="mt-4">
-					<div class="d-flex justify-content-center links">
-						Don't have an account? <a href="{% url 'register' %}" class="ml-2">Sign Up</a>
-					</div> -->
-			
-				</div>
-			</div>
-		</div>
+		
 	</div>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
+            </td>
+      </tr>
+    </table>
+
+    </center>
+
+<br>
+<center>
+<table border="0" cellpadding="0" cellspacing="0" class="loginBoxes">
+        
+       <tr>
+            <td class="loginBox">
+<div class="col-md">
+
+	<div class="container h-100">
+		
+		
+				
+		<h6>Introduction:</h6>
+Andy is a management systems software owned by Andy Systems, <br>
+an independent management consultancy in implementation, training<br>
+ and auditing of management systems benchmarked to ISO standards <br> 
+ including ISO 9001, ISO 27001 and ISO 20000. The software’s first and <br>
+ current release or version is 1.0.0 and the purpose of this document is <br>
+ to serve as a User Manual (UM) that provides the information necessary for <br>
+  its users to effectively use the Software. 
+				
+		
+			
+			
+
+		</div>
+		</div>	
+            </td>
+            <td class="loginBox">
+			<div class="col-md">
+           <div class="container h-100">
+		<h6>Software Features:</h6>	
+		<ul>
+<li>CONTEXT</li>
+<li>PLANNING</li>
+<li>OPERATIONS</li>
+<li>REPORTS</li>
+</ul>
+
+	</div>	
+	</div>
+            </td>
+      </tr>
+    </table>
+
+    </center>
+<br>
+
+<br>
+<br>
+<br>
+<br>
 <footer class="footer">
 <div class="card-header">  
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-6">
-							<div class="text-md-center footer-links d-none d-md-block">
-                                <script>document.write(new Date().getFullYear())</script> © AndyMS - <a href="https://andysystems.net/">Andy Systems </a>
+							<div class="text-md-left footer-links d-none d-md-block">
+                                © AndyMS <script> document.write(new Date().getFullYear())</script>  - Powered by Andy Systems
                             </div>
 							</div>
                             <div class="col-md-6">
                                
-								<div class="text-md-center footer-links d-none d-md-block">
-                                    <a href="https://andysystems.net/management-system-software"><h6>About</a>
-                                    <a href="https://andysystems.net/">Support</a>
-                                    <a href="https://andysystems.net/contact">Contact Us</a>
+								<div class="text-md-right footer-links d-none d-md-block">
+                                    <a href="https://andysystems.net/management-system-software">About Us | </a>
+                                    <a href="https://andysystems.net/contact">Contact Us | </a>
+                                    <a href="https://andysystems.net/contact">Privacy Policy | </a>
+									<a href="#">Help  </a>
                                 </div>
 								
                             </div>

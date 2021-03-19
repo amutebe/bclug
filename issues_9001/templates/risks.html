@@ -9,15 +9,15 @@ form
   margin: 0 auto;
 }
 </style>
+  <div class="col-md-8 order-md-1">  
 
-<div class="col-md-10 order-md-1">
           <h4 class="mb-3">Risk Assessment</h4>
 <p class="round2"> 
 
 <form action="/risks/" method="post" id="riskForm" data-ids-url="{% url 'ajax_load_ids' %}" data-contextdesc-url="{% url 'ajax_load_contextdesc' %}" >
                      {% csrf_token %}
                     
-<div class="card-header">             
+ <div class="card-header">       
 <div class="row">
     <div class="col">
       <label for="usr"><h6> Risk no: </h6></label><br>
@@ -232,6 +232,7 @@ form
           </table>
 </div>
 </form>
+</div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

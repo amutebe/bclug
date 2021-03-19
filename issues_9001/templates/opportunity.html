@@ -8,13 +8,13 @@ form {
   margin: 0 auto;
 }
 </style>
-<div class="col-md-10 order-md-1">
+ <div class="col-md-8 order-md-1">
           <h4 class="mb-3">Opportunities</h4>
 <p class="round2"> 
 
 <form action="/opportunity/" method="post" id="riskForm" data-ids-url="{% url 'ajax_load_ids' %}" data-contextdesc-url="{% url 'ajax_load_contextdesc' %}" >
                      {% csrf_token %}
-                    
+                   
 <div class="card-header">             
 <div class="row">
     <div class="col">
