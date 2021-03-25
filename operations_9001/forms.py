@@ -53,8 +53,11 @@ class qmsplanner(ModelForm):
         cleaned_data = super().clean()
         start_date = cleaned_data.get("start")
         end_date = cleaned_data.get("end")
-        if end_date < start_date:
-            raise forms.ValidationError("End date should be greater than start date.")
+        if end_date is not None and start_date is not None:
+            if end_date < start_date:
+                raise forms.ValidationError("End date should be greater than start date.")
+        else:
+            raise forms.ValidationError("End date and Start date cannot be empty")
 
 class ApproveQMS(ModelForm):
 
@@ -105,8 +108,11 @@ class trainingplaner(ModelForm):
         cleaned_data = super().clean()
         start_date = cleaned_data.get("start")
         end_date = cleaned_data.get("end")
-        if end_date < start_date:
-            raise forms.ValidationError("End date should be greater than start date.")
+        if end_date is not None and start_date is not None:
+            if end_date < start_date:
+                raise forms.ValidationError("End date should be greater than start date.")
+        else:
+            raise forms.ValidationError("End date and Start date cannot be empty")
 
 class ApproveTrainingPlanner(ModelForm):
    
@@ -183,6 +189,8 @@ class providerassessments(ModelForm):
         start_date = cleaned_data.get("start")
         end_date = cleaned_data.get("end")
         due_date = cleaned_data.get("due")
+        
+        
         if end_date < start_date:
             raise forms.ValidationError("End date should be greater than start date.")
         elif last_date>start_date:
@@ -311,9 +319,11 @@ class customer_satisfaction(ModelForm):
         cleaned_data = super().clean()
         start_date = cleaned_data.get("start")
         end_date = cleaned_data.get("end")
-        if end_date < start_date:
-            raise forms.ValidationError("End date should be greater than start date.")
-
+        if end_date is not None and start_date is not None:
+            if end_date < start_date:
+                raise forms.ValidationError("End date should be greater than start date.")
+        else:
+            raise forms.ValidationError("End date and Start date cannot be empty")
 
 class Verifyecustomersatisfaction(ModelForm):
     class Meta:

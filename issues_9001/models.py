@@ -72,9 +72,10 @@ class mod9001_issues(models.Model):
     internal_issues=models.CharField(max_length=200,null=True,blank=True, choices=INTERNAL_ISSUES)
     EXTERNAL_ISSUES=(('1','Legal and Regulatory requirements'),('2','Economic enviroment'),('3','Cultural enviroment'),('4','Political enviroment'),('5','Competitive enviroment'),('6','Social enviroment'),('7','Threats'),('8','Opportunities'),('9','Other'))
     external_issues=models.CharField(max_length=200,null=True,blank=True, choices=EXTERNAL_ISSUES)
-    process_desc=(('1','HR'),('2','Operations'))
+    process_desc=(('1','Transport'),('2','Sales'),('3','Administration'),('4','Marketing'),('5','Customer Relations'),('6','Service/Help Desk Support'),('7','Inventory'),('8','Project Management'),('9','Procurement'),('10','Other'),('11','Management'),('12','Training'),('13','Recruitment'),('14','Systems Administration'),('15','Disciplinary Process'))
     process_desc=models.CharField("Process Description",max_length=200,null=True,blank=True, choices=process_desc)
-    
+    #process_desc= models.ForeignKey('operations_9001.process',on_delete=models.CASCADE,verbose_name='Process:',related_name='Processes')
+
     PROCESS_ISSUES=(('1','Strength'),('2','Weaknesses'),('3','Opportunities'),('4','Threats'))
     process_issues=models.CharField(max_length=200,null=True,blank=True, choices=PROCESS_ISSUES)
     process_StrengthWeakness=models.ForeignKey(process_StrengthWeakness, on_delete=models.CASCADE,verbose_name='process Strength/Weakness:',related_name='process_StrengthWeakness',null=True,blank=True)
