@@ -72,6 +72,7 @@
                        <th>RiskTreatment</th>
                           <th>Mitigation</th>
                             <th>MitigationDetails</th>
+							<th>RetainDetails</th>
                              <th>Responsibility</th>
 					<th>When</th>
 					<th>Approval</th>
@@ -98,10 +99,10 @@
 					<td colspan="1">{{i.get_context_display}}</td>
 					{% endif %}
 				
-                    <td>{{i.issue_number.get_process_desc_display}}</td>
-					<td>{{i.issue_number.get_process_issues_display}}</td>
-					<td>{{i.issue_number.process_StrengthWeakness}}</td>
-					<td>{{i.issue_number.description}}</td>
+                    <td>{{i.ip_number.get_process_desc_display}}</td>
+					<td>{{i.ip_number.get_process_issues_display}}</td>
+					<td>{{i.ip_number.process_StrengthWeakness}}</td>
+					<td>{{i.ip_number.description}}</td>
                     <td>{{i.riskdescription}}</td>
                     <td>{{i.likelihood}}</td>
                     <td>{{i.severity}}</td>
@@ -110,7 +111,8 @@
                     <td>{{i.risktreatment}}</td>
                     <td>{{i.riskmitigation}}</td>
                      <td>{{i.mitigationdesc}}</td>
-                    <td>{{i.responsibility}}</td>
+                    <td>{{i.retainreason}}</td>
+					<td>{{i.responsibility}}</td>
 					<td>{{i.due}}</td>
 					<td>{{i.status}}</td>
                     <td>{{i.verification_status}}</td>

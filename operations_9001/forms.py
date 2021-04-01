@@ -74,7 +74,7 @@ class VerifyQMS(ModelForm):
     class Meta:
         model = mod9001_qmsplanner 
         #fields = '__all__'
-        fields=['verification','verification_status','verification_failed','qmsstatus','scheduled','completion']
+        fields=['verification','verification_status','verification_failed','qmsstatus','scheduled','completion','end']
         widgets={'completion':DateInput(),'scheduled':DateInput()}   
 
 class trainingregister(ModelForm):
@@ -129,7 +129,7 @@ class VerifyTraining(ModelForm):
     class Meta:
         model = mod9001_trainingplanner 
         #fields = '__all__'
-        fields=['verification','verification_status','verification_failed','trainplannerstatus','rescheduled','completion']
+        fields=['verification','verification_status','verification_failed','trainplannerstatus','rescheduled','completion','end']
         widgets={'completion':DateInput(),'rescheduled':DateInput()}   
 
 
@@ -193,9 +193,9 @@ class providerassessments(ModelForm):
         
         if end_date < start_date:
             raise forms.ValidationError("End date should be greater than start date.")
-        elif last_date>start_date:
+        elif last_date > start_date:
             raise forms.ValidationError("Last assessment date should not be greater than start date.")
-        elif due_date<end_date:
+        elif due_date < end_date:
             raise forms.ValidationError("When date should not be less than end date.")
 
         
@@ -254,11 +254,11 @@ class change_request(ModelForm):
     
     class Meta:
         model = mod9001_changeRegister 
-        fields = ['req_no','date','raisedby','trigger','process','changetype','changedesc','evaluation','evaldesc','cost','currency','costdescription','add_desc','assignedto','due','status']
+        fields = ['req_no','date','raisedby','trigger','reference','process','changetype','changedesc','evaluation','evaldesc','cost','currency','costdescription','add_desc','assignedto','due']
         #exclude = ['status','proposedby','assignedto','due','completion','qmsstatus','scheduled','entered_by','date_today','verification','verification_status','verification_failed','rejected','approval_date','approved_by']
         widgets = {
 
-            'date': DateInput(),'due': DateInput(),'changedesc':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'evaldesc':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'add_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40})
+            'date': DateInput(),'due': DateInput(),'reference':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'changedesc':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'evaldesc':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'add_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40})
         }
 
 class ApproveChangeRequest(ModelForm):

@@ -297,17 +297,17 @@ def ip_report(request):
 
 
         writer = csv.writer(response)
-        writer.writerow(['IP Number', 'LeadAnalyst','Context', 'Interested Party','Requirement','Description','Ip to Co.','Co. to IP','Priority','ActionTaken','Responsibility',
+        writer.writerow(['IP Number', 'LeadAnalyst','Context', 'Interested Party','Requirement','Description','Ip to Co.','Co. to IP','Priority','ActionTaken','OtherAction','Responsibility',
 'When','Status'])
 
 
     
         for i in ips:
             if (i.get_internal_issues_display()) is not None :
-                writer.writerow([i.ip_number, i.analyst, i.get_context_display(),i.get_internal_issues_display(),i.get_quality_needs_display(),i.description,i.get_interestedparties_display(),i.get_companyinterestedparties_display(),i.get_priority_display(),i.get_actiontaken_display(),i.responsibility,
+                writer.writerow([i.ip_number, i.analyst, i.get_context_display(),i.get_internal_issues_display(),i.get_quality_needs_display(),i.description,i.get_interestedparties_display(),i.get_companyinterestedparties_display(),i.get_priority_display(),i.get_actiontaken_display(),i.actionOther,i.responsibility,
 i.due,i.status])
             else:
-                writer.writerow([i.ip_number, i.analyst, i.get_context_display(),i.get_external_issues_display(),i.get_quality_needs_display(),i.description,i.get_interestedparties_display(),i.get_companyinterestedparties_display(),i.get_priority_display(),i.get_actiontaken_display(),i.responsibility,
+                writer.writerow([i.ip_number, i.analyst, i.get_context_display(),i.get_external_issues_display(),i.get_quality_needs_display(),i.description,i.get_interestedparties_display(),i.get_companyinterestedparties_display(),i.get_priority_display(),i.get_actiontaken_display(),i.actionOther,i.responsibility,
 i.due,i.status])
         
         
@@ -709,7 +709,7 @@ def opportunity_report(request):
             if i.issue_number is not None:
                 writer.writerow([i.risk_number,i.risk_date,i.assessor,i.issue_number.get_context_display(),i.issue_number.get_process_desc_display(),i.issue_number.get_process_issues_display(),i.issue_number.process_StrengthWeakness,i.issue_number.description,i.riskdescription,i.likelihood,i.severity,i.riskrating,i.riskrank,i.mitigation,i.responsibility,i.due,i.status,i.verification])
             else:
-                writer.writerow([i.risk_number,i.risk_date,i.assessor,"","","","","",i.riskdescription,i.likelihood,i.severity,i.riskrating,i.riskrank,i.mitigation,i.responsibility,i.due,i.status,i.verification])
+                writer.writerow([i.risk_number,i.risk_date,i.assessor,"","","","","",i.description,i.likelihood,i.severity,i.riskrating,i.riskrank,i.mitigation,i.responsibility,i.due,i.status,i.verification])
 
 
         return response

@@ -91,18 +91,25 @@ class CarPriority(models.Model):
     description=models.CharField("CAR Priority", max_length=50,null=True,blank=True)
     def __str__(self):
         return self.description
-   
+###################EMPLOYEES TITLES########################### 
+class Employee_titles(models.Model):
+    title_id=models.CharField("Title ID:",max_length=50,primary_key=True)
+    title_name=models.TextField("Name:")
+    def __str__(self):
+        return self.title_name  
 ######## TABLE EMPLOYEES ############################
 
 
 
 class employees(models.Model):
     employeeID=models.CharField("Employee ID",max_length=10,primary_key=True,default="TEGA"+str(randint(0, 999)))
+    title=models.ForeignKey(Employee_titles, on_delete=models.CASCADE,verbose_name='Title:',related_name='title',null=True,blank=True)
     registered=models.DateField("Reg. Date:")
     firstName=models.TextField("First Name",null=False,blank=True)
     lastName=models.TextField("Last Name",null=False,blank=False)
     email=models.EmailField("Email",blank=True,null=True,unique=True)
     dept=models.ForeignKey(Department, on_delete=models.CASCADE,verbose_name='Department:',related_name='employee')
+    supervisor=models.ForeignKey(Employee_titles, on_delete=models.CASCADE,verbose_name='Supervisor:',related_name='reportsTo',null=True,blank=True)
     def __str__(self):
         return self.firstName
 

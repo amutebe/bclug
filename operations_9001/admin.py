@@ -34,6 +34,8 @@ admin.site.register(costs)
 admin.site.register(providerparameters)
 admin.site.register(mod9001_supplieregistration)
 admin.site.register(providers)
+admin.site.register(mod9001_correctiveaction)
+admin.site.register(mod9001_planning)
 
 
 

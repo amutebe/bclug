@@ -181,7 +181,18 @@ form {
 </div>
 
 </div>
+<div class="form-group">
+   
 
+<div class="form-group" id="comment">
+    <label for="comment">Comment:</label>
+	<br>
+<input type="text" class="form-control" id="comments"  name="comments"{{form.comments}}
+  <font color="red">{{form.errors.comments}}</font>
+
+</div>
+
+</div>
     
 
 
@@ -193,7 +204,7 @@ form {
 
 
 <td ><a class="btn  btn-warning" href="{% url 'home'%}"> Cancel </a></td>
-<td align="right"><input class="btn btn-danger" type="submit" name="Submit"></td>
+<td align="right"><input class="btn btn-info" type="submit" name="Submit"></td>
 					</tr>
           </table>
 </div>

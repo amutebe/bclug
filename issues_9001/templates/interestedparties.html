@@ -142,21 +142,22 @@ div3
 
 <div class="col" id="">
     <label for="actiontaken"> Action to manage IP:</label>
-	<br>
-{{form.actiontaken}}
+	{{form.actiontaken}}
   <font color="red">{{form.errors.actiontaken}}</font>
 
 </div>
-
+</div>
+<div class="row">
 <div class="col" id="actionOther">
+<br>
     <label for="actionOther">Please specify:</label>
     <input type="text" class="form-control" id="actionOther"  name="actionOther" {{form.actionOther}}
     <font color="red">{{form.errors.actionOther}}</font>
 </div> 
-
-
+</div>
+<div class="row">
 <div class="col">
-    
+    <br>
     <label for="responsibility">Responsibility:</label><br>
    {{form.responsibility}}
 <font color="red">{{form.errors.responsibility}}</font>
@@ -164,7 +165,7 @@ div3
 </div>
  
 <div class="col">
-   
+ <br>  
   <label for="proposedDate" >When:</label>
   <br>
     {{form.due}}

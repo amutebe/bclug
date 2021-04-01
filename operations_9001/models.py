@@ -252,7 +252,7 @@ class mod9001_trainingplanner(models.Model):
     trainer=models.TextField("Trainer:",null=True,blank=True)
     resources=models.TextField("Resource:",null=True,blank=True)
     objective = models.ForeignKey('train_objective',null=True, blank=True, related_name='train_objective',on_delete=models.SET_NULL)
-    #train_status = models.ForeignKey('train_status',null=True, blank=True, related_name='train_status',on_delete=models.SET_NULL)
+    comments=models.TextField("Comment:",null=True,blank=True)
     reason=models.TextField("Give Reason:",null=True,blank=True)
     rescheduled=models.DateField("Rescheduled Date:",null=True,blank=True)
     completion=models.DateField("Completion Date:",null=True,blank=True)
@@ -288,7 +288,8 @@ class mod9001_trainingregister(models.Model):
     training=models.TextField("Training:",null=True,blank=True)
     location=models.TextField("Location:",null=True,blank=True)
     trainer = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='reg_by',on_delete=models.SET_NULL)
-    trainee=models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Trainee:',related_name='trainee')
+    #trainee=models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Trainee:',related_name='trainee')
+    trainee=models.TextField("Trainee:",null=True,blank=True)
     tainee_dept=models.ForeignKey('accounts.Department', on_delete=models.CASCADE,verbose_name='Trainee Department ID:',related_name='traineeDepartment')
     completion_date=models.DateField("Completion Date:")
     yesno=(('1','Yes'),('2','No'))
@@ -433,7 +434,9 @@ class mod9001_providerassessment(models.Model):
     assesment_date=models.DateField("Last Assessment Date:",null=True)
     start=models.DateField("Start Date:")
     end=models.DateField("End Date:")
-    appraise= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Appraise:',related_name='appraise')
+    appraise= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Appraisee:(Internal Provider)',related_name='appraise',null=True,blank=True)
+    appraiseename=models.CharField("Appraisee Name:(External Provider)",max_length=25,null=True,blank=True)
+
     #year_in_school = models.CharField(max_length=10,choices='mod9001_supplieregistration.name',verbose_name='Test:')   
     #purpose=models.TextField("Purpose",null=True, blank=True)
     #owner= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Owner:',related_name='own')
@@ -592,7 +595,8 @@ class mod9001_planning(models.Model):
     completion=models.DateField("Completion Date:",null=True,blank=True)
     scheduled=models.DateField("Rescheduled Date:",null=True,blank=True)
     comment=models.TextField("Comment:",null=True,blank=True, help_text='')
-
+    def __str__(self):
+        return self.car_no
           
 ################CHANGE REQUEST #########################
 class change_type(models.Model):
@@ -613,6 +617,7 @@ class mod9001_changeRegister(models.Model):
     date=models.DateField("Date:",null=True)    
     raisedby= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Raised by:',related_name='raised_by',null=True,blank=True)  
     trigger=models.ForeignKey('car_source', on_delete=models.SET_NULL,verbose_name='Source:',null=True,blank=True)
+    reference=models.TextField("Reference",null=True, blank=True)      
     process=models.ForeignKey('process', on_delete=models.SET_NULL,verbose_name='Process:',null=True,blank=True)
     changetype=models.ForeignKey('change_type', on_delete=models.SET_NULL,verbose_name='Change Type:',null=True,blank=True)
     changedesc=models.TextField("Change Description",null=True, blank=True)    
@@ -659,7 +664,7 @@ class mod9001_customerComplaint(models.Model):
     date=models.DateField("Date:",null=True)
     time=models.TimeField("Time (24Hr):",null=True)
     complaint=models.TextField("Complainant:",null=True, blank=True)   
-    organisation=models.ForeignKey(mod9001_supplieregistration, on_delete=models.SET_NULL,verbose_name='External Provider Organisation:',related_name='org',null=True,blank=True)
+    organisation=models.ForeignKey('accounts.customer', on_delete=models.SET_NULL,verbose_name='Customer Organisation:',related_name='org',null=True,blank=True)
     process=models.ForeignKey('process', on_delete=models.SET_NULL,verbose_name='Process:',null=True,blank=True)    
     type=models.ForeignKey('complaint_type', on_delete=models.SET_NULL,verbose_name='Complaint Type:',null=True,blank=True) 
     complaint_desc=models.TextField("Complaint Description",null=True, blank=True)

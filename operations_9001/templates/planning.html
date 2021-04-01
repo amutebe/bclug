@@ -15,7 +15,15 @@ form {
           <h4 class="mb-3">Planning</h4>
          
 <p class="round2"> 
-
+<div class="col" id="divissues_register">
+<table class="form-group">
+					<tr> 
+<td align="right"><a class="btn  btn-light" href="{% url 'correctiveaction_report'%}"> <font color="green">---Corrective Action Register--- </font></a></td>
+	
+          
+ </tr>
+</table>
+</div>
 <form action="/planning/" method="post">
                      {% csrf_token %}
                     

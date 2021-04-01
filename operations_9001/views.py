@@ -309,7 +309,7 @@ def CARnumbers_7days_expire(*x):
 
 @login_required(login_url='login')
 def qms_due(request):
-    carExpire7days=mod9001_qmsplanner.objects.filter(status=1).filter(~Q(qmsstatus=1))
+    carExpire7days=mod9001_qmsplanner.objects.filter(status=1).filter(~Q(qmsstatus=1)).filter(~Q(qmsstatus=3))
     thislist = []
     for i in carExpire7days:
         w=i.end
@@ -341,28 +341,42 @@ def verify_qms(request,pk_test):
     open_car=mod9001_qmsplanner.objects.get(planner_number=pk_test)
     form=VerifyQMS(instance=open_car)
     if request.method=="POST":
-            print("request.POST['qmsstatus']",request.POST['qmsstatus'])
+            #print("request.POST['qmsstatus']",request.POST['qmsstatus'])
             
-            if request.POST['qmsstatus'] =="Rejected":
+            if request.POST['qmsstatus'] =="3":
                 request.POST=request.POST.copy()
-                request.POST['status'] = 5 #requires approval first before next verification
-                request.POST['verification']=2 #default verifiaction to Not effective
-                print("request", request.POST)
+                request.POST['status'] = '' #make it cancelled
+                request.POST['verification']='' #make it canceled
+                #print("#MAKE IT CANCELED",  request.POST['status'])
             
+            elif request.POST['qmsstatus'] == '2':#if canceled
+                #print("request.POST['qmsstatus']",request.POST['qmsstatus'])
+                request.POST=request.POST.copy()
+                request.POST['status'] = 4 # keep status open
+                #request.POST['verification_status']='Closed'
+            elif request.POST['qmsstatus'] == '4':#if rescheduled
+                #print("request.POST['qmsstatus']",request.POST['qmsstatus'])
+                request.POST=request.POST.copy()
+                request.POST['end'] = request.POST['scheduled'] # keep status open
+                #print("RESCHEDULED",request.POST['end'])
             elif request.POST['qmsstatus'] == '1':
                 print("request.POST['qmsstatus']",request.POST['qmsstatus'])
                 request.POST=request.POST.copy()
                 request.POST['status'] = 1 # keep status approved
                 request.POST['verification_status']='Closed'
-            
             else:
                 request.POST=request.POST.copy()
+         
+
+
+
+            
 
 
 
 
-
-
+           # print("RESCHEDULED",request.POST['end'])
+            #print("RESCHEDULED",request.POST)
             form=VerifyQMS(request.POST, instance=open_car)
             if form.is_valid():
                 form.save()
@@ -479,12 +493,12 @@ def trainingplan_report(request):
         response['Content-Disposition'] = 'attachment; filename="Training_planner.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['Planner No.', 'TrainingType', 'Description', 'AdditionalDescription','Date','Audience','Objective','StartDate','EndDate','Location','Trainer','Resources','Approval','Verification'])
+        writer.writerow(['Planner No.', 'TrainingType', 'Description', 'AdditionalDescription','Date','Audience','Objective','Comment','StartDate','EndDate','Location','Trainer','Resources','Approval','Verification'])
 
     
         for i in trainingplan:
             
-            writer.writerow([i.plan_number, i.get_type_display(),i.description,  i.details,i.trainng_date,i.get_trainaudience_display(),i.objective,i.start,i.end,i.get_trainlocation_display(),i.trainer,i.status,i.trainplannerstatus])
+            writer.writerow([i.plan_number, i.get_type_display(),i.description,  i.details,i.trainng_date,i.get_trainaudience_display(),i.objective,i.comments,i.start,i.end,i.get_trainlocation_display(),i.trainer,i.status,i.trainplannerstatus])
         return response
         
     else:
@@ -569,18 +583,27 @@ def verify_training(request,pk_test):
     if request.method=="POST":
             #print("request.POST['qmsstatus']",request.POST['qmsstatus'])
             
-            if request.POST['trainplannerstatus'] =="Rejected":
+            if request.POST['trainplannerstatus'] =="3":
                 request.POST=request.POST.copy()
-                request.POST['status'] = 5 #requires approval first before next verification
-                request.POST['verification']=2 #default verifiaction to Not effective
-                #print("request", request.POST)
+                request.POST['status'] = '' #make it cancelled
+                request.POST['verification']='' #make it canceled
+                #print("#MAKE IT CANCELED",  request.POST['status'])
             
-            elif request.POST['trainplannerstatus'] == '1':
+            elif request.POST['trainplannerstatus'] == '2':#if canceled
                 #print("request.POST['qmsstatus']",request.POST['qmsstatus'])
+                request.POST=request.POST.copy()
+                request.POST['status'] = 4 # keep status open
+                #request.POST['verification_status']='Closed'
+            elif request.POST['trainplannerstatus'] == '4':#if rescheduled
+                #print("request.POST['qmsstatus']",request.POST['qmsstatus'])
+                request.POST=request.POST.copy()
+                request.POST['end'] = request.POST['rescheduled'] # keep status open
+                #print("RESCHEDULED",request.POST['end'])
+            elif request.POST['trainplannerstatus'] == '1':
+                print("request.POST['qmsstatus']",request.POST['trainplannerstatus'])
                 request.POST=request.POST.copy()
                 request.POST['status'] = 1 # keep status approved
                 request.POST['verification_status']='Closed'
-            
             else:
                 request.POST=request.POST.copy()
 
@@ -889,7 +912,7 @@ def providerAssessment_report(request):
 
         writer = csv.writer(response)
        
-        writer.writerow(['Review No.', 'Date', 'Provider', 'Organisation','Appraisee','Rating','ImprovementPlan','Addit.Details','AssignedTo','Timeline','Status'])
+        writer.writerow(['Review No.', 'Date', 'Provider', 'Organisation','AppraiseeInternal','AppraiseeExternal','Rating','ImprovementPlan','Addit.Details','AssignedTo','Timeline','Status'])
 
     
         for i in providerassessment:
@@ -954,7 +977,7 @@ def providerAssessment_report(request):
                 else:
                     return " " 
         
-            writer.writerow([i.emp_perfrev_no, i.start,i.get_Provider_display(),i.organisation,i.appraise,i.rank,jobknowledg()+ i.get_jobknowledg_display() + flexibility()+ i.get_flexibility_display()+ problemsolving()+ i.get_problemsolving_display()+ Initiativenes()+ i.get_Initiativenes_display()+ planning()+ i.get_planing_display()+ workquality()+ i.get_workquality_display()+ interskills()+ i.get_interskills_display()+ communication()+ i.get_communication_display()+ supervisionmagt()+ i.get_supervisionmagt_display()+ availabilit()+ i.get_availabilit_display()+ professional()+ i.get_professional_display()
+            writer.writerow([i.emp_perfrev_no, i.start,i.get_Provider_display(),i.organisation,i.appraise,i.appraiseename,i.rank,jobknowledg()+ i.get_jobknowledg_display() + flexibility()+ i.get_flexibility_display()+ problemsolving()+ i.get_problemsolving_display()+ Initiativenes()+ i.get_Initiativenes_display()+ planning()+ i.get_planing_display()+ workquality()+ i.get_workquality_display()+ interskills()+ i.get_interskills_display()+ communication()+ i.get_communication_display()+ supervisionmagt()+ i.get_supervisionmagt_display()+ availabilit()+ i.get_availabilit_display()+ professional()+ i.get_professional_display()
             ,i.nonconfdetails,i.assigned,i.due,i.qmsstatus])
             
         return response
@@ -1085,12 +1108,12 @@ def correctiveaction_report(request):
         response['Content-Disposition'] = 'attachment; filename="CorrectiveAction_register.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['CAR No.', 'Date', 'Process', 'CAR Source','Reference','Element','Findings','Add. Desc.','RequestTo','Containment','RootCause','Action','Add.Details','ProposedBy','AssignedTo','When','Approval','Verification','Completion','Reschduled','Comment'])
+        writer.writerow(['CAR No.', 'Date', 'Process', 'CAR Source','Reference','Element','Findings','Add. Desc.','RequestTo','Containment','RootCause','Action','Add.Details','ProposedBy','AssignedTo','When','Approval','Verification','Completion','Reschduled','Comment','Add.Comment'])
 
     
         for i in docmngr:
             
-            writer.writerow([i.car_no, i.car_no.date,i.car_no.process,i.car_no.car_source, i.car_no.reference,i.car_no.element,i.car_no.get_finding_display(),i.car_no.addesc,i.car_no.requesto,i.containment,i.rootcause,i.decision,i.details,i.proposedby,i.assignedto,i.due,i.status,i.qmsstatus,i.completion,i.scheduled,i.comment])
+            writer.writerow([i.car_no, i.car_no.date,i.car_no.process,i.car_no.car_source, i.car_no.reference,i.car_no.element,i.car_no.get_finding_display(),i.car_no.addesc,i.car_no.requesto,i.containment,i.rootcause,i.decision,i.details,i.proposedby,i.assignedto,i.due,i.status,i.qmsstatus,i.completion,i.scheduled,i.comment,i.details])
         return response
         
     else:
@@ -1124,7 +1147,9 @@ def planning(request):
             
     context={'form':form}
     return render(request,'planning.html',context)
+
 #######################APPROVE PLANNING###################################################
+
 @login_required(login_url='login')
 def planning_pending(request):
     pendingcar=mod9001_planning.objects.filter(status='5') #get all planning  pending approval    
@@ -1281,12 +1306,12 @@ def changeRegister_report(request):
         response['Content-Disposition'] = 'attachment; filename="Change_Request.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['RequestNo.', 'Date', 'RaisedBy', 'CARsource','Process','ChangeType','ChangeDesc.','Evaluation','Eval.Desc.','Cost','Currency','CostDesc.','Add.Desc.','Approved','Verified','ProposedBy','AssignedTo','When'])
+        writer.writerow(['RequestNo.', 'Date', 'RaisedBy', 'CARsource','Reference','Process','ChangeType','ChangeDesc.','Evaluation','Eval.Desc.','Cost','Currency','CostDesc.','Add.Desc.','Approved','Verified','ProposedBy','AssignedTo','When'])
 
     
         for i in docmngr:
             
-            writer.writerow([i.req_no, i.date,i.raisedby,i.trigger,i.process,i.changetype,i.changedesc,i.get_evaluation_display(),i.evaldesc,i.cost,i.get_currency_display(),i.costdescription,i.add_desc,i.status,i.qmsstatus,i.proposedby,i.assignedto,i.due])
+            writer.writerow([i.req_no, i.date,i.raisedby,i.trigger,i.reference,i.process,i.changetype,i.changedesc,i.get_evaluation_display(),i.evaldesc,i.cost,i.get_currency_display(),i.costdescription,i.add_desc,i.status,i.qmsstatus,i.proposedby,i.assignedto,i.due])
         return response
         
     else:
