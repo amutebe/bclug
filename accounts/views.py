@@ -30,7 +30,7 @@ def get_7days_expire(*x):
     delta =date.today() - date_object 
     return delta.days
 
-   
+
 
 #@login_required(login_url='login')
 #@allowed_users(allowed_roles=['admin'])

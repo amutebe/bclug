@@ -154,8 +154,7 @@ class incident_RegisterStaff(ModelForm):
         model = mod9001_incidentregisterStaff
         #exclude = ['entered_by','date_today','status']
         exclude = ['cost','currency','costdescription','lesson','entered_by','date_today','verification','verification_status','verification_failed','qmsstatus','scheduled','completion']
-
-    
+          
         
         widgets={'status':forms.HiddenInput,'due':DateInput(),'date':DateInput(),'completion':DateInput(),'date_posted':DateInput(), 'costdescription':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'lesson':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'description':forms.Textarea(attrs={'rows': 2, 'cols': 40})}
 class Verifyincidentregister(ModelForm):

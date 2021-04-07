@@ -341,12 +341,13 @@ def verify_qms(request,pk_test):
     open_car=mod9001_qmsplanner.objects.get(planner_number=pk_test)
     form=VerifyQMS(instance=open_car)
     if request.method=="POST":
-            #print("request.POST['qmsstatus']",request.POST['qmsstatus'])
+            #print("request.POST['qmsstatus']",request.POST)
             
             if request.POST['qmsstatus'] =="3":
                 request.POST=request.POST.copy()
                 request.POST['status'] = '' #make it cancelled
                 request.POST['verification']='' #make it canceled
+                #request.POST['end']='1900-01-01'
                 #print("#MAKE IT CANCELED",  request.POST['status'])
             
             elif request.POST['qmsstatus'] == '2':#if canceled
@@ -378,6 +379,8 @@ def verify_qms(request,pk_test):
            # print("RESCHEDULED",request.POST['end'])
             #print("RESCHEDULED",request.POST)
             form=VerifyQMS(request.POST, instance=open_car)
+
+            #print("FORM ERROrs",form.errors)
             if form.is_valid():
                 form.save()
                 return redirect('/qms_due/')
@@ -549,7 +552,7 @@ def CARnumbers_7days_expire(*x):
 
 @login_required(login_url='login')
 def training_due(request):
-    carExpire7days=mod9001_trainingplanner.objects.filter(status=1).filter(~Q(trainplannerstatus=1))
+    carExpire7days=mod9001_trainingplanner.objects.filter(status=1).filter(~Q(trainplannerstatus=1)).filter(~Q(trainplannerstatus=3))
     thislist = []
     for i in carExpire7days:
         w=i.end

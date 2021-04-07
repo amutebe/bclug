@@ -8,7 +8,7 @@
 <div class="col-md-6">
 <div class="card card-body">
 
-
+{{form.errors}}
 <form action="" method="POST">
  
  {% csrf_token %}
@@ -45,6 +45,17 @@
       <input type="text" class="form-control" id="verification_failed" placeholder="" name="verification_failed" {{form.verification_failed}}
 
 <font color="red">{{form.errors.verification_failed}}</font>
+</div>
+
+
+<br>
+<div class="form-group" id="endDateDIV">
+    
+    <label for="endDate">End DATE:</label><br>
+ 
+      <input type="text" class="form-control" id="end" placeholder="" name="end" {{form.end}}
+
+<font color="red">{{form.errors.end}}</font>
 </div>
 <br>
 
