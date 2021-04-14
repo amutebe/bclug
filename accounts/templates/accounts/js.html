@@ -1024,7 +1024,10 @@ $("#id_Provider").change(function() {
 			if ($("#id_Provider option:selected").text()=="External provider") {
 					
 				$('#id_organisation').show();
-				
+				$('#id_appraiseename').show();
+				$('label[for="id_appraiseename"]').show();
+				$('#id_appraise').hide();
+				$('label[for="id_appraise"]').hide();
 				$('#id_organisation').attr('required','');
 				$('#id_organisation').attr('data-error', 'This field is required.');
 				$('label[for="id_organisation"]').show();
@@ -1033,6 +1036,11 @@ $("#id_Provider").change(function() {
 			} else {
 				
 				$('#id_organisation').hide();
+				$('#id_appraiseename').hide();
+				$('label[for="id_appraiseename"]').hide();
+				$('label[for="id_appraise"]').show();
+				$('#id_appraise').show();
+
 				
 				$('label[for="id_organisation"]').hide();
 				$('#id_organisation').removeAttr('required');

@@ -213,7 +213,9 @@ class process(models.Model):
 class mod9001_qmsplanner(models.Model):
     planner_number=models.CharField("Planner no.:",max_length=200,default="Comp-QP-"+car_no(),primary_key=True)
     plan_date=models.DateField("Plan Date:")
-    planner = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='qms_by',on_delete=models.SET_NULL)
+    #planner = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='qms_by',on_delete=models.SET_NULL)
+    planner=models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Planner:',related_name='qms_by')
+       
     start=models.DateField("Start Date:")
     end=models.DateField("End Date:")
     description= models.ForeignKey('prod_description',on_delete=models.CASCADE,verbose_name='Program description:',related_name='progdesc')
@@ -397,7 +399,8 @@ class mod9001_incidentregisterStaff(models.Model):
     entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='incidentstaff',on_delete=models.SET_NULL)
     date_today=models.DateField("Date created:",default=datetime.now)
     status=models.ForeignKey('issues_9001.approval_status', on_delete=models.SET_NULL,verbose_name='Status:',null=True,blank=True)
-
+    def __str__(self):
+        return self.incident_number
 
     
 
@@ -571,7 +574,7 @@ class mod9001_correctiveaction(models.Model):
 
 class mod9001_planning(models.Model):
     #car_no=models.OneToOneField('mod9001_correctiveaction', on_delete=models.SET_NULL,verbose_name='CAR ID:',null=True,blank=True)
-    car_no=models.ForeignKey('mod9001_correctiveaction', on_delete=models.SET_NULL,verbose_name='CarNo:',null=True,blank=True)
+    car_no=models.ForeignKey('mod9001_correctiveaction', on_delete=models.SET_NULL,verbose_name='CarNo:',null=True,blank=True,unique=True)
     containment=models.ForeignKey('containment', on_delete=models.SET_NULL,verbose_name='containment:',null=True,blank=True)
     rootcause=models.ForeignKey('root_cause', on_delete=models.SET_NULL,verbose_name='rootcause:',null=True,blank=True)
     rootcause_desc=models.TextField("Root Cause Description",null=True, blank=True)
@@ -689,7 +692,7 @@ class mod9001_customerComplaint(models.Model):
 class mod9001_customerSatisfaction(models.Model):
     satis_no=models.CharField("Satisfaction Survey No.:",max_length=200,default="Comp-CS-Q-"+ correction_no(),primary_key=True)
     date=models.DateField("Date created:",default=datetime.now)
-    organisation=models.ForeignKey(mod9001_supplieregistration, on_delete=models.SET_NULL,verbose_name='Customer Organisation:',null=True,blank=True)
+    organisation=models.ForeignKey('accounts.customer', on_delete=models.SET_NULL,verbose_name='Customer Organisation:',null=True,blank=True)
     #year=models.DateField("Survey Period:",null=True)
     start=models.DateField("Start Date:",null=True, blank=True)
     end=models.DateField("End Date:",null=True, blank=True)

@@ -82,7 +82,7 @@ class trainingregister(ModelForm):
     class Meta:
         model = mod9001_trainingregister 
         exclude = ['training_desc','trainingplanid','training','location','trainer','entered_by','date_today']
-        widgets={'actionplanother':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'reasonother':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'timeline':DateInput(),'train_date':DateInput(),'completion_date':DateInput(),'job':HorizontalRadioSelect(),'skills':HorizontalRadioSelect(),'indicators':HorizontalRadioSelect(),'able':HorizontalRadioSelect()}
+        widgets={'trainee':forms.Textarea(attrs={'rows': 1, 'cols': 40}),'actionplanother':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'reasonother':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'timeline':DateInput(),'train_date':DateInput(),'completion_date':DateInput(),'job':HorizontalRadioSelect(),'skills':HorizontalRadioSelect(),'indicators':HorizontalRadioSelect(),'able':HorizontalRadioSelect()}
     
     def clean(self):
         cleaned_data = super().clean()
@@ -226,7 +226,7 @@ class mod9001planning(ModelForm):
         exclude = ['completion','qmsstatus','scheduled','entered_by','date_today','verification','verification_status','verification_failed','rejected','approval_date','approved_by']
         widgets = {
 
-           'status':forms.HiddenInput, 'due': DateInput(),'rootcause_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'details':forms.Textarea(attrs={'rows': 2, 'cols': 40})
+           'comment':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'status':forms.HiddenInput, 'due': DateInput(),'rootcause_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'details':forms.Textarea(attrs={'rows': 2, 'cols': 40})
         }
 
    

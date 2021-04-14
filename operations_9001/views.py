@@ -685,7 +685,7 @@ def incident_report(request):
     
         for i in incident:
             #if i.issue_number.get_context_display() is not None:#if the value is none django throws errors
-            writer.writerow([i.incident_number, i.incident_number.date,i.incident_number.time,i.incident_number.processname,i.incident_number.incidentype,i.incident_number.incident_description,i.incident_number.other,i.classification,i.correction,i.description,i.assigned,i.due,i.completion,i.get_cost_display(),i.get_currency_display(),i.costdescription,i.lesson])
+            writer.writerow([i.incident_number, i.incident_number.date,i.incident_number.time,i.incident_number.processname,i.incident_number.incidentype,i.incident_number.incident_description,i.incident_number.other,i.classification,i.correction,i.description,i.assigned,i.due,i.completion,i.get_cost_display(),i.get_currency_display(),i.costdescription,i.verification_failed])
         return response
         
     else:
@@ -915,7 +915,7 @@ def providerAssessment_report(request):
 
         writer = csv.writer(response)
        
-        writer.writerow(['Review No.', 'Date', 'Provider', 'Organisation','AppraiseeInternal','AppraiseeExternal','Rating','ImprovementPlan','Addit.Details','AssignedTo','Timeline','Status'])
+        writer.writerow(['Review No.', 'Date', 'Provider', 'Organisation','AppraiseeInternal','AppraiseeExternal','Rating','ImprovementPlan','Addit.Details','AssignedTo','Timeline','Status','Comment/LessonLearnt'])
 
     
         for i in providerassessment:
@@ -981,7 +981,7 @@ def providerAssessment_report(request):
                     return " " 
         
             writer.writerow([i.emp_perfrev_no, i.start,i.get_Provider_display(),i.organisation,i.appraise,i.appraiseename,i.rank,jobknowledg()+ i.get_jobknowledg_display() + flexibility()+ i.get_flexibility_display()+ problemsolving()+ i.get_problemsolving_display()+ Initiativenes()+ i.get_Initiativenes_display()+ planning()+ i.get_planing_display()+ workquality()+ i.get_workquality_display()+ interskills()+ i.get_interskills_display()+ communication()+ i.get_communication_display()+ supervisionmagt()+ i.get_supervisionmagt_display()+ availabilit()+ i.get_availabilit_display()+ professional()+ i.get_professional_display()
-            ,i.nonconfdetails,i.assigned,i.due,i.qmsstatus])
+            ,i.nonconfdetails,i.assigned,i.due,i.qmsstatus,i.comment])
             
         return response
         
@@ -1111,7 +1111,7 @@ def correctiveaction_report(request):
         response['Content-Disposition'] = 'attachment; filename="CorrectiveAction_register.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['CAR No.', 'Date', 'Process', 'CAR Source','Reference','Element','Findings','Add. Desc.','RequestTo','Containment','RootCause','Action','Add.Details','ProposedBy','AssignedTo','When','Approval','Verification','Completion','Reschduled','Comment','Add.Comment'])
+        writer.writerow(['CAR No.', 'Date', 'Process', 'CAR Source','Reference','Element','Findings','Add. Desc.','RequestTo','Containment','RootCause','Action','Add.Details','ProposedBy','AssignedTo','When','Approval','Verification','Completion','Reschduled','ApprovalComment','VerificationComment'])
 
     
         for i in docmngr:
