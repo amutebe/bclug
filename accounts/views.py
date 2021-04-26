@@ -375,14 +375,21 @@ def home(request):
         'color': ''
     }
  ################NON CONFORMITY BAR CHART#################################
+    
     nonconf=mod9001_planning.objects.all()
     nonconf2=list(nonconf)
     #print("printing querysetlist",nonconf2)
     process=[]
     finding=[]
-    for i in nonconf:
-        process.append(i.car_no.process)
-        finding.append(i.car_no.finding)
+    
+
+    
+    
+    if nonconf.count() > 0:
+        for i in nonconf:
+            
+            process.append(i.car_no.process)
+            finding.append(i.car_no.finding)
 
     #print(process)
     #print(finding)

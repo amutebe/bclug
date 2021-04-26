@@ -62,8 +62,10 @@
 					<th>AdditionalDescription</th>
 					<th>StartDate</th>
 					<th>EndDate</th>
-					<th>Approval</th>
-					<th>Verification</th>
+                    <th>Approved</th>
+					<th>ApprovalComment</th>
+					<th>Verified</th>
+					<th>VerificationComment</th>
 
                 
 
@@ -84,8 +86,10 @@
 				
 					<td>{{i.start}}</td>
 					<td>{{i.end}}</td>
-					<td>{{i.status}}</td>
-					<td>{{i.qmsstatus}}</td>
+                    <td>{{i.status}}</td>
+					<td>{{i.rejected}}</td>
+                    <td>{{i.qmsstatus}}</td>
+					<td>{{i.verification_failed}}</td>
 
 				
 					</tr>

@@ -72,7 +72,7 @@ class mod9001_issues(models.Model):
     internal_issues=models.CharField(max_length=200,null=True,blank=True, choices=INTERNAL_ISSUES)
     EXTERNAL_ISSUES=(('1','Legal and Regulatory requirements'),('2','Economic enviroment'),('3','Cultural enviroment'),('4','Political enviroment'),('5','Competitive enviroment'),('6','Social enviroment'),('7','Threats'),('8','Opportunities'),('9','Other'))
     external_issues=models.CharField(max_length=200,null=True,blank=True, choices=EXTERNAL_ISSUES)
-    process_desc=(('1','Transport'),('2','Sales'),('3','Administration'),('4','Marketing'),('5','Customer Relations'),('6','Service/Help Desk Support'),('7','Inventory'),('8','Project Management'),('9','Procurement'),('10','Other'),('11','Management'),('12','Training'),('13','Recruitment'),('14','Systems Administration'),('15','Disciplinary Process'))
+    process_desc=(('1','Transport'),('2','Sales'),('3','Administration'),('4','Marketing'),('5','Customer Relations'),('6','Service/Help Desk Support'),('7','Inventory'),('8','Project Management'),('9','Procurement'),('10','Other'),('11','Management'),('12','Training'),('13','Recruitment'),('14','Systems Administration'),('15','Disciplinary Process'),('16','Accounts Payables'),('17','Accounts Receivables'))
     process_desc=models.CharField("Process Description",max_length=200,null=True,blank=True, choices=process_desc)
     #process_desc= models.ForeignKey('operations_9001.process',on_delete=models.CASCADE,verbose_name='Process:',related_name='Processes')
 
@@ -108,7 +108,7 @@ class mod9001_interestedParties(models.Model):
     context=models.CharField(max_length=200,null=False, choices=IPTYPE)
     INTERNAL_ISSUES=(('1','Employee/Staff'),('2','Executive Management'),('3','Top Management'))
     internal_issues=models.CharField(max_length=200,null=True,blank=True, choices=INTERNAL_ISSUES)
-    EXTERNAL_ISSUES=(('1','Customers'),('2','Regulators'),('3','Hardware/Equipment Suppliers'),('4','Traning providers'),('5','Security providers'),('6','Internet providers'),('7','Insurance providers'),('8','Auditors'),('9','Certification bodies'),('10','Inspectors'),('11','Business partners'),('12','Competitors'),('13','Neighbourhood'),('14','Local authorities'),('15','Family'))
+    EXTERNAL_ISSUES=(('1','Customers'),('2','Regulators'),('3','Hardware/Equipment Suppliers'),('4','Traning providers'),('5','Security providers'),('6','Internet providers'),('7','Insurance providers'),('8','Auditors'),('9','Certification bodies'),('10','Inspectors'),('11','Business partners'),('12','Competitors'),('13','Neighbourhood'),('14','Local authorities'),('15','Family'),('16','Suppliers'), ('17','Prescribers'), ('18','NGOs'), ('19','Influencers'), ('19','Customers Customers'), ('20','Customers'),('21','Regulators'))
     external_issues=models.CharField(max_length=200,null=True,blank=True, choices=EXTERNAL_ISSUES)
     Quality_needs=(('1','Communication'),('2','Reporting'),('3','Tax complaince'),('4','CSR'),('5','Time payment for services/products'),('6','Timely delivery'),('7','Safe work enviroment'),('8','Operation support'),('9','Work equipment'),('10','Training'),('11','Clear vision'),('12','Quality support'),('13','Performance feedback'),('14','Contractual complaince'),('15','legal complaince'),('16','Business growth'),('17','Performance'))
     quality_needs=models.CharField("Requirement",max_length=200,null=False, choices=Quality_needs)

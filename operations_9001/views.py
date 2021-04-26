@@ -1122,6 +1122,32 @@ def correctiveaction_report(request):
     else:
         return render(request,'CorrectiveAction_report.html',{'docmngr':docmngr,'myFilter':myFilter})
 
+@login_required(login_url='login')
+def correctiveactionRequest_report(request):
+    
+    docmngr=mod9001_correctiveaction.objects.all() #get all corrective action in database 
+    myFilter=correctiveactionFilter(request.GET, queryset=docmngr)
+    docmngr=myFilter.qs
+    if request.method=="POST":
+        docmngr_list = mod9001_correctiveaction.objects.all()
+        myFilter=correctiveactionFilter(request.GET, queryset=docmngr_list)
+        docmngr=myFilter.qs
+        
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="CorrectiveActionRequest_register.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(['CAR No.', 'Date', 'Process', 'CAR Source','Reference','Element','Findings','Add. Desc.','RequestTo'])
+
+    
+        for i in docmngr:
+            
+            writer.writerow([i.car_no, i.date,i.process,i.car_source, i.reference,i.element,i.get_finding_display(),i.addesc,i.requesto])
+        return response
+        
+    else:
+        return render(request,'CorrectiveActionRequest_report.html',{'docmngr':docmngr,'myFilter':myFilter})
+
 
 
             

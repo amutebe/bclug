@@ -8,7 +8,7 @@
             
 		
 				<div class="card card-body">
- <h4 class="mb-3">Corrective Action Register (PLANNING):</h4>
+ <h4 class="mb-3">Corrective Action Register (REQUEST):</h4>
  <p class="round2"> 
 
 
@@ -22,7 +22,7 @@
 <th>Summary</th>
 <th>Start Date</th>
 <th>End Date</th>
-<!--<th>Source</th>-->
+<th>Source</th>
 
 <th></th>
 </tr></thead>
@@ -32,7 +32,7 @@
 <td>{{myFilter.form.date}}</td>
 <td>{{myFilter.form.start}}</td>
 <td>{{myFilter.form.end}}</td>
-<!--<td>{{myFilter.form.car_source}}</td>-->
+<td>{{myFilter.form.car_source}}</td>
 
 <td><button class="btn btn-info btn-sm" type="submit">Search</button></td>
 </tr></tbody>
@@ -63,20 +63,7 @@
                     <th>Findings</th>
 					<th>Add.Desc.</th>
 				    <th>RequestTo</th>
-					<th>Containment</th>
-					<th>RootCause</th>
-					<th>Action</th>
-					<th>Add.Details</th>
-					<th>ProposedBy</th>
-					<th>AssignedTo</th>
-					<th>When</th>
-					<th>Approval</th>
-					<th>Verification</th>
-					<th>Completion</th>
-					<th>Reschduled</th>
-					<th>ApprovalComment</th>
-					<th>VerificationComment</th>
-
+					
 					
                     
 					
@@ -86,27 +73,15 @@
 				
 					<tr>
 						<td>{{i.car_no}}</td>
-					<td>{{i.car_no.date}}</td>
-					<td>{{i.car_no.process}}</td>						
-				    <td>{{i.car_no.car_source}}</td>
-                    <td>{{i.car_no.element}}</td>
-                    <td>{{i.car_no.reference}}</td>
-                    <td>{{i.car_no.get_finding_display}}</td>
-                    <td>{{i.car_no.addesc}}</td>                
-					<td>{{i.car_no.requesto}}</td>
-					<td>{{i.containment}}</td>
-					<td>{{i.rootcause}}</td>
-                    <td>{{i.decision}}</td>
-                    <td>{{i.details}}</td>                
-					<td>{{i.proposedby}}</td>
-					<td>{{i.assignedto}}</td>
-					<td>{{i.due}}</td>
-                    <td>{{i.status}}</td>
-                    <td>{{i.qmsstatus}}</td>                
-					<td>{{i.completion}}</td>
-					<td>{{i.scheduled}}</td>
-					<td>{{i.comment}}</td>
-					<td>{{i.details}}</td>
+					<td>{{i.date}}</td>
+					<td>{{i.process}}</td>						
+				    <td>{{i.car_source}}</td>
+                    <td>{{i.element}}</td>
+                    <td>{{i.reference}}</td>
+                    <td>{{i.get_finding_display}}</td>
+                    <td>{{i.addesc}}</td>                
+					<td>{{i.requesto}}</td>
+					
 
 
 

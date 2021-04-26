@@ -96,7 +96,7 @@ class Employee_titles(models.Model):
     title_id=models.CharField("Title ID:",max_length=50,primary_key=True)
     title_name=models.TextField("Name:")
     def __str__(self):
-        return self.title_name  
+        return self.title_name
 ######## TABLE EMPLOYEES ############################
 
 

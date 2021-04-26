@@ -71,8 +71,10 @@
                        <th>Location</th>
                           <th>Trainer</th>
                              <th>Resource</th>
-					<th>Approval</th>
-					<th>Verification</th>
+					 <th>Approval</th>
+					<th>ApprovalComment</th>
+					<th>Verified</th>
+					<th>VerificationComment</th>
 
                 
 
@@ -101,8 +103,10 @@
                     <td>{{i.get_trainlocation_display}}</td>
                      <td>{{i.trainer}}</td>
                        <td>{{i.resources}}</td>
-					<td>{{i.status}}</td>
-					<td>{{i.trainplannerstatus}}</td>
+                    <td>{{i.status}}</td>
+					<td>{{i.rejected}}</td>
+                    <td>{{i.trainplannerstatus}}</td>
+					<td>{{i.verification_failed}}</td>
 
 				
 					</tr>

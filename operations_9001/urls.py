@@ -45,6 +45,7 @@ path('incidentregister_7daysToExpiryview/<str:pk_test>/',views.incidentregister_
 
 path('correctiveaction/', views.correctiveaction, name='correctiveaction'),
 path('correctiveaction_report/', views.correctiveaction_report, name='correctiveaction_report'),
+path('correctiveactionRequest_report/', views.correctiveactionRequest_report, name='correctiveactionRequest_report'),
 
 
 

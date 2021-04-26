@@ -103,7 +103,9 @@ class correctiveactionFilter(django_filters.FilterSet):
     date=DateRangeFilter(field_name="completion",label='Summary')
     start=DateFilter(field_name="completion",lookup_expr='gte',label='Start Date',widget=DateInput())
     end=DateFilter(field_name="completion",lookup_expr='lte',label='End Date',widget=DateInput())
-
+    class Meta:
+        model=mod9001_correctiveaction
+        fields=['car_source']
     
 
 ########################CHANGE REQUEST##################################
