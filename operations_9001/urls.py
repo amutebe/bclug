@@ -20,6 +20,9 @@ path('qms_due/',views.qms_due,name="qms_due"),
 path('qms_7daysToExpiryview/<str:pk_test>/',views.qms_7daysToExpiryview,name="qms_7daysToExpiryview"),
 path('trainingReg/', views.trainingReg, name='trainingReg'),
 path('training_register_report/',views.training_register_report,name="training_register_report"),
+path('Verify_trainingregister/<str:pk_test>/',views.Verify_trainingregister,name="Verify_trainingregister"),
+path('trainingregister_due/',views.trainingregister_due,name="trainingregister_due"),
+path('trainingregister_7daysToExpiryview/<str:pk_test>/',views.trainingregister_7daysToExpiryview,name="trainingregister_7daysToExpiryview"),
 
 path('training_planner/', views.training_planner, name='training_planner'),
 path('trainingplan_report/',views.trainingplan_report,name="trainingplan_report"),
@@ -32,6 +35,7 @@ path('training_7daysToExpiryview/<str:pk_test>/',views.training_7daysToExpiryvie
 
 path('incidentRegister/', views.incidentRegister, name='incidentRegister'),
 path('incident_report/', views.incident_report, name='incident_report'),
+path('incident_log_report/', views.incident_log_report, name='incident_log_report'),
 path('ajax/load_description/', views.load_description, name='ajax_load_description'),
 path('ajax/load_process/', views.load_process, name='ajax_load_process'),
 

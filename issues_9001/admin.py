@@ -4,7 +4,7 @@ from .models import *
 # Register your models here.
 admin.site.register(mod9001_interestedParties)
 admin.site.register(mod9001_regulatoryReq)
-admin.site.register(InterestedParties)
+#admin.site.register(InterestedParties)
 admin.site.register(RequirementCategory)
 admin.site.register(contextdetails)
 admin.site.register(risklikelihood)
@@ -19,8 +19,9 @@ admin.site.register(mod9001_issues)
 admin.site.register(process_StrengthWeakness)
 admin.site.register(process_OpportunitiesThreats)
 admin.site.register(risktreat)
-
-
+admin.site.register(interestedparty)
+admin.site.register(internalissue)
+admin.site.register(externalissue)
 
 
 

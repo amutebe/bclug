@@ -206,6 +206,9 @@ class incident_description(models.Model):
 
 class process(models.Model):
     description=models.CharField("Process", max_length=200,null=True,blank=True)
+    dept= models.ForeignKey('accounts.Department',on_delete=models.CASCADE,verbose_name='Department:',null=True,blank=True)
+    owner =models.TextField("Process Owner:",null=True,blank=True, help_text='Process owner')
+
     def __str__(self):
         return self.description
 
@@ -307,7 +310,15 @@ class mod9001_trainingregister(models.Model):
     actionplanother=models.TextField("Additional description:",null=True,blank=True)
     assigned = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='assignedto',verbose_name='Assigned to:',on_delete=models.SET_NULL)
     timeline=models.DateField("Timeline:",null=True,blank=True)     
-    
+    verification=models.ForeignKey('issues_9001.RISK_OPPverification', on_delete=models.SET_NULL,verbose_name='Verification:',null=True,blank=True)
+    verification_status=models.CharField(max_length=200, null=True,blank=True)
+    verification_failed=models.TextField("Reason for rejecting:",null=True,blank=True, help_text='If rejected, please give a reason')
+    qmsstatus=models.ForeignKey(qmsstatus, on_delete=models.SET_NULL,null=True,verbose_name='Verification Status:')
+    status=models.ForeignKey('issues_9001.approval_status', on_delete=models.SET_NULL,verbose_name='Status:',null=True,blank=True)
+    scheduled=models.DateField("Rescheduled Date:",null=True,blank=True)
+    completion=models.DateField("Completion Date:",null=True,blank=True)
+   
+        
     entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='training_entered_by',on_delete=models.SET_NULL)
     date_today=models.DateField("Date created:",default=datetime.now)
 
@@ -362,7 +373,7 @@ class mod9001_incidentregister(models.Model):
 
 
 class mod9001_incidentregisterStaff(models.Model):
-    incident_number=models.ForeignKey('mod9001_incidentregister', on_delete=models.SET_NULL,verbose_name='Incident Number:',null=True,blank=True)
+    incident_number=models.ForeignKey('mod9001_incidentregister', on_delete=models.SET_NULL,verbose_name='Incident Number:',null=True,blank=True, unique=True)
     classification=models.ForeignKey('classification', on_delete=models.SET_NULL,verbose_name='Incident Classification:',null=True,blank=True)
     rootcause=models.ForeignKey('rootcause', on_delete=models.SET_NULL,verbose_name='Root Cause:',null=True,blank=True)
     otherootcause=models.TextField("Other Root Cause:",null=True, blank=True)

@@ -81,8 +81,8 @@ class trainingregister(ModelForm):
   
     class Meta:
         model = mod9001_trainingregister 
-        exclude = ['training_desc','trainingplanid','training','location','trainer','entered_by','date_today']
-        widgets={'trainee':forms.Textarea(attrs={'rows': 1, 'cols': 40}),'actionplanother':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'reasonother':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'timeline':DateInput(),'train_date':DateInput(),'completion_date':DateInput(),'job':HorizontalRadioSelect(),'skills':HorizontalRadioSelect(),'indicators':HorizontalRadioSelect(),'able':HorizontalRadioSelect()}
+        exclude = ['training_desc','trainingplanid','training','location','trainer','entered_by','date_today','verification','verification_status','verification_failed','qmsstatus','scheduled','completion']
+        widgets={'status':forms.HiddenInput,'trainee':forms.Textarea(attrs={'rows': 1, 'cols': 40}),'actionplanother':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'reasonother':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'timeline':DateInput(),'train_date':DateInput(),'completion_date':DateInput(),'job':HorizontalRadioSelect(),'skills':HorizontalRadioSelect(),'indicators':HorizontalRadioSelect(),'able':HorizontalRadioSelect()}
     
     def clean(self):
         cleaned_data = super().clean()
@@ -92,6 +92,13 @@ class trainingregister(ModelForm):
         if completion_date < training_date:
             raise forms.ValidationError("Training date should be less than completion date.")
         
+class Verifyetrainingregister(ModelForm):
+    class Meta:
+        model = mod9001_trainingregister
+        #fields = '__all__'
+        fields=['verification','verification_status','verification_failed','qmsstatus','scheduled','completion']
+        widgets={'completion':DateInput(),'scheduled':DateInput()}        
+
 
 
 

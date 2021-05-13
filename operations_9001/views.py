@@ -404,7 +404,7 @@ def trainingReg(request):
         request.POST=request.POST.copy()
         request.POST['entered_by'] = request.user
         request.POST['date_today']=date.today()
-        
+        request.POST['status'] = 1       
         form=trainingregister(request.POST)
                         
         if form.is_valid():
@@ -437,17 +437,87 @@ def training_register_report(request):
         response['Content-Disposition'] = 'attachment; filename="Training_Evaluation_Report.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['TainingNo','TrainingDescription.', 'AdditionalDescription', 'TrainingDate', 'Nature','Trainee','Dept','CompletionDate','Decision','Reason','Details','ActionPlan','AdditionalDesc.','AssignedTo','Timeline'])
+        writer.writerow(['TainingNo','TrainingDescription.', 'AdditionalDescription', 'TrainingDate', 'Nature','Trainee','Dept','CompletionDate','Decision','Reason','Details','ActionPlan','AdditionalDesc.','AssignedTo','Timeline','Approved','Verified'])
 
     
         for i in trainingreg:
             
-            writer.writerow([i.training_number, i.plan_number.description,i.plan_number.details, i.train_date,i.get_nature_display(),i.trainee,i.trainee.dept,i.completion_date,i.get_decision_display(),i.reasond,i.reasonother,i.actionplan,i.actionplanother,i.assigned,i.timeline])
+            writer.writerow([i.training_number, i.plan_number.description,i.plan_number.details, i.train_date,i.get_nature_display(),i.trainee,i.tainee_dept,i.completion_date,i.get_decision_display(),i.reasond,i.reasonother,i.actionplan,i.actionplanother,i.assigned,i.timeline,i.status,i.qmsstatus])
         return response
         
     else:
         return render(request,'Training_Evaluation_Report.html',{'trainingreg':trainingreg,'myFilter':myFilter})
 ###################### TRAINING REGISTER VERIFICATION ############################################################
+@login_required(login_url='login')
+def trainingregister_due(request):
+    carExpire7days=mod9001_trainingregister.objects.filter(status=1).filter(~Q(qmsstatus=1))
+    #carExpire7days=mod9001_providerassessment.objects.filter(status=1)
+    thislist = []
+    for i in carExpire7days:
+        #print("printing",i)
+        w=i.completion_date
+        t=w.strftime('%m/%d/%Y')
+        if CARnumbers_7days_expire(t)<0:
+            thislist.append(i.training_number)
+    thisdict={}
+    i=0
+    #creat a dictionary for all car numbers for display
+    for x in thislist:
+        while i<len(thislist):
+            y = str(i)
+            thisdict["satis_no"+y] = thislist[i]
+            i+=1
+
+        
+    return render(request,'trainingregister_due.html',{'thisdict':thisdict})
+
+
+
+
+
+@allowed_users(allowed_roles=['Auditor'])
+def Verify_trainingregister(request,pk_test):
+    open_car=mod9001_trainingregister.objects.get(training_number=pk_test)
+    form=Verifyetrainingregister(instance=open_car)
+    if request.method=="POST":
+            #print("request.POST['qmsstatus']",request.POST['qmsstatus'])
+            
+            if request.POST['qmsstatus'] =="Rejected":
+                request.POST=request.POST.copy()
+                request.POST['status'] = 1 #requires approval first before next verification
+                request.POST['verification']=2 #default verifiaction to Not effective
+                print("request", request.POST)
+            
+            elif request.POST['qmsstatus'] == '1':
+                #print("request.POST['qmsstatus']",request.POST['qmsstatus'])
+                request.POST=request.POST.copy()
+                request.POST['status'] = 1 # keep status approved
+                request.POST['verification_status']='Closed'
+            
+            else:
+                request.POST=request.POST.copy()
+
+
+
+
+
+
+            form=Verifyetrainingregister(request.POST, instance=open_car)
+            if form.is_valid():
+                form.save()
+                return redirect('/trainingregister_due/')
+
+    context={'form':form}  
+
+
+    return render(request,'trainingregister_verify.html',context)
+
+
+@login_required(login_url='login')
+def trainingregister_7daysToExpiryview(request,pk_test):
+    products=mod9001_trainingregister.objects.filter(training_number=pk_test)
+    return render(request,'trainingregister_view_7_days_To_expiry.html',{'products':products})
+
 
 
 ####################### TRAINING PLANNER ###############################
@@ -690,6 +760,36 @@ def incident_report(request):
         
     else:
         return render(request,'incident_report.html',{'incident':incident,'myFilter':myFilter})
+
+@login_required(login_url='login')
+def incident_log_report(request):
+
+    
+    incident=mod9001_incidentregister.objects.all() #get all incident registers by staff
+  
+    
+    
+    myFilter=Operations_incident_log_RegisterFilter(request.GET, queryset=incident)
+    incident=myFilter.qs
+    if request.method=="POST":
+        incident_list = mod9001_incidentregister.objects.all()
+        
+        myFilter=Operations_incident_log_RegisterFilter(request.GET, queryset=incident_list)
+        incident=myFilter.qs
+        
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="IncidentRegister.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(['Incident. No.', 'Date', 'Time', 'Process','Type','Description','Details'])
+    
+        for i in incident:
+            #if i.issue_number.get_context_display() is not None:#if the value is none django throws errors
+            writer.writerow([i.incident_number, i.incident_number.date,i.incident_number.time,i.incident_number.processname,i.incident_number.incidentype,i.incident_number.incident_description,i.incident_number.other])
+        return response
+        
+    else:
+        return render(request,'incident_log.html',{'incident':incident,'myFilter':myFilter})
 
 
 

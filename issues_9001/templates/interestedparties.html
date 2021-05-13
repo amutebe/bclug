@@ -102,18 +102,23 @@ div3
 </div>
 
 <div class="form-group" id="qualitydiv">
-    <label for="external"> Requirements:</label>
+    <label for="external"> IP Requirement:</label>
 	<br>
 {{form.quality_needs}}
   <font color="red">{{form.errors.quality_needs}}</font>
 
 </div>
+ 
 <div class="form-group" id="description">
-    <label for="Description">Description</label>
+    <label for="Description">Additional Description</label>
     <input type="text" class="form-control" id="description"  name="description" {{form.description}}
     <font color="red">{{form.errors.description}}</font>
 </div> 
-
+<div class="form-group" id="companyrequirement">
+    <label for="companyrequirement">Company Requirement</label>
+    <input type="text" class="form-control" id="companyrequirement"  name="companyrequirement" {{form.companyrequirement}}
+    <font color="red">{{form.errors.companyrequirement}}</font>
+</div>
 <div class="form-group" id="">
     <label for="interestedparties"> Interested parties to company(control/influence):</label>
 	<br>

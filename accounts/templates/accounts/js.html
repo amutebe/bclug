@@ -1455,7 +1455,7 @@ $(document).ready(function()
 /*END*/
 /*script for requirements IP drop down*/
 $("#id_interestedparty").change(function() {
-			if ($(this).val()==5) {
+			if ($("#id_interestedparty option:selected").text()=="Other") {
 					
 				$('#otherInterestedParty').show();
 				$('#id_otherInterestedParty').attr('required','');

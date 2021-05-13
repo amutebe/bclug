@@ -14,6 +14,23 @@ class Country(models.Model):
         return self.name
 
 
+class interestedparty(models.Model):
+    description = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.description
+
+class internalissue(models.Model):
+    description = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.description
+
+class externalissue(models.Model):
+    description = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.description
 class City(models.Model):
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
@@ -68,10 +85,10 @@ class mod9001_issues(models.Model):
     analyst= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Lead Analyst:',related_name='analyst')
     CONTEXT=(('1','Internal Issues'),('2','External Issues'),('3','Process Issues'))
     context=models.CharField(max_length=200,null=False, choices=CONTEXT)
-    INTERNAL_ISSUES=(('1','Organisational Culture'),('2','Organisational Knowledge'),('3','Company Values'),('4','ICT Infrastructure'),('5','Available Resources'),('6','Organisational Structure'),('7','Strength'),('8','Weaknesses'),('9','Other'))
-    internal_issues=models.CharField(max_length=200,null=True,blank=True, choices=INTERNAL_ISSUES)
-    EXTERNAL_ISSUES=(('1','Legal and Regulatory requirements'),('2','Economic enviroment'),('3','Cultural enviroment'),('4','Political enviroment'),('5','Competitive enviroment'),('6','Social enviroment'),('7','Threats'),('8','Opportunities'),('9','Other'))
-    external_issues=models.CharField(max_length=200,null=True,blank=True, choices=EXTERNAL_ISSUES)
+    #INTERNAL_ISSUES=(('1','Organisational Culture'),('2','Organisational Knowledge'),('3','Company Values'),('4','ICT Infrastructure'),('5','Available Resources'),('6','Organisational Structure'),('7','Strength'),('8','Weaknesses'),('9','Other'))
+    internal_issues=models.ForeignKey("internalissue", verbose_name="Internal Issue", on_delete=models.CASCADE, null=True, blank=True)
+    #EXTERNAL_ISSUES=(('1','Legal and Regulatory requirements'),('2','Economic enviroment'),('3','Cultural enviroment'),('4','Political enviroment'),('5','Competitive enviroment'),('6','Social enviroment'),('7','Threats'),('8','Opportunities'),('9','Other'))
+    external_issues=models.ForeignKey("externalissue", verbose_name="External Issue", on_delete=models.CASCADE, null=True, blank=True)
     process_desc=(('1','Transport'),('2','Sales'),('3','Administration'),('4','Marketing'),('5','Customer Relations'),('6','Service/Help Desk Support'),('7','Inventory'),('8','Project Management'),('9','Procurement'),('10','Other'),('11','Management'),('12','Training'),('13','Recruitment'),('14','Systems Administration'),('15','Disciplinary Process'),('16','Accounts Payables'),('17','Accounts Receivables'))
     process_desc=models.CharField("Process Description",max_length=200,null=True,blank=True, choices=process_desc)
     #process_desc= models.ForeignKey('operations_9001.process',on_delete=models.CASCADE,verbose_name='Process:',related_name='Processes')
@@ -84,8 +101,8 @@ class mod9001_issues(models.Model):
 
     
     description=models.TextField("Description:",null=True,blank=True, help_text='Please give comments if any')
-
-    mitigation=models.TextField("Mitigation Action:",null=True,blank=True, help_text='Please give description if any')
+    interestedparties= models.ForeignKey("interestedparty", verbose_name="interestedparty", on_delete=models.CASCADE, null=True)
+    mitigation= models.TextField("Mitigation Action:",null=True,blank=True, help_text='Please give description if any')
     responsibility= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Responsibility:',related_name='responsibility',null=True,blank=True)
     due=models.DateField("When:",null=True,blank=True)
     entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='issue_entered_by',on_delete=models.SET_NULL)
@@ -112,6 +129,8 @@ class mod9001_interestedParties(models.Model):
     external_issues=models.CharField(max_length=200,null=True,blank=True, choices=EXTERNAL_ISSUES)
     Quality_needs=(('1','Communication'),('2','Reporting'),('3','Tax complaince'),('4','CSR'),('5','Time payment for services/products'),('6','Timely delivery'),('7','Safe work enviroment'),('8','Operation support'),('9','Work equipment'),('10','Training'),('11','Clear vision'),('12','Quality support'),('13','Performance feedback'),('14','Contractual complaince'),('15','legal complaince'),('16','Business growth'),('17','Performance'))
     quality_needs=models.CharField("Requirement",max_length=200,null=False, choices=Quality_needs)
+    companyrequirement=models.TextField("Company Requirement:",null=True,blank=True)
+
     description=models.TextField("Description:",null=True,blank=True, help_text='Please give description if any')
     INTERESTEDPARTIES=(('1','Control'),('2','Influence'),('3','Influence and Control'))
     interestedparties=models.CharField(max_length=200,null=False, choices=INTERESTEDPARTIES)
@@ -167,8 +186,8 @@ class mod9001_regulatoryReq(models.Model):
     description=models.TextField("Describe:",null=True,blank=True)
     document=models.TextField("Document Stipulating the Requirment:",null=True,blank=True)
     #interestedparty=models.ForeignKey(InterestedParties, on_delete=models.CASCADE,verbose_name='Interested Party ID:',related_name='interestedparty')
-    parties=(('1','Customers'),('2','Regulators'),('3','Hardware/Equipment Suppliers'),('4','Traning providers'),('5','Security providers'),('6','Internet providers'),('7','Insurance providers'),('8','Auditors'),('9','Certification bodies'),('10','Inspectors'),('11','Business partners'),('12','Competitors'),('13','Neighbourhood'),('14','Local authorities'),('15','Family'),('16','Other'))
-    interestedparty=models.CharField(max_length=200,null=True,blank=True, choices=parties)
+    #parties=(('1','Customers'),('2','Regulators'),('3','Hardware/Equipment Suppliers'),('4','Training providers'),('5','Security providers'),('6','Internet providers'),('7','Insurance providers'),('8','Auditors'),('9','Certification bodies'),('10','Inspectors'),('11','Business partners'),('12','Competitors'),('13','Neighbourhood'),('14','Local authorities'),('15','Family'),('16','Other'))
+    interestedparty=models.ForeignKey("interestedparty", verbose_name="Interested Party", on_delete=models.CASCADE, null=True)
    
     otherInterestedParty=models.TextField("Other interested party:",null=True,blank=True)
     entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='regulatoryreq_entered_by',on_delete=models.SET_NULL)

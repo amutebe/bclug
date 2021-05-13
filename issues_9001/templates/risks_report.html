@@ -63,6 +63,7 @@
                     <th>ProcessDesc.</th>
 					<th>SWOT</th>
 					<th>IssueDesc.</th>
+					<th>InterestedParty</th>
 					<th>Details</th>
                     <th>RiskDesc.</th>
                     <th>LKHD</th>
@@ -94,16 +95,26 @@
 				
 						{% if i.issue_number != empty %}
 					
-					<td colspan="1">{{i.issue_number.get_context_display}}</td>
+					<td>{{i.issue_number.get_context_display}}</td>
+
+					<td>{{i.issue_number.get_process_desc_display}}</td>
+					<td>{{i.issue_number.get_process_issues_display}}</td>
+					<td>{{i.issue_number.process_StrengthWeakness}}</td>
+					<td>{{i.issue_number.interestedparties}}</td>
+					<td>{{i.issue_number.description}}</td>
 					{% else %}
-					<td colspan="1">{{i.get_context_display}}</td>
-					{% endif %}
-				
-                    <td>{{i.ip_number.get_process_desc_display}}</td>
+					<td>{{i.get_context_display}}</td>
+					<td>{{i.ip_number.process_desc_display}}</td>
 					<td>{{i.ip_number.get_process_issues_display}}</td>
 					<td>{{i.ip_number.process_StrengthWeakness}}</td>
+					<td>{{i.ip_number.interestedparties}}</td>
 					<td>{{i.ip_number.description}}</td>
-                    <td>{{i.riskdescription}}</td>
+					{% endif %}
+				
+
+                    
+					
+					<td>{{i.riskdescription}}</td>
                     <td>{{i.likelihood}}</td>
                     <td>{{i.severity}}</td>
 					<td>{{i.riskrating}}</td>

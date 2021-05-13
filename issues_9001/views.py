@@ -454,7 +454,7 @@ def regulatory_report(request):
     
         for i in regulatory:
             
-            writer.writerow([i.regulatory_number, i.analyst,i.registered,  i.cat_name,i.otherCategory,i.description,i.document,i.get_interestedparty_display(),i.otherInterestedParty,i.responsibility,
+            writer.writerow([i.regulatory_number, i.analyst,i.registered,  i.cat_name,i.otherCategory,i.description,i.document,i.interestedparty,i.otherInterestedParty,i.responsibility,
 i.rejected,i.due,i.status])
         return response
         

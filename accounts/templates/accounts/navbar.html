@@ -74,6 +74,7 @@
                         <li><a data-icon="&#xf19b" >Training Evaluation</a>
                             <ul>
                                 <li><a data-icon="&#xF14B;" href="{% url 'trainingReg'%}">Create</a></li>
+                                <li><a data-icon="&#xF12E;" href="{% url 'trainingregister_due'%}">Verify</a></li>
                                 <!--<li><a data-icon="&#xF015;" href="">Verify</a></li> -->
                             </ul>
                         </li>
@@ -139,6 +140,7 @@
                         </li>
                         <li><a data-icon="&#xF09D;" >Operations</a>
                             <ul>
+                                <li><a data-icon="&#xf0c5" href="{% url 'incident_log_report'%}">Incident Log</a></li>
                                 <li><a data-icon="&#xF02B;" href="{% url 'incident_report'%}">Incident Register</a></li>
                                 <li><a data-icon="&#xF044;" href="{% url 'training_register_report'%}">Training Evaluation/Register</a></li>
                                 <li><a data-icon="&#xF1CB;" href="{% url 'providerAssessment_report'%}">Provider Assessment</a></li>
@@ -149,8 +151,8 @@
                         </li>
                         <li><a data-icon="&#xf1da" >Evaluation</a>
                             <ul>
-                                 <li><a data-icon="&#xF115;" href="{% url 'correctiveactionRequest_report'%}">Corrective Action Register (REQUEST)</a></li>
-                                 <li><a data-icon="&#xF115;" href="{% url 'correctiveaction_report'%}">Corrective Action Register (PLANNING)</a></li>
+                                 <li><a data-icon="&#xF115;" href="{% url 'correctiveactionRequest_report'%}">Corrective Action Requests</a></li>
+                                 <li><a data-icon="&#xF115;" href="{% url 'correctiveaction_report'%}">Corrective Action Register</a></li>
                             </ul>
                         </li>
                     </ul>

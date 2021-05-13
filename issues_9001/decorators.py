@@ -25,7 +25,7 @@ def allowed_users(allowed_roles=[]):
 
             if request.user.groups.exists():
                 for g in group:
-                    print(g)
+                    #print(g)
                     if g in allowed_roles:
                         return view_func(request,*args,**kwargs)
 
