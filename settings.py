@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'operations_9001',
     'import_export',
     #'axes',
-    'defender',
+    #'defender',
 
    
 ]
@@ -59,16 +59,16 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     #'axes.middleware.AxesMiddleware',
-    'defender.middleware.FailedLoginMiddleware',
+    #'defender.middleware.FailedLoginMiddleware',
    
 ]
 
 ROOT_URLCONF = 'customerRelation.urls'
-AXES_LOCK_OUT_AT_FAILURE = False
-AXES_USE_USER_AGENT = True
-AXES_COOLOFF_TIME = 1
-AXES_LOGIN_FAILURE_LIMIT = 3
-AXES_ONLY_ADMIN_SITE = True
+#AXES_LOCK_OUT_AT_FAILURE = False
+#AXES_USE_USER_AGENT = True
+#AXES_COOLOFF_TIME = 1
+#AXES_LOGIN_FAILURE_LIMIT = 3
+#AXES_ONLY_ADMIN_SITE = True
 
 TEMPLATES = [
     {
