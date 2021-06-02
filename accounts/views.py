@@ -21,6 +21,7 @@ import os
 import csv
 from .utils import *
 
+
   
 
 #function to get cars with 7 days to expire
@@ -474,10 +475,81 @@ def home(request):
             s+=1
         else:
             pass
-   
 
+     #############################NON CONFORMITY GRAPH FOR CORRECTIVE ACTION REGISTER##########################################################      
+    correctiveaction= mod9001_correctiveaction.objects.all().filter(finding='1')
+    Transport=0
+    Sales=0
+    Admin=0
+    Marketing=0
+    CustomerRelationship=0
+    HelpDesk=0
+    Inventory=0
+    ProjectManagement=0
+    Procurement=0
+    Management=0
+    Training=0
+    Recruitment=0
+    SystemAdmin=0
+    Disciplinary=0
+    Other=0
 
-    context={'finding':finding,'low':low,'high':high,'medium':medium,'total_jobs_pending':total_jobs_pending,'total_jobs_created':total_jobs_created,'total_jobs_completed':total_jobs_completed,'first_cost':g,'second_cost':h,'third_cost':m,'forth_cost':j,'fifth_cost':k,'sixth_cost':l,'firstt':aa,'secondd':bb,'thirdd':cc,'forthh':dd,'fifthh':ee,'sixthh':ff,'first':a,'second':b,'third':c,'forth':d,'fifth':e,'sixth':f,'poor':w,'improvement':x,'satisfactory':y,'good':z,'excellent':s,'browser_stats':browser_stats,'total_PROVIDERASSESSMENT':total_PROVIDERASSESSMENT,'total_CUSTOMERCOMPLAINT':total_CUSTOMERCOMPLAINT,'total_CUSTOMERSATISFACTION':total_CUSTOMERSATISFACTION,'total_CHANGEREQUEST':total_CHANGEREQUEST,'total_CORRECTIVEACTION':total_CORRECTIVEACTION,'total_INCIDENTREGISTER':total_INCIDENTREGISTER,'total_Trainingplanner':total_Trainingplanner,'total_QMSplanner':total_QMSplanner,'carstatus':carstatus,'cars':cars, 'customers':customers,'total_cars':total_cars,'total_approved':total_approved,'total_pending':total_pending,'counts':counts,'due':due,'chart': dump,'charts': dump2,'total_tasks':total_tasks,'total_IPS':total_IPS,'total_ISSUES':total_ISSUES,'total_COMPLAINCE':total_COMPLAINCE,'total_RISKS':total_RISKS,'total_OPPORTUNITY':total_OPPORTUNITY}
+    if correctiveaction.count() > 0:
+        for i in correctiveaction:
+            print(f"PROCESS:{i.process}")
+            if str(i.process)=='Project Management':
+                ProjectManagement+=1
+            elif str(i.process)=='Sales':
+                Sales+=1
+            elif str(i.process)=='Administration':
+                Admin+=1       
+            elif str(i.process)=='Marketing':
+                Marketing+=1
+            elif str(i.process)=='Customer Relations':
+                CustomerRelationship+=1           
+            elif str(i.process)=='Service or Help Desk Support':
+                HelpDesk+=1
+            elif str(i.process)=='Inventory':
+                Inventory+=1
+            elif str(i.process)=='Transport':
+                Transport+=1
+            elif str(i.process)=='Procurement':
+                Procurement+=1
+            elif str(i.process) =='Management':
+                Management+=1
+            elif str(i.process)=='Training':
+                Training+=1
+            elif str(i.process)=='Recruitment':
+                Recruitment+=1
+            elif str(i.process) =='Systems Administration':
+                SystemAdmin+=1
+            elif str(i.process)=='Disciplinary Process':
+                Disciplinary+=1
+            elif str(i.process)=='Other':
+                Other+=1
+            else:
+                pass
+    ca_categories=['Transport','Sales','Admin','Marketing','CustomerRelationship','HelpDesk','Inventory','ProjectManagement','Procurement','Management','Training','Recruitment','SystemAdmin','Disciplinary','Other']
+            
+    nonconformities = {
+        'name': 'NonConformity',
+        'data':[Transport,Sales,Admin,Marketing,CustomerRelationship,HelpDesk,Inventory,ProjectManagement,Procurement,Management,Training,Recruitment,SystemAdmin,Disciplinary,Other],
+        'color': ''
+    }
+
+    ca_chart = {
+        'chart': {'type': 'column'},
+        'title': {'text': ' Non Conformities - Corrective Action Register'},
+        'credits': 'false',
+       
+        'xAxis': {'categories': ca_categories},
+        'series': [nonconformities],
+           
+    }
+    ca_dump = json.dumps(ca_chart)
+    
+    
+    context={'ca_dump':ca_dump,'Transport':Transport,'Sales':Sales,'Admin':Admin,'Marketing':Marketing,'CustomerRelationship':CustomerRelationship,'HelpDesk':HelpDesk,'Inventory':Inventory,'ProjectManagement':ProjectManagement,'Procurement':Procurement,'Management':Management,'Training':Training,'Recruitment':Recruitment,'SystemAdmin':SystemAdmin,'Disciplinary':Disciplinary,'Other':Other,'finding':finding,'low':low,'high':high,'medium':medium,'total_jobs_pending':total_jobs_pending,'total_jobs_created':total_jobs_created,'total_jobs_completed':total_jobs_completed,'first_cost':g,'second_cost':h,'third_cost':m,'forth_cost':j,'fifth_cost':k,'sixth_cost':l,'firstt':aa,'secondd':bb,'thirdd':cc,'forthh':dd,'fifthh':ee,'sixthh':ff,'first':a,'second':b,'third':c,'forth':d,'fifth':e,'sixth':f,'poor':w,'improvement':x,'satisfactory':y,'good':z,'excellent':s,'browser_stats':browser_stats,'total_PROVIDERASSESSMENT':total_PROVIDERASSESSMENT,'total_CUSTOMERCOMPLAINT':total_CUSTOMERCOMPLAINT,'total_CUSTOMERSATISFACTION':total_CUSTOMERSATISFACTION,'total_CHANGEREQUEST':total_CHANGEREQUEST,'total_CORRECTIVEACTION':total_CORRECTIVEACTION,'total_INCIDENTREGISTER':total_INCIDENTREGISTER,'total_Trainingplanner':total_Trainingplanner,'total_QMSplanner':total_QMSplanner,'carstatus':carstatus,'cars':cars, 'customers':customers,'total_cars':total_cars,'total_approved':total_approved,'total_pending':total_pending,'counts':counts,'due':due,'chart': dump,'charts': dump2,'total_tasks':total_tasks,'total_IPS':total_IPS,'total_ISSUES':total_ISSUES,'total_COMPLAINCE':total_COMPLAINCE,'total_RISKS':total_RISKS,'total_OPPORTUNITY':total_OPPORTUNITY}
 
 
  

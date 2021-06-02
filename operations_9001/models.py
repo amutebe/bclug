@@ -6,6 +6,20 @@ from django import forms
 from django.conf import settings
 from multiselectfield import MultiSelectField
 
+##################################
+from django.core.exceptions import ValidationError
+
+
+def validate_file_size(value):
+    filesize= value.size
+    #print("PRINT FILESIZE",filesize)
+    
+    if filesize > 10485760:
+        #print("PRINT FILESIZE two",filesize)
+        raise forms.ValidationError("The maximum file size that can be uploaded is 10MB")
+    else:
+        return value
+
 # Create your models here.
 def car_no():
     now = datetime.now()
@@ -85,6 +99,7 @@ class rootcause(models.Model):
     def __str__(self):
         return self.description
 
+
 class mod9001_document_manager(models.Model):
     document_date=models.DateField("Date:")
     document_number=models.CharField("Document no.:",max_length=200,default="TEGA-Q-"+car_no(),primary_key=True)
@@ -108,7 +123,7 @@ class mod9001_document_manager(models.Model):
     retention=models.CharField("Retention time:",max_length=200,null=True, choices=Retention)
     Status=(('1','Current'),('2','Obsolete'))
     status=models.CharField(max_length=200,null=True, choices=Status)
-    document = models.FileField("Upload document:",upload_to='documents/',null=True)
+    document = models.FileField("Upload document:",upload_to='documents/',null=True,validators=[validate_file_size])
     uploaded_at = models.DateTimeField(auto_now_add=True,null=True)
 class mod9001_calibration(models.Model):
     calibration_date=models.DateField("Date:")

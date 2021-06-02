@@ -434,7 +434,24 @@ credits: {
 	
 </div>
 
+<div class="row">
+	
 
+	
+		<div class="col-md">
+		
+			
+		<div id="ca_container"></div>
+		
+		<script src="{% static 'js/highcharts.src.js' %}"></script>
+		
+		<script>  Highcharts.chart('ca_container', {{ ca_dump|safe }}); </script>
+		</div>
+	
+
+	
+	
+</div>
 	
 
 	

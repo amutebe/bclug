@@ -54,7 +54,7 @@ admin.site.register(CarPriority)
 admin.site.register(Carsverification)
 #admin.site.register(employees)
 admin.site.register(Employee_titles,Employee_titlesAdmin)
-#admin.site.register(Customer)
+
 
 
 

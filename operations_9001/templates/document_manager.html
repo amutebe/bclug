@@ -19,7 +19,11 @@ form {
           <h4 class="mb-3">Document Manager:</h4>
 <p class="round2">   
 
-<table border="0">            
+<table border="0">  
+{%if form.errors %}  
+ <div class="alert alert-danger"> Make sure file size is not more than 10MB </div>
+ {%endif%} 
+
 {{form}}
 </table>
 
