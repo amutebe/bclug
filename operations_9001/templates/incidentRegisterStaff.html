@@ -18,7 +18,7 @@ form {
 
 <form action="/incidentRegisterStaff/" method="post">
                      {% csrf_token %}
-                    
+ <div class="card-header">                    
 <table border="0">
 {% for errors in form.errors %}
 <div class="alert alert-danger"> {{form.errors}}</div>

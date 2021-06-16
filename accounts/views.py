@@ -496,7 +496,6 @@ def home(request):
 
     if correctiveaction.count() > 0:
         for i in correctiveaction:
-            print(f"PROCESS:{i.process}")
             if str(i.process)=='Project Management':
                 ProjectManagement+=1
             elif str(i.process)=='Sales':
@@ -539,7 +538,7 @@ def home(request):
 
     ca_chart = {
         'chart': {'type': 'column'},
-        'title': {'text': ' Non Conformities - Corrective Action Register'},
+        'title': {'text': ' Process Non-Conformities'},
         'credits': 'false',
        
         'xAxis': {'categories': ca_categories},

@@ -309,7 +309,7 @@ class mod9001_trainingregister(models.Model):
     location=models.TextField("Location:",null=True,blank=True)
     trainer = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='reg_by',on_delete=models.SET_NULL)
     #trainee=models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Trainee:',related_name='trainee')
-    trainee=models.TextField("Trainee:",null=True,blank=True)
+    trainee=models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Trainee :',null=True,blank=True)
     tainee_dept=models.ForeignKey('accounts.Department', on_delete=models.CASCADE,verbose_name='Trainee Department ID:',related_name='traineeDepartment')
     completion_date=models.DateField("Completion Date:")
     yesno=(('1','Yes'),('2','No'))

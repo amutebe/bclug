@@ -82,7 +82,7 @@ class trainingregister(ModelForm):
     class Meta:
         model = mod9001_trainingregister 
         exclude = ['training_desc','trainingplanid','training','location','trainer','entered_by','date_today','verification','verification_status','verification_failed','qmsstatus','scheduled','completion']
-        widgets={'status':forms.HiddenInput,'trainee':forms.Textarea(attrs={'rows': 1, 'cols': 40}),'actionplanother':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'reasonother':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'timeline':DateInput(),'train_date':DateInput(),'completion_date':DateInput(),'job':HorizontalRadioSelect(),'skills':HorizontalRadioSelect(),'indicators':HorizontalRadioSelect(),'able':HorizontalRadioSelect()}
+        widgets={'status':forms.HiddenInput,'actionplanother':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'reasonother':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'timeline':DateInput(),'train_date':DateInput(),'completion_date':DateInput(),'job':HorizontalRadioSelect(),'skills':HorizontalRadioSelect(),'indicators':HorizontalRadioSelect(),'able':HorizontalRadioSelect()}
     
     def clean(self):
         cleaned_data = super().clean()

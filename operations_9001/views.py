@@ -566,12 +566,12 @@ def trainingplan_report(request):
         response['Content-Disposition'] = 'attachment; filename="Training_planner.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['Planner No.', 'TrainingType', 'Description', 'AdditionalDescription','Date','Audience','Objective','Comment','StartDate','EndDate','Location','Trainer','Resources','Approval','Verification'])
+        writer.writerow(['Planner No.', 'TrainingType', 'Description', 'OtherTraining','AdditionalDescription','Date','Audience','Objective','Comment','StartDate','EndDate','Location','Trainer','Resources','Approval','Verification'])
 
     
         for i in trainingplan:
             
-            writer.writerow([i.plan_number, i.get_type_display(),i.description,  i.details,i.trainng_date,i.get_trainaudience_display(),i.objective,i.comments,i.start,i.end,i.get_trainlocation_display(),i.trainer,i.status,i.trainplannerstatus])
+            writer.writerow([i.plan_number, i.get_type_display(),i.description,i.other,  i.details,i.trainng_date,i.get_trainaudience_display(),i.objective,i.comments,i.start,i.end,i.get_trainlocation_display(),i.trainer,i.status,i.trainplannerstatus])
         return response
         
     else:

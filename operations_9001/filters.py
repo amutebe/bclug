@@ -96,7 +96,7 @@ class customerSatisfactionFilter(django_filters.FilterSet):
 
     class Meta:
         model=mod9001_customerSatisfaction   
-        fields=['rank','status','qmsstatus']
+        fields=['rank','status','organisation','qmsstatus']
 
 ########################CUSTOMER COMPLAINT ##################################
 class customer_complaintFilter(django_filters.FilterSet):

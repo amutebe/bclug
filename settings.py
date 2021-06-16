@@ -38,14 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #'defender.models.AccessAttempt'
-    'accounts',
-    'excel_app',
-    'django_filters',
-    'issues_9001',
-    'operations_9001',
-    'import_export',
+    #'accounts',
+   # 'excel_app',
+   # 'django_filters',
+   # 'issues_9001',
+   # 'operations_9001',
+    #'import_export',
     #'axes',
-    #'defender',
+    'defender',
 
    
 ]
@@ -59,7 +59,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     #'axes.middleware.AxesMiddleware',
-    #'defender.middleware.FailedLoginMiddleware',
+    'defender.middleware.FailedLoginMiddleware',
    
 ]
 
@@ -149,6 +149,6 @@ MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 
 AUTHENTICATION_BACKENDS = [
 
-    'axes.backends.AxesBackend',
+   # 'axes.backends.AxesBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
