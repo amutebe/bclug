@@ -10,7 +10,7 @@ from django.urls import path, include
 #]
 
 urlpatterns = [
-    path('',include('defender.urls')), # defender admin
+   # path('',include('defender.urls')), # defender admin
     path('',include('excel_app.urls')),
     path('',include('issues_9001.urls')),
     path('',include('operations_9001.urls')),

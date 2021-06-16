@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '^ierzn^w=%e)oyzw_ecfb_usv&#1y^80ffnxlo&aod1)!o7-9a'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['andysystems.pythonanywhere.com','127.0.0.1','localhost']
 
@@ -37,19 +37,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #'defender.models.AccessAttempt'
-    #'accounts',
-   # 'excel_app',
-   # 'django_filters',
-   # 'issues_9001',
-   # 'operations_9001',
-    #'import_export',
-    #'axes',
-    'defender',
-
-   
+  
+    'accounts',
+    'excel_app',
+    'django_filters',
+    'issues_9001',
+    'operations_9001',
+    'multiselectfield',
+    # Axes app can be in any position in the INSTALLED_APPS list.
+    'axes',
+    
 ]
-IMPORT_EXPORT_USE_TRANSACTIONS = True
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -58,17 +57,16 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #'axes.middleware.AxesMiddleware',
-    'defender.middleware.FailedLoginMiddleware',
-   
+    
+    # AxesMiddleware should be the last middleware in the MIDDLEWARE list.
+    # It only formats user lockout messages and renders Axes lockout responses
+    # on failed user authentication attempts from login views.
+    # If you do not want Axes to override the authentication response
+    # you can skip installing the middleware and use your own views.
+    'axes.middleware.AxesMiddleware',
 ]
 
 ROOT_URLCONF = 'customerRelation.urls'
-#AXES_LOCK_OUT_AT_FAILURE = False
-#AXES_USE_USER_AGENT = True
-#AXES_COOLOFF_TIME = 1
-#AXES_LOGIN_FAILURE_LIMIT = 3
-#AXES_ONLY_ADMIN_SITE = True
 
 TEMPLATES = [
     {
@@ -87,7 +85,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'customerRelation.wsgi.application'
-FILE_SIZE_LIMIT_IN_KILOBYTES=3
+
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
@@ -97,6 +95,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
+   
 }
 
 
@@ -137,18 +136,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
 STATICFILES_DIR=[
 os.path.join(BASE_DIR,'static'),
-]
-#STATIC_ROOT=os.path.join(BASE_DIR,'graphics')
-STATIC_ROOT='/home/andysystems/managementsystem/static'
-MEDIA_URL='/media/'
-MEDIA_ROOT=os.path.join(BASE_DIR,'media')
-#MEDIA_ROOT='/home/andysystems/managementsystem/media'
+]   
+STATIC_ROOT=os.path.join(BASE_DIR,'graphics')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 AUTHENTICATION_BACKENDS = [
+    # AxesBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
+    'axes.backends.AxesBackend',
 
-   # 'axes.backends.AxesBackend',
+    # Django ModelBackend is the default authentication backend.
     'django.contrib.auth.backends.ModelBackend',
 ]
