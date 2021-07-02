@@ -388,7 +388,7 @@ class mod9001_incidentregister(models.Model):
 
 
 class mod9001_incidentregisterStaff(models.Model):
-    incident_number=models.ForeignKey('mod9001_incidentregister', on_delete=models.SET_NULL,verbose_name='Incident Number:',null=True,blank=True, unique=True)
+    incident_number=models.OneToOneField('mod9001_incidentregister', on_delete=models.SET_NULL,verbose_name='Incident Number:',null=True,blank=True)
     classification=models.ForeignKey('classification', on_delete=models.SET_NULL,verbose_name='Incident Classification:',null=True,blank=True)
     rootcause=models.ForeignKey('rootcause', on_delete=models.SET_NULL,verbose_name='Root Cause:',null=True,blank=True)
     otherootcause=models.TextField("Other Root Cause:",null=True, blank=True)
@@ -600,7 +600,7 @@ class mod9001_correctiveaction(models.Model):
 
 class mod9001_planning(models.Model):
     #car_no=models.OneToOneField('mod9001_correctiveaction', on_delete=models.SET_NULL,verbose_name='CAR ID:',null=True,blank=True)
-    car_no=models.ForeignKey('mod9001_correctiveaction', on_delete=models.SET_NULL,verbose_name='CarNo:',null=True,blank=True,unique=True)
+    car_no=models.OneToOneField('mod9001_correctiveaction', on_delete=models.SET_NULL,verbose_name='CarNo:',null=True,blank=True)
     containment=models.ForeignKey('containment', on_delete=models.SET_NULL,verbose_name='containment:',null=True,blank=True)
     rootcause=models.ForeignKey('root_cause', on_delete=models.SET_NULL,verbose_name='rootcause:',null=True,blank=True)
     rootcause_desc=models.TextField("Root Cause Description",null=True, blank=True)

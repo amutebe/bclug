@@ -88,6 +88,7 @@ class Carsverification(models.Model):
 
 class CarPriority(models.Model):
 
+    #id=models.CharField("ID:",max_length=2,primary_key=True)
     description=models.CharField("CAR Priority", max_length=50,null=True,blank=True)
     def __str__(self):
         return self.description

@@ -785,7 +785,7 @@ def incident_log_report(request):
     
         for i in incident:
             #if i.issue_number.get_context_display() is not None:#if the value is none django throws errors
-            writer.writerow([i.incident_number, i.incident_number.date,i.incident_number.time,i.incident_number.processname,i.incident_number.incidentype,i.incident_number.incident_description,i.incident_number.other])
+            writer.writerow([i.incident_number, i.date,i.time,i.processname,i.incidentype,i.incident_description,i.other])
         return response
         
     else:
