@@ -12,7 +12,7 @@ form {
           <h4 class="mb-3">Opportunities</h4>
 <p class="round2"> 
 
-<form action="/opportunity/" method="post" id="riskForm" data-ids-url="{% url 'ajax_load_ids' %}" data-contextdesc-url="{% url 'ajax_load_contextdesc' %}" >
+<form action="/opportunity_assessed/" method="post" id="riskForm" data-ids-url="{% url 'ajax_load_ids' %}" data-contextdesc-url="{% url 'ajax_load_contextdesc' %}" >
                      {% csrf_token %}
                    
 <div class="card-header">             
@@ -190,7 +190,7 @@ form {
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script>
-    $("#id_contextdetails").change(function () {
+ /*   $("#id_contextdetails").change(function () {
       var url = $("#riskForm").attr("data-ids-url");
       var contextId = $(this).val();
 
@@ -227,7 +227,7 @@ form {
     });
     $("#id_issue_number").trigger("change");
 
-
+*/
     
 
   </script>

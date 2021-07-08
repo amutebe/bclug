@@ -14,7 +14,7 @@ form
           <h4 class="mb-3">Risk Assessment</h4>
 <p class="round2"> 
 
-<form action="/risks/" method="post" id="riskForm" data-ids-url="{% url 'ajax_load_ids' %}" data-contextdesc-url="{% url 'ajax_load_contextdesc' %}" >
+<form action="/risk_assessed/" method="post" id="riskForm" data-ids-url="{% url 'ajax_load_ids' %}" data-contextdesc-url="{% url 'ajax_load_contextdesc' %}" >
                      {% csrf_token %}
                     
  <div class="card-header">       
@@ -236,8 +236,10 @@ form
 </div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+ 
+ <!--
   <script>
-    $("#id_contextdetails").change(function () {
+  $("#id_contextdetails").change(function () {
       var url = $("#riskForm").attr("data-ids-url");
       var contextId = $(this).val();
 
@@ -282,7 +284,7 @@ form
     
 
   </script>
-
+-->
 
 {% endblock %} 
 

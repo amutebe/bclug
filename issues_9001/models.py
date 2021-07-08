@@ -42,8 +42,8 @@ class City(models.Model):
 class Person(models.Model):
     name = models.CharField(max_length=100)
     birthdate = models.DateField(null=True, blank=True)
-    country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True)
-    city = models.ForeignKey(City, on_delete=models.SET_NULL, null=True)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, null=True)
+    city = models.ForeignKey(City, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.name
@@ -80,7 +80,7 @@ class process_OpportunitiesThreats(models.Model):
         return self.description
 
 class mod9001_issues(models.Model):
-    issue_number=models.CharField("Issue no.:",max_length=200,default="TEGA-CT-Q-"+car_no(),primary_key=True)
+    issue_number=models.CharField("Issue no.:",max_length=200,default="BCL-CT-Q-"+car_no(),primary_key=True)
     analysis_date=models.DateField("Date of Analysis:")
     analyst= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Lead Analyst:',related_name='analyst')
     CONTEXT=(('1','Internal Issues'),('2','External Issues'),('3','Process Issues'))
@@ -105,12 +105,13 @@ class mod9001_issues(models.Model):
     mitigation= models.TextField("Mitigation Action:",null=True,blank=True, help_text='Please give description if any')
     responsibility= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Responsibility:',related_name='responsibility',null=True,blank=True)
     due=models.DateField("When:",null=True,blank=True)
-    entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='issue_entered_by',on_delete=models.SET_NULL)
+    entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='issue_entered_by',on_delete=models.CASCADE)
     date_today=models.DateField("Date created:",default=datetime.now)
-    status=models.ForeignKey(approval_status, on_delete=models.SET_NULL,null=True,verbose_name='Status:')
+    status=models.ForeignKey(approval_status, on_delete=models.CASCADE,null=True,verbose_name='Status:')
     rejected=models.TextField("Reason for rejecting:",null=True,blank=True, help_text='If rejected, please give a reason')
     approval_date=models.DateField("Date Approved:",null=True,blank=True)
-    approved_by=models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='Approv_by',on_delete=models.SET_NULL)
+    approved_by=models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='Approv_by',on_delete=models.CASCADE)
+    risk_assessment_flag=models.TextField("Risk Assessment Done?",null=True,blank=True,default='No', help_text='To be uses while filtering issues pending risk assessment')
 
     def __str__(self):
         return self.issue_number
@@ -118,7 +119,7 @@ class mod9001_issues(models.Model):
 
 
 class mod9001_interestedParties(models.Model):
-    ip_number=models.CharField("IP No.:",max_length=200,default="TEGA-IP-Q-"+car_no(),primary_key=True)
+    ip_number=models.CharField("IP No.:",max_length=200,default="BCL-IP-Q-"+car_no(),primary_key=True)
     analysis_date=models.DateField("Date of Analysis:")
     analyst= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Lead Analyst:')
     IPTYPE=(('1','Internal IP'),('2','External IP'))
@@ -141,19 +142,19 @@ class mod9001_interestedParties(models.Model):
     ACTION=(('1','Training and awareness'),('2','Customer satisfaction survey'),('3','Performance monitoring'),('4','Service Level Management'),('5','Tax Compliance/Policing'),('6','Auditing'),('7','Contract management'),('8','Compliance reviews'),('9','Others'))
     actiontaken=models.CharField(max_length=200,null=False, verbose_name='Action to Manage IP:',choices=ACTION)
     actionOther=models.TextField(null=True,blank=True,verbose_name='Other, specify')
-    entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='interested_entered_by',on_delete=models.SET_NULL)
+    entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='interested_entered_by',on_delete=models.CASCADE)
     date_today=models.DateField("Date created:",default=datetime.now)
     due=models.DateField("When:", null=True)
     responsibility= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Responsibility:',related_name='IPresponsibility')
-    status=models.ForeignKey(approval_status, on_delete=models.SET_NULL,null=True,verbose_name='Status:')
+    status=models.ForeignKey(approval_status, on_delete=models.CASCADE,null=True,verbose_name='Status:')
     rejected=models.TextField("Reason for rejecting:",null=True,blank=True, help_text='If rejected, please give a reason')
     approval_date=models.DateField("Date Approved:",null=True,blank=True)
-    approved_by=models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='IPApprov_by',on_delete=models.SET_NULL)
+    approved_by=models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='IPApprov_by',on_delete=models.CASCADE)
     def __str__(self):
         return self.ip_number
 
 class department(models.Model):
-    id=models.CharField("IP No.:",max_length=200,default="TEGA-IP-Q-"+car_no(),primary_key=True)
+    id=models.CharField("IP No.:",max_length=200,default="BCL-IP-Q-"+car_no(),primary_key=True)
     name=models.TextField("DeptName:")
     faculty=models.TextField("Faculty:")
 
@@ -161,7 +162,7 @@ class department(models.Model):
         return self.id
 
 class student(models.Model):
-    id=models.CharField("ID.:",max_length=200,default="TEGA-IP-Q-"+car_no(),primary_key=True)
+    id=models.CharField("ID.:",max_length=200,default="BCL-IP-Q-"+car_no(),primary_key=True)
     name=models.TextField("Name:")
     departments=models.ForeignKey(department,on_delete=models.CASCADE,verbose_name='dept:')
 
@@ -178,7 +179,7 @@ class InterestedParties(models.Model):
         return self.IP_name
 
 class mod9001_regulatoryReq(models.Model):
-    regulatory_number=models.CharField("IP No.:",max_length=200,default="TEGA-IP-LRO-Q-"+car_no(),primary_key=True)
+    regulatory_number=models.CharField("IP No.:",max_length=200,default="BCL-IP-LRO-Q-"+car_no(),primary_key=True)
     registered=models.DateField("Date of registration:")
     analyst= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Lead Analyst:')
     cat_name=models.ForeignKey(RequirementCategory, on_delete=models.CASCADE,verbose_name='Requirement Category ID:',related_name='RequirementCategory')
@@ -190,14 +191,14 @@ class mod9001_regulatoryReq(models.Model):
     interestedparty=models.ForeignKey("interestedparty", verbose_name="Interested Party", on_delete=models.CASCADE, null=True)
    
     otherInterestedParty=models.TextField("Other interested party:",null=True,blank=True)
-    entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='regulatoryreq_entered_by',on_delete=models.SET_NULL)
+    entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='regulatoryreq_entered_by',on_delete=models.CASCADE)
     date_today=models.DateField("Date created:",default=datetime.now)
     due=models.DateField("When:", null=True)
     responsibility= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Responsibility:',related_name='regulatoryresponsibility')
-    status=models.ForeignKey(approval_status, on_delete=models.SET_NULL,null=True,verbose_name='Status:')
+    status=models.ForeignKey(approval_status, on_delete=models.CASCADE,null=True,verbose_name='Status:')
     rejected=models.TextField("Reason for rejecting:",null=True,blank=True, help_text='If rejected, please give a reason')
     approval_date=models.DateField("Date Approved:",null=True,blank=True)
-    approved_by=models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='reqApprov_by',on_delete=models.SET_NULL)
+    approved_by=models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='reqApprov_by',on_delete=models.CASCADE)
 
 
 class contextdetails(models.Model):
@@ -247,7 +248,7 @@ class riskdesc(models.Model):
 
 
 class mod9001_risks(models.Model):
-    risk_number=models.CharField("RISK No.:",max_length=200,default="TEGA-RA-"+car_no(),primary_key=True)
+    risk_number=models.CharField("RISK No.:",max_length=200,default="BCL-RA-"+car_no(),primary_key=True)
     risk_date=models.DateField("Date of analysis:")
     assessor= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Lead Assessor:',related_name='issuenumber')
     issue_number= models.ForeignKey(mod9001_issues,on_delete=models.CASCADE,verbose_name='Issue number:',null=True,blank=True)
@@ -279,16 +280,16 @@ class mod9001_risks(models.Model):
     
     evidence=models.TextField("Evidence of documented information:",null=True,blank=True)
     document = models.FileField("Please upload evidence",upload_to ='uploads/',null=True,blank=True)
-    entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='risk_entered_by',on_delete=models.SET_NULL)
+    entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='risk_entered_by',on_delete=models.CASCADE)
     date_today=models.DateField("Date created:",default=datetime.now)
     due=models.DateField("When:",null=True,blank=True)
     responsibility= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Responsibility:',related_name='riskresponsibility',null=True,blank=True)
-    status=models.ForeignKey(approval_status, on_delete=models.SET_NULL,verbose_name='Status:',null=True,blank=True)
+    status=models.ForeignKey(approval_status, on_delete=models.CASCADE,verbose_name='Status:',null=True,blank=True)
     rejected=models.TextField("Reason for rejecting:",null=True,blank=True, help_text='If rejected, please give a reason')
     approval_date=models.DateField("Date Approved:",null=True,blank=True)
-    approved_by=models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='risk_OPPApprov_by',on_delete=models.SET_NULL)
+    approved_by=models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='risk_OPPApprov_by',on_delete=models.CASCADE)
     record_type=models.TextField("Record Type:",null=True,blank=True, help_text='Specifies whether the record is risk or opprotunity entry')
-    verification=models.ForeignKey(RISK_OPPverification, on_delete=models.SET_NULL,verbose_name='Verification:',null=True,blank=True)
+    verification=models.ForeignKey(RISK_OPPverification, on_delete=models.CASCADE,verbose_name='Verification:',null=True,blank=True)
 
     verification_status=models.CharField(max_length=200, null=True,blank=True)
     verification_failed=models.TextField("Reason for rejecting:",null=True,blank=True, help_text='If rejected, please give a reason')

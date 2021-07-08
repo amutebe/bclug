@@ -34,14 +34,14 @@
                     <ul>
                         <li><a data-icon="&#xF12D;" >Risks Assessment</a>
                             <ul>
-                                <li><a data-icon="&#xF14B;" href="{% url 'risks'%}">Create</a></li>
+                                <li><a data-icon="&#xF14B;" href="{% url 'issues_pending_risk_assesment'%}">Create</a></li>
                                 <li><a data-icon="&#xF00C;" href="{% url 'risk_pending'%}">Approve</a></li>
                                 <li><a data-icon="&#xF12E;" href="{% url 'risks_due'%}">Verification</a></li>
                             </ul>
                         </li>
                         <li><a data-icon="&#xF14E;" >Opp. Assessment</a>
                             <ul>
-                                <li><a data-icon="&#xF14B;" href="{% url 'opportunity'%}">Create</a></li>
+                                <li><a data-icon="&#xF14B;" href="{% url 'issues_pending_opp_assesment'%}">Create</a></li>
                                 <li><a data-icon="&#xF00C;" href="{% url 'opp_pending'%}">Approve</a></li>
                                 <li><a data-icon="&#xF12E;" href="{% url 'opp_due'%}">Verification</a></li>
                             </ul>
@@ -67,7 +67,7 @@
                         <li><a data-icon="&#xF016;" >Incident</a>
                             <ul>
                                 <li><a data-icon="&#xf0c5" href="{% url 'incidentRegister'%}">Log</a></li>
-                                <li><a data-icon="&#xf029" href="{% url 'incidentRegisterStaff'%}">Analysis</a></li>
+                                <li><a data-icon="&#xf029" href="{% url 'incidents_pending_analysis'%}">Analysis</a></li>
                                 <li><a data-icon="&#xF12E;" href="{% url 'incidentregister_due'%}">Verify</a></li>
                             </ul>
                         </li>
@@ -81,7 +81,7 @@
                         <li><a data-icon="&#xf0a5" >Corrective Action</a>
                             <ul>
                                 <li><a data-icon="&#xF017;" href="{% url 'correctiveaction'%}">Request</a></li>
-                                <li><a data-icon="&#xF016;" href="{% url 'planning'%}">Planning</a></li>
+                                <li><a data-icon="&#xF016;" href="{% url 'correctiveaction_pending_planning'%}">Planning</a></li>
                                 <li><a data-icon="&#xF00C;" href="{% url 'planning_pending'%}">Approve</a></li>
                                 <li><a data-icon="&#xF12E;" href="{% url 'planning_due'%}">Verify</a></li>
                             </ul>

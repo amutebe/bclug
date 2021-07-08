@@ -20,6 +20,7 @@ from django.urls import reverse_lazy
 import os
 import csv
 from .filters import *
+from accounts.models import Company
  
 
 
@@ -28,27 +29,34 @@ from .filters import *
 
 # Create your views here.
 ##FUNCTIONS TO GENERATE IDs###########
+def get_companyCode():
+    company_code=Company.objects.all().order_by('company_code')[0:1]
+    for i in company_code:
+        if i.company_code is not None:
+            return str(i.company_code)
+get_companyCode()
+
 def IP_no():
-   return str("TEGA-IP-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
+   return str(get_companyCode()+"-IP-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
 
 def Issue_no():
-    return str("TEGA-CT-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
+    return str(get_companyCode()+"-CT-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
 
 def Regulatory_no():
-    return str("TEGA-IP-LRO-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
+    return str(get_companyCode()+"-IP-LRO-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
 
 def Risk_no():
-    return str("TEGA-RA-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
+    return str(get_companyCode()+"-RA-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
 
 def opportunity_no():
-    return str("TEGA-OPP-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
+    return str(get_companyCode()+"-OPP-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
 
 
 
 
 
 
-###########################opst back views#############################################
+###########################post back views#############################################
 
 
 
@@ -212,7 +220,6 @@ def issues_pending(request):
     return render(request,'issues_pending.html',context)
 
 
-
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['TopManager'])
 def approve_issue(request,pk_test):
@@ -228,7 +235,7 @@ def approve_issue(request,pk_test):
             request.POST['approved_by']=request.user
             request.POST['approval_date']=date.today()
             form=ApproveIssue(request.POST, instance=pending_issue)
-            print("TESTING FORM",request.POST)
+            #print("TESTING FORM",request.POST)
             if form.is_valid():
                 form.save()
                 return redirect('/issues_pending/')
@@ -545,11 +552,18 @@ def load_issue_description(request):
     messages.success(request, 'Form submission successful')
 
 
+@login_required(login_url='login')
+def issues_pending_risk_assesment(request):
+    pendingcar=mod9001_issues.objects.filter(status='1').filter(risk_assessment_flag='No') #get all issues that have been approved and pending risk assessment    
+    context={'pendingcar':pendingcar} 
+    return render(request,'issues_pending_risk_assessment.html',context)
+
+
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['ManagementRepresentative'])
-def risks(request):
-    form=risk(initial={'risk_number': Risk_no()})
+def risks(request,issue_number):
+    form=risk(initial={'risk_number': Risk_no(),'issue_number':issue_number})
     
     
     if request.method=="POST":
@@ -593,6 +607,57 @@ def risks(request):
         
     context={'form':form}
     return render(request,'risks.html',context)
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['ManagementRepresentative'])
+def risk_assessed(request):
+    form = risk()
+
+    
+    
+    if request.method=="POST":
+        request.POST=request.POST.copy()
+        request.POST['entered_by'] = request.user
+        request.POST['date_today']=date.today()
+        request.POST['status'] = 5 #flaging status as pending risk
+        request.POST['record_type'] = "RISK" #specifiing type of entry
+        if request.POST['contextdetails']=="1":
+
+            request.POST['ip_number']="" #set ip_number to missing
+
+            
+        else:
+            request.POST['ip_number']=request.POST['issue_number'] #save ip number 
+            request.POST['issue_number']="" #set issue number to missing, remember ip and issue number are selected by same dropdown combo
+
+
+           
+        form = risk(request.POST)
+        
+         
+            
+        
+        if form.is_valid():
+           
+            
+            form.save()
+            return redirect('/issues_pending_risk_assesment/')
+
+           
+            #return redirect('/')
+            
+            
+        form=risk(request.POST)
+        context={'form':form}
+        
+        return render(request,'risks.html',context)
+           
+        
+    context={'form':form}
+    return render(request,'risks.html',context)
+
+
+
 @login_required(login_url='login')
 def risks_report(request):
 
@@ -633,11 +698,22 @@ def risks_report(request):
 
 
  ###############   OPPORTUNITY     ###############
+@login_required(login_url='login')
+def issues_pending_opp_assesment(request):
+    pendingcar=mod9001_issues.objects.filter(status='1').filter(risk_assessment_flag='No') #get all issues that have been approved and pending risk assessment    
+    context={'pendingcar':pendingcar} 
+    return render(request,'issues_pending_opp_assessment.html',context)
+
+
+
+
+
+
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['ManagementRepresentative'])
-def opportunity(request):
-    form=risk(initial={'risk_number': opportunity_no()})
+def opportunity(request,issue_number):
+    form=risk(initial={'risk_number': opportunity_no(),'issue_number':issue_number})
     
     
     if request.method=="POST":
@@ -682,6 +758,54 @@ def opportunity(request):
         
     context={'form':form}
     return render(request,'opportunity.html',context)
+
+
+def opportunity_assessed(request):
+    form=risk()
+    
+    
+    if request.method=="POST":
+        request.POST=request.POST.copy()
+        request.POST['entered_by'] = request.user
+        request.POST['status'] = 5 #flaging status as pending OPP 
+        request.POST['record_type'] = "OPP" #specifiing type of entry
+        request.POST['riskrank'] = request.POST['opprank'] #specifiing type of entry
+
+
+        request.POST['date_today']=date.today()
+
+        if request.POST['contextdetails']=="1":
+
+            request.POST['ip_number']="" #set ip_number to missing
+
+            
+        else:
+            request.POST['ip_number']=request.POST['issue_number'] #save ip number 
+            request.POST['issue_number']="" #set issue number to missing, remember ip and issue number are selected by same dropdown combo
+
+
+           
+        form = risk(request.POST)
+         
+            
+        
+        if form.is_valid():
+            
+            form.save()
+            #return redirect('/')
+            return redirect('/issues_pending_opp_assesment/')
+            
+            
+        form=risk(request.POST)
+        context={'form':form}
+        
+        return render(request,'opportunity.html',context)
+           
+        
+    context={'form':form}
+    return render(request,'opportunity.html',context)   
+
+
 @login_required(login_url='login')
 def opportunity_report(request):
 

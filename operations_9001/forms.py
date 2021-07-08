@@ -144,7 +144,7 @@ class incident_Register(ModelForm):
   
     class Meta:
         model = mod9001_incidentregister 
-        exclude = ['entered_by','date_today']
+        exclude = ['entered_by','date_today','analysis_flag']
         widgets={'date':DateInput(),'time':TimeInput(),'other':forms.Textarea(attrs={'rows': 2, 'cols': 40})}
 
 class customer_Register(ModelForm):
@@ -220,7 +220,7 @@ class corrective_action(ModelForm):
     
     class Meta:
         model = mod9001_correctiveaction 
-        exclude = ['entered_by','date_today']
+        exclude = ['entered_by','date_today','car_flag']
         widgets = {
 
             'date': DateInput(),'reference':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'addesc':forms.Textarea(attrs={'rows': 2, 'cols': 40})

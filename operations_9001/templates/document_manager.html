@@ -18,7 +18,7 @@ form {
                      {% csrf_token %}
           <h4 class="mb-3">Document Manager:</h4>
 <p class="round2">   
-
+ <div class="card-header">  
 <table border="0">  
 {%if form.errors %}  
  <div class="alert alert-danger"> Make sure file size is not more than 10MB </div>
@@ -30,7 +30,7 @@ form {
 <br>
 <p class="round2"> 
 <div class="card card-body">
-					<table class="form-group">
+					<table class="form-group">c
 					<tr> 
 
 <td ><a class="btn  btn-warning" href="{% url 'home'%}"> Cancel </a></td>
@@ -39,7 +39,7 @@ form {
 					</tr>
           </table>
 </div>
-
+</div>
 
 </form>
 <!-- print message for successfull upload

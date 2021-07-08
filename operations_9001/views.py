@@ -21,6 +21,7 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse, Http404
 from accounts.utils import *
+from issues_9001.views import get_companyCode
 
 # Create your views here.
 
@@ -29,33 +30,33 @@ from accounts.utils import *
 
 
 def QMS_no():
-   return str("TEGA-QP-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
+   return str(get_companyCode()+"-QP-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
 
 
 def Train_no():
-   return str("TEGA-TR-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
+   return str(get_companyCode()+"-TR-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
 
 def plan_no():
-   return str("TEGA-TP-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
+   return str(get_companyCode()+"-TP-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
 
 def incident_no():
-   return str("TEGA-INC-IS-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
+   return str(get_companyCode()+"-INC-IS-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
 
 
 def customer_no():
    return str("CST-MM-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
 
 def emp_perfrev_no():
-   return str("TEGA-EA-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
+   return str(get_companyCode()+"-EA-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
 
 def document_no():
-   return str("TEGA-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
+   return str(get_companyCode()+"-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
 
 def comp_no():
-   return str("TEGA-COMP-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
+   return str(get_companyCode()+"-COMP-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
 
 def satis_survey_no():
-   return str("TEGA-CS-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
+   return str(get_companyCode()+"-CS-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
 
 
 ####################################################################################
@@ -862,10 +863,20 @@ def customerRegister(request):
     return render(request,'customeRegister.html',context)
 
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['IncidentManager'])
-def incidentRegisterStaff(request):
+def incidents_pending_analysis(request):
 
-    form=incident_RegisterStaff()
+    products=mod9001_incidentregister.objects.filter(analysis_flag='No')
+    return render(request,'incidents_pending_analysis.html',{'products':products})
+
+
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['IncidentManager'])
+def incidentRegisterStaff(request,incident_id):
+
+    form=incident_RegisterStaff(initial={'incident_number':incident_id})
+    #form=risk(initial={'risk_number': Risk_no(),'issue_number':issue_number})
               
                             
     if request.method=="POST":
@@ -891,6 +902,40 @@ def incidentRegisterStaff(request):
         
     context={'form':form}
     return render(request,'incidentRegisterStaff.html',context)
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['IncidentManager'])
+def incidentStaff(request):
+
+    form=incident_RegisterStaff()
+    #form=risk(initial={'risk_number': Risk_no(),'issue_number':issue_number})
+              
+                            
+    if request.method=="POST":
+        request.POST=request.POST.copy()
+        request.POST['entered_by'] = request.user
+        request.POST['date_today']=date.today()
+        request.POST['status'] = 1
+        #request.POST['status'] = 5
+        
+        form=incident_RegisterStaff(request.POST)
+                        
+        if form.is_valid():
+
+                
+            form.save()
+            #form=incident_RegisterStaff()
+            #context={'form':form}
+            return redirect('/incidents_pending_analysis/')
+
+            
+            
+          
+        
+    context={'form':form}
+    return render(request,'incidentRegisterStaff.html',context)
+
+
 
 @login_required(login_url='login')
 def incidentregister_due(request):
@@ -955,6 +1000,14 @@ def Verify_incidentregister(request,pk_test):
 
 
     return render(request,'incidentregister_verify.html',context)
+
+
+
+
+
+
+
+
 
 
 @login_required(login_url='login')
@@ -1166,7 +1219,7 @@ def providerassesment_7daysToExpiryview(request,pk_test):
     return render(request,'providerassesment_view_7_days_To_expiry.html',{'products':products})
 
 def car_no():
-   return str("TEGA-CAR-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
+   return str(get_companyCode()+"-CAR-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
 
 #########################CORRECTIVE ACTION##################################
 @login_required(login_url='login')
@@ -1195,6 +1248,22 @@ def correctiveaction(request):
             
     context={'form':form}
     return render(request,'correctiveaction.html',context)
+
+
+@login_required(login_url='login')
+def correctiveaction_pending_planning(request):
+    pendingcar=mod9001_correctiveaction.objects.filter(car_flag='No') #get all planning  pending approval    
+    #pendingcar=mod9001_correctiveaction.objects.all()#get all from corrective action table   
+ 
+    
+    context={'pendingcar':pendingcar} 
+    return render(request,'correctiveaction_pending_planning.html',context)
+
+
+
+
+
+
 
 @login_required(login_url='login')
 def correctiveaction_report(request):
@@ -1252,7 +1321,35 @@ def correctiveactionRequest_report(request):
 
             
 @login_required(login_url='login')
-def planning(request):
+def planning(request, car_no):
+              
+    form=mod9001planning(initial={'car_no':car_no})
+                          
+    if request.method=="POST":
+
+        request.POST=request.POST.copy()
+        request.POST['entered_by'] = request.user
+        request.POST['date_today']=date.today()
+        request.POST['status'] = 5
+        
+        form=mod9001planning(request.POST)
+                        
+        if form.is_valid():
+
+                
+            form.save()
+            #form=mod9001planning()
+            #context={'form':form}
+            #return render(request,'planning.html',context)
+            return redirect('/correctiveaction_pending_planning/')
+            
+            
+    context={'form':form}
+    return render(request,'planning.html',context)
+
+
+@login_required(login_url='login')
+def planning_save(request):
               
     form=mod9001planning()
                           
@@ -1269,13 +1366,17 @@ def planning(request):
 
                 
             form.save()
-            form=mod9001planning()
-            context={'form':form}
-            return render(request,'planning.html',context)
+            #form=mod9001planning()
+            #context={'form':form}
+            #return render(request,'planning.html',context)
+            return redirect('/correctiveaction_pending_planning/')
             
             
     context={'form':form}
     return render(request,'planning.html',context)
+
+
+
 
 #######################APPROVE PLANNING###################################################
 
@@ -1389,7 +1490,7 @@ def verify_planning(request,pk_test):
           
 ###########################CHANGE REQUEST###########################################       
 def req_no():
-   return str("Comp-RFC-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
+   return str(get_companyCode()+"-RFC-Q-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
 
 
 

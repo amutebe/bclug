@@ -103,7 +103,7 @@ class Employee_titles(models.Model):
 
 
 class employees(models.Model):
-    employeeID=models.CharField("Employee ID",max_length=10,primary_key=True,default="TEGA"+str(randint(0, 999)))
+    employeeID=models.CharField("Employee ID",max_length=10,primary_key=True,default="BCL"+str(randint(0, 999)))
     title=models.ForeignKey(Employee_titles, on_delete=models.CASCADE,verbose_name='Title:',related_name='title',null=True,blank=True)
     registered=models.DateField("Reg. Date:")
     firstName=models.TextField("First Name",null=False,blank=True)
@@ -125,7 +125,7 @@ class employees(models.Model):
 ######Corrective Action Request###################
 class car(models.Model):
     verification_status=(('Closed','Close'),('Rejected','Reject'))
-    car_number=models.CharField("Corrective action no.:",max_length=200,default="TEGA"+car_no(),primary_key=True)
+    car_number=models.CharField("Corrective action no.:",max_length=200,default="BCL"+car_no(),primary_key=True)
     car_dateoccur=models.DateField("Date of Occurence:",error_messages ={"unique":"The Geeks Field you enetered is not unique."})
     car_time=models.TimeField("Time:",default=datetime.now)
     car_dept=models.ForeignKey(Department, on_delete=models.CASCADE,verbose_name='Affected Department ID:',related_name='Department')
@@ -179,8 +179,11 @@ class car(models.Model):
 #create a product model
 class Customer(models.Model):
     name=models.CharField(max_length=200,null=True)
+    contact_person=models.CharField("Contact Person",max_length=200,null=True)
+    job_title=models.CharField("Contact Person Title",max_length=200,null=True)
     phone=models.CharField(max_length=200,null=True)
     email=models.CharField(max_length=200,null=True)
+    address=models.TextField("Company address:",null=True,blank=True)
     date_created=models.DateTimeField(auto_now_add=True,null=True)
 
     def __str__(self):

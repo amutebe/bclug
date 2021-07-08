@@ -41,19 +41,23 @@ path('ajax/load_process/', views.load_process, name='ajax_load_process'),
 
 
 path('customerRegister/', views.customerRegister, name='customerRegister'),
-path('incidentRegisterStaff/', views.incidentRegisterStaff, name='incidentRegisterStaff'),
+path('incidentRegisterStaff/<str:incident_id>/', views.incidentRegisterStaff, name='incidentRegisterStaff'),
+path('incidentStaff/', views.incidentStaff, name='incidentStaff'),
 path('Verify_incidentregister/<str:pk_test>/',views.Verify_incidentregister,name="Verify_incidentregister"),
 path('incidentregister_due/',views.incidentregister_due,name="incidentregister_due"),
 path('incidentregister_7daysToExpiryview/<str:pk_test>/',views.incidentregister_7daysToExpiryview,name="incidentregister_7daysToExpiryview"),
+path('incidents_pending_analysis/',views.incidents_pending_analysis,name="incidents_pending_analysis"),
 
 
 path('correctiveaction/', views.correctiveaction, name='correctiveaction'),
+path('correctiveaction_pending_planning/', views.correctiveaction_pending_planning, name='correctiveaction_pending_planning'),
 path('correctiveaction_report/', views.correctiveaction_report, name='correctiveaction_report'),
 path('correctiveactionRequest_report/', views.correctiveactionRequest_report, name='correctiveactionRequest_report'),
 
 
 
-path('planning/', views.planning, name='planning'),
+path('planning/<str:car_no>/', views.planning, name='planning'),
+path('planning_save/', views.planning_save, name='planning_save'),
 path('planning_pending/', views.planning_pending, name='planning_pending'),
 path('approve_planning/<str:pk_test>/',views.approve_planning,name="approve_planning"),
 path('planning_due/',views.planning_due,name="planning_due"), 
@@ -96,7 +100,9 @@ path('Verify_customersatisfaction/<str:pk_test>/',views.Verify_customersatisfact
 path('customersatisfaction_due/',views.customersatisfaction_due,name="customersatisfaction_due"),
 path('customersatisfaction_7daysToExpiryview/<str:pk_test>/',views.customersatisfaction_7daysToExpiryview,name="customersatisfaction_7daysToExpiryview"),
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+#else:
+#    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

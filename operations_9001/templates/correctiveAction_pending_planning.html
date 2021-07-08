@@ -1,0 +1,57 @@
+{% extends "accounts/base.html" %} 
+
+{% block content %}
+<br>
+<div class="col-md-28">
+		
+		<div class="">
+			
+			<table class="table table-sm">
+				<tr class="table-info">
+					<th>CAR ID</th>
+					<th>Date</th>
+					<th>Process</th>
+					<th>Finding</th>
+					<th>Source</th>
+				
+					<th>Element</th>
+					<th>Reference</th>
+				
+					<th>Add.Desc.</th>
+					<th>RequestTo</th>
+				
+<th></th>
+				</tr>
+				
+				{% for i in pendingcar %}
+				
+					<tr>
+					<td>{{i.car_no}}</td>
+					<td>{{i.date}}</td>
+					<td>{{i.process}}</td>
+		
+					<td>{{i.get_finding_display}}</td>
+					<td>{{i.car_source}}</td>
+					<td>{{i.element}}</td>
+					<td>{{i.reference}}</td>
+					
+					<td>{{i.addesc}}</td>
+					<td>{{i.requesto}}</td>
+
+					
+					
+					
+					<td><a class="btn btn-sm btn-info" href="{%url 'planning' i.car_no %}">Action</a></td>
+
+					</tr>
+
+				{%endfor%}
+		
+			</table>
+		</div>
+	</div>
+
+</div>
+
+
+{% endblock %} 
