@@ -621,6 +621,7 @@ def risk_assessed(request):
         request.POST['date_today']=date.today()
         request.POST['status'] = 5 #flaging status as pending risk
         request.POST['record_type'] = "RISK" #specifiing type of entry
+        request.POST['contextdetails']="1"
         if request.POST['contextdetails']=="1":
 
             request.POST['ip_number']="" #set ip_number to missing
@@ -770,6 +771,7 @@ def opportunity_assessed(request):
         request.POST['status'] = 5 #flaging status as pending OPP 
         request.POST['record_type'] = "OPP" #specifiing type of entry
         request.POST['riskrank'] = request.POST['opprank'] #specifiing type of entry
+        request.POST['contextdetails']="1"
 
 
         request.POST['date_today']=date.today()

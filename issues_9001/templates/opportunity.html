@@ -8,7 +8,7 @@ form {
   margin: 0 auto;
 }
 </style>
- <div class="col-md-8 order-md-1">
+ <div class="col-md-9 order-md-1">
           <h4 class="mb-3">Opportunities</h4>
 <p class="round2"> 
 
@@ -52,9 +52,8 @@ form {
     
 
 <div class="col" id="context">
-      <label for="context"><h6>Context:</h6> </label>  <br>
-{{form.contextdetails}} 
- <font color="red">{{form.errors.contextdetails}}</font>
+      <label for="context"><h6>Context ID:</h6> </label>  <br>
+ {{form.issue_number}}<font color="red">{{ form.errors.issue_number }}</font>
 </div>    
  <!--
 <label for="contextdescription"></label>
@@ -68,7 +67,7 @@ form {
   
 <br>
 <div class="row">
-<div class="col">
+<div class="col"><!--
  <label for="usr">Context ID:</label><br>
  {{form.issue_number}}<font color="red">{{ form.errors.issue_number }}</font>
 </div>
@@ -76,7 +75,7 @@ form {
 <div class="col" id="divissues_register">
 <table class="form-group">
 					<tr> 
-<!--<td align="right"><a class="btn  btn-light" href="{% url 'issues_report'%}"><font color="green">---Details--- </font></a></td>-->
+<td align="right"><a class="btn  btn-light" href="{% url 'issues_report'%}"><font color="green">---Details--- </font></a></td>
 	
           
  </tr>
@@ -96,7 +95,8 @@ form {
 
 </div>
 </div>
-<br>
+-->
+
 
 <div class="form-group" id="internal">
     
