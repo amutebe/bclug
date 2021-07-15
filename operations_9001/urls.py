@@ -91,11 +91,15 @@ path('Verify_providerassessments/<str:pk_test>/',views.Verify_providerassessment
 path('providerassessments_due/',views.providerassessments_due,name="providerassessments_due"),
 path('providerassesment_7daysToExpiryview/<str:pk_test>/',views.providerassesment_7daysToExpiryview,name="providerassesment_7daysToExpiryview"),
 
+path('customersatisfaction_survey/<str:customer_name>/', views.customersatisfaction_survey, name='customersatisfaction_survey'),#for customers outside without login accounts
+path('customersatisfaction_survey_email/', views.customersatisfaction_survey_email, name='customersatisfaction_survey_email'),#for customers outside without login accounts
+path('customersatisfaction_surveyed/', views.customersatisfaction_surveyed, name='customersatisfaction_surveyed'),#for customers outside without login accounts
 path('customersatisfaction/', views.customersatisfaction, name='customersatisfaction'),
+path('customersatisfaction_pending_improvement_plan/', views.customersatisfaction_pending_improvement_plan, name='customersatisfaction_pending_improvement_plan'),
+
+path('customersatisfaction_pending/<str:pk_test>/', views.customersatisfaction_pending, name='customersatisfaction_pending'),#for customers outside without login accounts
+
 path('customersatisfaction_report/', views.customersatisfaction_report, name='customersatisfaction_report'),
-
-
-
 path('Verify_customersatisfaction/<str:pk_test>/',views.Verify_customersatisfaction,name="Verify_customersatisfaction"),
 path('customersatisfaction_due/',views.customersatisfaction_due,name="customersatisfaction_due"),
 path('customersatisfaction_7daysToExpiryview/<str:pk_test>/',views.customersatisfaction_7daysToExpiryview,name="customersatisfaction_7daysToExpiryview"),

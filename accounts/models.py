@@ -182,7 +182,7 @@ class Customer(models.Model):
     contact_person=models.CharField("Contact Person",max_length=200,null=True)
     job_title=models.CharField("Contact Person Title",max_length=200,null=True)
     phone=models.CharField(max_length=200,null=True)
-    email=models.CharField(max_length=200,null=True)
+    email=models.EmailField()
     address=models.TextField("Company address:",null=True,blank=True)
     date_created=models.DateTimeField(auto_now_add=True,null=True)
 

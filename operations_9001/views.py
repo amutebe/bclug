@@ -22,6 +22,7 @@ from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse, Http404
 from accounts.utils import *
 from issues_9001.views import get_companyCode
+from accounts.models import Customer
 
 # Create your views here.
 
@@ -1788,7 +1789,165 @@ def customercomplaint_7daysToExpiryview(request,pk_test):
     products=mod9001_customerComplaint.objects.filter(comp_no=pk_test)
     return render(request,'customercomplaint_view_7_days_To_expiry.html',{'products':products})
 
-##########################CUSTOMER SATISFACTION########################################
+##########################  CUSTOMER SATISFACTION   ########################################
+
+#####LOADS SURVEY FOR CUSTOMERS WITHOUT LOGGING IN
+def customersatisfaction_survey_email(request):
+    form=customersatisfaction_email() 
+                          
+    if request.method=="POST":
+        request.POST=request.POST.copy()
+        if request.POST['email'] is not None:
+            customerByName = Customer.objects.filter(email=request.POST['email'])
+            flag=False
+            for name in customerByName:
+                customer=name.id
+                flag=True
+                print("CUSTOMER NAME",customer)
+            if flag:
+                return redirect('customersatisfaction_survey',customer_name=customer)
+                    
+                       
+            else:
+                errormsg='Invalid email'
+                context={'form':form,'errors':errormsg}
+                return render(request,'customersatisfaction_survey_email.html',context)
+      
+        
+    context={'form':form}
+    return render(request,'customersatisfaction_survey_email.html',context)
+
+
+def customersatisfaction_survey(request,customer_name):
+    
+    form=customer_satisfaction_survey(initial={'satis_no': satis_survey_no(),'organisation':customer_name})
+    
+              
+                            
+    if request.method=="POST":
+        request.POST=request.POST.copy()
+        request.POST['entered_by']=request.user
+        request.POST['date_today']=date.today()
+        request.POST['status'] = 1
+#        #print("TEXT",request.POST)
+##########################GET RANK DESCRIPTION FROM RATING SUBSTRING#####################################
+        if "Poor" in request.POST['rank']:
+            request.POST['rankdesc_survey'] = "Poor"
+        elif "Improvement" in request.POST['rank']:
+            request.POST['rankdesc_survey'] = "Improvement"
+     
+        elif "Satisfactory" in request.POST['rank']:
+            request.POST['rankdesc_survey'] = "Satisfactory"
+        
+        elif "Good" in request.POST['rank']:
+            request.POST['rankdesc_survey'] = "Good"
+        
+        elif "Excellent" in request.POST['rank']:
+            request.POST['rankdesc_survey'] = "Excellent"
+        
+        else:
+            pass
+####################END#######################################
+
+        
+        form=customer_satisfaction_survey(request.POST)
+                        
+        if form.is_valid():
+
+                
+            form.save()
+            #form=customer_satisfaction()
+            #context={'form':form}
+            return redirect('/')
+
+            
+            
+          
+        
+    context={'form':form,'providers':providers}
+    return render(request,'customersatisfaction_survey.html',context)
+
+def customersatisfaction_surveyed(request):
+    form=customer_satisfaction_survey(initial={'satis_no': satis_survey_no()})
+    
+              
+                            
+    if request.method=="POST":
+        request.POST=request.POST.copy()
+        request.POST['entered_by']=request.user
+        request.POST['date_today']=date.today()
+        request.POST['status'] = 1
+#        #print("TEXT",request.POST)
+##########################GET RANK DESCRIPTION FROM RATING SUBSTRING#####################################
+        if "Poor" in request.POST['rank']:
+            request.POST['rankdesc_survey'] = "Poor"
+        elif "Improvement" in request.POST['rank']:
+            request.POST['rankdesc_survey'] = "Improvement"
+     
+        elif "Satisfactory" in request.POST['rank']:
+            request.POST['rankdesc_survey'] = "Satisfactory"
+        
+        elif "Good" in request.POST['rank']:
+            request.POST['rankdesc_survey'] = "Good"
+        
+        elif "Excellent" in request.POST['rank']:
+            request.POST['rankdesc_survey'] = "Excellent"
+        
+        else:
+            pass
+####################END#######################################
+
+        
+        form=customer_satisfaction_survey(request.POST)
+                        
+        if form.is_valid():
+
+                
+            form.save()
+            #form=customer_satisfaction()
+            #context={'form':form}
+            return redirect('/')
+
+            
+            
+          
+        
+    context={'form':form,'providers':providers}
+    return render(request,'customersatisfaction_survey.html',context)
+
+@allowed_users(allowed_roles=['RelationsManager'])
+@login_required(login_url='login')
+def customersatisfaction_pending_improvement_plan(request):
+    pendingcar=mod9001_customerSatisfaction.objects.filter(improvplan='') #get all customer surveys missing improvement plan    
+    context={'pendingcar':pendingcar} 
+    return render(request,'customersatisfaction_pending_improvement_plan.html',context)
+
+def customersatisfaction_pending(request,pk_test):
+    pending_customersatisfaction=mod9001_customerSatisfaction.objects.get(satis_no=pk_test)
+    #print("printing satisfaction",pending_customersatisfaction)
+    form=customer_satisfaction(instance=pending_customersatisfaction)
+
+    if request.method=="POST":
+
+            
+            
+            request.POST=request.POST.copy()
+            request.POST['entered_by']=request.user
+            request.POST['date_today']=date.today()
+            request.POST['status'] = 1                    
+
+            form=customer_satisfaction(request.POST, instance=pending_customersatisfaction)
+            if form.is_valid():
+                form.save()
+                return redirect('/customersatisfaction_pending_improvement_plan/')
+
+    context={'form':form}  
+
+
+    return render(request,'customersatisfaction_completed.html',context)
+
+
+
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['RelationsManager'])

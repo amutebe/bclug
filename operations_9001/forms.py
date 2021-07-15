@@ -1,6 +1,7 @@
 from django.forms import ModelForm,TextInput,NumberInput,RadioSelect
 
 from .models import *
+from accounts.models import Customer
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
@@ -305,7 +306,44 @@ class Verifycustomer_complaint(ModelForm):
         widgets={'completion':DateInput(),'scheduled':DateInput()}        
 
 
-class customer_satisfaction(ModelForm):
+
+
+class customersatisfaction_email(ModelForm):# to auntenticate customer byemail input before displaying the survet form
+    class Meta:
+        model = Customer
+        #fields = '__all__'
+        fields=['email']
+        #widgets={'email':emailInput()}        
+
+
+
+
+class customer_satisfaction_survey(ModelForm): #for customers outside company without login accounts
+
+     #cost = MultiSelectFormField(choices=mod9001_incidentregisterStaff.costs)
+      
+    class Meta:
+        model = mod9001_customerSatisfaction 
+        exclude = ['entered_by','date_today','verification','verification_status','verification_failed','qmsstatus','scheduled','completion','improvplan','details','due','assignedto']
+        #widgets={'improvplan':forms.HiddenInput,'details':forms.HiddenInput,'assignedto':forms.HiddenInput,'due':forms.HiddenInput,'end':DateInput(),'start':DateInput(),'status':forms.HiddenInput,'comment':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'due':DateInput(),'details':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'date':DateInput(),'responsetime':HorizontalRadioSelect(),'resolution':HorizontalRadioSelect(),'delivery':HorizontalRadioSelect(),'communication':HorizontalRadioSelect(),'compliant':HorizontalRadioSelect(),'quality':HorizontalRadioSelect(),'infosecurity':HorizontalRadioSelect(),'customerservice':HorizontalRadioSelect()}
+        widgets={'end':DateInput(),'start':DateInput(),'status':forms.HiddenInput,'comment':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'due':DateInput(),'details':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'date':DateInput(),'responsetime':HorizontalRadioSelect(),'resolution':HorizontalRadioSelect(),'delivery':HorizontalRadioSelect(),'communication':HorizontalRadioSelect(),'compliant':HorizontalRadioSelect(),'quality':HorizontalRadioSelect(),'infosecurity':HorizontalRadioSelect(),'customerservice':HorizontalRadioSelect()}
+    
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        start_date = cleaned_data.get("start")
+        end_date = cleaned_data.get("end")
+        if end_date is not None and start_date is not None:
+            if end_date < start_date:
+                raise forms.ValidationError("End date should be greater than start date.")
+        else:
+            raise forms.ValidationError("End date and Start date cannot be empty")
+        
+ 
+        
+
+
+class customer_satisfaction(ModelForm): # for company staff that require login accounts
 
      #cost = MultiSelectFormField(choices=mod9001_incidentregisterStaff.costs)
       
