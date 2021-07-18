@@ -1,0 +1,138 @@
+{%  extends 'accounts/base.html' %}
+
+{% block content %}
+  	
+		<div class="col-md-40">
+
+			<div class="col-md-40">
+            
+		
+				<div class="card card-body">
+ <h4 class="mb-3">Service Request:</h4>
+ <p class="round2"> 
+
+
+<form method="get">
+                     {% csrf_token %}
+                    
+<table  class="tableizer-table" align="left">                
+<thead><tr class="tableizer-firstrow">
+
+
+<th>Summary</th>
+<th>Start Date</th>
+<th>End Date</th>
+<th>Classification</th>
+<th>Request Mode</th>
+<th>IT service</th>
+<th>Priority</th>
+<th></th>
+</tr></thead>
+
+
+<tbody><tr>
+<td>{{myFilter.form.request_date}}</td>
+<td>{{myFilter.form.start}}</td>
+<td>{{myFilter.form.end}}</td>
+<td>{{myFilter.form.request_type}}</td>
+<td>{{myFilter.form.request_mode}}</td>
+<td>{{myFilter.form.IT_service}}</td>
+<td>{{myFilter.form.priority}}</td>
+<td><button class="btn btn-info btn-sm" type="submit">Search</button></td>
+</tr></tbody>
+</table>
+ </form>
+<form method="post">{% csrf_token %} 
+                    
+<table  class="tableizer-table" align="right">                
+<tbody><tr><td><button class="btn btn-success btn-sm" type="submit">Export to excel</button></td>
+</tr></tbody>
+</table>
+ </form>		
+		 
+		  
+				</div> 
+				</div>
+                </div>
+	
+                
+					<table class="tableizer-table">
+						<thead><tr class="tableizer-firstrow">
+<th>SR ID</th> 
+<th>Date</th> 
+<th>Time</th> 
+<th>Type</th>
+<th>Mode</th>
+<th>ITservice</th>
+<th>Details</th>
+<th>Priority</th>
+<th>PlanningDate</th>
+<th>Scope</th>
+<th>Category</th>
+<th>Resource</th>
+<th>Dependency</th>
+<th>PlanningDesc.</th>
+<th>Activities</th>
+<th>Criteria</th>
+<th>AssignedTO</th>
+<th>DateCompleted</th>
+<th>CompletedBy</th>
+<th>ReportNo.</th>
+<th>ComponentAffected</th>
+<th>Error</th>
+<th>Solution</th>
+<th>Remark</th>
+<th>Verification</th>
+<th>Rescheduled</th>
+<th>When</th>
+										
+				</tr></thead><tbody>
+				
+				{% for i in service_request %}
+				
+<td>{{i.service_number.service_number}}</td>
+<td>{{i.service_number.date}}</td>
+<td>{{i.service_number.time}}</td>
+<td>{{i.service_number.request_type}}</td>
+<td>{{i.service_number.request_mode}}</td>
+<td>{{i.service_number.IT_service}}</td>
+<td>{{i.service_number.other}}</td>
+<td>{{i.service_number.priority}}</td>
+<td>{{i.planning_date}}</td>
+<td>{{i.service_scope}}</td>
+<td>{{i.service_category}}</td>
+<td>{{i.get_resource_display}}</td>
+<td>{{i.get_dependency_display}}</td>
+<td>{{i.description}}</td>
+<td>{{i.activities}}</td>
+<td>{{i.get_criteria_display}}</td>
+<td>{{i.assigned}}</td>
+<td>{{i.completion_date}}</td>
+<td>{{i.completedby}}</td>
+<td>{{i.report_number}}</td>
+<td>{{i.component_affected}}</td>
+<td>{{i.error}}</td>
+<td>{{i.solution}}</td>
+<td>{{i.remark}}</td>
+<td>{{i.verification}}</td>
+<td>{{i.scheduled}}</td>
+<td>{{i.due}}</td>
+                   
+
+
+
+
+				
+					</tr>
+                    </tbody>
+
+				{%endfor%}
+						
+					</table>
+                  
+         
+			
+		
+		
+
+{% endblock content %}

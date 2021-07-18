@@ -169,7 +169,14 @@
                 </li>
                 <li><a data-icon="&#xF12E;" >Operations</a>
                     <ul>
-                        <li><a data-icon="&#xF036;" href="">Service Request</a></li>
+
+                        <li><a data-icon="&#xF016;" >Service Request</a>
+                            <ul>
+                                <li><a data-icon="&#xF0C5;" href="{% url 'services_request'%}">Log</a></li>
+                                <li><a data-icon="&#xF029;" href="{% url 'serviceRequest_pending_planning'%}">Analysis</a></li>
+                                <li><a data-icon="&#xF12E;" href="{% url 'serviceRequest_due'%}">Verify</a></li>
+                            </ul>
+
                         <li><a data-icon="&#xF023;" href="">Access Request</a></li>
                         <li><a data-icon="&#xF016;" href="">CMS</a></li>
                     </ul>
@@ -180,7 +187,7 @@
                         <li><a data-icon="&#xF0E3;" href="">Service Catalogue</a></li>
                         <li><a data-icon="&#xF0D0;" href="">Risk Register</a></li>
                         <li><a data-icon="&#xF0C9;" href="">Risk Treatment Plan</a></li>
-                        <li><a data-icon="&#xF036;" href="">Service Requests</a></li>
+                        <li><a data-icon="&#xF036;" href="{% url 'service_request_report'%}">Service Requests</a></li>
                         <li><a data-icon="&#xF09C;" href="#">Access requests</a></li>
                         <li><a data-icon="&#xF1C0;" href="">CMSDB</a></li>
                     </ul>

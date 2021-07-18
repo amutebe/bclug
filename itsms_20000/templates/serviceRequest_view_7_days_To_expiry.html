@@ -1,0 +1,78 @@
+{%  extends 'accounts/base.html' %}
+
+{% block content %}
+
+		<br>
+
+		<div class="row">
+			<div class="col-md">
+				
+				
+				<div class="card card-body">
+					<table class="table-bordered">
+						<tr>
+							
+					<th>SR ID</th> 
+<th>Date</th> 
+<th>Time</th> 
+<th>Type</th>
+<th>Mode</th>
+<th>ITservice</th>
+<th>Details</th>
+<th>Priority</th>
+<th>PlanningDate</th>
+<th>Scope</th>
+<th>Category</th>
+<th>Resource</th>
+<th>Dependency</th>
+<th>PlanningDesc.</th>
+<th>Activities</th>
+<th>AssignedTo</th>
+<th>When</th>
+					
+                            
+						
+						</tr>
+						{% for i in products %}
+						<tr>
+					<td>{{i.service_number}}</td>
+<td>{{ i.date}}</td>
+<td>{{i.time}}</td>
+<td>{{i.request_type}}</td>
+<td>{{i.request_mode}}</td>
+<td>{{i.IT_service}}</td>
+<td>{{i.other}}</td>
+<td>{{i.priority}}</td>
+<td>{{i.service_number.planning_date}}</td>
+<td>{{i.service_number.service_scope}}</td>
+<td>{{i.service_number.service_category}}</td>
+<td>{{i.service_number.get_resource_display}}</td>
+<td>{{i.service_number.get_dependency_display}}</td>
+<td>{{i.service_number.description}}</td>
+<td>{{i.service_number.activities}}</td>
+					<td>{{i.service_number.assigned}}</td>
+                    <td>{{i.service_number.due}}</td>
+        
+                       
+
+										
+                        
+						
+						</tr>
+                        
+
+
+						{% endfor %}
+					
+						
+					</table>
+				
+			</div>
+			<div class="text-right">
+                    <a href="{%url 'serviceRequest_due' %}"><h6><< Back</h6></a>
+                    </div>
+			
+		</div>
+		
+
+{% endblock content %}

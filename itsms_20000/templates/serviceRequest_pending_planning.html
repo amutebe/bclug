@@ -1,0 +1,56 @@
+{% extends "accounts/base.html" %} 
+
+{% block content %}
+
+<div class="col-md-16">
+		
+		<div class="card card-body">
+			
+			<table class="table table-sm">
+				<tr class="table-info">
+                <th>SR ID</th> 
+<th>Date</th> 
+<th>Time</th> 
+<th>Type</th>
+<th>Mode</th>
+<th>ITservice</th>
+<th>Details</th>
+<th>Priority</th>
+
+                       <th></th>
+                    <th></th>
+										
+				</tr></thead><tbody>
+				
+				{% for i in products %}
+				
+					<tr>
+					<td>{{i.service_number}}</td>
+<td>{{ i.date}}</td>
+<td>{{i.time}}</td>
+<td>{{i.request_type}}</td>
+<td>{{i.request_mode}}</td>
+<td>{{i.IT_service}}</td>
+<td>{{i.other}}</td>
+<td>{{i.priority}}</td>
+
+        <td></td>
+
+					
+				
+					<td><a class="btn btn-sm btn-info" href="{%url 'serviceRequestPlanning' i.service_number %}">Action</a></td>
+
+                       
+					</tr>
+
+				{%endfor%}
+		
+			</table>
+			
+		</div>
+	</div>
+
+</div>
+
+
+{% endblock %} 

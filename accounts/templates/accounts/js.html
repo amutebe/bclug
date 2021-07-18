@@ -2088,6 +2088,9 @@ $("#id_qmsstatus").change(function() {
 				$('#completiondateDIV').show();
 				$('#id_completion').attr('required','');
 				$('#id_completion').attr('data-error', 'This field is required.');
+				$('#completedby').show();
+				$('#id_completedby').attr('required','');
+				$('#id_completedby').attr('data-error', 'This field is required.');
 
 				$('#scheduledDIV').hide();	
             	$('#id_scheduled').removeAttr('required');
@@ -2105,6 +2108,10 @@ $("#id_qmsstatus").change(function() {
 				$('#completiondateDIV').hide();	
             	$('#id_completion').removeAttr('required');
 				$('#id_completion').removeAttr('data-error');
+				
+				$('#completedby').hide();	
+            	$('#id_completedby').removeAttr('required');
+				$('#id_completedby').removeAttr('data-error');
 					
 				
 			} 
@@ -2121,6 +2128,9 @@ $("#id_qmsstatus").change(function() {
 			$('#completiondateDIV').hide();	
             $('#id_completion').removeAttr('required');
 			$('#id_completion').removeAttr('data-error');
+						$('#completedby').hide();	
+            $('#id_completedby').removeAttr('required');
+			$('#id_completedby').removeAttr('data-error');
 						
 			}
 		});
@@ -2172,8 +2182,9 @@ document.querySelector('input[name="delivery"]:checked').value==""||
 document.querySelector('input[name="communication"]:checked').value==""||
 document.querySelector('input[name="compliant"]:checked').value==""||
 document.querySelector('input[name="quality"]:checked').value==""||
-document.querySelector('input[name="infosecurity"]:checked').value==""||
-document.querySelector('input[name="customerservice"]:checked').value=="")
+document.querySelector('input[name="infosecurity"]:checked').value==""
+//||document.querySelector('input[name="customerservice"]:checked').value==""
+)
 
 	{
 //alert("All fields require to be filled");
@@ -2191,8 +2202,9 @@ parseInt(document.querySelector('input[name="delivery"]:checked').value)+
 parseInt(document.querySelector('input[name="communication"]:checked').value)+
 parseInt(document.querySelector('input[name="compliant"]:checked').value)+
 parseInt(document.querySelector('input[name="quality"]:checked').value)+
-parseInt(document.querySelector('input[name="infosecurity"]:checked').value)+
-parseInt(document.querySelector('input[name="customerservice"]:checked').value))/40)*100));
+parseInt(document.querySelector('input[name="infosecurity"]:checked').value)
+//+parseInt(document.querySelector('input[name="customerservice"]:checked').value)
+)/35)*100));
 	
 
 
@@ -2252,8 +2264,9 @@ document.querySelector('input[name="delivery"]:checked').value==""||
 document.querySelector('input[name="communication"]:checked').value==""||
 document.querySelector('input[name="compliant"]:checked').value==""||
 document.querySelector('input[name="quality"]:checked').value==""||
-document.querySelector('input[name="infosecurity"]:checked').value==""||
-document.querySelector('input[name="customerservice"]:checked').value=="")
+document.querySelector('input[name="infosecurity"]:checked').value==""
+//||document.querySelector('input[name="customerservice"]:checked').value==""
+)
 	{
 $('#id_rank').css("background-color", "");
 $('#id_rank').val("");
@@ -2268,8 +2281,9 @@ parseInt(document.querySelector('input[name="delivery"]:checked').value)+
 parseInt(document.querySelector('input[name="communication"]:checked').value)+
 parseInt(document.querySelector('input[name="compliant"]:checked').value)+
 parseInt(document.querySelector('input[name="quality"]:checked').value)+
-parseInt(document.querySelector('input[name="infosecurity"]:checked').value)+
-parseInt(document.querySelector('input[name="customerservice"]:checked').value))/40)*100));
+parseInt(document.querySelector('input[name="infosecurity"]:checked').value)
+//+parseInt(document.querySelector('input[name="customerservice"]:checked').value)
+)/35)*100));
 	
 
 
@@ -2328,8 +2342,9 @@ document.querySelector('input[name="delivery"]:checked').value==""||
 document.querySelector('input[name="communication"]:checked').value==""||
 document.querySelector('input[name="compliant"]:checked').value==""||
 document.querySelector('input[name="quality"]:checked').value==""||
-document.querySelector('input[name="infosecurity"]:checked').value==""||
-document.querySelector('input[name="customerservice"]:checked').value=="")
+document.querySelector('input[name="infosecurity"]:checked').value==""
+//||document.querySelector('input[name="customerservice"]:checked').value==""
+)
 	{
 $('#id_rank').css("background-color", "");
 $('#id_rank').val("");
@@ -2344,8 +2359,9 @@ parseInt(document.querySelector('input[name="delivery"]:checked').value)+
 parseInt(document.querySelector('input[name="communication"]:checked').value)+
 parseInt(document.querySelector('input[name="compliant"]:checked').value)+
 parseInt(document.querySelector('input[name="quality"]:checked').value)+
-parseInt(document.querySelector('input[name="infosecurity"]:checked').value)+
-parseInt(document.querySelector('input[name="customerservice"]:checked').value))/40)*100));
+parseInt(document.querySelector('input[name="infosecurity"]:checked').value)
+//+parseInt(document.querySelector('input[name="customerservice"]:checked').value)
+)/35)*100));
 	
 
 
@@ -2404,8 +2420,9 @@ document.querySelector('input[name="delivery"]:checked').value==""||
 document.querySelector('input[name="communication"]:checked').value==""||
 document.querySelector('input[name="compliant"]:checked').value==""||
 document.querySelector('input[name="quality"]:checked').value==""||
-document.querySelector('input[name="infosecurity"]:checked').value==""||
-document.querySelector('input[name="customerservice"]:checked').value=="")
+document.querySelector('input[name="infosecurity"]:checked').value==""
+//||document.querySelector('input[name="customerservice"]:checked').value==""
+)
 	{
 $('#id_rank').css("background-color", "");
 $('#id_rank').val("");
@@ -2419,8 +2436,9 @@ parseInt(document.querySelector('input[name="delivery"]:checked').value)+
 parseInt(document.querySelector('input[name="communication"]:checked').value)+
 parseInt(document.querySelector('input[name="compliant"]:checked').value)+
 parseInt(document.querySelector('input[name="quality"]:checked').value)+
-parseInt(document.querySelector('input[name="infosecurity"]:checked').value)+
-parseInt(document.querySelector('input[name="customerservice"]:checked').value))/40)*100));
+parseInt(document.querySelector('input[name="infosecurity"]:checked').value)
+//+parseInt(document.querySelector('input[name="customerservice"]:checked').value)
+)/35)*100));
 	
 
 
@@ -2479,8 +2497,9 @@ document.querySelector('input[name="delivery"]:checked').value==""||
 document.querySelector('input[name="communication"]:checked').value==""||
 document.querySelector('input[name="compliant"]:checked').value==""||
 document.querySelector('input[name="quality"]:checked').value==""||
-document.querySelector('input[name="infosecurity"]:checked').value==""||
-document.querySelector('input[name="customerservice"]:checked').value=="")
+document.querySelector('input[name="infosecurity"]:checked').value==""
+//||document.querySelector('input[name="customerservice"]:checked').value==""
+)
 	{
 $('#id_rank').css("background-color", "");
 $('#id_rank').val("");
@@ -2495,8 +2514,9 @@ parseInt(document.querySelector('input[name="delivery"]:checked').value)+
 parseInt(document.querySelector('input[name="communication"]:checked').value)+
 parseInt(document.querySelector('input[name="compliant"]:checked').value)+
 parseInt(document.querySelector('input[name="quality"]:checked').value)+
-parseInt(document.querySelector('input[name="infosecurity"]:checked').value)+
-parseInt(document.querySelector('input[name="customerservice"]:checked').value))/40)*100));
+parseInt(document.querySelector('input[name="infosecurity"]:checked').value)
+//+parseInt(document.querySelector('input[name="customerservice"]:checked').value)
+)/35)*100));
 
 
 		
@@ -2554,8 +2574,9 @@ document.querySelector('input[name="delivery"]:checked').value==""||
 document.querySelector('input[name="communication"]:checked').value==""||
 document.querySelector('input[name="compliant"]:checked').value==""||
 document.querySelector('input[name="quality"]:checked').value==""||
-document.querySelector('input[name="infosecurity"]:checked').value==""||
-document.querySelector('input[name="customerservice"]:checked').value=="")
+document.querySelector('input[name="infosecurity"]:checked').value==""
+//||document.querySelector('input[name="customerservice"]:checked').value==""
+)
 	{
 $('#id_rank').css("background-color", "");
 $('#id_rank').val("");
@@ -2570,8 +2591,9 @@ parseInt(document.querySelector('input[name="delivery"]:checked').value)+
 parseInt(document.querySelector('input[name="communication"]:checked').value)+
 parseInt(document.querySelector('input[name="compliant"]:checked').value)+
 parseInt(document.querySelector('input[name="quality"]:checked').value)+
-parseInt(document.querySelector('input[name="infosecurity"]:checked').value)+
-parseInt(document.querySelector('input[name="customerservice"]:checked').value))/40)*100));
+parseInt(document.querySelector('input[name="infosecurity"]:checked').value)
+//+parseInt(document.querySelector('input[name="customerservice"]:checked').value)
+)/35)*100));
 	
 
 
@@ -2630,8 +2652,9 @@ document.querySelector('input[name="delivery"]:checked').value==""||
 document.querySelector('input[name="communication"]:checked').value==""||
 document.querySelector('input[name="compliant"]:checked').value==""||
 document.querySelector('input[name="quality"]:checked').value==""||
-document.querySelector('input[name="infosecurity"]:checked').value==""||
-document.querySelector('input[name="customerservice"]:checked').value=="")
+document.querySelector('input[name="infosecurity"]:checked').value==""
+//||document.querySelector('input[name="customerservice"]:checked').value==""
+)
 	{
 $('#id_rank').css("background-color", "");
 $('#id_rank').val("");
@@ -2646,8 +2669,9 @@ parseInt(document.querySelector('input[name="delivery"]:checked').value)+
 parseInt(document.querySelector('input[name="communication"]:checked').value)+
 parseInt(document.querySelector('input[name="compliant"]:checked').value)+
 parseInt(document.querySelector('input[name="quality"]:checked').value)+
-parseInt(document.querySelector('input[name="infosecurity"]:checked').value)+
-parseInt(document.querySelector('input[name="customerservice"]:checked').value))/40)*100));
+parseInt(document.querySelector('input[name="infosecurity"]:checked').value)
+//+parseInt(document.querySelector('input[name="customerservice"]:checked').value)
+)/35)*100));
 
 
 		
@@ -2705,8 +2729,9 @@ document.querySelector('input[name="delivery"]:checked').value==""||
 document.querySelector('input[name="communication"]:checked').value==""||
 document.querySelector('input[name="compliant"]:checked').value==""||
 document.querySelector('input[name="quality"]:checked').value==""||
-document.querySelector('input[name="infosecurity"]:checked').value==""||
-document.querySelector('input[name="customerservice"]:checked').value=="")
+document.querySelector('input[name="infosecurity"]:checked').value==""
+//||document.querySelector('input[name="customerservice"]:checked').value==""
+)
 	{
 $('#id_rank').css("background-color", "");
 $('#id_rank').val("");
@@ -2721,8 +2746,9 @@ parseInt(document.querySelector('input[name="delivery"]:checked').value)+
 parseInt(document.querySelector('input[name="communication"]:checked').value)+
 parseInt(document.querySelector('input[name="compliant"]:checked').value)+
 parseInt(document.querySelector('input[name="quality"]:checked').value)+
-parseInt(document.querySelector('input[name="infosecurity"]:checked').value)+
-parseInt(document.querySelector('input[name="customerservice"]:checked').value))/40)*100));
+parseInt(document.querySelector('input[name="infosecurity"]:checked').value)
+//+parseInt(document.querySelector('input[name="customerservice"]:checked').value)
+)/35)*100));
 	
 
 

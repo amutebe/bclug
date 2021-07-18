@@ -2002,7 +2002,7 @@ def customersatisfaction(request):
 
 @login_required(login_url='login')
 def customersatisfaction_due(request):
-    carExpire7days=mod9001_customerSatisfaction.objects.filter(status=1).filter(~Q(qmsstatus=1))
+    carExpire7days=mod9001_customerSatisfaction.objects.filter(~Q(improvplan='')).filter(status=1).filter(~Q(qmsstatus=1))
     #carExpire7days=mod9001_providerassessment.objects.filter(status=1)
     thislist = []
     for i in carExpire7days:

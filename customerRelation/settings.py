@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     # Axes app can be in any position in the INSTALLED_APPS list.
     'axes',
     'surveys',
+    'itsms_20000',
     
 ]
 

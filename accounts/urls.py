@@ -12,6 +12,7 @@ from django.urls import path, include
 urlpatterns = [
    # path('',include('defender.urls')), # defender admin
     path('',include('excel_app.urls')),
+    path('',include('itsms_20000.urls')),
     path('',include('issues_9001.urls')),
     path('',include('operations_9001.urls')),
     path('', views.home, name="home"),

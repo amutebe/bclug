@@ -261,11 +261,11 @@ class change_request(ModelForm):
     
     class Meta:
         model = mod9001_changeRegister 
-        fields = ['req_no','date','raisedby','trigger','reference','process','changetype','changedesc','evaluation','evaldesc','cost','currency','costdescription','add_desc','assignedto','due']
+        fields = ['status','req_no','date','raisedby','trigger','reference','process','changetype','changedesc','evaluation','evaldesc','cost','currency','costdescription','add_desc','assignedto','due']
         #exclude = ['status','proposedby','assignedto','due','completion','qmsstatus','scheduled','entered_by','date_today','verification','verification_status','verification_failed','rejected','approval_date','approved_by']
         widgets = {
 
-            'date': DateInput(),'due': DateInput(),'reference':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'changedesc':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'evaldesc':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'add_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40})
+            'status':forms.HiddenInput,'date': DateInput(),'due': DateInput(),'reference':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'changedesc':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'evaldesc':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'add_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40})
         }
 
 class ApproveChangeRequest(ModelForm):
@@ -324,20 +324,20 @@ class customer_satisfaction_survey(ModelForm): #for customers outside company wi
       
     class Meta:
         model = mod9001_customerSatisfaction 
-        exclude = ['entered_by','date_today','verification','verification_status','verification_failed','qmsstatus','scheduled','completion','improvplan','details','due','assignedto']
+        exclude = ['start','end','entered_by','date_today','verification','verification_status','verification_failed','qmsstatus','scheduled','completion','improvplan','details','due','assignedto']
         #widgets={'improvplan':forms.HiddenInput,'details':forms.HiddenInput,'assignedto':forms.HiddenInput,'due':forms.HiddenInput,'end':DateInput(),'start':DateInput(),'status':forms.HiddenInput,'comment':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'due':DateInput(),'details':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'date':DateInput(),'responsetime':HorizontalRadioSelect(),'resolution':HorizontalRadioSelect(),'delivery':HorizontalRadioSelect(),'communication':HorizontalRadioSelect(),'compliant':HorizontalRadioSelect(),'quality':HorizontalRadioSelect(),'infosecurity':HorizontalRadioSelect(),'customerservice':HorizontalRadioSelect()}
         widgets={'end':DateInput(),'start':DateInput(),'status':forms.HiddenInput,'comment':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'due':DateInput(),'details':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'date':DateInput(),'responsetime':HorizontalRadioSelect(),'resolution':HorizontalRadioSelect(),'delivery':HorizontalRadioSelect(),'communication':HorizontalRadioSelect(),'compliant':HorizontalRadioSelect(),'quality':HorizontalRadioSelect(),'infosecurity':HorizontalRadioSelect(),'customerservice':HorizontalRadioSelect()}
     
     
-    def clean(self):
-        cleaned_data = super().clean()
-        start_date = cleaned_data.get("start")
-        end_date = cleaned_data.get("end")
-        if end_date is not None and start_date is not None:
-            if end_date < start_date:
-                raise forms.ValidationError("End date should be greater than start date.")
-        else:
-            raise forms.ValidationError("End date and Start date cannot be empty")
+    #def clean(self):
+    #    cleaned_data = super().clean()
+    #    start_date = cleaned_data.get("start")
+    #    end_date = cleaned_data.get("end")
+    #    if end_date is not None and start_date is not None:
+    #        if end_date < start_date:
+    #            raise forms.ValidationError("End date should be greater than start date.")
+    #    else:
+    #        raise forms.ValidationError("End date and Start date cannot be empty")
         
  
         
