@@ -23,7 +23,7 @@ class serviceRequest(ModelForm):
     class Meta:
         model = mod20000_service_request 
         exclude = ['date_today','planning_flag']
-        widgets={'entered_by':HiddenInput(),'date':DateInput(),'time':TimeInput(),'other':forms.Textarea(attrs={'rows': 2, 'cols': 40})}
+        widgets={'requestor':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'entered_by':HiddenInput(),'date':DateInput(),'time':TimeInput(),'other':forms.Textarea(attrs={'rows': 2, 'cols': 40})}
 
 
 class serviceRequestPlans(ModelForm):
@@ -31,7 +31,7 @@ class serviceRequestPlans(ModelForm):
       
      class Meta:
         model = mod20000_service_planning
-        exclude = ['entered_by','date_today','verification','verification_status','verification_failed','qmsstatus','scheduled','completion_date','completedby']
+        exclude = ['entered_by','date_today','verification','verification_status','verification_failed','qmsstatus','scheduled','completion_date','completedby', 'component_affected','error','solution','report_number']
           
         
         widgets={'entered_by':HiddenInput(),'status':forms.HiddenInput,'due':DateInput(),'planning_date':DateInput(),'completion_date':DateInput(), 'description':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'error':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'activities':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'report_number':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'solution':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'remark':forms.Textarea(attrs={'rows': 2, 'cols': 40})}

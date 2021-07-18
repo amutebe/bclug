@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'multiselectfield',
     # Axes app can be in any position in the INSTALLED_APPS list.
     'axes',
-    'surveys',
+    #'surveys',
     'itsms_20000',
     
 ]

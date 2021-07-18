@@ -85,10 +85,10 @@ def service_request_report(request):
         response['Content-Disposition'] = 'attachment; filename="ServiceRequests.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['SR ID', 'Date', 'Time', 'Type','Mode','ITservice','Details','Priority','PlanningDate','Scope','Category','Resource','Dependency','PlanningDesc.','Activities','Criteria','AssignedTO','Completed','CompletedBy','ReportNo.','ComponentAffected','Error','Solution','Remark','Verification','Rescheduled','When'])
+        writer.writerow(['SR ID', 'Date', 'Time', 'Type','Requestor','Mode','ITservice','Details','Priority','PlanningDate','Scope','Category','Resource','Dependency','PlanningDesc.','Activities','Criteria','AssignedTO','Completed','CompletedBy','ReportNo.','ComponentAffected','Error','Solution','Remark','Verification','Rescheduled','When'])
     
         for i in service_request:
-            writer.writerow([i.service_number, i.service_number.date,i.service_number.time,i.service_number.request_type,i.service_number.request_mode,i.service_number.IT_service,i.service_number.other,i.service_number.priority,i.planning_date,i.service_scope,i.service_category,i.get_resource_display(),i.get_dependency_display(),i.description,i.activities,i.get_criteria_display(),i.assigned,i.completion_date,i.completedby,i.report_number,i.component_affected,i.error,i.solution,i.remark,i.verification_status,i.scheduled,i.due])
+            writer.writerow([i.service_number, i.service_number.date,i.service_number.time,i.service_number.request_type,i.service_number.requestor,i.service_number.request_mode,i.service_number.IT_service,i.service_number.other,i.service_number.priority,i.planning_date,i.service_scope,i.service_category,i.get_resource_display(),i.get_dependency_display(),i.description,i.activities,i.get_criteria_display(),i.assigned,i.completion_date,i.completedby,i.report_number,i.component_affected,i.error,i.solution,i.remark,i.verification_status,i.scheduled,i.due])
         return response
         
     else:

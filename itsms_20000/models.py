@@ -38,6 +38,7 @@ class mod20000_service_request(models.Model):
     date=models.DateField("Request Date:",null=False)
     time=models.TimeField("Time (24Hr):",null=True)
     request_type=models.ForeignKey('ServiceRequest_type', on_delete=models.CASCADE,verbose_name='Request Type:',null=True,blank=True)
+    requestor=models.TextField("Requestor",null=True,blank=True)   
     request_mode=models.ForeignKey('ServiceRequest_mode', on_delete=models.CASCADE,verbose_name='Request Mode:',null=True,blank=True)
     IT_service=models.ForeignKey('IT_service', on_delete=models.CASCADE,verbose_name='IT service:',null=True,blank=True)
     other=models.TextField("Details",null=True, blank=True)
