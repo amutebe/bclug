@@ -261,11 +261,11 @@ class change_request(ModelForm):
     
     class Meta:
         model = mod9001_changeRegister 
-        fields = ['status','req_no','date','raisedby','trigger','reference','process','changetype','changedesc','evaluation','evaldesc','cost','currency','costdescription','add_desc','assignedto','due']
+        fields = ['status','req_no','date','raisedby','trigger','reference','process','changetype','changedesc']
         #exclude = ['status','proposedby','assignedto','due','completion','qmsstatus','scheduled','entered_by','date_today','verification','verification_status','verification_failed','rejected','approval_date','approved_by']
         widgets = {
 
-            'status':forms.HiddenInput,'date': DateInput(),'due': DateInput(),'reference':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'changedesc':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'evaldesc':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'add_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40})
+            'status':forms.HiddenInput,'date': DateInput(),'due': DateInput(),'reference':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'changedesc':forms.Textarea(attrs={'rows': 2, 'cols': 40})
         }
 
 class ApproveChangeRequest(ModelForm):
@@ -274,8 +274,9 @@ class ApproveChangeRequest(ModelForm):
     class Meta:
         model = mod9001_changeRegister 
         #fields = '__all__'
-        fields = ['status','rejected','approval_date','approved_by']
-        widgets={'status': RadioSelect(),'approval_date':DateInput()}
+        fields = ['status','rejected','approval_date','approved_by','evaluation','evaldesc','cost','currency','costdescription','add_desc']
+        widgets={'status': RadioSelect(),'approval_date':DateInput(),'evaldesc':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'add_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40})
+        }
 
 
 class Verifychangerequest(ModelForm):
@@ -293,10 +294,19 @@ class customer_complaint(ModelForm):
      class Meta:
         model = mod9001_customerComplaint
         #exclude = ['entered_by','date_today','status']
-        exclude = ['entered_by','date_today','verification','verification_status','verification_failed','qmsstatus','scheduled','completion']
+        exclude = ['analysis_flag','entered_by','date_today','verification','verification_status','verification_failed','qmsstatus','scheduled','completion','re_occurance','classification','correction','add_desc','assignedto','due']
  
-        widgets={'complaint':TextInput(),'time':TimeInput(),'status':forms.HiddenInput,'due':DateInput(),'date':DateInput(),'completion':DateInput(),'date_posted':DateInput(), 'complaint_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'add_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40})}
+        widgets={'complaint':TextInput(),'time':TimeInput(),'status':forms.HiddenInput,'due':DateInput(),'date':DateInput(),'completion':DateInput(),'date_posted':DateInput(), 'complaint_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40})}
 
+class customer_complaintPlanning(ModelForm):
+     #cost = MultiSelectFormField(choices=mod9001_incidentregisterStaff.costs)
+      
+     class Meta:
+        model = mod9001_customerComplaint
+        #exclude = ['entered_by','date_today','status']
+        fields = ['re_occurance','classification','correction','add_desc','assignedto','due','analysis_flag']
+ 
+        widgets={'time':TimeInput(),'status':forms.HiddenInput,'analysis_flag':forms.HiddenInput,'due':DateInput(),'date':DateInput(),'completion':DateInput(),'date_posted':DateInput(), 'complaint_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'add_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40})}
 
 class Verifycustomer_complaint(ModelForm):
     class Meta:

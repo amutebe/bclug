@@ -822,7 +822,7 @@ def load_process(request):
     #ids = mod9001_risks.objects.filter(contextdetails_id=context_id)
     #ids = mod9001_issues.objects.all()
    
-    print("context_id incidents", context_id)
+    #print("context_id incidents", context_id)
     if context_id=="2":
         #print("ID  test",id.id,  id.description)
         ids=process.objects.all()
@@ -1582,7 +1582,8 @@ def approve_changerequest(request,pk_test):
                 form.save()
                 return redirect('/changerequest_pending/')
 
-    context={'form':form}  
+    context={'form':form,'Request_No':pk_test}  
+    #print('PRINTING REQ NUMBER', pk_test )
 
 
     return render(request,'changerequest_approve.html',context) 
@@ -1684,6 +1685,47 @@ def customercomplaint(request):
         
     context={'form':form}
     return render(request,'customercomplaint.html',context)
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['RelationsManager'])
+def customerComplaints_pending_analysis(request):
+    pendingcar=mod9001_customerComplaint.objects.filter(analysis_flag='No') #get all customer complaints  pending approval    
+    context={'pendingcar':pendingcar} 
+    return render(request,'customerComplaint_pending_analysis.html',context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['RelationsManager'])
+def customercomplaint_planning(request,complaint_id):
+    pending_planning=mod9001_customerComplaint.objects.get(comp_no=complaint_id)
+    form=customer_complaintPlanning(instance=pending_planning)
+                          
+    if request.method=="POST":
+
+        request.POST=request.POST.copy()
+        request.POST['entered_by'] = request.user
+        request.POST['date_today']=date.today()
+        request.POST['status'] = 1
+        request.POST['analysis_flag'] = 'Yes'
+        
+        form=customer_complaintPlanning(request.POST,instance=pending_planning)
+                        
+        if form.is_valid():
+
+                
+            form.save()
+            return redirect('/customerComplaints_pending_analysis/')
+            
+            
+          
+        
+    context={'form':form,'Complaint_id':complaint_id}
+    return render(request,'customerComplaint_planning.html',context)
+
+
+
+
+
 
 @login_required(login_url='login')
 def customer_complaint_report(request):

@@ -1,0 +1,50 @@
+{% extends "accounts/base.html" %} 
+
+{% block content %}
+<br>
+<div class="col-md-28">
+		
+		<div class="">
+			
+			<table class="table table-sm">
+				<tr class="table-info">
+					<th>ComplaintNo.</th>
+					<th>Date</th>
+					<th>time</th>
+					<th>Complaint</th>
+					<th>Organisation</th>
+					<th>Process</th>
+					<th>Type</th>
+                    <th>Comp.Desc</th>
+				
+<th></th>
+				</tr>
+				
+				{% for i in pendingcar %}
+				
+					<tr>
+					<td>{{i.comp_no}}</td>
+					<td>{{i.date}}</td>
+					<td>{{i.time}}</td>
+					<td>{{i.complaint}}</td>
+					<td>{{i.organisation}}</td>
+					<td>{{i.process}}</td>
+					<td>{{i.type}}</td>
+					<td>{{i.complaint_desc}}</td>
+					
+					
+					
+					<td><a class="btn btn-sm btn-info" href="{%url 'customercomplaint_planning' i.comp_no %}">Action</a></td>
+
+					</tr>
+
+				{%endfor%}
+		
+			</table>
+		</div>
+	</div>
+
+</div>
+
+
+{% endblock %} 

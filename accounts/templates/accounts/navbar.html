@@ -89,7 +89,7 @@
                             <ul>
                                 <li><a data-icon="&#xF14B;" href="{% url 'changerequest'%}">Create</a></li>
                                 <li><a data-icon="&#xF00C;" href="{% url 'changerequest_pending'%}">Approve</a></li>
-                                <li><a data-icon="&#xF12E;" href="{% url 'changerequest_due'%}">Verify</a></li>
+                                <!--<li><a data-icon="&#xF12E;" href="{% url 'changerequest_due'%}">Verify</a></li>-->
                             </ul>
                         </li>
                         <li><a data-icon="&#xF005;" >Customer Satisfaction</a>
@@ -107,7 +107,9 @@
                         </li>
                         <li><a data-icon="&#xF01C;" >Customer Complaint</a>
                             <ul>
-                                <li><a data-icon="&#xF14B;" href="{% url 'customercomplaint'%}">Create</a></li>
+                                <li><a data-icon="&#xF14B;" href="{% url 'customercomplaint'%}">log</a></li>
+                                <li><a data-icon="&#xF14B;" href="{% url 'customerComplaints_pending_analysis'%}">Analysis</a></li>
+                                
                                 <li><a data-icon="&#xF12E;" href="{% url 'customercomplaint_due'%}">Verify</a></li>
                             </ul>
                         </li>

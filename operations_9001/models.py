@@ -721,6 +721,9 @@ class mod9001_customerComplaint(models.Model):
     status=models.ForeignKey('issues_9001.approval_status', on_delete=models.CASCADE,verbose_name='Status:',null=True,blank=True)
     scheduled=models.DateField("Rescheduled Date:",null=True,blank=True)
     completion=models.DateField("Completion Date:",null=True,blank=True)
+    analysis_flag=models.TextField("Complaint Analysis Done?",null=True,blank=True,default='No', help_text='To be uses while filtering complaints pending analysis')
+    
+   
    
 
 class mod9001_customerSatisfaction(models.Model):

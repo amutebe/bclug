@@ -75,12 +75,16 @@ path('changeRegister_report/', views.changeRegister_report, name='changeRegister
 path('verify_changerequest/<str:pk_test>/',views.verify_changerequest,name="verify_changerequest"),
 
 path('customercomplaint/', views.customercomplaint, name='customercomplaint'),
+path('customerComplaints_pending_analysis/', views.customerComplaints_pending_analysis, name='customerComplaints_pending_analysis'),
+path('Verify_customercomplaint/<str:pk_test>/',views.Verify_customercomplaint,name="Verify_customercomplaint"),
+
+
 path('customer_complaint_report/', views.customer_complaint_report, name='customer_complaint_report'),
 
 
 path('customercomplaint_due/',views.customercomplaint_due,name="customercomplaint_due"), 
 path('customercomplaint_7daysToExpiryview/<str:pk_test>/',views.customercomplaint_7daysToExpiryview,name="customercomplaint_7daysToExpiryview"),
-path('Verify_customercomplaint/<str:pk_test>/',views.Verify_customercomplaint,name="Verify_customercomplaint"),
+path('customercomplaint_planning/<str:complaint_id>/',views.customercomplaint_planning,name="customercomplaint_planning"),
 
 path('providerassessment/', views.providerassessment, name='providerassessment'),
 path('providerAssessment_report/', views.providerAssessment_report, name='providerAssessment_report'),
