@@ -5,6 +5,9 @@ from random import randint,randrange
 from django import forms
 from django.conf import settings
 from multiselectfield import MultiSelectField
+from itsms_20000.models import component
+
+
 
 ##################################
 from django.core.exceptions import ValidationError
@@ -255,6 +258,8 @@ class mod9001_qmsplanner(models.Model):
         return self.planner_number
 class mod9001_trainingplanner(models.Model):
     plan_number=models.CharField("Plan no.:",max_length=200,default="Comp-TP-"+car_no(),primary_key=True)
+    planner=models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Planner:',related_name='tainingplanner_by')
+           
     trainng_date=models.DateField("Training Date:",null=True)
     TYPE=(('1','Planned'),('2','Not Planned'))
     type=models.CharField(max_length=200, choices=TYPE)
@@ -369,12 +374,14 @@ class mod9001_supplieregistration(models.Model):
         return self.name
 
 
-
+####################INCIDENT LOG#####################################
 
 class mod9001_incidentregister(models.Model):
     incident_number=models.CharField("Incident No.:",max_length=200,primary_key=True)
     date=models.DateField("Date:",null=True)
     time=models.TimeField("Time (24Hr):",null=True)
+    reporter= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Reported by:',null=True,blank=True)
+       
     REFERENCE=(('1','Project'),('2','Process'),('3','Other'))
     reference=models.CharField("Reference",max_length=200, choices=REFERENCE)
     processname=models.ForeignKey('process', on_delete=models.CASCADE,verbose_name='If Process, name:',null=True,blank=True)
@@ -391,6 +398,7 @@ class mod9001_incidentregister(models.Model):
         return self.incident_number
 
 
+#####################INCIDENT ANALYSIS######################################
 class mod9001_incidentregisterStaff(models.Model):
     incident_number=models.OneToOneField('mod9001_incidentregister', on_delete=models.CASCADE,verbose_name='Incident Number:',null=True,blank=True)
     classification=models.ForeignKey('classification', on_delete=models.CASCADE,verbose_name='Incident Classification:',null=True,blank=True)
@@ -426,9 +434,24 @@ class mod9001_incidentregisterStaff(models.Model):
     assigned= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Assigned to:',null=True,blank=True)
     due=models.DateField("When:",null=True,blank=True)      
     #comp_status=models.TextField("Compliant Status:",null=True, blank=True)
+    component_affected= models.ForeignKey(component,on_delete=models.CASCADE,verbose_name='Affected Component:',null=True,blank=True)
+    report_number=models.TextField("Report No.:",null=True, blank=True)
+    error=models.TextField("Known Error:",null=True, blank=True)    
+    solution=models.TextField("Solution:",null=True, blank=True)    
+    remark=models.TextField("Remarks:",null=True, blank=True) 
+  
+    
+    
+    
+    
+    
     entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='incidentstaff',on_delete=models.CASCADE)
     date_today=models.DateField("Date created:",default=datetime.now)
     status=models.ForeignKey('issues_9001.approval_status', on_delete=models.CASCADE,verbose_name='Status:',null=True,blank=True)
+    
+    
+    
+    
     def __str__(self):
         return self.incident_number
 

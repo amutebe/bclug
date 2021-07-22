@@ -8,13 +8,14 @@
 			<div class="col-md">
 				
 				
-				<div class="card card-body">
+				
 					<table class="table-bordered">
-						<tr>
+						<tr class="table-info">
 							
 					<th>IncidentNo.</th>
 					<th>Date</th>
 					<th>time</th>
+					<th>ReportedBy</th>
 					<th>Process</th>
 					<th>Type</th>
 					<th>Description</th>
@@ -33,6 +34,7 @@
 					<td>{{i.incident_number}}</td>
 					<td>{{i.incident_number.date}}</td>
 					<td>{{i.incident_number.time}}</td>
+					<td>{{i.incident_number.reporter}}</td>
 					<td>{{i.incident_number.processname}}</td>
 					<td>{{i.incident_number.incidentype}}</td>
 					<td>{{i.incident_number.incident_description}}</td>
@@ -57,7 +59,7 @@
 						
 					</table>
 				
-			</div>
+			
 			<div class="text-right">
                     <a href="{%url 'incidentregister_due' %}"><h6><< Back</h6></a>
                     </div>

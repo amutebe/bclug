@@ -28,7 +28,7 @@ class planning_qmsFilter(django_filters.FilterSet):
 
     class Meta:
         model=mod9001_qmsplanner
-        fields=['status','qmsstatus']
+        fields=['status','qmsstatus','planner']
         #widgets={'end_date':DateInput()}
 ######################## PROVIDER ASSESSSMENT ##################################
 class providerAssessmentFilter(django_filters.FilterSet):
@@ -59,7 +59,7 @@ class planning_trainingplannerFilter(django_filters.FilterSet):
 
     class Meta:
         model=mod9001_trainingplanner
-        fields=['type','status','trainplannerstatus']
+        fields=['type','status','trainplannerstatus','planner']
         #widgets={'end_date':DateInput()}
 
 ########################INCIDENT REGISTER#######################
@@ -72,7 +72,7 @@ class Operations_incidentRegisterFilter(django_filters.FilterSet):
 
     class Meta:
         model=mod9001_incidentregisterStaff
-        fields=['classification']
+        fields=['classification','assigned']
 
 ##incident log
 class Operations_incident_log_RegisterFilter(django_filters.FilterSet):
@@ -84,7 +84,7 @@ class Operations_incident_log_RegisterFilter(django_filters.FilterSet):
 
     class Meta:
         model=mod9001_incidentregister
-        fields=['incidentype']
+        fields=['incidentype','reporter']
 
 ########################CUSTOMER SATISFACTION SURVEY ##################################
 class customerSatisfactionFilter(django_filters.FilterSet):
@@ -105,7 +105,7 @@ class customer_complaintFilter(django_filters.FilterSet):
     end=DateFilter(field_name="date",lookup_expr='lte',label='End Date',widget=DateInput())
     class Meta:
         model=mod9001_customerComplaint
-        fields=['classification']
+        fields=['classification','complaint','organisation','assignedto']
 
 
 ########################CORRECTIVE ACTION##################################

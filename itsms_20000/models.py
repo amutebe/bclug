@@ -43,7 +43,7 @@ class mod20000_service_request(models.Model):
     IT_service=models.ForeignKey('IT_service', on_delete=models.CASCADE,verbose_name='IT service:',null=True,blank=True)
     other=models.TextField("Details",null=True, blank=True)
     priority=models.ForeignKey('priority', on_delete=models.CASCADE,verbose_name='Priority:',null=True,blank=True)
-    entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True,on_delete=models.CASCADE)
+    entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True,on_delete=models.CASCADE,related_name='SrequestBy')
     date_today=models.DateField("Date created:",default=datetime.now)
     planning_flag=models.TextField("Service planning Done?",null=True,blank=True,default='No', help_text='To be uses while filtering serive requests pending planning')
     

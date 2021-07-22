@@ -25,6 +25,7 @@
 <th>Type</th>
 <th>Approval</th>
 <th>Verification</th>
+<th>Planner</th>
 <th></th>
 </tr></thead>
 
@@ -36,6 +37,7 @@
 <td>{{myFilter.form.type}}</td>
 <td>{{myFilter.form.status}}</td>
 <td>{{myFilter.form.trainplannerstatus}}</td>
+<td>{{myFilter.form.planner}}</td>
 <td><button class="btn btn-info btn-sm" type="submit">Search</button></td>
 </tr></tbody>
 </table>
@@ -57,6 +59,7 @@
 					<table class="tableizer-table">
 						<thead><tr class="tableizer-firstrow">
 					<th>Planner No.</th>
+					<th>Planner</th>
 					<th>TrainingType</th>
 					<th>Description</th>
 					<th>OtherTraining</th>
@@ -89,6 +92,7 @@
 				
 					<tr>
 					<td>{{i.plan_number}}</td>
+					<td>{{i.planner}}</td>
 					<td>{{i.get_type_display}}</td>
 					<td>{{i.description}}</td>
 					<td>{{i.other}}</td>

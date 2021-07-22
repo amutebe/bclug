@@ -23,6 +23,7 @@
 <th>Start Date</th>
 <th>End Date</th>
 <th>Classification</th>
+<th>AssignedTo</th>
 <th></th>
 </tr></thead>
 
@@ -32,6 +33,7 @@
 <td>{{myFilter.form.start}}</td>
 <td>{{myFilter.form.end}}</td>
 <td>{{myFilter.form.classification}}</td>
+<td>{{myFilter.form.assigned}}</td>
 <td><button class="btn btn-info btn-sm" type="submit">Search</button></td>
 </tr></tbody>
 </table>
@@ -54,7 +56,8 @@
 						<thead><tr class="tableizer-firstrow">
 					<th>Incident No.</th>
 					<th>Date</th>
-					<th>Time</th>					
+					<th>Time</th>	
+					<th>ReportedBy</th>				
 					
                     <th>Process</th>
                     <th>Type</th>
@@ -82,6 +85,7 @@
 					<td>{{i.incident_number}}</td>
 					<td>{{i.incident_number.date}}</td>
 					<td>{{i.incident_number.time}}</td>
+					<td>{{i.incident_number.reporter}}</td>
 				
 
 					

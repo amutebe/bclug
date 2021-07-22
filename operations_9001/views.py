@@ -242,12 +242,12 @@ def qms_report(request):
         response['Content-Disposition'] = 'attachment; filename="QMS_planner.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['Planner No.', 'Plan Date', 'ProgramDescription', 'AdditionalDescription','Planner','StartDate','EndDate','Approval','Verification'])
+        writer.writerow(['Planner No.','Planner', 'Plan Date', 'ProgramDescription', 'AdditionalDescription','Planner','StartDate','EndDate','Approval','Verification','CompletionDate'])
 
     
         for i in qms:
             
-            writer.writerow([i.planner_number, i.plan_date,i.description,  i.details,i.planner,i.start,i.end,i.status,i.qmsstatus])
+            writer.writerow([i.planner_number,i.planner,i.plan_date,i.description,  i.details,i.planner,i.start,i.end,i.status,i.qmsstatus,i.completion])
         return response
         
     else:
@@ -568,12 +568,12 @@ def trainingplan_report(request):
         response['Content-Disposition'] = 'attachment; filename="Training_planner.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['Planner No.', 'TrainingType', 'Description', 'OtherTraining','AdditionalDescription','Date','Audience','Objective','Comment','StartDate','EndDate','Location','Trainer','Resources','Approval','Verification'])
+        writer.writerow(['Planner No.','Planner', 'TrainingType', 'Description', 'OtherTraining','AdditionalDescription','Date','Audience','Objective','Comment','StartDate','EndDate','Location','Trainer','Resources','Approval','Verification'])
 
     
         for i in trainingplan:
             
-            writer.writerow([i.plan_number, i.get_type_display(),i.description,i.other,  i.details,i.trainng_date,i.get_trainaudience_display(),i.objective,i.comments,i.start,i.end,i.get_trainlocation_display(),i.trainer,i.status,i.trainplannerstatus])
+            writer.writerow([i.plan_number,i.planner, i.get_type_display(),i.description,i.other,  i.details,i.trainng_date,i.get_trainaudience_display(),i.objective,i.comments,i.start,i.end,i.get_trainlocation_display(),i.trainer,i.status,i.trainplannerstatus])
         return response
         
     else:
@@ -753,11 +753,11 @@ def incident_report(request):
         response['Content-Disposition'] = 'attachment; filename="IncidentRegister.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['Incident. No.', 'Date', 'Time', 'Process','Type','Description','Details','Classification','Containment','Addit.Desc','AssignedTo','When','Comp.Date','Cost','currency','Amount','Lesson'])
+        writer.writerow(['Incident. No.', 'Date', 'Time','Reporter', 'Process','Type','Description','Details','Classification','Containment','Addit.Desc','AssignedTo','When','Comp.Date','Cost','currency','Amount','Lesson'])
     
         for i in incident:
             #if i.issue_number.get_context_display() is not None:#if the value is none django throws errors
-            writer.writerow([i.incident_number, i.incident_number.date,i.incident_number.time,i.incident_number.processname,i.incident_number.incidentype,i.incident_number.incident_description,i.incident_number.other,i.classification,i.correction,i.description,i.assigned,i.due,i.completion,i.get_cost_display(),i.get_currency_display(),i.costdescription,i.verification_failed])
+            writer.writerow([i.incident_number, i.incident_number.date,i.incident_number.time,i.incident_number.reporter,i.incident_number.processname,i.incident_number.incidentype,i.incident_number.incident_description,i.incident_number.other,i.classification,i.correction,i.description,i.assigned,i.due,i.completion,i.get_cost_display(),i.get_currency_display(),i.costdescription,i.verification_failed])
         return response
         
     else:
@@ -783,11 +783,11 @@ def incident_log_report(request):
         response['Content-Disposition'] = 'attachment; filename="IncidentRegister.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['Incident. No.', 'Date', 'Time', 'Process','Type','Description','Details'])
+        writer.writerow(['Incident. No.', 'Date', 'Time','ReportedBy', 'Process','Type','Description','Details'])
     
         for i in incident:
             #if i.issue_number.get_context_display() is not None:#if the value is none django throws errors
-            writer.writerow([i.incident_number, i.date,i.time,i.processname,i.incidentype,i.incident_description,i.other])
+            writer.writerow([i.incident_number, i.date,i.time,i.reporter,i.processname,i.incidentype,i.incident_description,i.other])
         return response
         
     else:
@@ -997,7 +997,7 @@ def Verify_incidentregister(request,pk_test):
                 form.save()
                 return redirect('/incidentregister_due/')
 
-    context={'form':form}  
+    context={'form':form, 'incident_id':pk_test}  
 
 
     return render(request,'incidentregister_verify.html',context)
