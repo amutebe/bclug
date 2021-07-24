@@ -88,7 +88,7 @@ def service_request_report(request):
         writer.writerow(['SR ID', 'Date', 'Time', 'Type','Requestor','Mode','ITservice','Details','Priority','PlanningDate','Scope','Category','Resource','Dependency','PlanningDesc.','Activities','Criteria','AssignedTO','Completed','CompletedBy','ReportNo.','ComponentAffected','Error','Solution','Remark','Verification','Rescheduled','When'])
     
         for i in service_request:
-            writer.writerow([i.service_number, i.service_number.date,i.service_number.time,i.service_number.request_type,i.service_number.requestor,i.service_number.request_mode,i.service_number.IT_service,i.service_number.other,i.service_number.priority,i.planning_date,i.service_scope,i.service_category,i.get_resource_display(),i.get_dependency_display(),i.description,i.activities,i.get_criteria_display(),i.assigned,i.completion_date,i.completedby,i.report_number,i.component_affected,i.error,i.solution,i.remark,i.verification_status,i.scheduled,i.due])
+            writer.writerow([i.service_number, i.service_number.date,i.service_number.time,i.service_number.request_type,i.service_number.requestor,i.service_number.request_mode,i.service_number.IT_service,i.service_number.other,i.service_number.priority,i.planning_date,i.service_scope,i.service_category,i.get_resource_display(),i.get_dependency_display(),i.description,i.activities,i.get_criteria_display(),i.assigned,i.completion_date,i.completedby,i.report_number,i.component_affected,i.error,i.solution,i.remark,i.qmsstatus,i.scheduled,i.due])
         return response
         
     else:
@@ -117,6 +117,8 @@ def serviceRequestPlanning(request,sr_id):
         form=serviceRequestPlans(request.POST)
                         
         if form.is_valid():
+            #print("request.POST['qmsstatus']",request.POST)
+
 
                 
             form.save()
@@ -159,7 +161,7 @@ def serviceRequest_due(request):
 @login_required(login_url='login')
 def serviceRequest_7daysToExpiryview(request,pk_test):
 
-    products=mod20000_service_request.objects.filter(service_number=pk_test)
+    products=mod20000_service_planning.objects.filter(service_number=pk_test)
     return render(request,'serviceRequest_view_7_days_To_expiry.html',{'products':products})
 
 def Verify_service_request(request,pk_test):

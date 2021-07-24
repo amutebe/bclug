@@ -78,6 +78,7 @@
 <th>Activities</th>
 <th>Criteria</th>
 <th>AssignedTO</th>
+<th>When</th>
 <th>DateCompleted</th>
 <th>CompletedBy</th>
 <th>ReportNo.</th>
@@ -87,7 +88,8 @@
 <th>Remark</th>
 <th>Verification</th>
 <th>Rescheduled</th>
-<th>When</th>
+<th>Duration</th>
+
 										
 				</tr></thead><tbody>
 				
@@ -111,6 +113,7 @@
 <td>{{i.activities}}</td>
 <td>{{i.get_criteria_display}}</td>
 <td>{{i.assigned}}</td>
+<td>{{i.due}}</td>
 <td>{{i.completion_date}}</td>
 <td>{{i.completedby}}</td>
 <td>{{i.report_number}}</td>
@@ -118,9 +121,16 @@
 <td>{{i.error}}</td>
 <td>{{i.solution}}</td>
 <td>{{i.remark}}</td>
-<td>{{i.verification}}</td>
+<td>{{i.qmsstatus}}</td>
 <td>{{i.scheduled}}</td>
-<td>{{i.due}}</td>
+<td>
+{% if i.completion_date %}
+                 	{{i.completion_date |timeuntil:i.service_number.date}} 
+                    {%endif%}
+
+
+</td>
+
                    
 
 

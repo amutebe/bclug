@@ -75,6 +75,11 @@
 					<th>Amount</th>
 					
                     <th>Lesson</th>
+					<th>Report_number</th>
+<th>Component Affected</th>
+<th>Error</th>
+<th>Solution</th>
+<th>Duration</th>
                     
 					
 				</tr></thead><tbody>
@@ -107,7 +112,17 @@
 					<td>{{i.get_currency_display}}</td>
 					<td>{{i.costdescription}}</td>
                     <td>{{i.verification_failed}}</td>
-
+					<td>{{i.report_number}}</td>
+					<td>{{i.component_affected}}</td>
+					<td>{{i.error}}</td>
+					<td>{{i.solution}}</td>
+<td>
+					{% if i.completion %}
+                 	{{i.completion |timeuntil:i.incident_number.date}} 
+                    {%endif%}  
+					
+					
+					</td>
 
 
 

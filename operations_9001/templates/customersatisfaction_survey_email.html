@@ -1,22 +1,17 @@
 
 {% extends "accounts/base_survey.html" %} 
 {% block content %}
-
-
 <style>
 form {
   max-width: 900px;
   display: block;
   margin: 0 auto;
 }
-
-
 </style>
 <div class="col-md-9 order-md-1">
           <h4 class="mb-3">Customer Email Address</h4>
           <customer class="mb-3"> </customer>
 <p class="round2"> 
-
 <form action="/customersatisfaction_survey_email/" method="post">
                      {% csrf_token %}
 

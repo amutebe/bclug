@@ -71,11 +71,14 @@
 					<th>AssignedTo</th>
 					<th>When</th>
 					<th>Approval</th>
-					<th>Verification</th>
-					<th>Completion</th>
-					<th>Reschduled</th>
 					<th>ApprovalComment</th>
+					<th>Verification</th>
 					<th>VerificationComment</th>
+					<th>Completion</th>
+					<th>Rescheduled</th>
+					<th>Duration</th>
+					
+					
 
 					
                     
@@ -102,11 +105,21 @@
 					<td>{{i.assignedto}}</td>
 					<td>{{i.due}}</td>
                     <td>{{i.status}}</td>
-                    <td>{{i.qmsstatus}}</td>                
+					<td>{{i.comment}}</td>
+                    <td>{{i.qmsstatus}}</td>
+					<td>{{i.verification_failed}}</td>                
 					<td>{{i.completion}}</td>
 					<td>{{i.scheduled}}</td>
-					<td>{{i.comment}}</td>
-					<td>{{i.details}}</td>
+					<td>
+					{% if i.completion %}
+                 	{{i.completion |timeuntil:i.car_no.date}} 
+                    {%endif%} 
+					
+					
+					
+					</td>
+					
+					
 
 
 

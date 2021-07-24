@@ -36,22 +36,22 @@
 						{% for i in products %}
 						<tr>
 					<td>{{i.service_number}}</td>
-<td>{{ i.date}}</td>
-<td>{{i.time}}</td>
-<td>{{i.request_type}}</td>
-<td>{{i.request_mode}}</td>
-<td>{{i.IT_service}}</td>
-<td>{{i.other}}</td>
-<td>{{i.priority}}</td>
-<td>{{i.service_number.planning_date}}</td>
-<td>{{i.service_number.service_scope}}</td>
-<td>{{i.service_number.service_category}}</td>
-<td>{{i.service_number.get_resource_display}}</td>
-<td>{{i.service_number.get_dependency_display}}</td>
-<td>{{i.service_number.description}}</td>
-<td>{{i.service_number.activities}}</td>
-					<td>{{i.service_number.assigned}}</td>
-                    <td>{{i.service_number.due}}</td>
+<td>{{ i.service_number.date}}</td>
+<td>{{i.service_number.time}}</td>
+<td>{{i.service_number.request_type}}</td>
+<td>{{i.service_number.request_mode}}</td>
+<td>{{i.service_number.IT_service}}</td>
+<td>{{i.service_number.other}}</td>
+<td>{{i.service_number.priority}}</td>
+<td>{{i.planning_date}}</td>
+<td>{{i.service_scope}}</td>
+<td>{{i.service_category}}</td>
+<td>{{i.get_resource_display}}</td>
+<td>{{i.get_dependency_display}}</td>
+<td>{{i.description}}</td>
+<td>{{i.activities}}</td>
+					<td>{{i.assigned}}</td>
+                    <td>{{i.due}}</td>
         
                        
 

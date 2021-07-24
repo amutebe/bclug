@@ -94,13 +94,14 @@
                         </li>
                         <li><a data-icon="&#xF005;" >Customer Satisfaction</a>
                             <ul>
-                                <li><a data-icon="&#xF16B;">Create</a>
-                                <ul>
+                                <!--<li><a data-icon="&#xF16B;">Create</a>-->
+                                <li><a data-icon="&#xF10B;" href="{% url 'customersatisfaction_survey_email'%}">Survey</a></li>
+                                <!--<ul>
                                 <li><a data-icon="&#xF10B;" href="{% url 'customersatisfaction_survey_email'%}">Customer</a></li>
                                 <li><a data-icon="&#xF13B;" href="{% url 'customersatisfaction'%}">Staff</a></li>
                                 </ul>
                                 
-                                </li>
+                                </li>-->
                                 <li><a data-icon="&#xF14B;" href="{% url 'customersatisfaction_pending_improvement_plan'%}">Pending</a></li>
                                 <li><a data-icon="&#xF12E;" href="{% url 'customersatisfaction_due'%}">Verify</a></li>
                             </ul>

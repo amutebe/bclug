@@ -75,6 +75,8 @@
                     <th>Approved</th>
 					<th>Verified</th>
 					<th>VerificationComment</th>
+					<th>CompletionDate</th>
+					<th>Duration</th>
 					
                     
 					
@@ -99,6 +101,13 @@
                     <td>{{i.status}}</td>
                     <td>{{i.qmsstatus}}</td>
 					<td>{{i.verification_failed}}</td>
+					<td>{{i.completion}}</td>
+					<td>
+					{% if i.completion %}
+                 	{{i.completion |timeuntil:i.date}} 
+                    {%endif%}  
+					
+					</td>
 
 
 

@@ -611,7 +611,7 @@ class decision(models.Model):
 
 class mod9001_correctiveaction(models.Model):
     car_no=models.CharField("CAR No.:",max_length=200,default="Comp-CAR-Q-"+ correction_no(),primary_key=True)
-    date=models.DateTimeField("CAR Date:",null=True)
+    date=models.DateField("CAR Date:",null=True)
     process=models.ForeignKey('process', on_delete=models.CASCADE,verbose_name='Process:',null=True,blank=True)
     car_source=models.ForeignKey('car_source', on_delete=models.CASCADE,verbose_name='CAR source:',null=True,blank=True)
     element=models.ForeignKey('element', on_delete=models.CASCADE,verbose_name='Element:',null=True,blank=True)

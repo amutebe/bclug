@@ -61,6 +61,8 @@
                     <th>ChangeType</th>
                     <th>ChangeDesc.</th>
 					<th>Evaluation.</th>
+					<th>Add.details</th>
+					
 				    <th>Risk</th>
 					<th>Currency</th>
                     <th>Amount</th>
@@ -69,12 +71,14 @@
 					<th>When</th>
                     <th>Approved</th>
 					<th>ApprovalComment</th>
+					<!--
 					<th>Verified</th>
 					<th>VerificationComment</th>
 
                     <th>ProposedBy</th>
                     <th>AssignedTo</th>
 					<th>When</th>
+					-->
 					
                     
 					
@@ -91,7 +95,8 @@
                     <td>{{i.process}}</td>
                     <td>{{i.changetype}}</td>
                     <td>{{i.changedesc}}</td>
-                    <td>{{i.get_evaluation_display}}</td>                
+                    <td>{{i.get_evaluation_display}}</td>  
+					<td>{{i.evaldesc}}</td>               
 					<td>{{i.get_cost_display}}</td>
 					<td>{{i.get_currency_display}}</td>
 					<td>{{i.costdescription}}</td>
@@ -99,12 +104,14 @@
 					<td>{{i.due}}</td>
                     <td>{{i.status}}</td>
 					<td>{{i.rejected}}</td>
-                    <td>{{i.qmsstatus}}</td>
+                    <!--
+					<td>{{i.qmsstatus}}</td>
 					<td>{{i.verification_failed}}</td>
 
                     <td>{{i.proposedby}}</td>
                     <td>{{i.assignedto}}</td>
                     <td>{{i.due}}</td>
+					-->
 
 
 

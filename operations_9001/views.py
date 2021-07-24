@@ -568,12 +568,12 @@ def trainingplan_report(request):
         response['Content-Disposition'] = 'attachment; filename="Training_planner.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['Planner No.','Planner', 'TrainingType', 'Description', 'OtherTraining','AdditionalDescription','Date','Audience','Objective','Comment','StartDate','EndDate','Location','Trainer','Resources','Approval','Verification'])
+        writer.writerow(['Planner No.','Planner', 'TrainingType', 'Description','Audience', 'OtherAudience','AdditionalDescription','Date','Objective','Comment','StartDate','EndDate','Location','OtherLocation','Trainer','Resources','Approval','Verification'])
 
     
         for i in trainingplan:
             
-            writer.writerow([i.plan_number,i.planner, i.get_type_display(),i.description,i.other,  i.details,i.trainng_date,i.get_trainaudience_display(),i.objective,i.comments,i.start,i.end,i.get_trainlocation_display(),i.trainer,i.status,i.trainplannerstatus])
+            writer.writerow([i.plan_number,i.planner, i.get_type_display(),i.description,i.get_trainaudience_display(),i.other_audience,  i.details,i.trainng_date,i.objective,i.comments,i.start,i.end,i.get_trainlocation_display(),i.other_location,i.trainer,i.status,i.trainplannerstatus])
         return response
         
     else:
@@ -753,11 +753,11 @@ def incident_report(request):
         response['Content-Disposition'] = 'attachment; filename="IncidentRegister.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['Incident. No.', 'Date', 'Time','Reporter', 'Process','Type','Description','Details','Classification','Containment','Addit.Desc','AssignedTo','When','Comp.Date','Cost','currency','Amount','Lesson'])
+        writer.writerow(['Incident. No.', 'Date', 'Time','Reporter', 'Process','Type','Description','Details','Classification','Containment','Addit.Desc','AssignedTo','When','Comp.Date','Cost','currency','Amount','Lesson','ReportNo.','ComponentAffected','Error','Solution'])
     
         for i in incident:
             #if i.issue_number.get_context_display() is not None:#if the value is none django throws errors
-            writer.writerow([i.incident_number, i.incident_number.date,i.incident_number.time,i.incident_number.reporter,i.incident_number.processname,i.incident_number.incidentype,i.incident_number.incident_description,i.incident_number.other,i.classification,i.correction,i.description,i.assigned,i.due,i.completion,i.get_cost_display(),i.get_currency_display(),i.costdescription,i.verification_failed])
+            writer.writerow([i.incident_number, i.incident_number.date,i.incident_number.time,i.incident_number.reporter,i.incident_number.processname,i.incident_number.incidentype,i.incident_number.incident_description,i.incident_number.other,i.classification,i.correction,i.description,i.assigned,i.due,i.completion,i.get_cost_display(),i.get_currency_display(),i.costdescription,i.verification_failed,i.report_number,i.component_affected,i.error,i.solution])
         return response
         
     else:
@@ -994,6 +994,7 @@ def Verify_incidentregister(request,pk_test):
 
             form=Verifyincidentregister(request.POST, instance=open_car)
             if form.is_valid():
+                print("request.POST['Verifyincidentregister']",request.POST)
                 form.save()
                 return redirect('/incidentregister_due/')
 
@@ -1742,12 +1743,12 @@ def customer_complaint_report(request):
         response['Content-Disposition'] = 'attachment; filename="customer_complaint_register.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['ComplaintNo.', 'Date', 'Time', 'complainant','Organisation','Process','CompalintType','Desc.','Classification','Correction','Add. Desc.','AssignedTo','When','Approved','Verified'])
+        writer.writerow(['ComplaintNo.', 'Date', 'Time', 'complainant','Organisation','Process','CompalintType','Desc.','Classification','Correction','Add. Desc.','AssignedTo','When','Approved','Verification','CompletionDate'])
 
     
         for i in docmngr:
             
-            writer.writerow([i.comp_no, i.date,i.time,  i.complaint,i.organisation,i.process,i.type,i.complaint_desc,i.classification,i.correction,i.add_desc,i.assignedto,i.due,i.status,i.qmsstatus])
+            writer.writerow([i.comp_no, i.date,i.time,  i.complaint,i.organisation,i.process,i.type,i.complaint_desc,i.classification,i.correction,i.add_desc,i.assignedto,i.due,i.status,i.qmsstatus,i.completion])
         return response
         
     else:

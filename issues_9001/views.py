@@ -554,7 +554,7 @@ def load_issue_description(request):
 
 @login_required(login_url='login')
 def issues_pending_risk_assesment(request):
-    pendingcar=mod9001_issues.objects.filter(risk_assessment_flag='No') #get all customer survey missing improvement plan  entries  
+    pendingcar=mod9001_issues.objects.filter(risk_assessment_flag='No').filter(status='1') #get all customer survey missing improvement plan  entries  
     context={'pendingcar':pendingcar} 
     return render(request,'issues_pending_risk_assessment.html',context)
 

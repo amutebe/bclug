@@ -1357,25 +1357,28 @@ $("#id_risktreatment").change(function() {
 /*End*/
 
 /*script for risk description options dropdown*/
-$("#id_riskdescription").change(function() {
-			if ($("#id_riskdescription option:selected").text()=="Other") {
+
+
+//$("#id_riskdescription").change(function() {
+			//if ($("#id_riskdescription option:selected").text()=="Other") {
 					
-				$('#internal').show();
+			//	$('#internal').show();
 				
-				$('#id_description').attr('required','');
-				$('#id_description').attr('data-error', 'This field is required.');
+			//	$('#id_description').attr('required','');
+			//	$('#id_description').attr('data-error', 'This field is required.');
 					
 				
-			} else {
+			//} else {
 				
-				$('#internal').hide();
+			//	$('#internal').hide();
 				
 				
-				$('#id_description').removeAttr('required');
-				$('#id_description').removeAttr('data-error');				
-			}
-		});
-		$("#id_riskdescription").trigger("change");
+				//$('#id_description').removeAttr('required');
+				//$('#id_description').removeAttr('data-error');				
+			//}
+		//}
+		//);
+		//$("#id_riskdescription").trigger("change");
 
 /*End*/
 
