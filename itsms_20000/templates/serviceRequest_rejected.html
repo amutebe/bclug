@@ -1,0 +1,70 @@
+{% extends "accounts/base.html" %} 
+
+{% block content %}
+
+<div class="col-md-16">
+ 	 <h4 class="mb-3">Service Request Cancelled:</h4>
+ <p class="round2">		
+		<div class="card card-body">
+			
+			<table class="table table-sm">
+				<tr class="table-info">
+
+<th>SR ID</th> 
+<th>Date</th> 
+<th>Time</th> 
+<th>Type</th>
+<th>Mode</th>
+<th>ITservice</th>
+<th>Details</th>
+<th>Priority</th>
+<th>PlanningDate</th>
+<th>Scope</th>
+<th>Category</th>
+<th>Resource</th>
+<th>Dependency</th>
+<th>PlanningDesc.</th>
+<th>Activities</th>
+<th>AssignedTo</th>
+<th>When</th>
+<th>Status</th>
+<th>Reason</th>
+					
+                            
+						
+						</tr>
+						{% for i in products %}
+						<tr>
+					<td>{{i.service_number}}</td>
+<td>{{ i.service_number.date}}</td>
+<td>{{i.service_number.time}}</td>
+<td>{{i.service_number.request_type}}</td>
+<td>{{i.service_number.request_mode}}</td>
+<td>{{i.service_number.IT_service}}</td>
+<td>{{i.service_number.other}}</td>
+<td>{{i.service_number.priority}}</td>
+<td>{{i.planning_date}}</td>
+<td>{{i.service_scope}}</td>
+<td>{{i.service_category}}</td>
+<td>{{i.get_resource_display}}</td>
+<td>{{i.get_dependency_display}}</td>
+<td>{{i.description}}</td>
+<td>{{i.activities}}</td>
+					<td>{{i.assigned}}</td>
+                    <td>{{i.due}}</td>
+                    <td>{{i.qmsstatus}}</td>
+                    <td>{{i.verification_failed}}</td>
+                       
+					</tr>
+
+				{%endfor%}
+		
+			</table>
+			
+		</div>
+	</div>
+
+</div>
+
+
+{% endblock %} 

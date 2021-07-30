@@ -7,10 +7,10 @@
 		<div class="col-md">
 			<div class="card text-center text-white  mb-3" id="orders-delivered">
 			  	<div class="card-header">
-			  		<h5 class="card-title">Total Tasks</h5>
+			  		<h5 class="card-title">Tasks Pending Aproval</h5>
 			  	</div>
 			  	<div class="card-body">
-			    	<h3 class="card-title">{{total_jobs_created}}</h3>
+			    	<h3 class="card-title">{{total_tasks}}</h3>
 			  	</div>
 			</div>
 		
@@ -20,10 +20,10 @@
 		<div class="col-md">
 			<div class="card text-center text-white  mb-3" id="orders-pending">
 			  	<div class="card-header">
-			  		<h5 class="card-title">Completed</h5>
+			  		<h5 class="card-title">Tasks Due Verification</h5>
 			  	</div>
 			  	<div class="card-body">
-			    	<h3 class="card-title">{{total_jobs_completed}}</h3>
+			    	<h3 class="card-title">{{total_tasks_pending}}</h3>
 			  	</div>
 			</div>
 	
@@ -32,11 +32,11 @@
 		<div class="col-md">
 			<div class="card text-center text-white  mb-3" id="total-orders">
 			  	<div class="card-header">
-				  <h5 class="card-title">Pending</h5>
+				  <h5 class="card-title">Rejected Tasks (Last 7 Days)</h5>
 			  	</div>
 			  	<div class="card-body">
 			    	
-					<h3 class="card-title">{{total_jobs_pending}}</a></h3>
+					<h3 class="card-title">{{total_tasks_rejected}}</a></h3>
 				  	
 						
 

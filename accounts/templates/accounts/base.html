@@ -106,6 +106,17 @@ customer {
 		color: #FFF;
 		font-weight: bold;
 	}
+
+	.blinking{
+    animation:blinkingText 1.2s infinite;
+}
+@keyframes blinkingText{
+    0%{     color: #ffa500;    }
+    49%{    color: #ffa500; }
+    60%{    color: transparent; }
+    99%{    color:transparent;  }
+    100%{   color: #ffa500;    }
+}
 </style>
 
 	
@@ -125,6 +136,7 @@ customer {
 </div>
 	<div class="card">
 	<div class="container-fluid">
+
 	<br>
 	{% block content %}
 	

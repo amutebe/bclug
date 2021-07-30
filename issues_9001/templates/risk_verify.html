@@ -13,8 +13,9 @@
  
  {% csrf_token %}
  <h5>
-<label for="residuelikelihood"> Approved Risk</label>
+<label for="residuelikelihood"> Verify Risk: <customer class="mb-3">{{pk_test}}</customer></label>
 </h5>
+ <p class="round2">	
 <table class="table table-sm">
 				<tr class="table-info">
 					<th>Likelihood</th>

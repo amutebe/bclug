@@ -9,25 +9,115 @@
 <div class="row">
 	
     <div class="col-md">
-		<h6>Tasks Pending Approval:</h6>
+		<h6>Status:</h6>
 		
+
+
+<div class="col-md-16">
 		
-		
-		<div class="table table-sm">
-			    	<li><a href="{% url 'ip_pending'%}">IPs: {{total_IPS}}</a><br></li>
-					<li><a href="{% url 'issues_pending'%}">Issues: {{total_ISSUES}}</a><br></li>
-					<li><a href="{% url 'requirement_pending'%}">Compliance: {{total_COMPLAINCE}}</a><br></li>
-			    	<li><a href="{% url 'risk_pending'%}">Risks: {{total_RISKS}}</a><br></li>
-					<li><a href="{% url 'opp_pending'%}">Opportunity: {{total_OPPORTUNITY}}</a><br></li>
-					<li><a href="{% url 'qms_pending'%}">QMS Planner: {{total_QMSplanner}}</a><br></li>
-					<li><a href="{% url 'trainplanner_pending'%}">Training Planner: {{total_Trainingplanner}}</a><br></li>
-					<li><a href="{% url 'incidentregister_due'%}">Incident: {{total_INCIDENTREGISTER}}</a><br></li>
-					<li><a href="{% url 'planning_pending'%}">Corrective Action: {{total_CORRECTIVEACTION}}</a><br></li>
-			    	<li><a href="{% url 'changerequest_pending'%}">Change Request: {{total_CHANGEREQUEST}}</a><br></li>
-					<li><a href="{% url 'customersatisfaction_due'%}">Customer Satisfaction: {{total_CUSTOMERSATISFACTION}}</a><br></li>
-					<li><a href="{% url 'customercomplaint_due'%}">Customer Complaint: {{total_CUSTOMERCOMPLAINT}}</a><br></li>
-			    	<li><a href="{% url 'providerassessments_due'%}">Provider Assessment: {{total_PROVIDERASSESSMENT}}</a><br></li>
+		<div class="card card-body">
+			
+			<table class="table table-sm">
+				<tr class="table-info">
+					<th>Task</th>
+					<th>Pending</th>
+					<th>Due</th>
+					<th>Rejected</th>									
+				</tr></thead><tbody>	
+					<tr>
+						<td>IPs:</td>
+						<td><a href="{% url 'ip_pending'%}">{{total_IPS}}</a></td>
+						<td>NA</td>
+						<td><a href="{% url 'ip_rejected'%}">{{total_IPS_rejected}}</a></td>                     
+					</tr>
+										<tr>
+						<td>Issues:</td>
+						<td><a href="{% url 'issues_pending'%}">{{total_ISSUES}}</a></td>
+						<td>NA</td>
+						<td><a href="{% url 'issues_rejected'%}">{{total_ISSUES_rejected}}</a></td>                     
+					</tr>
+										<tr>
+						<td>Compliance:</td>
+						<td><a href="{% url 'requirement_pending'%}">{{total_COMPLAINCE}}</a></td>
+						<td>NA</td>
+						<td><a href="{% url 'requirement_rejected'%}">{{total_COMPLAINCE_rejected}}</a></td>                     
+					</tr>
+										<tr>
+						<td>Risks:</td>
+						<td><a href="{% url 'risk_pending'%}">{{total_RISKS}}</a></td>
+						<td><a href="{% url 'risks_due'%}">{{total_RISKS_pending}}</a></td>
+						<td>NA</td>                     
+					</tr>
+										<tr>
+						<td>Opportunity:</td>
+						<td><a href="{% url 'opp_pending'%}">{{total_OPPORTUNITY}}</a></td>
+						<td><a href="{% url 'opp_due'%}">{{total_OPPORTUNITY_pending}}</a></td>
+						<td>NA</td>                     
+					</tr>
+										<tr>
+						<td>QMS:</td>
+						<td><a href="{% url 'qms_pending'%}">{{total_QMSplanner}}</a></td>
+						<td><a href="{% url 'qms_due'%}">{{total_QMSplanner_pending}}</a></td>
+						<td><a href="{% url 'qms_rejected'%}">{{total_QMSplanner_rejected}}</a></td>                     
+					</tr>
+										<tr>
+						<td>Training Planner: </td>
+						<td><a href="{% url 'trainplanner_pending'%}">{{total_Trainingplanner}}</a></td>
+						<td><a href="{% url 'training_due'%}">{{total_Trainingplanner_pending}}</a></td>
+						<td><a href="{% url 'trainplanner_rejected'%}">{{total_Trainingplanner_rejected}}</a></td>                     
+					</tr>
+										<tr>
+						<td>Incident Register:</td>
+						<td><a href="{% url 'incidents_pending_analysis'%}">{{total_INCIDENTREGISTER}}</a></td>
+						<td><a href="{% url 'incidentregister_due'%}">{{total_INCIDENTREGISTER_pending}}</a></td>
+						<td><a href="{% url 'incidents_rejected'%}">{{total_INCIDENTREGISTER_rejected}}</a></td>                     
+					</tr>
+										<tr>
+						<td>Corrective Action: </td>
+						<td><a href="{% url 'planning_pending'%}">{{total_CORRECTIVEACTION}}</a></td>
+						<td><a href="{% url 'planning_due'%}">{{total_CORRECTIVEACTION_pending}}</a></td>
+						<td><a href="{% url 'planning_rejected'%}">{{total_CORRECTIVEACTION_rejected}}</a></td>                     
+					</tr>
+										<tr>
+						<td>Change Request</td>
+						<td><a href="{% url 'changerequest_pending'%}">{{total_CHANGEREQUEST}}</a></td>
+						<td>NA</td>
+						<td><a href="{% url 'changerequest_rejected'%}">{{total_CHANGEREQUEST_rejected}}</a></td>                     
+					</tr>
+					
+										<tr>
+						<td>Customer Satisfaction</td>
+						<td><a href="{% url 'customersatisfaction_pending_improvement_plan'%}">{{total_CUSTOMERSATISFACTION}}</a></td>
+						<td><a href="{% url 'customersatisfaction_due'%}">{{total_CUSTOMERSATISFACTION_pending}}</a></td>
+						<td><a href="{% url 'customersatisfaction_rejected'%}">{{total_CUSTOMERSATISFACTION_rejected}}</a></td>                     
+					</tr>
+				
+										<tr>
+						<td>Customer Complaint</td>
+						<td><a href="{% url 'customerComplaints_pending_analysis'%}">{{total_CUSTOMERCOMPLAINT}}</a></td>
+						<td><a href="{% url 'customercomplaint_due'%}">{{total_CUSTOMERCOMPLAINT_pending}}</a></td>
+						<td><a href="{% url 'customerComplaint_rejected'%}">{{total_CUSTOMERCOMPLAINT_rejected}}</a></td>                     
+					</tr>
+					
+										<tr>
+						<td>Provider Assessment</td>
+						<td>NA</td>
+						<td><a href="{% url 'providerassessments_due'%}">{{total_PROVIDERASSESSMENT_pending}}</a></td>
+						<td><a href="{% url 'providerassessments_rejected'%}">{{total_PROVIDERASSESSMENT_rejected}}</a></td>                     
+					</tr>
+
+										<tr>
+						<td>Service Requests</td>
+						<td><a href="{% url 'serviceRequest_pending_planning'%}">{{total_ServiceRequests}}</a></td>
+						<td><a href="{% url 'serviceRequest_due'%}">{{total_ServiceRequests_pending}}</a></td>
+						<td><a href="{% url 'serviceRequest_rejected'%}">{{total_ServiceRequests_rejected}}</a></td>                     
+					</tr>					
+			</table>
+			
 		</div>
+</div>		
+		
+
 			  
 		
 		

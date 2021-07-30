@@ -12,8 +12,10 @@
 <form action="" method="POST">
  
  {% csrf_token %}
-
+<h4 class="mb-3">Verify Opportunity: <customer class="mb-3">{{pk_test}}</customer></h4>	
+   <p class="round2">
 <div class="form-group" id="verification">
+
     
     <label for="exampleFormControlSelect1">Verification status:</label><br>
   {{form.verification}}
@@ -37,7 +39,7 @@
 
 
 <td ><a class="btn btn-warning" href="{%url 'opp_due' %}">Cancel</a></td>
-<td align="right"> <input class="btn btn-danger" type="submit" name="Confirm" value="Close"></td>
+<td align="right"> <input class="btn btn-info" type="submit" name="Confirm" value="Close"></td>
 					</tr>
           </table>
 </div>

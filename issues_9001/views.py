@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate,login, logout
 from django.contrib.auth import get_user_model
 from .decorators import unauthenticated_user,allowed_users
 from django.contrib.auth.decorators import login_required
-from datetime import date
+from datetime import date, timedelta
 import json
 from django.db.models import Count, Q, F
 import xlwt
@@ -79,10 +79,10 @@ def load_ids(request):
     #ids = mod9001_risks.objects.filter(contextdetails_id=context_id)
     #ids = mod9001_issues.objects.all()
     if context_id=="1":
-        print("context_id issues", context_id)
+        #print("context_id issues", context_id)
         ids=mod9001_issues.objects.all()
     else:
-        print("context_id pi", context_id)
+        #print("context_id pi", context_id)
         ids=mod9001_interestedParties.objects.values(issue_number=F('ip_number'))
 
     
@@ -95,15 +95,15 @@ def load_contextdesc(request):
 
     context_id = request.GET.get('contextid')
     context = request.GET.get('context')
-    print("context_id description", context_id)
-    print("context", context)
+    #print("context_id description", context_id)
+    #print("context", context)
     if context=="1":
         contextdescription = mod9001_issues.objects.values(contextdescription=F('description')).filter(issue_number=context_id)
-        print("contextdescription issue", contextdescription)
+        #print("contextdescription issue", contextdescription)
     
     else:
         contextdescription = mod9001_interestedParties.objects.values(contextdescription=F('description')).filter(ip_number=context_id)
-        print("contextdescription ip", contextdescription)
+        #print("contextdescription ip", contextdescription)
 
     return render(request, 'context_descripton.html', {'contextdescription': contextdescription})
 
@@ -219,6 +219,14 @@ def issues_pending(request):
     context={'pendingcar':pendingcar} 
     return render(request,'issues_pending.html',context)
 
+@login_required(login_url='login')
+def issues_rejected(request):
+    pendingcar=mod9001_issues.objects.all().filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4') #get all issues rejected    
+    context={'pendingcar':pendingcar} 
+    return render(request,'issues_rejected.html',context)
+
+
+
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['TopManager'])
@@ -240,7 +248,7 @@ def approve_issue(request,pk_test):
                 form.save()
                 return redirect('/issues_pending/')
 
-    context={'form':form}  
+    context={'form':form,'pk_test':pk_test}  
 
 
     return render(request,'issue_approve.html',context)
@@ -367,6 +375,11 @@ def ip_pending(request):
     context={'pendingcar':pendingcar} 
     return render(request,'ip_pending.html',context)
 
+@login_required(login_url='login')
+def ip_rejected(request):
+    pendingcar= mod9001_interestedParties.objects.all().filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4')   
+    context={'pendingcar':pendingcar} 
+    return render(request,'ip_rejected.html',context)
 
 
 @login_required(login_url='login')
@@ -398,7 +411,7 @@ def approve_ip(request,pk_test):
                 return redirect('/ip_pending/')
             #print("FAILED")
     
-    context={'form':form}  
+    context={'form':form,'pk_test':pk_test}  
 
 
     return render(request,'ip_approve.html',context,)
@@ -516,6 +529,12 @@ def requirement_pending(request):
     return render(request,'requirement_pending.html',context)
 
 
+@login_required(login_url='login')
+def requirement_rejected(request):
+    pendingcar=mod9001_regulatoryReq.objects.filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4').order_by('responsibility') #get all requirement rejected    
+    context={'pendingcar':pendingcar} 
+    return render(request,'requirement_rejected.html',context)
+
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['TopManager'])
@@ -537,7 +556,7 @@ def approve_requirement(request,pk_test):
                 form.save()
                 return redirect('/requirement_pending/')
 
-    context={'form':form}  
+    context={'form':form,'pk_test':pk_test}  
 
 
     return render(request,'requirement_approve.html',context)
@@ -848,13 +867,14 @@ def opportunity_report(request):
 
 @login_required(login_url='login')
 def risk_pending(request):
-    pendingcar=mod9001_risks.objects.filter(status='5',record_type='RISK') #get all risk pending approval    
+    pendingcar=mod9001_risks.objects.filter(status='5',record_type='RISK').filter(~Q(verification_status='Closed')) #get all risk pending approval    
+    #pendingcar=mod9001_risks.objects.all().filter(status='5',record_type='RISK').filter(~Q(riskrank='Low')).filter(~Q(risktreatment=2)).filter(~Q(risktreatment=4)).filter(~Q(verification_status='Closed'))
     context={'pendingcar':pendingcar} 
     return render(request,'risk_pending.html',context)
 
 @login_required(login_url='login')
 def opp_pending(request):
-    pendingcar=mod9001_risks.objects.filter(status='5',record_type='OPP') #get all opportunity  pending approval    
+    pendingcar=mod9001_risks.objects.filter(status='5',record_type='OPP').filter(~Q(verification_status='Closed')) #get all opportunity  pending approval    
     context={'pendingcar':pendingcar} 
     return render(request,'opp_pending.html',context)
 
@@ -879,7 +899,7 @@ def approve_risk(request,pk_test):
                 form.save()
                 return redirect('/risk_pending/')
 
-    context={'form':form}  
+    context={'form':form,'pk_test':pk_test}  
 
 
     return render(request,'risk_approve.html',context)
@@ -903,7 +923,7 @@ def approve_opp(request,pk_test):
                 form.save()
                 return redirect('/opp_pending/')
 
-    context={'form':form}  
+    context={'form':form,'pk_test':pk_test}  
 
 
     return render(request,'opp_approve.html',context)
@@ -917,14 +937,15 @@ def CARnumbers_7days_expire(*x):
 
 @login_required(login_url='login')
 def risks_due(request):
-    carExpire7days=mod9001_risks.objects.filter(status=1,record_type='RISK').filter(~Q(verification=1)).filter(~Q(riskrank='Low')).filter(~Q(risktreatment=2)).filter(~Q(risktreatment=4))
+    carExpire7days=mod9001_risks.objects.filter(due__gte=datetime.now() - timedelta(days=7)).filter(status=1,record_type='RISK').filter(~Q(verification=1)).filter(~Q(riskrank='Low')).filter(~Q(risktreatment=2)).filter(~Q(risktreatment=4))
+    #carExpire7days=mod9001_risks.objects.all().filter(due__gte=datetime.now() - timedelta(days=7)).filter(record_type='RISK').filter(status='1').filter(~Q(verification_status='Closed'))
     thislist = []
    
     for i in carExpire7days:
-        w=i.due
-        t=w.strftime('%m/%d/%Y')
-        if CARnumbers_7days_expire(t)<0:
-            thislist.append(i.risk_number)
+        #w=i.due
+        #t=w.strftime('%m/%d/%Y')
+        #if CARnumbers_7days_expire(t)<0:
+        thislist.append(i.risk_number)
     thisdict={}
     i=0
     #creat a dictionary for all car numbers for display
@@ -973,10 +994,10 @@ def verify_risk(request,pk_test):
             form=VerifyRisk(request.POST, instance=open_car)
             if form.is_valid():
                 form.save()
-                print("request saved", request.POST)
+                #print("request saved", request.POST)
                 return redirect('/risks_due/')
 
-    context={'form':form,'open_car':open_car}  
+    context={'form':form,'open_car':open_car,'pk_test':pk_test}  
 
 
     return render(request,'risk_verify.html',context)
@@ -984,13 +1005,13 @@ def verify_risk(request,pk_test):
 #################OPPORTUNITY VERIFICATION#######################
 @login_required(login_url='login')
 def opp_due(request):
-    carExpire7days=mod9001_risks.objects.filter(status=1,record_type='OPP').filter(~Q(verification=1))
+    carExpire7days=mod9001_risks.objects.all().filter(due__gte=datetime.now() - timedelta(days=7)).filter(record_type='OPP').filter(status='1').filter(~Q(verification_status='Closed'))
     thislist = []
     for i in carExpire7days:
-        w=i.due
-        t=w.strftime('%m/%d/%Y')
-        if CARnumbers_7days_expire(t)<0:
-            thislist.append(i.risk_number)
+        #w=i.due
+        #t=w.strftime('%m/%d/%Y')
+        #if CARnumbers_7days_expire(t)<0:
+        thislist.append(i.risk_number)
     thisdict={}
     i=0
     #creat a dictionary for all car numbers for display
@@ -1029,7 +1050,7 @@ def verify_opp(request,pk_test):
             form.save()
             return redirect('/opp_due/')
 
-    context={'form':form}  
+    context={'form':form,'pk_test':pk_test}  
 
 
     return render(request,'opp_verify.html',context)

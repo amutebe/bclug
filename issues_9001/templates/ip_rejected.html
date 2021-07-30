@@ -1,0 +1,67 @@
+{% extends "accounts/base.html" %} 
+
+{% block content %}
+<br>
+<div class="col-md-26">
+		 <h4 class="mb-3">IPs Rejected in Last 7 Days:</h4>
+ <p class="round2">
+		<div class="">
+			
+			<table class="table table-sm ">
+				<tr class="table-info ">
+					<th>Id</th>
+					<th>Analyst</th>
+					<th>Created</th>
+					<th>Status</th>
+					<th>Reason</th>
+					<th>Context</th>
+					<th>Int.Issue</th>
+					<th>Ext.Issue</th>					
+					<th>Requirement</th>
+					<th>IP to Co.</th>
+					<th>Co. to IP</th>
+					<th>Priority</th>
+					<th>Action</th>
+					<th>By Who</th>
+					<th>When</th>
+					
+					
+				</tr>
+				
+				{% for i in pendingcar %}
+				
+					<tr>
+					<td>{{i.ip_number}}</td>
+					<td>{{i.analyst}}</td>
+					<td>{{i.analysis_date}}</td>
+					<td>{{i.status}}</td>
+					<td>{{i.rejected}}</td>
+					
+					<td>{{i.get_context_display}}</td>
+					<td>{{i.get_internal_issues_display}}</td>
+					<td>{{i.get_external_issues_display}}</td>
+				
+					<td>{{i.description}}</td>
+
+					
+					<td>{{i.get_interestedparties_display}}</td>
+					<td>{{i.get_companyinterestedparties_display}}</td>
+					<td>{{i.get_priority_display}}</td>
+					<td>{{i.get_actiontaken_display}}</td>
+					<td>{{i.responsibility}}</td>
+					<td>{{i.due}}</td>
+					
+					
+
+					</tr>
+
+				{%endfor%}
+		
+			</table>
+		</div>
+	</div>
+
+</div>
+
+
+{% endblock %} 

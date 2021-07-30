@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from .models import *
 from issues_9001.models import *
 from operations_9001.models import *
+from itsms_20000.models import *
 from. forms import *
 from django.contrib import messages
 from django.contrib.auth import authenticate,login, logout
@@ -10,7 +11,7 @@ from django.contrib.auth import get_user_model
 from .decorators import unauthenticated_user,allowed_users
 from .filters import CarFilter
 from django.contrib.auth.decorators import login_required
-from datetime import date
+from datetime import date, timedelta
 import json
 from django.db.models import Count, Q
 import xlwt
@@ -41,22 +42,98 @@ def home(request):
     #total_tasks= mod9001_issues.objects.all().filter(responsibility=request.user.id).count()
     
     #################THIS CODE LOADS ALL PENDING TASKS BASED ON USER ACCOUNT######################################
-    
+    counts=0
     if is_ManagementRepresentative(request.user):
-        total_IPS= mod9001_interestedParties.objects.all().filter(~Q(status='1')).count()
-        total_ISSUES= mod9001_issues.objects.all().filter(~Q(status='1')).count()
-        total_COMPLAINCE= mod9001_regulatoryReq.objects.all().filter(~Q(status='1')).count()
-        total_RISKS= mod9001_risks.objects.all().filter(~Q(status='1')).filter(~Q(verification_status='Closed')).count()
-        total_OPPORTUNITY= mod9001_risks.objects.all().filter(record_type='OPP').filter(~Q(status='1')).filter(~Q(verification_status='Closed')).count()
-        total_QMSplanner= mod9001_qmsplanner.objects.all().filter(~Q(status='1')).filter(~Q(verification_status='Closed')).count()
-        total_Trainingplanner= mod9001_trainingplanner.objects.all().filter(~Q(status='1')).filter(~Q(trainplannerstatus='1')).count()
-        total_INCIDENTREGISTER= mod9001_incidentregisterStaff.objects.all().filter(~Q(status='1')).count()
-        total_CORRECTIVEACTION= mod9001_planning.objects.all().filter(~Q(status='1')).count()
-        total_CHANGEREQUEST= mod9001_changeRegister.objects.all().filter(~Q(status='1')).count()  
-        total_CUSTOMERSATISFACTION= mod9001_customerSatisfaction.objects.all().filter(status='1').filter(~Q(qmsstatus='1')).count()
-        total_CUSTOMERCOMPLAINT= mod9001_customerComplaint.objects.all().filter(status='1').filter(~Q(qmsstatus='1')).count()      
-        total_PROVIDERASSESSMENT= mod9001_providerassessment.objects.all().filter(status='1').filter(~Q(qmsstatus='1')).count()      
+        total_IPS= mod9001_interestedParties.objects.all().filter(status='5').count()
+        total_IPS_rejected= mod9001_interestedParties.objects.all().filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4').count()
+
+        total_ISSUES= mod9001_issues.objects.all().filter(status='5').count()
+        total_ISSUES_rejected= mod9001_issues.objects.all().filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4').count()
+
+        total_COMPLAINCE= mod9001_regulatoryReq.objects.all().filter(status='5').count()       
+        total_COMPLAINCE_rejected=mod9001_regulatoryReq.objects.all().filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4').count()
+ 
+        total_RISKS= mod9001_risks.objects.all().filter(status='5',record_type='RISK').filter(~Q(verification_status='Closed')).count()
+        total_RISKS_pending= mod9001_risks.objects.all().filter(due__gte=datetime.now() - timedelta(days=7)).filter(record_type='RISK').filter(status='1').filter(~Q(verification_status='Closed')).count()
+ 
+        total_OPPORTUNITY= mod9001_risks.objects.all().filter(record_type='OPP').filter(status='5').filter(~Q(verification_status='Closed')).count()
+        total_OPPORTUNITY_pending= mod9001_risks.objects.all().filter(due__gte=datetime.now() - timedelta(days=7)).filter(record_type='OPP').filter(status='1').filter(~Q(verification_status='Closed')).count()
+
+        total_QMSplanner= mod9001_qmsplanner.objects.all().filter(status='5').count()
+        total_QMSplanner_rejected= mod9001_qmsplanner.objects.all().filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4').count()
+        total_QMSplanner_pending= mod9001_qmsplanner.objects.all().filter(end__gte=datetime.now() - timedelta(days=7)).filter(status='1').filter(~Q(qmsstatus=1)).filter(~Q(qmsstatus=3)).count()
     
+        total_Trainingplanner= mod9001_trainingplanner.objects.all().filter(status='5').count()
+        total_Trainingplanner_rejected= mod9001_trainingplanner.objects.all().filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4').count()      
+        total_Trainingplanner_pending= mod9001_trainingplanner.objects.all().filter(end__gte=datetime.now() - timedelta(days=7)).filter(status='1').filter(trainplannerstatus__isnull=True).count()
+#total_INCIDENTREGISTER= mod9001_incidentregisterStaff.objects.all().filter(status='1').filter(qmsstatus__isnull=True).count()
+        total_INCIDENTREGISTER=mod9001_incidentregister.objects.filter(analysis_flag='No').count()
+        total_INCIDENTREGISTER_rejected= mod9001_incidentregisterStaff.objects.all().filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(qmsstatus='3').count()
+        total_INCIDENTREGISTER_pending= mod9001_incidentregisterStaff.objects.all().filter(due__gte=datetime.now() - timedelta(days=7)).filter(~Q(qmsstatus='3')).filter(~Q(qmsstatus='1')).count()
+        
+        total_CORRECTIVEACTION= mod9001_planning.objects.all().filter(status='5').count()
+        total_CORRECTIVEACTION_rejected= mod9001_planning.objects.all().filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4').count()
+        total_CORRECTIVEACTION_pending= mod9001_planning.objects.all().filter(due__gte=datetime.now() - timedelta(days=7)).filter(status='1').filter(~Q(qmsstatus='3')).filter(~Q(qmsstatus='1')).count()  
+       
+        total_CHANGEREQUEST= mod9001_changeRegister.objects.all().filter(status='5').count()
+        total_CHANGEREQUEST_rejected= mod9001_changeRegister.objects.all().filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4').count()
+    
+        #total_CUSTOMERSATISFACTION= mod9001_customerSatisfaction.objects.all().filter(status='1').filter(~Q(qmsstatus='1')).count()
+        total_CUSTOMERSATISFACTION= mod9001_customerSatisfaction.objects.all().filter(status='1').filter(start__isnull=True).count()
+        total_CUSTOMERSATISFACTION_rejected= mod9001_customerSatisfaction.objects.all().filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(qmsstatus='3').count()
+        total_CUSTOMERSATISFACTION_pending= mod9001_customerSatisfaction.objects.all().filter(due__gte=datetime.now() - timedelta(days=7)).filter(~Q(qmsstatus='3')).filter(~Q(qmsstatus='1')).count()     
+           #total_CUSTOMERCOMPLAINT= mod9001_customerComplaint.objects.all().filter(status='1').filter(~Q(qmsstatus='1')).count()      
+        total_CUSTOMERCOMPLAINT= mod9001_customerComplaint.objects.filter(analysis_flag='No').count()   
+        total_CUSTOMERCOMPLAINT_rejected= mod9001_customerComplaint.objects.all().filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(qmsstatus='3').count()          
+        total_CUSTOMERCOMPLAINT_pending= mod9001_customerComplaint.objects.all().filter(due__gte=datetime.now() - timedelta(days=7)).filter(~Q(qmsstatus='3')).filter(~Q(qmsstatus='1')).count()       
+
+        #total_PROVIDERASSESSMENT= mod9001_providerassessment.objects.all().filter(status='1').filter(~Q(qmsstatus='1')).count()      
+        total_PROVIDERASSESSMENT= mod9001_providerassessment.objects.all().filter(status='1').filter(qmsstatus__isnull=True).count()
+        total_PROVIDERASSESSMENT_rejected= mod9001_providerassessment.objects.all().filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(qmsstatus='3').count() 
+        total_PROVIDERASSESSMENT_pending= mod9001_providerassessment.objects.all().filter(due__gte=datetime.now() - timedelta(days=7)).filter(~Q(qmsstatus='3')).filter(~Q(qmsstatus='1')).count() 
+ 
+        
+        
+        
+        #total_CORRECTIVEACTION= mod9001_planning.objects.all().filter(status='1').filter(~Q(qmsstatus='1')).count()
+       # total_CORRECTIVEACTION= mod9001_planning.objects.all().filter(status='5').count()
+        #total_CORRECTIVEACTION_rejected= mod9001_planning.objects.all().filter(status='4')
+        #for i in total_CORRECTIVEACTION_rejected:
+        #    if i.date_today is not None:
+         #       w=i.date_today
+        #        t=w.strftime('%m/%d/%Y')
+        #        if (get_7days_expire(t)<8 and get_7days_expire(t)>=0):
+         #           counts+=1     
+       # total_CORRECTIVEACTION_rejected=counts
+        #counts=0
+        #total_CORRECTIVEACTION_pending= mod9001_planning.objects.all().filter(~Q(qmsstatus='3')).filter(~Q(qmsstatus='1')) 
+        #for i in total_CORRECTIVEACTION_pending:
+        #    if i.due is not None:
+        #        w=i.due
+        #        t=w.strftime('%m/%d/%Y')
+        #        if (get_7days_expire(t)<8 and get_7days_expire(t)>=0):
+        #            counts+=1     
+        #total_CORRECTIVEACTION_pending=counts
+        counts=0
+
+
+
+        #total_ServiceRequests= mod20000_service_planning.objects.all().filter(status='1').filter(~Q(qmsstatus='1')).count()
+        total_ServiceRequests= mod20000_service_request.objects.filter(planning_flag='No').count()
+        total_ServiceRequests_rejected= mod20000_service_planning.objects.all().filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(qmsstatus='3').count()
+        total_ServiceRequests_pending= mod20000_service_planning.objects.all().filter(due__gte=datetime.now() - timedelta(days=7)).filter(~Q(qmsstatus='3')).filter(~Q(qmsstatus='1')).count()
+
+            
+
+
+
+
+
+
+
+        #total_tasks= total_ServiceRequests + total_IPS + total_ISSUES + total_COMPLAINCE + total_RISKS + total_OPPORTUNITY + total_QMSplanner + total_Trainingplanner + total_INCIDENTREGISTER + total_CORRECTIVEACTION + total_CHANGEREQUEST + total_CUSTOMERSATISFACTION + total_CUSTOMERCOMPLAINT + total_PROVIDERASSESSMENT
+
+
     elif is_Auditor(request.user):
         total_IPS= mod9001_interestedParties.objects.all().filter(~Q(status='1')).count()
         total_ISSUES= mod9001_issues.objects.all().filter(~Q(status='1')).count()
@@ -71,7 +148,9 @@ def home(request):
         total_CUSTOMERSATISFACTION= mod9001_customerSatisfaction.objects.all().filter(status='1').filter(~Q(qmsstatus='1')).count()
         total_CUSTOMERCOMPLAINT= mod9001_customerComplaint.objects.all().filter(status='1').filter(~Q(qmsstatus='1')).count()      
         total_PROVIDERASSESSMENT= mod9001_providerassessment.objects.all().filter(status='1').filter(~Q(qmsstatus='1')).count()      
-            
+        total_ServiceRequests= mod20000_service_planning.objects.all().filter(status='1').filter(~Q(qmsstatus='1')).count()    
+        #total_tasks= total_ServiceRequests + total_IPS + total_ISSUES + total_COMPLAINCE + total_RISKS + total_OPPORTUNITY + total_QMSplanner + total_Trainingplanner + total_INCIDENTREGISTER + total_CORRECTIVEACTION + total_CHANGEREQUEST + total_CUSTOMERSATISFACTION + total_CUSTOMERCOMPLAINT + total_PROVIDERASSESSMENT
+
                
     
     elif is_TopManager(request.user):
@@ -88,23 +167,84 @@ def home(request):
         total_CUSTOMERSATISFACTION= mod9001_customerSatisfaction.objects.all().filter(status='1').filter(~Q(qmsstatus='1')).count()
         total_CUSTOMERCOMPLAINT= mod9001_customerComplaint.objects.all().filter(status='1').filter(~Q(qmsstatus='1')).count()      
         total_PROVIDERASSESSMENT= mod9001_providerassessment.objects.all().filter(status='1').filter(~Q(qmsstatus='1')).count()      
-    
+        total_ServiceRequests= mod20000_service_planning.objects.all().filter(status='1').filter(~Q(qmsstatus='1')).count()
+         
+        #total_tasks= total_ServiceRequests + total_IPS + total_ISSUES + total_COMPLAINCE + total_RISKS + total_OPPORTUNITY + total_QMSplanner + total_Trainingplanner + total_INCIDENTREGISTER + total_CORRECTIVEACTION + total_CHANGEREQUEST + total_CUSTOMERSATISFACTION + total_CUSTOMERCOMPLAINT + total_PROVIDERASSESSMENT
+       
     else:
-        total_IPS= mod9001_interestedParties.objects.all().filter(~Q(status='1')).filter(responsibility=request.user.id).count()
-        total_ISSUES= mod9001_issues.objects.all().filter(~Q(status='1')).filter(responsibility=request.user.id).count()
-        total_COMPLAINCE= mod9001_regulatoryReq.objects.all().filter(~Q(status='1')).filter(responsibility=request.user.id).count()
-        total_RISKS= mod9001_risks.objects.all().filter(~Q(status='1')).filter(record_type='RISK').filter(~Q(verification_status='Closed')).filter(responsibility=request.user.id).count()
-        total_OPPORTUNITY= mod9001_risks.objects.all().filter(record_type='OPP').filter(~Q(status='1')).filter(~Q(verification_status='Closed')).count()
-        total_QMSplanner= mod9001_qmsplanner.objects.all().filter(~Q(status='1')).filter(~Q(verification_status='Closed')).count()
-        total_Trainingplanner= mod9001_trainingplanner.objects.all().filter(~Q(status='1')).filter(~Q(trainplannerstatus='1')).count()
-        total_INCIDENTREGISTER= mod9001_incidentregisterStaff.objects.all().filter(~Q(status='1')).count()
-        total_CORRECTIVEACTION= mod9001_planning.objects.all().filter(~Q(status='1')).count()
-        total_CHANGEREQUEST= mod9001_changeRegister.objects.all().filter(~Q(status='1')).count()  
-        total_CUSTOMERSATISFACTION= mod9001_customerSatisfaction.objects.all().filter(status='1').filter(~Q(qmsstatus='1')).count()            
-        total_CUSTOMERCOMPLAINT= mod9001_customerComplaint.objects.all().filter(status='1').filter(~Q(qmsstatus='1')).count()      
-        total_PROVIDERASSESSMENT= mod9001_providerassessment.objects.all().filter(status='1').filter(~Q(qmsstatus='1')).count()      
+        #total_IPS= mod9001_interestedParties.objects.all().filter(~Q(status='1')).filter(responsibility=request.user.id).count()
+        #total_ISSUES= mod9001_issues.objects.all().filter(~Q(status='1')).filter(responsibility=request.user.id).count()
+        #total_COMPLAINCE= mod9001_regulatoryReq.objects.all().filter(~Q(status='1')).filter(responsibility=request.user.id).count()
+        #total_RISKS= mod9001_risks.objects.all().filter(~Q(status='1')).filter(record_type='RISK').filter(~Q(verification_status='Closed')).filter(responsibility=request.user.id).count()
+        #total_OPPORTUNITY= mod9001_risks.objects.all().filter(record_type='OPP').filter(~Q(status='1')).filter(~Q(verification_status='Closed')).count()
+        #total_QMSplanner= mod9001_qmsplanner.objects.all().filter(~Q(status='1')).filter(~Q(verification_status='Closed')).count()
+        #total_Trainingplanner= mod9001_trainingplanner.objects.all().filter(~Q(status='1')).filter(~Q(trainplannerstatus='1')).count()
+        #total_INCIDENTREGISTER= mod9001_incidentregisterStaff.objects.all().filter(~Q(status='1')).count()
+        #total_CORRECTIVEACTION= mod9001_planning.objects.all().filter(~Q(status='1')).count()
+        ##total_CHANGEREQUEST= mod9001_changeRegister.objects.all().filter(~Q(status='1')).count()  
+        #total_CUSTOMERSATISFACTION= mod9001_customerSatisfaction.objects.all().filter(status='1').filter(~Q(qmsstatus='1')).count()            
+        #total_CUSTOMERCOMPLAINT= mod9001_customerComplaint.objects.all().filter(status='1').filter(~Q(qmsstatus='1')).count()      
+        #total_PROVIDERASSESSMENT= mod9001_providerassessment.objects.all().filter(status='1').filter(~Q(qmsstatus='1')).count()      
+        
+        total_IPS= 0
+        total_ISSUES= 0
+        total_COMPLAINCE= 0
+        total_RISKS= 0
+        total_OPPORTUNITY= 0
+        total_QMSplanner= 0
+        total_Trainingplanner= 0
+        total_INCIDENTREGISTER= 0
+        total_CORRECTIVEACTION= 0
+        total_CHANGEREQUEST= 0
+        total_CUSTOMERSATISFACTION= 0
+        total_CUSTOMERCOMPLAINT= 0      
+        total_PROVIDERASSESSMENT= 0 
+        total_ServiceRequests= 0  
+        total_tasks=0
+        total_tasks_pending=0
+        total_tasks_rejected=0
+        total_IPS_pending= 0
+        total_ISSUES_pending= 0
+        total_COMPLAINCE_pending= 0
+        total_RISKS_pending= 0
+        total_OPPORTUNITY_pending= 0
+        total_QMSplanner_pending= 0
+        total_Trainingplanner_pending= 0
+        total_INCIDENTREGISTER_pending= 0
+        total_CORRECTIVEACTION_pending= 0
+        total_CHANGEREQUEST_pending= 0
+        total_CUSTOMERSATISFACTION_pending= 0
+        total_CUSTOMERCOMPLAINT_pending= 0      
+        total_PROVIDERASSESSMENT_pending= 0 
+        total_ServiceRequests_pending= 0 
+        total_IPS_rejected= 0
+        total_ISSUES_rejected= 0
+        total_COMPLAINCE_rejected= 0
+        total_RISKS_rejected= 0
+        total_OPPORTUNITY_rejected= 0
+        total_QMSplanner_rejected= 0
+        total_Trainingplanner_rejected= 0
+        total_INCIDENTREGISTER_rejected= 0
+        total_CORRECTIVEACTION_rejected= 0
+        total_CHANGEREQUEST_rejected= 0
+        total_CUSTOMERSATISFACTION_rejected= 0
+        total_CUSTOMERCOMPLAINT_rejected= 0      
+        total_PROVIDERASSESSMENT_rejected= 0 
+        total_ServiceRequests_rejected= 0  
 
-    total_tasks= total_IPS + total_ISSUES + total_COMPLAINCE + total_RISKS + total_OPPORTUNITY + total_QMSplanner + total_Trainingplanner + total_INCIDENTREGISTER + total_CORRECTIVEACTION + total_CHANGEREQUEST + total_CUSTOMERSATISFACTION + total_CUSTOMERCOMPLAINT + total_PROVIDERASSESSMENT
+
+
+    total_tasks=total_ServiceRequests + total_IPS + total_ISSUES + total_COMPLAINCE + total_RISKS + total_OPPORTUNITY + total_QMSplanner + total_Trainingplanner + total_INCIDENTREGISTER + total_CORRECTIVEACTION + total_CHANGEREQUEST + total_CUSTOMERSATISFACTION + total_CUSTOMERCOMPLAINT + total_PROVIDERASSESSMENT
+    total_tasks_pending=total_ServiceRequests_pending  + total_RISKS_pending + total_OPPORTUNITY_pending + total_QMSplanner_pending + total_Trainingplanner_pending + total_INCIDENTREGISTER_pending + total_CORRECTIVEACTION_pending  + total_CUSTOMERSATISFACTION_pending + total_CUSTOMERCOMPLAINT_pending + total_PROVIDERASSESSMENT_pending
+    total_tasks_rejected=total_ServiceRequests_rejected + total_IPS_rejected + total_ISSUES_rejected + total_COMPLAINCE_rejected  + total_QMSplanner_rejected + total_Trainingplanner_rejected + total_INCIDENTREGISTER_rejected + total_CORRECTIVEACTION_rejected + total_CHANGEREQUEST_rejected + total_CUSTOMERSATISFACTION_rejected + total_CUSTOMERCOMPLAINT_rejected + total_PROVIDERASSESSMENT_rejected
+      
+    
+    if total_tasks==0:
+        total_tasks=''
+    total_tasks=total_ServiceRequests + total_IPS + total_ISSUES + total_COMPLAINCE + total_RISKS + total_OPPORTUNITY + total_QMSplanner + total_Trainingplanner + total_INCIDENTREGISTER + total_CORRECTIVEACTION + total_CHANGEREQUEST + total_CUSTOMERSATISFACTION + total_CUSTOMERCOMPLAINT + total_PROVIDERASSESSMENT
+    tasks=total_tasks+total_tasks_pending
+    if tasks==0:
+        tasks=''
     #request.session['total_tasks'] = total_tasks
     
 #####################END##################################
@@ -478,61 +618,59 @@ def home(request):
 
      #############################NON CONFORMITY GRAPH FOR CORRECTIVE ACTION REGISTER##########################################################      
     correctiveaction= mod9001_correctiveaction.objects.all().filter(finding='1')
-    Transport=0
-    Sales=0
-    Admin=0
-    Marketing=0
-    CustomerRelationship=0
-    HelpDesk=0
-    Inventory=0
-    ProjectManagement=0
-    Procurement=0
-    Management=0
-    Training=0
+    BidManagement=0
+    IToperations=0
+    InternalAuditing=0
+    AccountsReceivables=0
+    AccountsPayables=0
     Recruitment=0
-    SystemAdmin=0
-    Disciplinary=0
-    Other=0
+    Training=0
+    Management=0
+    Procurement=0
+    Projects=0
+    TechnicalSupport=0
+    CustomerSatisfaction=0    
+    Marketing=0
+    Administration=0
+
 
     if correctiveaction.count() > 0:
         for i in correctiveaction:
-            if str(i.process)=='Project Management':
-                ProjectManagement+=1
-            elif str(i.process)=='Sales':
-                Sales+=1
-            elif str(i.process)=='Administration':
-                Admin+=1       
-            elif str(i.process)=='Marketing':
-                Marketing+=1
-            elif str(i.process)=='Customer Relations':
-                CustomerRelationship+=1           
-            elif str(i.process)=='Service or Help Desk Support':
-                HelpDesk+=1
-            elif str(i.process)=='Inventory':
-                Inventory+=1
-            elif str(i.process)=='Transport':
-                Transport+=1
-            elif str(i.process)=='Procurement':
-                Procurement+=1
-            elif str(i.process) =='Management':
-                Management+=1
-            elif str(i.process)=='Training':
-                Training+=1
+            if str(i.process)=='Bid Management':
+                BidManagement+=1
+            elif str(i.process)=='IT Operations':
+                IToperations+=1
+            elif str(i.process)=='Internal Auditing':
+                InternalAuditing+=1       
+            elif str(i.process)=='Accounts Receivables':
+                AccountsReceivables+=1
+            elif str(i.process)=='Accounts Payables':
+                AccountsPayables+=1           
             elif str(i.process)=='Recruitment':
                 Recruitment+=1
-            elif str(i.process) =='Systems Administration':
-                SystemAdmin+=1
-            elif str(i.process)=='Disciplinary Process':
-                Disciplinary+=1
-            elif str(i.process)=='Other':
-                Other+=1
+            elif str(i.process)=='Training':
+                Training+=1
+            elif str(i.process)=='Management':
+                Management+=1
+            elif str(i.process)=='Procurement':
+                Procurement+=1
+            elif str(i.process)=='Projects':
+                Projects+=1
+            elif str(i.process)=='Technical Support':
+                TechnicalSupport+=1
+            elif str(i.process) =='Customer Satisfaction':
+                CustomerSatisfaction+=1
+            elif str(i.process)=='Marketing':
+                Marketing+=1
+            elif str(i.process)=='Administration':
+                Administration+=1
             else:
                 pass
-    ca_categories=['Transport','Sales','Admin','Marketing','CustomerRelationship','HelpDesk','Inventory','ProjectManagement','Procurement','Management','Training','Recruitment','SystemAdmin','Disciplinary','Other']
+    ca_categories=['BidManagement','ITOperations','InternalAuditing','AccountsReceivables','AccountsPayables','Recruitment','Training','Management','Procurement','Projects','TechnicalSupport','CustomerSatisfaction','Marketing','Administration']
             
     nonconformities = {
         'name': 'NonConformity',
-        'data':[Transport,Sales,Admin,Marketing,CustomerRelationship,HelpDesk,Inventory,ProjectManagement,Procurement,Management,Training,Recruitment,SystemAdmin,Disciplinary,Other],
+        'data':[BidManagement,IToperations,InternalAuditing,AccountsReceivables,AccountsPayables,Recruitment,Training,Management,Procurement,Projects,TechnicalSupport,CustomerSatisfaction,Marketing,Administration],
         'color': ''
     }
 
@@ -548,7 +686,10 @@ def home(request):
     ca_dump = json.dumps(ca_chart)
     
     
-    context={'ca_dump':ca_dump,'Transport':Transport,'Sales':Sales,'Admin':Admin,'Marketing':Marketing,'CustomerRelationship':CustomerRelationship,'HelpDesk':HelpDesk,'Inventory':Inventory,'ProjectManagement':ProjectManagement,'Procurement':Procurement,'Management':Management,'Training':Training,'Recruitment':Recruitment,'SystemAdmin':SystemAdmin,'Disciplinary':Disciplinary,'Other':Other,'finding':finding,'low':low,'high':high,'medium':medium,'total_jobs_pending':total_jobs_pending,'total_jobs_created':total_jobs_created,'total_jobs_completed':total_jobs_completed,'first_cost':g,'second_cost':h,'third_cost':m,'forth_cost':j,'fifth_cost':k,'sixth_cost':l,'firstt':aa,'secondd':bb,'thirdd':cc,'forthh':dd,'fifthh':ee,'sixthh':ff,'first':a,'second':b,'third':c,'forth':d,'fifth':e,'sixth':f,'poor':w,'improvement':x,'satisfactory':y,'good':z,'excellent':s,'browser_stats':browser_stats,'total_PROVIDERASSESSMENT':total_PROVIDERASSESSMENT,'total_CUSTOMERCOMPLAINT':total_CUSTOMERCOMPLAINT,'total_CUSTOMERSATISFACTION':total_CUSTOMERSATISFACTION,'total_CHANGEREQUEST':total_CHANGEREQUEST,'total_CORRECTIVEACTION':total_CORRECTIVEACTION,'total_INCIDENTREGISTER':total_INCIDENTREGISTER,'total_Trainingplanner':total_Trainingplanner,'total_QMSplanner':total_QMSplanner,'carstatus':carstatus,'cars':cars, 'customers':customers,'total_cars':total_cars,'total_approved':total_approved,'total_pending':total_pending,'counts':counts,'due':due,'chart': dump,'charts': dump2,'total_tasks':total_tasks,'total_IPS':total_IPS,'total_ISSUES':total_ISSUES,'total_COMPLAINCE':total_COMPLAINCE,'total_RISKS':total_RISKS,'total_OPPORTUNITY':total_OPPORTUNITY}
+    #total_tasks_pending=total_ServiceRequests_pending  + total_RISKS_pending + total_OPPORTUNITY_pending + total_QMSplanner_pending + total_Trainingplanner_pending + total_INCIDENTREGISTER_pending + total_CORRECTIVEACTION_pending  + total_CUSTOMERSATISFACTION_pending + total_CUSTOMERCOMPLAINT_pending + total_PROVIDERASSESSMENT_pending
+    context={'ca_dump':ca_dump,'BidManagement':BidManagement,'ITOperations':IToperations,'InternalAuditing':InternalAuditing,'AccountsReceivables':AccountsReceivables,'AccountsPayables':AccountsPayables,'Recruitment':Recruitment,'Training':Training,'Management':Management,'Procurement':Procurement,'Projects':Projects,'TechnicalSupport':TechnicalSupport,'CustomerSatisfaction':CustomerSatisfaction,'Marketing':Marketing,'Administration':Administration,'finding':finding,'low':low,'high':high,'medium':medium,'total_jobs_pending':total_jobs_pending,'total_jobs_created':total_jobs_created,'total_jobs_completed':total_jobs_completed,'first_cost':g,'second_cost':h,'third_cost':m,'forth_cost':j,'fifth_cost':k,'sixth_cost':l,'firstt':aa,'secondd':bb,'thirdd':cc,'forthh':dd,'fifthh':ee,'sixthh':ff,'first':a,'second':b,'third':c,'forth':d,'fifth':e,'sixth':f,'poor':w,'improvement':x,'satisfactory':y,'good':z,'excellent':s,'browser_stats':browser_stats,'total_PROVIDERASSESSMENT':total_PROVIDERASSESSMENT,'total_CUSTOMERCOMPLAINT':total_CUSTOMERCOMPLAINT,'total_CUSTOMERSATISFACTION':total_CUSTOMERSATISFACTION,'total_CHANGEREQUEST':total_CHANGEREQUEST,'total_CORRECTIVEACTION':total_CORRECTIVEACTION,'total_INCIDENTREGISTER':total_INCIDENTREGISTER,'total_Trainingplanner':total_Trainingplanner,'total_QMSplanner':total_QMSplanner,'carstatus':carstatus,'cars':cars, 'customers':customers,'total_cars':total_cars,'total_approved':total_approved,'total_pending':total_pending,'counts':counts,'due':due,'chart': dump,'charts': dump2,'total_tasks':total_tasks,'total_tasks_pending':total_tasks_pending,'total_tasks_rejected':total_tasks_rejected,'total_IPS':total_IPS,'total_ISSUES':total_ISSUES,'total_COMPLAINCE':total_COMPLAINCE,'total_RISKS':total_RISKS,'total_OPPORTUNITY':total_OPPORTUNITY,'total_ServiceRequests_rejected':total_ServiceRequests_rejected,'total_QMSplanner_rejected':total_QMSplanner_rejected,'total_Trainingplanner_rejected':total_Trainingplanner_rejected,'total_INCIDENTREGISTER_rejected':total_INCIDENTREGISTER_rejected,'total_CORRECTIVEACTION_rejected':total_CORRECTIVEACTION_rejected,'total_CUSTOMERSATISFACTION_rejected':total_CUSTOMERSATISFACTION_rejected,'total_CUSTOMERCOMPLAINT_rejected':total_CUSTOMERCOMPLAINT_rejected,'total_PROVIDERASSESSMENT_rejected':total_PROVIDERASSESSMENT_rejected,'total_ServiceRequests_pending':total_ServiceRequests_pending,'total_RISKS_pending':total_RISKS_pending,'total_OPPORTUNITY_pending':total_OPPORTUNITY_pending,'total_QMSplanner_pending':total_QMSplanner_pending,'total_Trainingplanner_pending':total_Trainingplanner_pending,'total_INCIDENTREGISTER_pending':total_INCIDENTREGISTER_pending,'total_CORRECTIVEACTION_pending':total_CORRECTIVEACTION_pending,'total_CUSTOMERSATISFACTION_pending':total_CUSTOMERSATISFACTION_pending,'total_CUSTOMERCOMPLAINT_pending':total_CUSTOMERCOMPLAINT_pending,'total_PROVIDERASSESSMENT_pending':total_PROVIDERASSESSMENT_pending,'total_IPS_rejected':total_IPS_rejected,'total_ISSUES_rejected':total_ISSUES_rejected,'total_CHANGEREQUEST_rejected':total_CHANGEREQUEST_rejected,'total_ServiceRequests':total_ServiceRequests,'total_COMPLAINCE_rejected':total_COMPLAINCE_rejected,'tasks':tasks
+
+}
 
 
  
@@ -686,7 +827,7 @@ def cars_view(request):
         car_list = car.objects.all()
         myFilter=CarFilter(request.GET, queryset=car_list)
         cars=myFilter.qs
-        print("PRINTING",cars)
+        #print("PRINTING",cars)
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="CAR.csv"'
 

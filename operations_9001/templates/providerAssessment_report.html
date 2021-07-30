@@ -55,7 +55,8 @@
 	
                 
 					<table class="tableizer-table">
-						<thead><tr class="tableizer-firstrow">
+						<thead>
+                        <tr class="tableizer-firstrow">
 					<th>Review No.</th>
 					<th>Date</th>
 					<th>Provider</th>
@@ -105,10 +106,10 @@
 					
 					<td colspan="11">
                      {% if i.get_jobknowledg_display  %}
-                 <b>Job Knowledge:</b>{{i.get_jobknowledg_display}} 
+                 <b>Knowledge/Expertise:</b>{{i.get_jobknowledg_display}} 
                     {%endif%}               
                     {% if i.get_flexibility_display %}
-                  <b> Adaptability:</b>  {{i.get_flexibility_display}}
+                  <b> Adaptability & Flexibility:</b>  {{i.get_flexibility_display}}
                     
                     {%endif%} 
                     {% if i.get_problemsolving_display %}
@@ -116,7 +117,7 @@
                     
                     {%endif%}
                     {% if i.get_Initiativenes_display %}  
-                    <b> Initiativeness:</b>{{i.get_Initiativenes_display}}
+                    <b> Initiativeness & Resourcefulness:</b>{{i.get_Initiativenes_display}}
                     
                     {%endif%}
                     {% if i.get_planing_display %} 
@@ -124,7 +125,7 @@
                     
                     {%endif%}
                     {% if i.get_workquality_display %} 
-                    <b> Work quality:</b>{{i.get_workquality_display}}
+                    <b> Work Quality & Quantity:</b>{{i.get_workquality_display}}
                     
                     {%endif%}
                     {% if i.get_interskills_display %} 
@@ -132,7 +133,7 @@
                     
                     {%endif%}
                     {% if i.get_communication_display %} 
-                    <b> Communication skills:</b>{{i.get_communication_display}}
+                    <b> Communication:</b>{{i.get_communication_display}}
                     
                     {%endif%}
                     {% if i.get_supervisionmagt_display %} 

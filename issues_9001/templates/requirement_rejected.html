@@ -1,0 +1,59 @@
+{% extends "accounts/base.html" %} 
+
+{% block content %}
+
+<div class="col-md-16">
+	<h4 class="mb-3">Compliance Rejected in Last 7 Days</h4>	
+   <p class="round2">	
+		<div class="card card-body">
+			
+			<table class="table table-sm">
+				<tr class="table-info">
+					<th>ID</th>
+					<th>Analyst</th>
+					<th>Created</th>
+					<th>Status</th>
+                    <th>Reason</th>
+					<th>Requirement</th>
+					<th>Description</th>
+					<th>Document</th>			
+					<th>Int.Party</th>
+					<th>Responsility</th>
+					<th>When</th>
+				
+					
+				
+				
+				</tr>
+				
+				{% for i in pendingcar %}
+				
+					<tr>
+					<td>{{i.regulatory_number}}</td>
+					<td>{{i.analyst}}</td>
+					<td>{{i.registered}}</td>
+					<td>{{i.status}}</td>
+                    <td>{{i.rejected}}</td>
+					<td>{{i.cat_name}}</td>
+					<td>{{i.description}}</td>
+					<td>{{i.document}}</td>
+					<td>{{i.get_interestedparty_display}}</td>
+					<td>{{i.responsibility}}</td>
+					<td>{{i.due}}</td>
+					
+				
+			
+					</tr>
+
+
+
+				{%endfor%}
+		
+			</table>
+		</div>
+	</div>
+
+</div>
+
+
+{% endblock %} 

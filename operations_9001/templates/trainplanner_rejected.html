@@ -1,0 +1,62 @@
+{% extends "accounts/base.html" %} 
+
+{% block content %}
+<br>
+<div class="col-md-16">
+	  <h5>
+<label for="residuelikelihood"> Trainings Rejected: </label>
+</h5>
+ <p class="round2">	
+		<div class="card card-body">
+			
+			<table class="table table-sm">
+				<tr class="table-info">
+					<th>ID</th>
+					<th>Planner</th>
+					<th>PlanDate</th>
+					<th>Type</th>
+					<th>Trainees</th>
+					<th>Start</th>
+					<th>End</th>
+					<th>Desc.</th>
+					<th>Details</th>
+					<th>Trainer</th>
+					<th>Resources</th>
+					<th>Objective</th>
+					<th>Location</th>
+					<th>Status</th>
+                    <th>Reason</th>
+		
+				</tr>
+				
+				{% for i in pendingcar %}
+				
+					<tr>
+					<td>{{i.plan_number}}</td>
+					<td>{{i.planner}}</td>
+					<td>{{i.trainng_date}}</td>
+					<td>{{i.get_type_display}}</td>
+					<td>{{i.get_trainaudience_display}}</td>
+					<td>{{i.start}}</td>
+					<td>{{i.end}}</td>
+					<td>{{i.description}}</td>
+					<td>{{i.details}}</td>
+					<td>{{i.trainer}}</td>
+					<td>{{i.resources}}</td>
+					<td>{{i.objective}}</td>
+					<td>{{i.get_trainlocation_display}}</td>
+					<td>{{i.status}}</td>
+                    <td>{{i.rejected}}</td>
+
+					</tr>
+
+				{%endfor%}
+		
+			</table>
+		</div>
+	</div>
+
+</div>
+
+
+{% endblock %} 

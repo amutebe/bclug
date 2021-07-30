@@ -1,0 +1,68 @@
+{% extends "accounts/base.html" %} 
+
+{% block content %}
+<br>
+<div class="col-md-28">
+  <h5>
+<label for="residuelikelihood"> Change Request Rejected:</label>
+</h5>
+ <p class="round2">		
+		<div class="">
+			
+			<table class="table table-sm">
+				<tr class="table-info">
+					<th>RequestNo</th>
+					<th>Date</th>
+					<th>RaisedBy</th>
+					<th>Trigger</th>
+					<th>Process</th>
+					<th>ChangeType</th>
+                    <th>ChangeDesc.</th>
+                    <th>Evaluation</th>
+					<th>Add.Desc</th>
+					<th>Risk</th>
+					<th>Currency</th>
+					<th>Amount</th>
+					<th>Details</th>
+		
+					<th>Status</th>
+					
+					
+					<th>Reason</th>
+				</tr>
+				
+				{% for i in pendingcar %}
+				
+					<tr>
+					<td>{{i.req_no}}</td>
+					<td>{{i.date}}</td>
+					<td>{{i.raisedby}}</td>
+					<td>{{i.trigger}}</td>
+					<td>{{i.process}}</td>
+					<td>{{i.changetype}}</td>
+<td>{{i.changedesc}}</td>	
+<td>{{i.get_evaluation_display}}</td>	
+<td>{{i.evaldesc}}</td>	
+<td>{{i.get_cost_display}}</td>		
+					<td>{{i.get_currency_display}}</td>
+					<td>{{i.costdescription}}</td>
+						<td>{{i.add_desc}}</td>
+				
+					<td>{{i.status}}</td>
+					
+					
+					
+					<td>{{i.rejected}}</td>
+
+					</tr>
+
+				{%endfor%}
+		
+			</table>
+		</div>
+	</div>
+
+</div>
+
+
+{% endblock %} 

@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate,login, logout
 from django.contrib.auth import get_user_model
 from .decorators import unauthenticated_user,allowed_users
 from django.contrib.auth.decorators import login_required
-from datetime import date
+from datetime import date, timedelta
 import json
 from django.db.models import Count, Q, F
 import xlwt
@@ -265,6 +265,20 @@ def qms_pending(request):
     context={'pendingcar':pendingcar} 
     return render(request,'qms_pending.html',context)
 
+@login_required(login_url='login')
+def qms_rejected(request):
+    if is_Auditor(request.user):
+        pendingcar=mod9001_qmsplanner.objects.all().filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4') #get all qms rejected    
+        
+    else:
+        pendingcar=mod9001_qmsplanner.objects.all().filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4') #get all qms rejected
+    
+    context={'pendingcar':pendingcar} 
+    return render(request,'qms_rejected.html',context)
+
+
+
+
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['TopManager'])
@@ -285,7 +299,7 @@ def approve_qms(request,pk_test):
                 form.save()
                 return redirect('/qms_pending/')
 
-    context={'form':form}  
+    context={'form':form,'pk_test':pk_test}  
 
 
     return render(request,'qms_approve.html',context)
@@ -311,13 +325,13 @@ def CARnumbers_7days_expire(*x):
 
 @login_required(login_url='login')
 def qms_due(request):
-    carExpire7days=mod9001_qmsplanner.objects.filter(status=1).filter(~Q(qmsstatus=1)).filter(~Q(qmsstatus=3))
+    carExpire7days=mod9001_qmsplanner.objects.all().filter(end__gte=datetime.now() - timedelta(days=7)).filter(status='1').filter(~Q(qmsstatus=1)).filter(~Q(qmsstatus=3))
     thislist = []
     for i in carExpire7days:
-        w=i.end
-        t=w.strftime('%m/%d/%Y')
-        if CARnumbers_7days_expire(t)<0:
-            thislist.append(i.planner_number)
+        #w=i.end
+        #t=w.strftime('%m/%d/%Y')
+        #if CARnumbers_7days_expire(t)<0:
+        thislist.append(i.planner_number)
     thisdict={}
     i=0
     #creat a dictionary for all car numbers for display
@@ -387,7 +401,7 @@ def verify_qms(request,pk_test):
                 form.save()
                 return redirect('/qms_due/')
 
-    context={'form':form}  
+    context={'form':form,'pk_test':pk_test}  
 
 
     return render(request,'qms_verify.html',context)
@@ -587,6 +601,12 @@ def trainplanner_pending(request):
     context={'pendingcar':pendingcar} 
     return render(request,'trainplanner_pending.html',context)
 
+@login_required(login_url='login')
+def trainplanner_rejected(request):
+    pendingcar= mod9001_trainingplanner.objects.all().filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4') #get all  rejected    
+    context={'pendingcar':pendingcar} 
+    return render(request,'trainplanner_rejected.html',context)
+
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['TopManager'])
@@ -607,7 +627,7 @@ def approve_trainplanner(request,pk_test):
                 form.save()
                 return redirect('/trainplanner_pending/')
 
-    context={'form':form}  
+    context={'form':form,'pk_test':pk_test}  
 
 
     return render(request,'trainingplanner_approve.html',context)
@@ -624,13 +644,15 @@ def CARnumbers_7days_expire(*x):
 
 @login_required(login_url='login')
 def training_due(request):
-    carExpire7days=mod9001_trainingplanner.objects.filter(status=1).filter(~Q(trainplannerstatus=1)).filter(~Q(trainplannerstatus=3))
+    #carExpire7days=mod9001_trainingplanner.objects.filter(status=1).filter(~Q(trainplannerstatus=1)).filter(~Q(trainplannerstatus=3))
+    carExpire7days=mod9001_trainingplanner.objects.filter(status=1).filter(~Q(trainplannerstatus=1)).filter(trainplannerstatus__isnull=True)
+
     thislist = []
     for i in carExpire7days:
-        w=i.end
-        t=w.strftime('%m/%d/%Y')
-        if CARnumbers_7days_expire(t)<0:
-            thislist.append(i.plan_number)
+        #w=i.end
+        #t=w.strftime('%m/%d/%Y')
+        #if CARnumbers_7days_expire(t)<0:
+        thislist.append(i.plan_number)
     thisdict={}
     i=0
     #creat a dictionary for all car numbers for display
@@ -692,7 +714,7 @@ def verify_training(request,pk_test):
                 form.save()
                 return redirect('/training_due/')
 
-    context={'form':form}  
+    context={'form':form,'pk_test':pk_test}  
 
 
     return render(request,'training_verify.html',context)
@@ -869,8 +891,11 @@ def incidents_pending_analysis(request):
     products=mod9001_incidentregister.objects.filter(analysis_flag='No')
     return render(request,'incidents_pending_analysis.html',{'products':products})
 
+@login_required(login_url='login')
+def incidents_rejected(request):
 
-
+    products=mod9001_incidentregisterStaff.objects.all().filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(qmsstatus='3')
+    return render(request,'incidents_rejected.html',{'products':products})
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['IncidentManager'])
@@ -940,7 +965,7 @@ def incidentStaff(request):
 
 @login_required(login_url='login')
 def incidentregister_due(request):
-    carExpire7days=mod9001_incidentregisterStaff.objects.filter(status=1).filter(~Q(qmsstatus=1))
+    carExpire7days=mod9001_incidentregisterStaff.objects.all().filter(~Q(qmsstatus='3')).filter(~Q(qmsstatus='1'))
     #carExpire7days=mod9001_providerassessment.objects.filter(status=1)
     thislist = []
     for i in carExpire7days:
@@ -1109,11 +1134,11 @@ def providerAssessment_report(request):
                     return " ,Work Quality:"
                 else:
                     return " " 
-            def interskills():
-                if i.interskills:
-                    return " ,Interpersonal skills:"
-                else:
-                    return " " 
+            #def interskills():
+            #    if i.interskills:
+            #        return " ,Interpersonal skills:"
+            #    else:
+            #        return " " 
             def communication():
                 if i.communication:
                     return " ,Communication skills:"
@@ -1129,13 +1154,13 @@ def providerAssessment_report(request):
                     return " ,Availability:"
                 else:
                     return " " 
-            def professional():
-                if i.professional:
-                    return " ,Professional contribution:"
-                else:
-                    return " " 
+            #def professional():
+            #    if i.professional:
+            #        return " ,Professional contribution:"
+            #    else:
+            #        return " " 
         
-            writer.writerow([i.emp_perfrev_no, i.start,i.get_Provider_display(),i.organisation,i.appraise,i.appraiseename,i.rank,jobknowledg()+ i.get_jobknowledg_display() + flexibility()+ i.get_flexibility_display()+ problemsolving()+ i.get_problemsolving_display()+ Initiativenes()+ i.get_Initiativenes_display()+ planning()+ i.get_planing_display()+ workquality()+ i.get_workquality_display()+ interskills()+ i.get_interskills_display()+ communication()+ i.get_communication_display()+ supervisionmagt()+ i.get_supervisionmagt_display()+ availabilit()+ i.get_availabilit_display()+ professional()+ i.get_professional_display()
+            writer.writerow([i.emp_perfrev_no, i.start,i.get_Provider_display(),i.organisation,i.appraise,i.appraiseename,i.rank,jobknowledg()+ i.get_jobknowledg_display() + flexibility()+ i.get_flexibility_display()+ problemsolving()+ i.get_problemsolving_display()+ Initiativenes()+ i.get_Initiativenes_display()+ planning()+ i.get_planing_display()+ workquality()+ i.get_workquality_display()+ communication()+ i.get_communication_display()+ supervisionmagt()+ i.get_supervisionmagt_display()+ availabilit()+ i.get_availabilit_display()
             ,i.nonconfdetails,i.assigned,i.due,i.qmsstatus,i.comment])
             
         return response
@@ -1150,16 +1175,23 @@ def providerAssessment_report(request):
 
 
 @login_required(login_url='login')
+def providerassessments_rejected(request):
+    carExpire7days=mod9001_providerassessment.objects.all().filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(qmsstatus='3')
+ 
+    context={'products':carExpire7days}   
+    return render(request,'providerassessments_rejected.html',context)
+
+@login_required(login_url='login')
 def providerassessments_due(request):
-    carExpire7days=mod9001_providerassessment.objects.filter(status=1).filter(~Q(qmsstatus=1))
+    carExpire7days=mod9001_providerassessment.objects.all().filter(due__gte=datetime.now() - timedelta(days=7)).filter(~Q(qmsstatus='3')).filter(~Q(qmsstatus='1'))
     #carExpire7days=mod9001_providerassessment.objects.filter(status=1)
     thislist = []
     for i in carExpire7days:
         #print("printing",i)
-        w=i.due
-        t=w.strftime('%m/%d/%Y')
-        if CARnumbers_7days_expire(t)<0:
-            thislist.append(i.emp_perfrev_no)
+        #w=i.due
+        #t=w.strftime('%m/%d/%Y')
+        #if CARnumbers_7days_expire(t)<0:
+        thislist.append(i.emp_perfrev_no)
     thisdict={}
     i=0
     #creat a dictionary for all car numbers for display
@@ -1208,7 +1240,7 @@ def Verify_providerassessments(request,pk_test):
                 form.save()
                 return redirect('/providerassessments_due/')
 
-    context={'form':form}  
+    context={'form':form,'pk_test':pk_test}  
 
 
     return render(request,'providerassesment_verify.html',context)
@@ -1386,10 +1418,16 @@ def planning_save(request):
 def planning_pending(request):
     pendingcar=mod9001_planning.objects.filter(status='5') #get all planning  pending approval    
     #pendingcar=mod9001_correctiveaction.objects.all()#get all from corrective action table   
- 
+ #mod9001_planning.objects.all().filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4')
     
     context={'pendingcar':pendingcar} 
     return render(request,'planning_pending.html',context)
+@login_required(login_url='login')
+def planning_rejected(request):
+    pendingcar=mod9001_planning.objects.all().filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4')   
+    context={'pendingcar':pendingcar} 
+    return render(request,'planning_rejected.html',context)
+
 
 
 
@@ -1411,7 +1449,7 @@ def approve_planning(request,pk_test):
                 form.save()
                 return redirect('/planning_pending/')
 
-    context={'form':form}  
+    context={'form':form,'pk_test':pk_test}  
 
 
     return render(request,'planning_approve.html',context)    
@@ -1424,14 +1462,15 @@ def CARnumbers_7days_expire(*x):
 
 @login_required(login_url='login')
 def planning_due(request):
-    carExpire7days=mod9001_planning.objects.filter(status=1).filter(~Q(qmsstatus=1))
+    #carExpire7days=mod9001_planning.objects.filter(status=1).filter(~Q(qmsstatus=1))
+    carExpire7days=mod9001_planning.objects.all().filter(due__gte=datetime.now() - timedelta(days=7)).filter(status='1').filter(~Q(qmsstatus='3')).filter(~Q(qmsstatus='1'))
     thislist = []
    
     for i in carExpire7days:
-        w=i.due
-        t=w.strftime('%m/%d/%Y')
-        if CARnumbers_7days_expire(t)<0:
-            thislist.append(i.car_no)
+        #w=i.due
+        #t=w.strftime('%m/%d/%Y')
+        #if CARnumbers_7days_expire(t)<0:
+        thislist.append(i.car_no)
     thisdict={}
     i=0
     #creat a dictionary for all car numbers for display
@@ -1485,7 +1524,7 @@ def verify_planning(request,pk_test):
                 form.save()
                 return redirect('/planning_due/')
 
-    context={'form':form}  
+    context={'form':form,'pk_test':pk_test}  
 
 
     return render(request,'planning_verify.html',context) 
@@ -1562,6 +1601,11 @@ def changerequest_pending(request):
     context={'pendingcar':pendingcar} 
     return render(request,'changerequest_pending.html',context)
 
+@login_required(login_url='login')
+def changerequest_rejected(request):
+    pendingcar=mod9001_changeRegister.objects.all().filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4') #get all planning  pending approval    
+    context={'pendingcar':pendingcar} 
+    return render(request,'changerequest_rejected.html',context)
 
 
 @login_required(login_url='login')
@@ -1653,7 +1697,7 @@ def verify_changerequest(request,pk_test):
                 form.save()
                 return redirect('/changerequest_due/')
 
-    context={'form':form}  
+    context={'form':form,'pk_test':pk_test}  
 
 
     return render(request,'changerequest_verify.html',context) 
@@ -1693,6 +1737,15 @@ def customerComplaints_pending_analysis(request):
     pendingcar=mod9001_customerComplaint.objects.filter(analysis_flag='No') #get all customer complaints  pending approval    
     context={'pendingcar':pendingcar} 
     return render(request,'customerComplaint_pending_analysis.html',context)
+
+@login_required(login_url='login')
+def customerComplaint_rejected(request):
+    pendingcar=mod9001_customerComplaint.objects.all().filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(qmsstatus='3') #get all customer complaints  pending approval    
+    context={'pendingcar':pendingcar} 
+    return render(request,'customerComplaint_rejected.html',context)
+
+
+
 
 
 @login_required(login_url='login')
@@ -1763,14 +1816,15 @@ def customer_complaint_report(request):
 
 @login_required(login_url='login')
 def customercomplaint_due(request):
-    carExpire7days=mod9001_customerComplaint.objects.filter(status=1).filter(~Q(qmsstatus=1))
+    carExpire7days=mod9001_customerComplaint.objects.all().filter(due__gte=datetime.now() - timedelta(days=7)).filter(~Q(qmsstatus='3')).filter(~Q(qmsstatus='1')) 
     #carExpire7days=mod9001_providerassessment.objects.filter(status=1)
     thislist = []
     for i in carExpire7days:
         #print("printing",i)
-        w=i.due
-        t=w.strftime('%m/%d/%Y')
-        if CARnumbers_7days_expire(t)<0:
+        if i.due is not None:
+            #w=i.due
+            #t=w.strftime('%m/%d/%Y')
+            #if CARnumbers_7days_expire(t)<0:
             thislist.append(i.comp_no)
     thisdict={}
     i=0
@@ -1820,7 +1874,7 @@ def Verify_customercomplaint(request,pk_test):
                 form.save()
                 return redirect('/customercomplaint_due/')
 
-    context={'form':form}  
+    context={'form':form,'pk_test':pk_test}  
 
 
     return render(request,'customercomplaint_verify.html',context)
@@ -1962,8 +2016,18 @@ def customersatisfaction_surveyed(request):
 @login_required(login_url='login')
 def customersatisfaction_pending_improvement_plan(request):
     pendingcar=mod9001_customerSatisfaction.objects.filter(improvplan='') #get all customer surveys missing improvement plan    
+    
+    
     context={'pendingcar':pendingcar} 
     return render(request,'customersatisfaction_pending_improvement_plan.html',context)
+
+@login_required(login_url='login')
+def customersatisfaction_rejected(request):
+    pendingcar=mod9001_customerSatisfaction.objects.all().filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(qmsstatus='3') #get all customer surveys missing improvement plan         
+    context={'pendingcar':pendingcar} 
+    return render(request,'customersatisfaction_rejected.html',context)
+
+
 
 def customersatisfaction_pending(request,pk_test):
     pending_customersatisfaction=mod9001_customerSatisfaction.objects.get(satis_no=pk_test)
@@ -2045,15 +2109,18 @@ def customersatisfaction(request):
 
 @login_required(login_url='login')
 def customersatisfaction_due(request):
-    carExpire7days=mod9001_customerSatisfaction.objects.filter(~Q(improvplan='')).filter(status=1).filter(~Q(qmsstatus=1))
-    #carExpire7days=mod9001_providerassessment.objects.filter(status=1)
+ 
+    carExpire7days=mod9001_customerSatisfaction.objects.all().filter(due__gte=datetime.now() - timedelta(days=7)).filter(~Q(qmsstatus='3')).filter(~Q(qmsstatus='1'))
+    print("PRINTING carExpire7days",carExpire7days) 
     thislist = []
     for i in carExpire7days:
-        #print("printing",i)
-        w=i.due
-        t=w.strftime('%m/%d/%Y')
-        if CARnumbers_7days_expire(t)<0:
-            thislist.append(i.satis_no)
+        #print("printing",i.satis_no)
+        #if i.due is not None:
+        #    print("PRINTING due",i.satis_no) 
+            #w=i.due
+            #t=w.strftime('%m/%d/%Y')
+            #if CARnumbers_7days_expire(t)<0:
+        thislist.append(i.satis_no)
     thisdict={}
     i=0
     #creat a dictionary for all car numbers for display
@@ -2102,7 +2169,7 @@ def Verify_customersatisfaction(request,pk_test):
                 form.save()
                 return redirect('/customersatisfaction_due/')
 
-    context={'form':form}  
+    context={'form':form,'pk_test':pk_test}  
 
 
     return render(request,'customersatisfaction_verify.html',context)

@@ -258,7 +258,7 @@ class mod9001_qmsplanner(models.Model):
         return self.planner_number
 class mod9001_trainingplanner(models.Model):
     plan_number=models.CharField("Plan no.:",max_length=200,default="Comp-TP-"+car_no(),primary_key=True)
-    planner=models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Planner:',related_name='tainingplanner_by')
+    planner=models.ForeignKey('accounts.employees',null=True, blank=True,on_delete=models.CASCADE,verbose_name='Planner:',related_name='tainingplanner_by')
            
     trainng_date=models.DateField("Training Date:",null=True)
     TYPE=(('1','Planned'),('2','Not Planned'))
@@ -512,17 +512,16 @@ class mod9001_providerassessment(models.Model):
     comment=models.TextField("Comment",null=True, blank=True)
     #nonconformity=(('1','Support/Resource'),('2','Planning'),('3','IITS(Information, Instructions, Training, Supervision)'),('4','Performance monitoring'),('5','Evaluation'),('6','Risk/Vulnerability Assessment'),('7','Leadership'),('8','Other'))
     #nonconformity=models.CharField("Reason: cause of nonconformity",max_length=200, choices=nonconformity,null=True,blank=True)
- 
-    jobknowledg=(('1','Technical/Professional skills required'),('2','Application'),('3','Support and training to others'))
-    jobknowledg = MultiSelectField('1. Job Knowledge',choices=jobknowledg,null=True,blank=True)
+    jobknowledg=(('1','Technical/Professional skills required'),('2','Application'),('3','Support and training'))
+    jobknowledg = MultiSelectField('1. Knowledge/Expertise',choices=jobknowledg,null=True,blank=True)
 
-    flexibility=(('1','Relaibility'),('2','Response to Change'),('3','Ease of taking on other roles'),('4','Attitude towards learning'))
+    flexibility=(('1','Relaibility'),('2','Response to Change'))
     flexibility = MultiSelectField('2. Adaptability & Flexibility',choices=flexibility,null=True,blank=True)
 
     problemsolving=(('1','Response promptness'),('2','Level of Judgement'),('3','Solution Quality'))
     problemsolving = MultiSelectField('3. Problem solving',choices=problemsolving,null=True,blank=True)
 
-    Initiativenes=(('1','Idea Development'),('2','Effective use of resources'),('3','Self drive/motivation'))
+    Initiativenes=(('1','Idea Development'),('2','Effective use of resources'))
     Initiativenes = MultiSelectField('4. Initiativeness & Resourcefulness',choices=Initiativenes,null=True,blank=True)
 
     planing=(('1','Establishing Priorities'),('2','Meeting Deadlines'),('3','Planning of Tasks'))
@@ -531,20 +530,21 @@ class mod9001_providerassessment(models.Model):
     workqualit=(('1','Meeting Company Objectives'),('2','Task Completeness'),('3','Accuracy'))
     workquality = MultiSelectField('6. Work Quality & Quantity',choices=workqualit,null=True,blank=True)
 
-    skill=(('1','Relationship with Co-workers'),('2','Clients or Team spirit and general work attitude'))
-    interskills = MultiSelectField('7. Interpersonal Skills',choices=skill,null=True,blank=True)
+    #skill=(('1','Relationship with Co-workers'),('2','Clients or Team spirit and general work attitude'))
+    #interskills = MultiSelectField('7. Interpersonal Skills',choices=skill,null=True,blank=True)
 
     communication=(('1','Oral and Written'),('2','Clarity of Information shared'),('3','Accuracy of Information shared'))
-    communication = MultiSelectField('8. Communication Skills',choices=communication,null=True,blank=True)
+    communication = MultiSelectField('7. Communication',choices=communication,null=True,blank=True)
 
-    supervisionm=(('1','Work/task scheduling'),('2','Meeting own/company targets'),('3','Self-Supervision'))
-    supervisionmagt = MultiSelectField('9. Supervision & Management',choices=supervisionm,null=True,blank=True)
+    supervisionm=(('1','Work/task scheduling'),('2','Self-Supervision'))
+    supervisionmagt = MultiSelectField('8. Supervision & Management',choices=supervisionm,null=True,blank=True)
 
-    availabilit=(('1','Time keeping'),('2','Commitment to duty'))
-    availabilit = MultiSelectField('10. Availability',choices=availabilit,null=True,blank=True)
+    availabilit=(('1','Time keeping'),('2','Commitment'))
+    availabilit = MultiSelectField('9. Availability',choices=availabilit,null=True,blank=True)
 
-    professional=(('1','Attendance of Professional Meetings'),('2','Provision of Professional education/talks'))
-    professional = MultiSelectField('11. Professional Contribution',choices=professional,null=True,blank=True)
+    #professional=(('1','Attendance of Professional Meetings'),('2','Provision of Professional education/talks'))
+    #professional = MultiSelectField('11. Professional Contribution',choices=professional,null=True,blank=True)
+ 
     nonconfdetails=models.TextField("Additional description",null=True, blank=True)
 
     costs=(('1','Financial'),('2','Operational'),('3','Legal/Regulatory'),('4','Brand/Reputation'))
@@ -775,7 +775,7 @@ class mod9001_customerSatisfaction(models.Model):
     improvplan = MultiSelectField('Improvement Plan',choices=improvement,null=True,blank=True) 
     details=models.TextField("Additional Details",null=True, blank=True)   
     assignedto= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Assigned to:',null=True,blank=True)
-    due=models.DateTimeField("When:",null=True)    
+    due=models.DateField("When:",null=True)    
     entered_by= models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True,on_delete=models.CASCADE, related_name='ente')
     date_today=models.DateField("Date created:",default=datetime.now)
  

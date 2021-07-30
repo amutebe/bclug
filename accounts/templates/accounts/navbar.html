@@ -161,7 +161,7 @@
                 </li>
             </ul>
         </li>
-        <li><a data-icon="&#xF108;" href="">ITSMS</a>
+        <li><a data-icon="&#xF108;" ">ITSMS</a>
             <ul>
                 <li><a data-icon="&#xF00B;" href="#">Planning</a>
                     <ul>
@@ -197,13 +197,25 @@
                 </li>
             </ul>
         </li>
-        <li><a data-icon="&#xF13E;" href="">HSEMS</a></li>
+        <li><a data-icon="&#xF13E;" >HSEMS</a></li>
         <li><a data-icon="&#xF02D;" href="{% url 'doc_manager'%}">DocumentManager</a></li>
         <li><a data-icon="&#xF007;" href="{% url 'admin:index' %}">Admin</a></li>
-        <li><a class="notification" href="">
-  <span><i class="fa fa-envelope" style="font-size:24px;color:red"></i></span>
-  <span class="badge">{{total_tasks}}</span>
-</a></li>
+        <li>  
+
+
+		{% if total_tasks is not none %}
+    <span><i class="fa fa-envelope" style="font-size:24px;color:white"></i></span>
+  <span class="badge" style="font-size:16px;color:red"><span class="blinking">{{tasks}}</span></span>
+</a>
+					
+					{% else %}
+    <span><i class="fa fa-envelope" style="font-size:24px;color:orange"></i></span>
+  <span class="badge" style="font-size:16px;color:red"><span class="blinking" >{{total_tasks}}</span></span>
+</a>
+                  
+					{% endif %}
+
+    </li>
         <li><a data-icon="&#xF08B;" href="{% url 'logout'%}">Signout</a></li>
     </ul>
 <canvas><noscript><a href="//swimbi.com/download/">Here - maker css menu</a> at swimbi.com. All Rights Reserved</noscript></canvas>

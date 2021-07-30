@@ -1,0 +1,65 @@
+{% extends "accounts/base.html" %} 
+
+{% block content %}
+
+
+		 <h4 class="mb-3">Corrective Action Plans Rejected:</h4>
+ <p class="round2">		
+		<div class="col-md-36">
+			
+			<table class="table table-sm">
+				<tr class="table-info">
+					<th>CAR ID</th>
+					<th>Date</th>
+					<th>Process</th>
+					<th>Finding</th>
+					<th>Source</th>
+				
+					<th>Add.Desc.</th>
+					<th>Containment</th>
+					<th>RootCause</th>
+					<th>RC.Desc.</th>
+					<th>Decision</th>
+					<th>Add.Details</th>
+					<th>AssignedTo</th>
+					<th>When</th>
+					<th>Status</th>
+                    <th>Reason</th>
+
+				</tr>
+				
+				{% for i in pendingcar %}
+				
+					<tr>
+					<td>{{i.car_no}}</td>
+					<td>{{i.car_no.date}}</td>
+					<td>{{i.car_no.process}}</td>
+		
+					<td>{{i.car_no.get_finding_display}}</td>
+					<td>{{i.car_no.car_source}}</td>
+					<td>{{i.car_no.addesc}}</td>
+					<td>{{i.containment}}</td>
+					<td>{{i.rootcause}}</td>
+					<td>{{i.rootcause_desc}}</td>
+					<td>{{i.decision}}</td>
+					<td>{{i.details}}</td>									
+					<td>{{i.assignedto}}</td>
+					<td>{{i.due}}</td>
+					<td>{{i.status}}</td>
+                    <td>{{i.rejected}}</td>
+					
+					
+					
+					
+					</tr>
+
+				{%endfor%}
+		
+			</table>
+		</div>
+
+
+
+
+
+{% endblock %} 

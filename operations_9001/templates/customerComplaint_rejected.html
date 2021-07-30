@@ -1,0 +1,59 @@
+{% extends "accounts/base.html" %} 
+
+{% block content %}
+
+<div class="col-md-28">
+	 <h4 class="mb-3">Customer Compalint Cancelled:</customer></h4>
+ <p class="round2">	
+		<div class="">
+			
+			<table class="table table-sm">
+				<tr class="table-info">
+					<th>ComplaintNo.</th>
+					<th>Date</th>
+					<th>time</th>
+					<th>Complaint</th>
+					<th>Organisation</th>
+					<th>Process</th>
+					<th>Type</th>
+                    <th>Comp.Desc</th>
+					<th>Re-Occurance</th>
+					<th>Classification</th>
+					<th>Correction</th>
+                    <th>Add.Desc.</th>
+                    <th>AssignedTo</th>
+					<th>When</th>
+                      <th>Status</th>
+					<th>Reason</th>
+					                        
+					</tr>
+						{% for i in pendingcar %}
+						<tr>
+					<td>{{i.comp_no}}</td>
+					<td>{{i.date}}</td>
+					<td>{{i.time}}</td>
+					<td>{{i.complaint}}</td>
+					<td>{{i.organisation}}</td>
+					<td>{{i.process}}</td>
+					<td>{{i.type}}</td>
+					<td>{{i.complaint_desc}}</td>
+					<td>{{i.get_re_occurance_display}}</td>
+					<td>{{i.classification}}</td>
+					<td>{{i.correction}}</td>
+					<td>{{i.add_desc}}</td>
+					<td>{{i.assignedto}}</td>
+                    <td>{{i.due}}</td>
+                    <td>{{i.qmsstatus}}</td>
+                    <td>{{i.verification_failed}}</td>
+					</tr>
+
+				{%endfor%}
+		
+			</table>
+		</div>
+	</div>
+
+</div>
+
+
+{% endblock %} 

@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate,login, logout
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from datetime import date
+from datetime import date,timedelta
 import json
 from django.db.models import Count, Q, F
 import xlwt
@@ -101,6 +101,16 @@ def serviceRequest_pending_planning(request):
     return render(request,'serviceRequest_pending_planning.html',{'products':products})
 
 @login_required(login_url='login')
+def serviceRequest_rejected(request):
+
+    products=mod20000_service_planning.objects.all().filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(qmsstatus='3')
+    return render(request,'serviceRequest_rejected.html',{'products':products})
+
+
+
+
+
+@login_required(login_url='login')
 def serviceRequestPlanning(request,sr_id):
 
     form=serviceRequestPlans(initial={'service_number':sr_id})
@@ -134,14 +144,16 @@ def serviceRequestPlanning(request,sr_id):
 
 @login_required(login_url='login')
 def serviceRequest_due(request):
-    carExpire7days=mod20000_service_planning.objects.filter(status=1).filter(~Q(qmsstatus=1))
+    #carExpire7days=mod20000_service_planning.objects.filter(status=1).filter(~Q(qmsstatus=1))
+    carExpire7days=mod20000_service_planning.objects.all().filter(due__gte=datetime.now() - timedelta(days=7)).filter(~Q(qmsstatus='3')).filter(~Q(qmsstatus='1'))
     #carExpire7days=mod9001_providerassessment.objects.filter(status=1)
     thislist = []
     for i in carExpire7days:
         #print("printing",i)
-        w=i.due
-        t=w.strftime('%m/%d/%Y')
-        if CARnumbers_7days_expire(t)<0:
+        if i.due is not None:
+            #w=i.due
+            #t=w.strftime('%m/%d/%Y')
+            #if CARnumbers_7days_expire(t)<0:
             thislist.append(i.service_number)
     thisdict={}
     i=0

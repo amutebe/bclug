@@ -1,0 +1,49 @@
+{% extends "accounts/base.html" %} 
+
+{% block content %}
+<br>
+<div class="col-md-16">
+	<h4 class="mb-3">QMS Rejected in Last 7 Days:</h4>	
+   <p class="round2">		
+		<div class="card card-body">
+						<table class="table table-sm">
+				<tr class="table-info">
+					<th>ID</th>
+					<th>PlanDate</th>
+					<th>Planner</th>
+					<th>Status</th>
+                    <th>Reason</th>
+					<th>Start</th>
+					<th>End</th>
+					<th>Description</th>
+					<th>Addit.Desc</th>
+			
+					
+					
+				</tr>
+				
+				{% for i in pendingcar %}
+				
+					<tr>
+					<td>{{i.planner_number}}</td>
+					<td>{{i.plan_date}}</td>
+					<td>{{i.planner}}</td>
+					<td>{{i.status}}</td>
+                    <td>{{i.rejected}}</td>
+					<td>{{i.start}}</td>
+					<td>{{i.end}}</td>
+					<td>{{i.description}}</td>
+					<td>{{i.details}}</td>
+
+					</tr>
+
+				{%endfor%}
+		
+			</table>
+		</div>
+	</div>
+
+</div>
+
+
+{% endblock %} 

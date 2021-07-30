@@ -25,6 +25,7 @@ urlpatterns = [
     path('edit_issue/<str:pk_test>/',views.edit_issue,name="edit_issue"),
     path('delete_issue/<str:pk_test>/',views.deleteissue,name="deleteissue"),
     path('issues_pending/',views.issues_pending,name="issues_pending"),
+    path('issues_rejected/',views.issues_rejected,name="issues_rejected"),
     path('approve_issue/<str:pk_test>/',views.approve_issue,name="approve_issue"),
     ####END############################
 
@@ -35,6 +36,7 @@ urlpatterns = [
     path('edit_ip/<str:pk_test>/',views.edit_ip,name="edit_ip"),
     path('delete_ip/<str:pk_test>/',views.deleteip,name="deleteip"),
     path('ip_pending/',views.ip_pending,name="ip_pending"),
+    path('ip_rejected/',views.ip_rejected,name="ip_rejected"),
     path('approve_ip/<str:pk_test>/',views.approve_ip,name="approve_ip"),
 
     ############REGULATORY REQUIRMENT########################
@@ -45,6 +47,7 @@ urlpatterns = [
     path('edit_regulatoryreq/<str:pk_test>/',views.edit_regulatoryreq,name="edit_regulatoryreq"),
     path('deleteregulatory/<str:pk_test>/',views.deleteregulatory,name="deleteregulatory"),
     path('requirement_pending/',views.requirement_pending,name="requirement_pending"),
+    path('requirement_rejected/',views.requirement_rejected,name="requirement_rejected"),
     path('approve_requirement/<str:pk_test>/',views.approve_requirement,name="approve_requirement"),
 ###################### RISKS ##############################
     path('ajax/context_description/', views.load_issue_description, name='context_description'),
