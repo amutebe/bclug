@@ -1005,7 +1005,7 @@ def verify_risk(request,pk_test):
 #################OPPORTUNITY VERIFICATION#######################
 @login_required(login_url='login')
 def opp_due(request):
-    carExpire7days=mod9001_risks.objects.all().filter(due__gte=datetime.now() - timedelta(days=7)).filter(record_type='OPP').filter(status='1').filter(~Q(verification_status='Closed'))
+    carExpire7days=mod9001_risks.objects.all().filter(due__gte=datetime.now() - timedelta(days=7)).filter(record_type='OPP').filter(status='1').filter(~Q(verification='1'))
     thislist = []
     for i in carExpire7days:
         #w=i.due

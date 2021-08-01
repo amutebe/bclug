@@ -198,7 +198,7 @@ def download(request, id):
 
 
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['ManagementRepresentative'])
+@allowed_users(allowed_roles=['Planner'])
 def qms_planner(request):
               
     form=qmsplanner(initial={'planner_number': QMS_no()})
@@ -410,7 +410,7 @@ def verify_qms(request,pk_test):
 
 #######################TRAINING REGISTER###############################
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['HRManager'])
+@allowed_users(allowed_roles=['Assessor'])
 def trainingReg(request):
     #print("PRINTING PRINTING")        
     form=trainingregister(initial={'training_number': Train_no()})
@@ -465,16 +465,24 @@ def training_register_report(request):
         return render(request,'Training_Evaluation_Report.html',{'trainingreg':trainingreg,'myFilter':myFilter})
 ###################### TRAINING REGISTER VERIFICATION ############################################################
 @login_required(login_url='login')
+def trainingregister_rejected(request):
+    products=mod9001_trainingregister.objects.all().filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(qmsstatus='3')
+    context={'products':products}
+    return render(request,'trainingregister_rejected.html',context) 
+
+
+
+@login_required(login_url='login')
 def trainingregister_due(request):
-    carExpire7days=mod9001_trainingregister.objects.filter(status=1).filter(~Q(qmsstatus=1))
+    carExpire7days=mod9001_trainingregister.objects.filter(completion_date__gte=datetime.now() - timedelta(days=7)).filter(status=1).filter(~Q(qmsstatus=1)).filter(~Q(qmsstatus='3'))
     #carExpire7days=mod9001_providerassessment.objects.filter(status=1)
     thislist = []
     for i in carExpire7days:
         #print("printing",i)
-        w=i.completion_date
-        t=w.strftime('%m/%d/%Y')
-        if CARnumbers_7days_expire(t)<0:
-            thislist.append(i.training_number)
+        #w=i.completion_date
+        #t=w.strftime('%m/%d/%Y')
+        #if CARnumbers_7days_expire(t)<0:
+        thislist.append(i.training_number)
     thisdict={}
     i=0
     #creat a dictionary for all car numbers for display
@@ -523,7 +531,7 @@ def Verify_trainingregister(request,pk_test):
                 form.save()
                 return redirect('/trainingregister_due/')
 
-    context={'form':form}  
+    context={'form':form,'pk_test':pk_test}  
 
 
     return render(request,'trainingregister_verify.html',context)
@@ -538,7 +546,7 @@ def trainingregister_7daysToExpiryview(request,pk_test):
 
 ####################### TRAINING PLANNER ###############################
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['HRManager'])
+@allowed_users(allowed_roles=['Planner'])
 def training_planner(request):
               
     form=trainingplaner(initial={'plan_number': plan_no()})
@@ -728,7 +736,7 @@ def training_7daysToExpiryview(request,pk_test):
 
 ########################INCIDENT REGISTER################################################
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['IncidentManager'])
+@allowed_users(allowed_roles=['Logger'])
 def incidentRegister(request):
               
     form=incident_Register(initial={'incident_number': incident_no()})
@@ -898,7 +906,7 @@ def incidents_rejected(request):
     return render(request,'incidents_rejected.html',{'products':products})
 
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['IncidentManager'])
+@allowed_users(allowed_roles=['Analyst'])
 def incidentRegisterStaff(request,incident_id):
 
     form=incident_RegisterStaff(initial={'incident_number':incident_id})
@@ -1703,7 +1711,7 @@ def verify_changerequest(request,pk_test):
     return render(request,'changerequest_verify.html',context) 
 ########################### CUSTOMER COMPLAINT##################################
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['RelationsManager'])
+@allowed_users(allowed_roles=['Logger'])
 def customercomplaint(request):
               
     form=customer_complaint(initial={'comp_no': comp_no()})
@@ -1749,7 +1757,7 @@ def customerComplaint_rejected(request):
 
 
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['RelationsManager'])
+@allowed_users(allowed_roles=['Analyst'])
 def customercomplaint_planning(request,complaint_id):
     pending_planning=mod9001_customerComplaint.objects.get(comp_no=complaint_id)
     form=customer_complaintPlanning(instance=pending_planning)

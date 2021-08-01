@@ -23,6 +23,7 @@ path('trainingReg/', views.trainingReg, name='trainingReg'),
 path('training_register_report/',views.training_register_report,name="training_register_report"),
 path('Verify_trainingregister/<str:pk_test>/',views.Verify_trainingregister,name="Verify_trainingregister"),
 path('trainingregister_due/',views.trainingregister_due,name="trainingregister_due"),
+path('trainingregister_rejected/',views.trainingregister_rejected,name="trainingregister_rejected"),
 path('trainingregister_7daysToExpiryview/<str:pk_test>/',views.trainingregister_7daysToExpiryview,name="trainingregister_7daysToExpiryview"),
 
 path('training_planner/', views.training_planner, name='training_planner'),

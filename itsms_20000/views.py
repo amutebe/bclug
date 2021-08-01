@@ -5,6 +5,8 @@ from. forms import *
 from django.contrib import messages
 from django.contrib.auth import authenticate,login, logout
 from django.contrib.auth import get_user_model
+#from .decorators import unauthenticated_user,allowed_users
+from operations_9001.decorators import unauthenticated_user,allowed_users
 from django.contrib.auth.decorators import login_required
 from datetime import date,timedelta
 import json
@@ -35,7 +37,7 @@ def CARnumbers_7days_expire(*x):
 
 
 @login_required(login_url='login')
-
+@allowed_users(allowed_roles=['Logger'])
 def services_request(request):
               
     form=serviceRequest(initial={'service_number': service_no()})
@@ -111,6 +113,7 @@ def serviceRequest_rejected(request):
 
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['Analyst'])
 def serviceRequestPlanning(request,sr_id):
 
     form=serviceRequestPlans(initial={'service_number':sr_id})

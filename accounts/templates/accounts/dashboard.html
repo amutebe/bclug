@@ -9,7 +9,7 @@
 <div class="row">
 	
     <div class="col-md">
-		<h6>Status:</h6>
+		<h6></h6>
 		
 
 
@@ -19,43 +19,43 @@
 			
 			<table class="table table-sm">
 				<tr class="table-info">
-					<th>Task</th>
+					<th>Task      </th>
 					<th>Pending</th>
-					<th>Due</th>
-					<th>Rejected</th>									
+					<th>Verify</th>
+					<th>REJ/CXL</th>									
 				</tr></thead><tbody>	
 					<tr>
-						<td>IPs:</td>
+						<td>Interested Parties:</td>
 						<td><a href="{% url 'ip_pending'%}">{{total_IPS}}</a></td>
-						<td>NA</td>
+						<td>--</td>
 						<td><a href="{% url 'ip_rejected'%}">{{total_IPS_rejected}}</a></td>                     
 					</tr>
 										<tr>
 						<td>Issues:</td>
 						<td><a href="{% url 'issues_pending'%}">{{total_ISSUES}}</a></td>
-						<td>NA</td>
+						<td>--</td>
 						<td><a href="{% url 'issues_rejected'%}">{{total_ISSUES_rejected}}</a></td>                     
 					</tr>
 										<tr>
 						<td>Compliance:</td>
 						<td><a href="{% url 'requirement_pending'%}">{{total_COMPLAINCE}}</a></td>
-						<td>NA</td>
+						<td>--</td>
 						<td><a href="{% url 'requirement_rejected'%}">{{total_COMPLAINCE_rejected}}</a></td>                     
 					</tr>
 										<tr>
 						<td>Risks:</td>
 						<td><a href="{% url 'risk_pending'%}">{{total_RISKS}}</a></td>
 						<td><a href="{% url 'risks_due'%}">{{total_RISKS_pending}}</a></td>
-						<td>NA</td>                     
+						<td>--</td>                     
 					</tr>
 										<tr>
 						<td>Opportunity:</td>
 						<td><a href="{% url 'opp_pending'%}">{{total_OPPORTUNITY}}</a></td>
 						<td><a href="{% url 'opp_due'%}">{{total_OPPORTUNITY_pending}}</a></td>
-						<td>NA</td>                     
+						<td>--</td>                     
 					</tr>
 										<tr>
-						<td>QMS:</td>
+						<td>QMS Planner:</td>
 						<td><a href="{% url 'qms_pending'%}">{{total_QMSplanner}}</a></td>
 						<td><a href="{% url 'qms_due'%}">{{total_QMSplanner_pending}}</a></td>
 						<td><a href="{% url 'qms_rejected'%}">{{total_QMSplanner_rejected}}</a></td>                     
@@ -66,22 +66,42 @@
 						<td><a href="{% url 'training_due'%}">{{total_Trainingplanner_pending}}</a></td>
 						<td><a href="{% url 'trainplanner_rejected'%}">{{total_Trainingplanner_rejected}}</a></td>                     
 					</tr>
+				
+														<tr>
+						<td>Change Request</td>
+						<td><a href="{% url 'changerequest_pending'%}">{{total_CHANGEREQUEST}}</a></td>
+						<td>--</td>
+						<td><a href="{% url 'changerequest_rejected'%}">{{total_CHANGEREQUEST_rejected}}</a></td>                     
+					</tr>
+					
+			
+			
+					
 										<tr>
-						<td>Incident Register:</td>
+						<td>Provider Assessment</td>
+						<td>--</td>
+						<td><a href="{% url 'providerassessments_due'%}">{{total_PROVIDERASSESSMENT_pending}}</a></td>
+						<td><a href="{% url 'providerassessments_rejected'%}">{{total_PROVIDERASSESSMENT_rejected}}</a></td>                     
+					</tr>
+
+			
+										<tr>
+						<td>Training Evaluation</td>
+						<td>--</td>
+						<td><a href="{% url 'trainingregister_due'%}">{{total_TRAININGevaluation_pending}}</a></td>
+						<td><a href="{% url 'trainingregister_rejected'%}">{{total_TRAININGevaluation_rejected}}</a></td>                     
+					</tr>
+<tr>
+						<td>Incidents:</td>
 						<td><a href="{% url 'incidents_pending_analysis'%}">{{total_INCIDENTREGISTER}}</a></td>
 						<td><a href="{% url 'incidentregister_due'%}">{{total_INCIDENTREGISTER_pending}}</a></td>
 						<td><a href="{% url 'incidents_rejected'%}">{{total_INCIDENTREGISTER_rejected}}</a></td>                     
 					</tr>
-										<tr>
-						<td>Corrective Action: </td>
-						<td><a href="{% url 'planning_pending'%}">{{total_CORRECTIVEACTION}}</a></td>
-						<td><a href="{% url 'planning_due'%}">{{total_CORRECTIVEACTION_pending}}</a></td>
-						<td><a href="{% url 'planning_rejected'%}">{{total_CORRECTIVEACTION_rejected}}</a></td>                     
-					</tr>
+
 										<tr>
 						<td>Change Request</td>
 						<td><a href="{% url 'changerequest_pending'%}">{{total_CHANGEREQUEST}}</a></td>
-						<td>NA</td>
+						<td>--</td>
 						<td><a href="{% url 'changerequest_rejected'%}">{{total_CHANGEREQUEST_rejected}}</a></td>                     
 					</tr>
 					
@@ -99,24 +119,44 @@
 						<td><a href="{% url 'customerComplaint_rejected'%}">{{total_CUSTOMERCOMPLAINT_rejected}}</a></td>                     
 					</tr>
 					
-										<tr>
-						<td>Provider Assessment</td>
-						<td>NA</td>
-						<td><a href="{% url 'providerassessments_due'%}">{{total_PROVIDERASSESSMENT_pending}}</a></td>
-						<td><a href="{% url 'providerassessments_rejected'%}">{{total_PROVIDERASSESSMENT_rejected}}</a></td>                     
-					</tr>
+			
 
 										<tr>
 						<td>Service Requests</td>
 						<td><a href="{% url 'serviceRequest_pending_planning'%}">{{total_ServiceRequests}}</a></td>
 						<td><a href="{% url 'serviceRequest_due'%}">{{total_ServiceRequests_pending}}</a></td>
 						<td><a href="{% url 'serviceRequest_rejected'%}">{{total_ServiceRequests_rejected}}</a></td>                     
-					</tr>					
+					</tr>
+
+
+			</table>
+			
+						
+				
+						<table class="table table-sm">
+				<tr class="table-info">
+					<th>Task</th>
+					<th>Plan</th>
+                    <th>Approve</th>
+					<th>Verify</th>
+					<th>REJ/CXL</th>									
+				</tr></thead><tbody>	
+					
+						
+						<td>Corrective Action: </td>
+                        <td><a href="{% url 'correctiveaction_pending_planning'%}">{{total_CORRECTIVEACTION_pending_planning}}</a></td>
+						<td><a href="{% url 'planning_pending'%}">{{total_CORRECTIVEACTION}}</a></td>
+						<td><a href="{% url 'planning_due'%}">{{total_CORRECTIVEACTION_pending}}</a></td>
+						<td><a href="{% url 'planning_rejected'%}">{{total_CORRECTIVEACTION_rejected}}</a></td>                     
+					</tr>
+										
+
+			
+
 			</table>
 			
 		</div>
 </div>		
-		
 
 			  
 		

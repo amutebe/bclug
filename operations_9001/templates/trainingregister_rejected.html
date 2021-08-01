@@ -1,0 +1,81 @@
+{% extends "accounts/base.html" %} 
+
+{% block content %}
+<br>
+<div class="col-md-16">
+	  <h5>
+<label for="residuelikelihood"> Trainings Rejected: </label>
+</h5>
+ <p class="round2">	
+		<div class="card card-body">
+			
+			<table class="table table-sm">
+				<tr class="table-info">
+					<th>TainingNo</th>
+					<th>Training</th>
+					<th>Addit.Desc</th>
+					<th>Date</th>
+					<th>Nature</th>
+					<th>Trainee</th>
+					<th>Dept.</th>
+					<th>Completion</th>
+                    <th>Decision</th>
+                    <th>Reason</th>
+                    <th>Details</th>
+                    <th>ActionPlan</th>
+                     <th>Addit.Desc.</th>
+
+					<th>AssignedTo</th>
+					<th>Timeline</th>
+					<th>Approved</th>
+					<th>Verified</th>
+                    <th>Reason</th>
+		
+			
+
+                
+
+
+				
+					
+				</tr></thead><tbody>
+				
+				{% for i in products %}
+				
+					<tr>
+					<td>{{i.training_number}}</td>
+					<td>{{i.plan_number.description}}</td>
+					<td>{{i.plan_number.details}}</td>
+			
+				
+					
+					<td>{{i.train_date}}</td>
+				
+					<td>{{i.get_nature_display}}</td>
+					<td>{{i.trainee}}</td>
+					<td>{{i.trainee.dept}}</td>
+					<td>{{i.completion_date}}</td>
+
+                    <td>{{i.get_decision_display}}</td>
+                     <td>{{i.reasond}}</td>
+                     <td>{{i.reasonother}}</td>
+                          <td>{{i.actionplan}}</td>
+                           <td>{{i.actionplanother}}</td>
+					<td>{{i.assigned}}</td>
+					<td>{{i.timeline}}</td>
+						<td>{{i.status}}</td>
+					<td>{{i.qmsstatus}}</td>
+                    <td>{{i.verification_failed}}</td>
+
+					</tr>
+
+				{%endfor%}
+		
+			</table>
+		</div>
+	</div>
+
+</div>
+
+
+{% endblock %} 
