@@ -1,3 +1,4 @@
+{% load auth_extras %}
 {%load static%}
 <nav class="navbar navbar-expand-lg">
 <!-- swimbi code start -->
@@ -202,18 +203,46 @@
         <li><a data-icon="&#xF007;" href="{% url 'admin:index' %}">Admin</a></li>
         <li>  
 
+{% if request.user|has_group:"Auditor" and request.user|has_group:"Analyst" and request.user|has_group:"TopManager" %}
+    <span><i class="fa fa-envelope" style="font-size:24px;color:Orange"></i></span>
 
-		{% if total_tasks is not none %}
-    <span><i class="fa fa-envelope" style="font-size:24px;color:white"></i></span>
-  <span class="badge" style="font-size:16px;color:red"><span class="blinking">{{tasks}}</span></span>
-</a>
-					
-					{% else %}
-    <span><i class="fa fa-envelope" style="font-size:24px;color:orange"></i></span>
-  <span class="badge" style="font-size:16px;color:red"><span class="blinking" >{{total_tasks}}</span></span>
-</a>
-                  
-					{% endif %}
+    <span class="badge" style="font-size:16px;color:red"><span class="blinking">{{AnalystTopManagerAuditor_Tasks }}</span></span>
+
+{% elif request.user|has_group:"Analyst" and request.user|has_group:"TopManager" %}
+    <span><i class="fa fa-envelope" style="font-size:24px;color:Orange"></i></span>
+
+    <span class="badge" style="font-size:16px;color:red"><span class="blinking">{{AnalystTopManager_Tasks }}</span></span>
+
+{% elif request.user|has_group:"Analyst" and request.user|has_group:"Auditor" %}
+    <span><i class="fa fa-envelope" style="font-size:24px;color:Orange"></i></span>
+
+    <span class="badge" style="font-size:16px;color:red"><span class="blinking">{{AnalystAuditor_Tasks }}</span></span>
+
+{% elif request.user|has_group:"TopManager" and request.user|has_group:"Auditor" %}
+    <span><i class="fa fa-envelope" style="font-size:24px;color:Orange"></i></span>
+
+    <span class="badge" style="font-size:16px;color:red"><span class="blinking">{{TopManagerAuditor_Tasks }}</span></span>
+
+
+{% elif request.user|has_group:"Auditor" %}
+    <span><i class="fa fa-envelope" style="font-size:24px;color:Orange"></i></span>
+
+    <span class="badge" style="font-size:16px;color:red"><span class="blinking">{{Auditor_Tasks }}</span></span>
+
+{% elif request.user|has_group:"TopManager"%}
+    <span><i class="fa fa-envelope" style="font-size:24px;color:Orange"></i></span>
+
+    <span class="badge" style="font-size:16px;color:red"><span class="blinking">{{TopManager_Tasks }}</span></span>
+
+{% elif request.user|has_group:"Analyst"%}
+    <span><i class="fa fa-envelope" style="font-size:24px;color:Orange"></i></span>
+
+    <span class="badge" style="font-size:16px;color:red"><span class="blinking">{{Analyst_Tasks }}</span></span>
+
+{% else %}
+
+
+{% endif %}	 
 
     </li>
         <li><a data-icon="&#xF08B;" href="{% url 'logout'%}">Signout</a></li>

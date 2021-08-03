@@ -1,3 +1,4 @@
+{% load auth_extras %}
 {% load static %}
 
 <div class="row">
@@ -32,11 +33,23 @@
 		<div class="col-md">
 			<div class="card text-center text-white  mb-3" id="total-orders">
 			  	<div class="card-header">
-				  <h5 class="card-title">Rejected Tasks (Last 7 Days)</h5>
+				  <h5 class="card-title">Rejected/Cancelled Tasks (Last7Days)</h5>
 			  	</div>
 			  	<div class="card-body">
+				   
+				   {% if request.user|has_group:"Logger" or request.user|has_group:"ChangeRequestor" or request.user|has_group:"Assessor" or request.user|has_group:"Planner" or request.user|has_group:"ManagementRepresentative"  %}
+   
+  <span class="badge" style="font-size:16px;color:red"><span class="blinking"><h3 class="card-title">{{total_tasks_rejected}}</a></h3></span></span>
+</a>
+					
+					{% else %}
+    
+  <h3 class="card-title">{{total_tasks_rejected}}</h3>
+</a>
+                  
+					{% endif %}
 			    	
-					<h3 class="card-title">{{total_tasks_rejected}}</a></h3>
+					
 				  	
 						
 

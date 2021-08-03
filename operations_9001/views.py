@@ -1363,6 +1363,8 @@ def correctiveactionRequest_report(request):
 
             
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['CorrectiveActionImplementer'])
+
 def planning(request, car_no):
               
     form=mod9001planning(initial={'car_no':car_no})
@@ -1440,6 +1442,7 @@ def planning_rejected(request):
 
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['TopManager'])
 def approve_planning(request,pk_test):
     pending_planning=mod9001_planning.objects.get(car_no=pk_test)
     form=ApprovePlanning(instance=pending_planning)
@@ -1499,6 +1502,7 @@ def planning_7daysToExpiryview(request,pk_test):
     products=mod9001_planning.objects.filter(car_no=pk_test)
     return render(request,'planning_view_7_days_To_expiry.html',{'products':products})
 
+@login_required(login_url='login')
 @allowed_users(allowed_roles=['Auditor'])
 def verify_planning(request,pk_test):
 
@@ -1740,7 +1744,7 @@ def customercomplaint(request):
     return render(request,'customercomplaint.html',context)
 
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['RelationsManager'])
+#@allowed_users(allowed_roles=['RelationsManager'])
 def customerComplaints_pending_analysis(request):
     pendingcar=mod9001_customerComplaint.objects.filter(analysis_flag='No') #get all customer complaints  pending approval    
     context={'pendingcar':pendingcar} 
