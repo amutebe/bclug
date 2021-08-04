@@ -52,13 +52,13 @@ def home(request):
 
     #if is_ManagementRepresentative(request.user):
     total_IPS= mod9001_interestedParties.objects.all().filter(status='5').count()
-    total_IPS_rejected= mod9001_interestedParties.objects.all().filter(analyst=request.user.id).filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4').count()
-
+    total_IPS_rejected= mod9001_interestedParties.objects.all().filter(analyst_user_id=request.user.id).filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4').count()
+    
     total_ISSUES= mod9001_issues.objects.all().filter(status='5').count()
-    total_ISSUES_rejected= mod9001_issues.objects.all().filter(analyst=request.user.id).filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4').count()
+    total_ISSUES_rejected= mod9001_issues.objects.all().filter(analyst_user_id=request.user.id).filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4').count()
 
     total_COMPLAINCE= mod9001_regulatoryReq.objects.all().filter(status='5').count()       
-    total_COMPLAINCE_rejected=mod9001_regulatoryReq.objects.all().filter(analyst=request.user.id).filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4').count()
+    total_COMPLAINCE_rejected=mod9001_regulatoryReq.objects.all().filter(analyst_user_id=request.user.id).filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4').count()
  
     total_RISKS= mod9001_risks.objects.all().filter(status='5',record_type='RISK').filter(~Q(verification_status='Closed')).count()
     total_RISKS_pending= mod9001_risks.objects.all().filter(assessor=request.user.id).filter(due__gte=datetime.now() - timedelta(days=7)).filter(record_type='RISK').filter(status='1').filter(~Q(verification_status='Closed')).count()
@@ -67,11 +67,11 @@ def home(request):
     total_OPPORTUNITY_pending= mod9001_risks.objects.all().filter(assessor=request.user.id).filter(due__gte=datetime.now() - timedelta(days=7)).filter(record_type='OPP').filter(status='1').filter(~Q(verification='1')).count()
 
     total_QMSplanner= mod9001_qmsplanner.objects.all().filter(status='5').count()
-    total_QMSplanner_rejected= mod9001_qmsplanner.objects.all().filter(planner=request.user.id).filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4').count()
+    total_QMSplanner_rejected= mod9001_qmsplanner.objects.all().filter(planner_user_id=request.user.id).filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4').count()
     total_QMSplanner_pending= mod9001_qmsplanner.objects.all().filter(end__gte=datetime.now() - timedelta(days=7)).filter(status='1').filter(~Q(qmsstatus=1)).filter(~Q(qmsstatus=3)).count()
     
     total_Trainingplanner= mod9001_trainingplanner.objects.all().filter(status='5').count()
-    total_Trainingplanner_rejected= mod9001_trainingplanner.objects.all().filter(planner=request.user.id).filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4').count()      
+    total_Trainingplanner_rejected= mod9001_trainingplanner.objects.all().filter(planner_user_id=request.user.id).filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4').count()      
     total_Trainingplanner_pending= mod9001_trainingplanner.objects.all().filter(end__gte=datetime.now() - timedelta(days=7)).filter(status='1').filter(trainplannerstatus__isnull=True).count()
 
     total_INCIDENTREGISTER=mod9001_incidentregister.objects.filter(analysis_flag='No').count()
@@ -79,12 +79,12 @@ def home(request):
     total_INCIDENTREGISTER_pending= mod9001_incidentregisterStaff.objects.all().filter(due__gte=datetime.now() - timedelta(days=7)).filter(~Q(qmsstatus='3')).filter(~Q(qmsstatus='1')).count()
         
     total_CORRECTIVEACTION= mod9001_planning.objects.all().filter(status='5').count()
-    total_CORRECTIVEACTION_rejected= mod9001_planning.objects.all().filter(proposedby=request.user.id).filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4').count()
+    total_CORRECTIVEACTION_rejected= mod9001_planning.objects.all().filter(proposedby_user_id=request.user.id).filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4').count()
     total_CORRECTIVEACTION_pending= mod9001_planning.objects.all().filter(due__gte=datetime.now() - timedelta(days=7)).filter(status='1').filter(~Q(qmsstatus='3')).filter(~Q(qmsstatus='1')).count()  
     total_CORRECTIVEACTION_pending_planning= mod9001_correctiveaction.objects.filter(car_flag='No').count()  
               
     total_CHANGEREQUEST= mod9001_changeRegister.objects.all().filter(status='5').count()
-    total_CHANGEREQUEST_rejected= mod9001_changeRegister.objects.all().filter(raisedby=request.user.id).filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4').count()
+    total_CHANGEREQUEST_rejected= mod9001_changeRegister.objects.all().filter(raisedby_user_id=request.user.id).filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4').count()
     
     total_CUSTOMERSATISFACTION= mod9001_customerSatisfaction.objects.all().filter(status='1').filter(start__isnull=True).count()
     total_CUSTOMERSATISFACTION_rejected= mod9001_customerSatisfaction.objects.all().filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(qmsstatus='3').count()

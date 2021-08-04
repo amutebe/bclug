@@ -236,7 +236,7 @@ class mod9001_qmsplanner(models.Model):
     plan_date=models.DateField("Plan Date:")
     #planner = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='qms_by',on_delete=models.CASCADE)
     planner=models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Planner:',related_name='qms_by')
-       
+    planner_user_id= models.CharField("Planner Sytem UserID.:", max_length=20, null=True, blank=True)       
     start=models.DateField("Start Date:")
     end=models.DateField("End Date:")
     description= models.ForeignKey('prod_description',on_delete=models.CASCADE,verbose_name='Program description:',related_name='progdesc')
@@ -259,7 +259,7 @@ class mod9001_qmsplanner(models.Model):
 class mod9001_trainingplanner(models.Model):
     plan_number=models.CharField("Plan no.:",max_length=200,default="Comp-TP-"+car_no(),primary_key=True)
     planner=models.ForeignKey('accounts.employees',null=True, blank=True,on_delete=models.CASCADE,verbose_name='Planner:',related_name='tainingplanner_by')
-           
+    planner_user_id= models.CharField("Planner Sytem UserID.:", max_length=20, null=True, blank=True)                
     trainng_date=models.DateField("Training Date:",null=True)
     TYPE=(('1','Planned'),('2','Not Planned'))
     type=models.CharField(max_length=200, choices=TYPE)
@@ -638,6 +638,8 @@ class mod9001_planning(models.Model):
     decision=models.ForeignKey('decision', on_delete=models.CASCADE,verbose_name='decision:',null=True,blank=True)
     details=models.TextField("Additional Details",null=True, blank=True)   
     proposedby= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Proposed by:',related_name='proposed_to',null=True,blank=True)
+    proposedby_user_id= models.CharField("ProposedBy Sytem UserID.:", max_length=20, null=True, blank=True) 
+    
     assignedto= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Assigned to:',related_name='asigned_to',null=True,blank=True)
     due=models.DateTimeField("When:",null=True)
     status=models.ForeignKey('issues_9001.approval_status', on_delete=models.CASCADE,verbose_name='Status:',null=True,blank=True)
@@ -676,6 +678,7 @@ class mod9001_changeRegister(models.Model):
     req_no=models.CharField("Request No.:",max_length=200,default="Comp-RFC-Q-"+ correction_no(),primary_key=True)
     date=models.DateField("Date:",null=True)    
     raisedby= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Raised by:',related_name='raised_by',null=True,blank=True)  
+    raisedby_user_id= models.CharField("RaisedBy Sytem UserID.:", max_length=20, null=True, blank=True)    
     trigger=models.ForeignKey('car_source', on_delete=models.CASCADE,verbose_name='Source:',null=True,blank=True)
     reference=models.TextField("Reference",null=True, blank=True)      
     process=models.ForeignKey('process', on_delete=models.CASCADE,verbose_name='Process:',null=True,blank=True)

@@ -73,7 +73,12 @@
 						<td>--</td>
 						<td><a href="{% url 'changerequest_rejected'%}">{{total_CHANGEREQUEST_rejected}}</a></td>                     
 					</tr>
-					
+															<tr>
+						<td>Customer Satisfaction</td>
+						<td><a href="{% url 'customersatisfaction_pending_improvement_plan'%}">{{total_CUSTOMERSATISFACTION}}</a></td>
+						<td><a href="{% url 'customersatisfaction_due'%}">{{total_CUSTOMERSATISFACTION_pending}}</a></td>
+						<td>--</td>                     
+					</tr>
 			
 			
 					
@@ -98,19 +103,9 @@
 						<td>--</td>                     
 					</tr>
 
-										<tr>
-						<td>Change Request</td>
-						<td><a href="{% url 'changerequest_pending'%}">{{total_CHANGEREQUEST}}</a></td>
-						<td>--</td>
-						<td><a href="{% url 'changerequest_rejected'%}">{{total_CHANGEREQUEST_rejected}}</a></td>                     
-					</tr>
+				
 					
-										<tr>
-						<td>Customer Satisfaction</td>
-						<td><a href="{% url 'customersatisfaction_pending_improvement_plan'%}">{{total_CUSTOMERSATISFACTION}}</a></td>
-						<td><a href="{% url 'customersatisfaction_due'%}">{{total_CUSTOMERSATISFACTION_pending}}</a></td>
-						<td>--</td>                     
-					</tr>
+
 				
 										<tr>
 						<td>Customer Complaint</td>

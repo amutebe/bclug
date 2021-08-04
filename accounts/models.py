@@ -111,6 +111,9 @@ class employees(models.Model):
     email=models.EmailField("Email",blank=True,null=True,unique=True)
     dept=models.ForeignKey(Department, on_delete=models.CASCADE,verbose_name='Department:',related_name='employee')
     supervisor=models.ForeignKey(Employee_titles, on_delete=models.CASCADE,verbose_name='Supervisor:',related_name='reportsTo',null=True,blank=True)
+    system_user_id = models.OneToOneField(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='user_id',on_delete=models.SET_NULL)
+
+    
     def __str__(self):
         return self.firstName
 
