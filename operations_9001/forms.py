@@ -180,7 +180,7 @@ class providerassessments(ModelForm):
       
     class Meta:
         model = mod9001_providerassessment 
-        exclude = ['cost','currency','costdescription','lesson','entered_by','date_today','verification','verification_status','verification_failed','qmsstatus','scheduled','completion']
+        exclude = ['planner_number','cost','currency','costdescription','lesson','entered_by','date_today','verification','verification_status','verification_failed','qmsstatus','scheduled','completion']
 
             
  
@@ -261,11 +261,11 @@ class change_request(ModelForm):
     
     class Meta:
         model = mod9001_changeRegister 
-        fields = ['status','req_no','date','raisedby','trigger','reference','process','changetype','changedesc']
+        fields = ['status','req_no','date','raisedby','trigger','reference','process','changetype','changetype_desc','changedesc','reason','reason_details']
         #exclude = ['status','proposedby','assignedto','due','completion','qmsstatus','scheduled','entered_by','date_today','verification','verification_status','verification_failed','rejected','approval_date','approved_by']
         widgets = {
 
-            'status':forms.HiddenInput,'date': DateInput(),'due': DateInput(),'reference':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'changedesc':forms.Textarea(attrs={'rows': 2, 'cols': 40})
+            'status':forms.HiddenInput,'date': DateInput(),'due': DateInput(),'reference':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'changedesc':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'reason_details':forms.Textarea(attrs={'rows': 2, 'cols': 40})
         }
 
 class ApproveChangeRequest(ModelForm):
@@ -274,8 +274,8 @@ class ApproveChangeRequest(ModelForm):
     class Meta:
         model = mod9001_changeRegister 
         #fields = '__all__'
-        fields = ['status','rejected','approval_date','approved_by','evaluation','evaldesc','cost','currency','costdescription','add_desc']
-        widgets={'status': RadioSelect(),'approval_date':DateInput(),'evaldesc':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'add_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40})
+        fields = ['status','rejected','approval_date','approved_by','evaluation','evaldesc','cost','currency','costdescription','add_desc','costdesc']
+        widgets={'status': RadioSelect(),'approval_date':DateInput(),'costdesc':forms.Textarea(attrs={'rows': 6, 'cols': 80}),'evaldesc':forms.Textarea(attrs={'rows': 6, 'cols': 80}),'add_desc':forms.Textarea(attrs={'rows': 2, 'cols': 80})
         }
 
 

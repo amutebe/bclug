@@ -1,98 +1,70 @@
 {% extends "accounts/base.html" %} 
 {% block content %}
 
-<div class="col-md-12 order-md-1">
-		 <h4 class="mb-3">Due Customer Complaints</h4>
+<div class="col-md-24 order-md-1">
+          <h4 class="mb-3">Customer Complaints Due for Verification:</h4>
 <p class="round2"> 
 
-		<div class="card card-body">
+
 		
-			<table class="table table-sm">
-				<tr>
-					<th>Complaint No.</th>
+		<div class="card card-body">
+			
+			<table class="table table-sm ">
+			
+						<thead>
+				<tr class="table-info">
+					<th>ComplaintNo.</th>
+					<th>Date</th>
+					<th>time</th>
+					<th>Complaint</th>
+					<th>Organisation</th>
+					<th>Process</th>
+					<th>Type</th>
+                    <th>Comp.Desc</th>
+					<th>Re-Occurance</th>
+					<th>Classification</th>
+					<th>Correction</th>
+                    <th>Add.Desc.</th>
+                    <th>AssignedTo</th>
+					<th>When</th>
 					<th></th>
-				</tr>			
-				{% for key,value in thisdict.items %}
-				<tr>
-				<td>{{ value }}</td>
-			<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td><a class="btn btn-sm btn-info" href="{%url 'customercomplaint_7daysToExpiryview' value %}">Details</a></td>
-				<td><a class="btn btn-sm btn-info" href="{%url 'Verify_customercomplaint' value %}">Action</a></td>
+				
+					
 				</tr>
-				{% endfor %}
+			</tr></thead><tbody>
+				
+						{% for i in products %}
+						<tr>
+					<td>{{i.comp_no}}</td>
+					<td>{{i.date}}</td>
+					<td>{{i.time}}</td>
+					<td>{{i.complaint}}</td>
+					<td>{{i.organisation}}</td>
+					<td>{{i.process}}</td>
+					<td>{{i.type}}</td>
+					<td>{{i.complaint_desc}}</td>
+					<td>{{i.get_re_occurance_display}}</td>
+					<td>{{i.classification}}</td>
+					<td>{{i.correction}}</td>
+					<td>{{i.add_desc}}</td>
+					<td>{{i.assignedto}}</td>
+                    <td>{{i.due}}</td>
+        
+					<td><a class="btn btn-sm btn-info" href="{%url 'Verify_customercomplaint' i.comp_no %}">Action</a></td>
+            
+
+				
+					</tr>
+                    </tbody>
+
+				{%endfor%}
+			
+
 		
 			</table>
 		</div>
-	</div>
 
-</div>
+
 
 
 

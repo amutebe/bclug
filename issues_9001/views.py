@@ -468,14 +468,14 @@ def regulatory_report(request):
         response['Content-Disposition'] = 'attachment; filename="compliance_Register.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['Reg. Id', 'Analyst','Date Registered', 'Requirement', 'OtherRequirement','Description','Document','InterestedParty','Other IP','Responsibility',
-'ApprovalComment','When','Status'])
+        writer.writerow(['Reg. Id', 'Analyst', 'Requirement', 'OtherRequirement','Description','Document','InterestedParty','Details','Responsibility',
+'ApprovalComment','Start Date','End Date','Status'])
 
     
         for i in regulatory:
             
-            writer.writerow([i.regulatory_number, i.analyst,i.registered,  i.cat_name,i.otherCategory,i.description,i.document,i.interestedparty,i.otherInterestedParty,i.responsibility,
-i.rejected,i.due,i.status])
+            writer.writerow([i.regulatory_number, i.analyst,  i.cat_name,i.otherCategory,i.description,i.document,i.interestedparty,i.otherInterestedParty,i.responsibility,
+i.rejected,i.registered,i.due,i.status])
         return response
         
     else:
@@ -939,24 +939,24 @@ def CARnumbers_7days_expire(*x):
 def risks_due(request):
     carExpire7days=mod9001_risks.objects.filter(due__gte=datetime.now() - timedelta(days=7)).filter(status=1,record_type='RISK').filter(~Q(verification=1)).filter(~Q(riskrank='Low')).filter(~Q(risktreatment=2)).filter(~Q(risktreatment=4))
     #carExpire7days=mod9001_risks.objects.all().filter(due__gte=datetime.now() - timedelta(days=7)).filter(record_type='RISK').filter(status='1').filter(~Q(verification_status='Closed'))
-    thislist = []
+    #thislist = []
    
-    for i in carExpire7days:
+    #for i in carExpire7days:
         #w=i.due
         #t=w.strftime('%m/%d/%Y')
         #if CARnumbers_7days_expire(t)<0:
-        thislist.append(i.risk_number)
-    thisdict={}
-    i=0
+    #    thislist.append(i.risk_number)
+    #thisdict={}
+    #i=0
     #creat a dictionary for all car numbers for display
-    for x in thislist:
-        while i<len(thislist):
-            y = str(i)
-            thisdict["risk_number"+y] = thislist[i]
-            i+=1
-
+    #for x in thislist:
+    #    while i<len(thislist):
+     #       y = str(i)
+     ##       thisdict["risk_number"+y] = thislist[i]
+    #        i+=1
+    context={'products':carExpire7days}
         
-    return render(request,'risks_due.html',{'thisdict':thisdict})
+    return render(request,'risks_due.html',context)
 
 
 
@@ -1006,23 +1006,24 @@ def verify_risk(request,pk_test):
 @login_required(login_url='login')
 def opp_due(request):
     carExpire7days=mod9001_risks.objects.all().filter(due__gte=datetime.now() - timedelta(days=7)).filter(record_type='OPP').filter(status='1').filter(~Q(verification='1'))
-    thislist = []
-    for i in carExpire7days:
+    context={'products':carExpire7days}
+    #thislist = []
+    #for i in carExpire7days:
         #w=i.due
         #t=w.strftime('%m/%d/%Y')
         #if CARnumbers_7days_expire(t)<0:
-        thislist.append(i.risk_number)
-    thisdict={}
-    i=0
+    #    thislist.append(i.risk_number)
+    #thisdict={}
+    #i=0
     #creat a dictionary for all car numbers for display
-    for x in thislist:
-        while i<len(thislist):
-            y = str(i)
-            thisdict["risk_number"+y] = thislist[i]
-            i+=1
+    #for x in thislist:
+    #    while i<len(thislist):
+    #        y = str(i)
+    #        thisdict["risk_number"+y] = thislist[i]
+    #        i+=1
 
         
-    return render(request,'opp_due.html',{'thisdict':thisdict})
+    return render(request,'opp_due.html',context)
 
 
 

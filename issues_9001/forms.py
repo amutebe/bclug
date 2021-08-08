@@ -111,7 +111,6 @@ class interestedPartiesFORM(ModelForm):
         }
 
 
-
 class IPEdit(ModelForm):
     
     class Meta:
@@ -133,6 +132,16 @@ class regulatoryRequirmentFORM(ModelForm):
 
             'registered': DateInput(),'due':DateInput()
         }
+    def clean(self):
+        cleaned_data = super().clean()
+        start_date = cleaned_data.get("registered")
+        end_date = cleaned_data.get("due")
+        if end_date is not None and start_date is not None:
+            if end_date < start_date:
+                raise forms.ValidationError("End date should be greater than Start date.")
+        else:
+            raise forms.ValidationError("End date and Start date cannot be empty")
+
 
 class regulatoryreqEdit(ModelForm):
     

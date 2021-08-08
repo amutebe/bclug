@@ -1,98 +1,68 @@
 {% extends "accounts/base.html" %} 
 {% block content %}
 
-<div class="col-md-12 order-md-1">
-		 <h4 class="mb-3">Due Incidents:</h4>
+<div class="col-md-24 order-md-1">
+          <h4 class="mb-3">Due Incidents:</h4>
 <p class="round2"> 
 
-		<div class="card card-body">
+
 		
-			<table class="table table-sm">
-				<tr>
-					<th>Incident No.</th>
+		<div class="card card-body">
+			
+			<table class="table table-sm ">
+			
+						<thead>
+				<tr class="table-info">
+						<th>IncidentNo.</th>
+					<th>Date</th>
+					<th>time</th>
+					<th>ReportedBy</th>
+					<th>Process</th>
+					<th>Type</th>
+					<th>Description</th>
+					<th>Details</th>
+                    <th>Classification</th>
+					<th>Containment</th>
+					<th>Addit.Desc</th>
+                    <th>AssignedTo</th>
+					<th>Due</th>
 					<th></th>
-				</tr>			
-				{% for key,value in thisdict.items %}
-				<tr>
-				<td>{{ value }}</td>
-			<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td><a class="btn btn-sm btn-info" href="{%url 'incidentregister_7daysToExpiryview' value %}">Details</a></td>
-				<td><a class="btn btn-sm btn-info" href="{%url 'Verify_incidentregister' value %}">Action</a></td>
+				
+					
 				</tr>
-				{% endfor %}
+			</tr></thead><tbody>
+				
+						{% for i in products %}
+						<tr>
+					<td>{{i.incident_number}}</td>
+					<td>{{i.incident_number.date}}</td>
+					<td>{{i.incident_number.time}}</td>
+					<td>{{i.incident_number.reporter}}</td>
+					<td>{{i.incident_number.processname}}</td>
+					<td>{{i.incident_number.incidentype}}</td>
+					<td>{{i.incident_number.incident_description}}</td>
+					<td>{{i.incident_number.other}}</td>
+					<td>{{i.classification}}</td>
+					<td>{{i.correction}}</td>
+					<td>{{i.description}}</td>
+					<td>{{i.assigned}}</td>
+                    <td>{{i.due}}</td>
+        
+					<td><a class="btn btn-sm btn-info" href="{%url 'Verify_incidentregister' i.incident_number %}">Action</a></td>
+            
+
+				
+					</tr>
+                    </tbody>
+
+				{%endfor%}
+			
+
 		
 			</table>
 		</div>
-	</div>
 
-</div>
+
 
 
 

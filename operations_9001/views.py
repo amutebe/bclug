@@ -326,23 +326,24 @@ def CARnumbers_7days_expire(*x):
 @login_required(login_url='login')
 def qms_due(request):
     carExpire7days=mod9001_qmsplanner.objects.all().filter(end__gte=datetime.now() - timedelta(days=7)).filter(status='1').filter(~Q(qmsstatus=1)).filter(~Q(qmsstatus=3))
-    thislist = []
-    for i in carExpire7days:
+    context={'products':carExpire7days}
+    #thislist = []
+    #for i in carExpire7days:
         #w=i.end
         #t=w.strftime('%m/%d/%Y')
         #if CARnumbers_7days_expire(t)<0:
-        thislist.append(i.planner_number)
-    thisdict={}
-    i=0
+    #    thislist.append(i.planner_number)
+    #thisdict={}
+    #i=0
     #creat a dictionary for all car numbers for display
-    for x in thislist:
-        while i<len(thislist):
-            y = str(i)
-            thisdict["planner_number"+y] = thislist[i]
-            i+=1
+    #for x in thislist:
+    #    while i<len(thislist):
+    #        y = str(i)
+    #        thisdict["planner_number"+y] = thislist[i]
+    #        i+=1
 
         
-    return render(request,'qms_due.html',{'thisdict':thisdict})
+    return render(request,'qms_due.html',context)
 
 
 
@@ -475,25 +476,26 @@ def trainingregister_rejected(request):
 @login_required(login_url='login')
 def trainingregister_due(request):
     carExpire7days=mod9001_trainingregister.objects.filter(completion_date__gte=datetime.now() - timedelta(days=7)).filter(status=1).filter(~Q(qmsstatus=1)).filter(~Q(qmsstatus='3'))
+    context={'products':carExpire7days}
     #carExpire7days=mod9001_providerassessment.objects.filter(status=1)
-    thislist = []
-    for i in carExpire7days:
+    #thislist = []
+    #for i in carExpire7days:
         #print("printing",i)
         #w=i.completion_date
         #t=w.strftime('%m/%d/%Y')
         #if CARnumbers_7days_expire(t)<0:
-        thislist.append(i.training_number)
-    thisdict={}
-    i=0
+    #    thislist.append(i.training_number)
+    #thisdict={}
+    #i=0
     #creat a dictionary for all car numbers for display
-    for x in thislist:
-        while i<len(thislist):
-            y = str(i)
-            thisdict["satis_no"+y] = thislist[i]
-            i+=1
+    #for x in thislist:
+    #    while i<len(thislist):
+    #        y = str(i)
+    #        thisdict["satis_no"+y] = thislist[i]
+    #        i+=1
 
         
-    return render(request,'trainingregister_due.html',{'thisdict':thisdict})
+    return render(request,'trainingregister_due.html',context)
 
 
 
@@ -590,12 +592,12 @@ def trainingplan_report(request):
         response['Content-Disposition'] = 'attachment; filename="Training_planner.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['Planner No.','Planner', 'TrainingType', 'Description','Audience', 'OtherAudience','AdditionalDescription','Date','Objective','Comment','StartDate','EndDate','Location','OtherLocation','Trainer','Resources','Approval','Verification'])
+        writer.writerow(['Planner No.','Planner', 'TrainingType', 'Description','Audience', 'OtherAudience','Trainee','AdditionalDescription','Date','Objective','Comment','StartDate','EndDate','Location','OtherLocation','Trainer','Resources','Approval','Verification'])
 
     
         for i in trainingplan:
             
-            writer.writerow([i.plan_number,i.planner, i.get_type_display(),i.description,i.get_trainaudience_display(),i.other_audience,  i.details,i.trainng_date,i.objective,i.comments,i.start,i.end,i.get_trainlocation_display(),i.other_location,i.trainer,i.status,i.trainplannerstatus])
+            writer.writerow([i.plan_number,i.planner, i.get_type_display(),i.description,i.get_trainaudience_display(),i.other_audience,i.trainee,i.details,i.trainng_date,i.objective,i.comments,i.start,i.end,i.get_trainlocation_display(),i.other_location,i.trainer,i.status,i.trainplannerstatus])
         return response
         
     else:
@@ -653,25 +655,25 @@ def CARnumbers_7days_expire(*x):
 @login_required(login_url='login')
 def training_due(request):
     #carExpire7days=mod9001_trainingplanner.objects.filter(status=1).filter(~Q(trainplannerstatus=1)).filter(~Q(trainplannerstatus=3))
-    carExpire7days=mod9001_trainingplanner.objects.filter(status=1).filter(~Q(trainplannerstatus=1)).filter(trainplannerstatus__isnull=True)
-
-    thislist = []
-    for i in carExpire7days:
+    carExpire7days=mod9001_trainingplanner.objects.filter(status=1).filter(~Q(trainplannerstatus=1)).filter(~Q(trainplannerstatus=3))
+    context={'products':carExpire7days}
+    #thislist = []
+    #for i in carExpire7days:
         #w=i.end
         #t=w.strftime('%m/%d/%Y')
         #if CARnumbers_7days_expire(t)<0:
-        thislist.append(i.plan_number)
-    thisdict={}
-    i=0
+    #    thislist.append(i.plan_number)
+    #thisdict={}
+    #i=0
     #creat a dictionary for all car numbers for display
-    for x in thislist:
-        while i<len(thislist):
-            y = str(i)
-            thisdict["plan_number"+y] = thislist[i]
-            i+=1
+    #for x in thislist:
+    #    while i<len(thislist):
+    #        y = str(i)
+    #        thisdict["plan_number"+y] = thislist[i]
+    #        i+=1
 
         
-    return render(request,'training_due.html',{'thisdict':thisdict})
+    return render(request,'training_due.html',context)
 
 
 
@@ -974,25 +976,26 @@ def incidentStaff(request):
 @login_required(login_url='login')
 def incidentregister_due(request):
     carExpire7days=mod9001_incidentregisterStaff.objects.all().filter(~Q(qmsstatus='3')).filter(~Q(qmsstatus='1'))
+    context={'products':carExpire7days}
     #carExpire7days=mod9001_providerassessment.objects.filter(status=1)
-    thislist = []
-    for i in carExpire7days:
+    #thislist = []
+    #for i in carExpire7days:
         #print("printing",i)
-        w=i.due
-        t=w.strftime('%m/%d/%Y')
-        if CARnumbers_7days_expire(t)<0:
-            thislist.append(i.incident_number)
-    thisdict={}
-    i=0
+    #    w=i.due
+    #    t=w.strftime('%m/%d/%Y')
+     #   if CARnumbers_7days_expire(t)<0:
+    #        thislist.append(i.incident_number)
+    #thisdict={}
+    #i=0
     #creat a dictionary for all car numbers for display
-    for x in thislist:
-        while i<len(thislist):
-            y = str(i)
-            thisdict["incident_number"+y] = thislist[i]
-            i+=1
+    #for x in thislist:
+    #    while i<len(thislist):
+    #        y = str(i)
+    #        thisdict["incident_number"+y] = thislist[i]
+    #        i+=1
 
         
-    return render(request,'incidentregister_due.html',{'thisdict':thisdict})
+    return render(request,'incidentregister_due.html',context)
 
 
 
@@ -1103,7 +1106,7 @@ def providerAssessment_report(request):
 
         writer = csv.writer(response)
        
-        writer.writerow(['Review No.', 'Date', 'Provider', 'Organisation','AppraiseeInternal','AppraiseeExternal','Rating','ImprovementPlan','Addit.Details','AssignedTo','Timeline','Status','Comment/LessonLearnt'])
+        writer.writerow(['Review No.', 'Date', 'Provider', 'Organisation','AppraiseeInternal','AppraiseeExternal','Rating','ImprovementPlan','Addit.Details','Assessor','Timeline','Status','Comment/LessonLearnt'])
 
     
         for i in providerassessment:
@@ -1192,25 +1195,26 @@ def providerassessments_rejected(request):
 @login_required(login_url='login')
 def providerassessments_due(request):
     carExpire7days=mod9001_providerassessment.objects.all().filter(due__gte=datetime.now() - timedelta(days=7)).filter(~Q(qmsstatus='3')).filter(~Q(qmsstatus='1'))
+    context={'products':carExpire7days}
     #carExpire7days=mod9001_providerassessment.objects.filter(status=1)
-    thislist = []
-    for i in carExpire7days:
+    #thislist = []
+    #for i in carExpire7days:
         #print("printing",i)
         #w=i.due
         #t=w.strftime('%m/%d/%Y')
         #if CARnumbers_7days_expire(t)<0:
-        thislist.append(i.emp_perfrev_no)
-    thisdict={}
-    i=0
+    #    thislist.append(i.emp_perfrev_no)
+    #thisdict={}
+    #i=0
     #creat a dictionary for all car numbers for display
-    for x in thislist:
-        while i<len(thislist):
-            y = str(i)
-            thisdict["emp_perfrev_no"+y] = thislist[i]
-            i+=1
+    #for x in thislist:
+    #    while i<len(thislist):
+    #        y = str(i)
+     ##       thisdict["emp_perfrev_no"+y] = thislist[i]
+     #       i+=1
 
         
-    return render(request,'providerassessments_due.html',{'thisdict':thisdict})
+    return render(request,'providerassessments_due.html',context)
 
 
 
@@ -1475,24 +1479,25 @@ def CARnumbers_7days_expire(*x):
 def planning_due(request):
     #carExpire7days=mod9001_planning.objects.filter(status=1).filter(~Q(qmsstatus=1))
     carExpire7days=mod9001_planning.objects.all().filter(due__gte=datetime.now() - timedelta(days=7)).filter(status='1').filter(~Q(qmsstatus='3')).filter(~Q(qmsstatus='1'))
-    thislist = []
+    context={'products':carExpire7days}
+    #thislist = []
    
-    for i in carExpire7days:
+    #for i in carExpire7days:
         #w=i.due
         #t=w.strftime('%m/%d/%Y')
         #if CARnumbers_7days_expire(t)<0:
-        thislist.append(i.car_no)
-    thisdict={}
-    i=0
+    #    thislist.append(i.car_no)
+    #thisdict={}
+    #i=0
     #creat a dictionary for all car numbers for display
-    for x in thislist:
-        while i<len(thislist):
-            y = str(i)
-            thisdict["car_no"+y] = thislist[i]
-            i+=1
+    #for x in thislist:
+    #    while i<len(thislist):
+     #       y = str(i)
+    #        thisdict["car_no"+y] = thislist[i]
+    #        i+=1
 
         
-    return render(request,'planning_due.html',{'thisdict':thisdict})
+    return render(request,'planning_due.html',context)
 
 
 
@@ -1589,12 +1594,12 @@ def changeRegister_report(request):
         response['Content-Disposition'] = 'attachment; filename="Change_Request.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['RequestNo.', 'Date', 'RaisedBy', 'CARsource','Reference','Process','ChangeType','ChangeDesc.','Evaluation','Eval.Desc.','Cost','Currency','CostDesc.','Add.Desc.','Approved','Verified','ProposedBy','AssignedTo','When'])
+        writer.writerow(['RequestNo.', 'Date', 'RaisedBy', 'CARsource','Reference','Process','ChangeType','ChangeTypeDesc.','Details.','Reason','OtherReason','Evaluation','Eval.Desc.','Risk','RiskDetails','Currency','CostDesc.','Add.Desc.','Approved','Verified','ProposedBy','AssignedTo','When'])
 
     
         for i in docmngr:
             
-            writer.writerow([i.req_no, i.date,i.raisedby,i.trigger,i.reference,i.process,i.changetype,i.changedesc,i.get_evaluation_display(),i.evaldesc,i.cost,i.get_currency_display(),i.costdescription,i.add_desc,i.status,i.qmsstatus,i.proposedby,i.assignedto,i.due])
+            writer.writerow([i.req_no, i.date,i.raisedby,i.trigger,i.reference,i.process,i.changetype,i.changetype_desc,i.changedesc,i.reason,i.reason_details,i.get_evaluation_display(),i.evaldesc,i.get_cost_display(),i.costdesc,i.get_currency_display(),i.costdescription,i.add_desc,i.status,i.qmsstatus,i.proposedby,i.assignedto,i.due])
         return response
         
     else:
@@ -1829,26 +1834,27 @@ def customer_complaint_report(request):
 @login_required(login_url='login')
 def customercomplaint_due(request):
     carExpire7days=mod9001_customerComplaint.objects.all().filter(due__gte=datetime.now() - timedelta(days=7)).filter(~Q(qmsstatus='3')).filter(~Q(qmsstatus='1')) 
+    context={'products':carExpire7days}
     #carExpire7days=mod9001_providerassessment.objects.filter(status=1)
-    thislist = []
-    for i in carExpire7days:
-        #print("printing",i)
-        if i.due is not None:
+    #thislist = []
+    #for i in carExpire7days:
+    #    #print("printing",i)
+    #    if i.due is not None:
             #w=i.due
             #t=w.strftime('%m/%d/%Y')
             #if CARnumbers_7days_expire(t)<0:
-            thislist.append(i.comp_no)
-    thisdict={}
-    i=0
+     #       thislist.append(i.comp_no)
+    #thisdict={}
+    #i=0
     #creat a dictionary for all car numbers for display
-    for x in thislist:
-        while i<len(thislist):
-            y = str(i)
-            thisdict["comp_no"+y] = thislist[i]
-            i+=1
+    #for x in thislist:
+    #    while i<len(thislist):
+    #        y = str(i)
+    #        thisdict["comp_no"+y] = thislist[i]
+    #        i+=1
 
         
-    return render(request,'customerComplaint_due.html',{'thisdict':thisdict})
+    return render(request,'customerComplaint_due.html',context)
 
 
 
@@ -2123,27 +2129,27 @@ def customersatisfaction(request):
 def customersatisfaction_due(request):
  
     carExpire7days=mod9001_customerSatisfaction.objects.all().filter(due__gte=datetime.now() - timedelta(days=7)).filter(~Q(qmsstatus='3')).filter(~Q(qmsstatus='1'))
-    print("PRINTING carExpire7days",carExpire7days) 
-    thislist = []
-    for i in carExpire7days:
+    context={'products':carExpire7days}
+    #thislist = []
+    #for i in carExpire7days:
         #print("printing",i.satis_no)
         #if i.due is not None:
         #    print("PRINTING due",i.satis_no) 
             #w=i.due
             #t=w.strftime('%m/%d/%Y')
             #if CARnumbers_7days_expire(t)<0:
-        thislist.append(i.satis_no)
-    thisdict={}
-    i=0
+    #    thislist.append(i.satis_no)
+    #thisdict={}
+    #i=0
     #creat a dictionary for all car numbers for display
-    for x in thislist:
-        while i<len(thislist):
-            y = str(i)
-            thisdict["satis_no"+y] = thislist[i]
-            i+=1
+    #for x in thislist:
+    #    while i<len(thislist):
+     #       y = str(i)
+    #        thisdict["satis_no"+y] = thislist[i]
+    #        i+=1
 
         
-    return render(request,'customersatisfaction_due.html',{'thisdict':thisdict})
+    return render(request,'customersatisfaction_due.html',context)
 
 
 

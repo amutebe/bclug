@@ -1,98 +1,79 @@
 {% extends "accounts/base.html" %} 
 {% block content %}
 
-<div class="col-md-12 order-md-1">
-		 <h4 class="mb-3">Training Evaluation Due for Verification</h4>
+<div class="col-md-24 order-md-1">
+          <h4 class="mb-3">Training Evaluation Due for Verification:</h4>
 <p class="round2"> 
 
-		<div class="card card-body">
+
 		
-			<table class="table table-sm">
-				<tr>
-					<th>Training No.</th>
+		<div class="card card-body">
+			
+			<table class="table table-sm ">
+			
+						<thead>
+				<tr class="table-info">
+						<th>TainingNo</th>
+					<th>Planner</th>
+					<th>Training</th>
+					<th>Addit.Desc</th>
+					<th>Date</th>
+					<th>Nature</th>
+					<th>Trainee</th>
+					<th>Dept.</th>
+					<th>Completion</th>
+                    <th>Decision</th>
+                    <th>Reason</th>
+                    <th>Details</th>
+                    <th>ActionPlan</th>
+                     <th>Addit.Desc.</th>
+
+					<th>AssignedTo</th>
+					<th>Timeline</th>
 					<th></th>
-				</tr>			
-				{% for key,value in thisdict.items %}
-				<tr>
-				<td>{{ value }}</td>
-			<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td><a class="btn btn-sm btn-info" href="{%url 'trainingregister_7daysToExpiryview' value %}">Details</a></td>
-				<td><a class="btn btn-sm btn-info" href="{%url 'Verify_trainingregister' value %}">Action</a></td>
+				
+					
 				</tr>
-				{% endfor %}
+			{% for i in products %}         
+						
+						<tr>
+					<td>{{i.training_number}}</td>
+					<td>{{i.planner}}</td>
+					<td>{{i.plan_number.description}}</td>
+					<td>{{i.plan_number.details}}</td>
+				
+					
+					<td>{{i.train_date}}</td>
+				
+					<td>{{i.get_nature_display}}</td>
+					<td>{{i.trainee}}</td>
+					<td>{{i.trainee.dept}}</td>
+					<td>{{i.completion_date}}</td>
+
+                    <td>{{i.get_decision_display}}</td>
+                     <td>{{i.reasond}}</td>
+                     <td>{{i.reasonother}}</td>
+                          <td>{{i.actionplan}}</td>
+                           <td>{{i.actionplanother}}</td>
+
+					<td>{{i.assigned}}</td>
+					<td>{{i.timeline}}</td>
+        
+					<td><a class="btn btn-sm btn-info" href="{%url 'Verify_trainingregister' i.training_number %}">Action</a></td>
+            
+
+				
+					</tr>
+                    </tbody>
+
+				{%endfor%}
+			
+
 		
 			</table>
 		</div>
-	</div>
 
-</div>
+
 
 
 

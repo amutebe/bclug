@@ -1,98 +1,66 @@
 {% extends "accounts/base.html" %} 
 {% block content %}
 
-<div class="col-md-12 order-md-1">
-		 <h4 class="mb-3"> Customer Satisfaction Due for Verification:</h4>
+<div class="col-md-24 order-md-1">
+          <h4 class="mb-3">Customer Satisfaction Due for Verification:</h4>
 <p class="round2"> 
 
-		<div class="card card-body">
+
 		
-			<table class="table table-sm">
-				<tr>
-					<th>Survey No.</th>
+		<div class="card card-body">
+			
+			<table class="table table-sm ">
+			
+						<thead>
+				<tr class="table-info">
+					<th>Survey No</th>
+					<th>Created on</th>
+					<th>Organisation</th>
+					<th>Start</th>
+					<th>End</th>
+					<th>FinalRating</th>
+					<th>Comment</th>
+					<th>Improv.Plan</th>
+					<th>Add.Details</th>
+					<th>AssignedTo</th>
+					<th>When</th>
+                    <th>Status</th>
 					<th></th>
-				</tr>			
-				{% for key,value in thisdict.items %}
-				<tr>
-				<td>{{ value }}</td>
-			<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td><a class="btn btn-sm btn-info" href="{%url 'customersatisfaction_7daysToExpiryview' value %}">Details</a></td>
-				<td><a class="btn btn-sm btn-info" href="{%url 'Verify_customersatisfaction' value %}">Action</a></td>
+				
+					
 				</tr>
-				{% endfor %}
+			</tr></thead><tbody>
+				
+						{% for i in products %}
+						<tr>
+					<td>{{i.satis_no}}</td>
+					<td>{{i.date}}</td>
+					<td>{{i.organisation}}</td>
+					<td>{{i.start}}</td>
+					<td>{{i.end}}</td>
+					<td>{{i.rank}}</td>
+					<td>{{i.comment}}</td>
+					<td>{{i.get_improvplan_display}}</td>
+					<td>{{i.details}}</td>
+					<td>{{i.assignedto}}</td>
+					<td>{{i.due}}</td>
+					<td>{{i.status}}</td>
+        
+					<td><a class="btn btn-sm btn-info" href="{%url 'Verify_customersatisfaction' i.satis_no %}">Action</a></td>
+            
+
+				
+					</tr>
+                    </tbody>
+
+				{%endfor%}
+			
+
 		
 			</table>
 		</div>
-	</div>
 
-</div>
+
 
 
 

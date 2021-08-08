@@ -1,97 +1,58 @@
 {% extends "accounts/base.html" %} 
 {% block content %}
 
-<div class="col-md-12 order-md-1">
-		 <h4 class="mb-3">Due QMS</h4>
+<div class="col-md-24 order-md-1">
+          <h4 class="mb-3">Due QMS</h4>
 <p class="round2"> 
 
-		<div class="card card-body">
+
 		
-			<table class="table table-sm">
-				<tr>
-					<th>Planner Number</th>
+		<div class="card card-body">
+			
+			<table class="table table-sm ">
+			
+						<thead>
+				<tr class="table-info">
+						<th>ID</th>
+					<th>PlanDate</th>
+					<th>Planner</th>
+					<th>Status</th>
+					<th>Start</th>
+					<th>End</th>
+					<th>Desc.</th>
+					<th>Addit.Desc</th>
 					<th></th>
-				</tr>			
-				{% for key,value in thisdict.items %}
-				<tr>
-				<td>{{ value }}</td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td><a class="btn btn-sm btn-info" href="{%url 'qms_7daysToExpiryview' value %}">Details</a> <a class="btn btn-sm btn-info" href="{%url 'verify_qms' value %}">Action</a></td>
+				
+					
 				</tr>
-				{% endfor %}
+			</tr></thead><tbody>
+				
+						{% for i in products %}
+						<tr>
+					<td>{{i.planner_number}}</td>
+					<td>{{i.plan_date}}</td>
+					<td>{{i.planner}}</td>
+					<td>{{i.status}}</td>
+					<td>{{i.start}}</td>
+					<td>{{i.end}}</td>
+					<td>{{i.description}}</td>
+					<td>{{i.details}}</td>
+        
+					<td><a class="btn btn-sm btn-info" href="{%url 'verify_qms' i.planner_number %}">Action</a></td>
+            
+
+				
+					</tr>
+                    </tbody>
+
+				{%endfor%}
+			
+
 		
 			</table>
 		</div>
-	</div>
 
-</div>
+
 
 
 

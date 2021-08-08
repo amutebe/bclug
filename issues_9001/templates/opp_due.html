@@ -1,99 +1,83 @@
 {% extends "accounts/base.html" %} 
 {% block content %}
 
-<div class="col-md-12 order-md-1">
-	          <h4 class="mb-3">Due Opportunities</h4>
-<p class="round2"> 	
-		<div class="card card-body">
+<div class="col-md-24 order-md-1">
+          <h4 class="mb-3">Due Opportunity</h4>
+<p class="round2"> 
+
+
 		
-			<table class="table table-sm">
-				<tr>
-					<th>OPPORTUNITY Number</th>
-					<th></th>
-				</tr>
+		<div class="card card-body">
+			
+			<table class="table table-sm ">
+			
+						<thead>
+				<tr class="table-info">
+					<th>ID</th>
+					<th>Date</th>
+					<th>Assessor</th>					
+					<th>Context</th>
+                    <th>ProcessDesc.</th>
+					<th>SWOT</th>
+					<th>IssueDesc.</th>
+					<th>Details</th>
+                    <th>OPP.Desc.</th>
+                   
+                       
 				
-				{% for key,value in thisdict.items %}
-				<tr>
-				<td>{{ value }}</td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td><a class="btn btn-sm btn-info" href="{%url 'opp_7daysToExpiryview' value %}">Details</a> <a class="btn btn-sm btn-info" href="{%url 'verify_opp' value %}">Action</a></td>
+					<th>Ranking</th>
+                       <th>OPP.Action</th>
+                       
+                             <th>Responsibility</th>
+					<th>When</th>
+					<th></th>
+				
+					
+				</tr>
+			</tr></thead><tbody>
+				
+					{% for i in products %}
+						<tr>
+						<td>{{i.risk_number}}</td>
+					<td>{{i.risk_date}}</td>
+					<td>{{i.assessor}}</td>
+				
+						{% if i.issue_number != empty %}
+					
+					<td colspan="1">{{i.issue_number.get_context_display}}</td>
+					{% else %}
+					<td colspan="1">{{i.get_context_display}}</td>
+					{% endif %}
+				
+                    <td>{{i.issue_number.get_process_desc_display}}</td>
+					<td>{{i.issue_number.get_process_issues_display}}</td>
+					<td>{{i.issue_number.process_StrengthWeakness}}</td>
+					<td>{{i.issue_number.description}}</td>
+                    <td>{{i.description}}</td>
+                  
+               
+			
+					<td>{{i.riskrank}}</td>
+                    <td>{{i.mitigation}}</td>
+                  
+                    <td>{{i.responsibility}}</td>
+					<td>{{i.due}}</td>
+        
+					<td><a class="btn btn-sm btn-info" href="{%url 'verify_opp' i.risk_number %}">Action</a></td>
             
 
-				</tr>
-				{% endfor %}
+				
+					</tr>
+                    </tbody>
+
+				{%endfor%}
+			
+
 		
 			</table>
 		</div>
-	</div>
 
-</div>
+
 
 
 

@@ -150,25 +150,25 @@ def serviceRequest_due(request):
     #carExpire7days=mod20000_service_planning.objects.filter(status=1).filter(~Q(qmsstatus=1))
     carExpire7days=mod20000_service_planning.objects.all().filter(due__gte=datetime.now() - timedelta(days=7)).filter(~Q(qmsstatus='3')).filter(~Q(qmsstatus='1'))
     #carExpire7days=mod9001_providerassessment.objects.filter(status=1)
-    thislist = []
-    for i in carExpire7days:
+    #thislist = []
+    #for i in carExpire7days:
         #print("printing",i)
-        if i.due is not None:
+    #    if i.due is not None:
             #w=i.due
             #t=w.strftime('%m/%d/%Y')
             #if CARnumbers_7days_expire(t)<0:
-            thislist.append(i.service_number)
-    thisdict={}
-    i=0
+    #        thislist.append(i.service_number)
+    #thisdict={}
+    #i=0
     #creat a dictionary for all car numbers for display
-    for x in thislist:
-        while i<len(thislist):
-            y = str(i)
-            thisdict["service_number"+y] = thislist[i]
-            i+=1
+    #for x in thislist:
+    #    while i<len(thislist):
+    #        y = str(i)
+     #       thisdict["service_number"+y] = thislist[i]
+    #        i+=1
 
-        
-    return render(request,'serviceRequest_due.html',{'thisdict':thisdict})
+    context={'products':carExpire7days}    
+    return render(request,'serviceRequest_due.html',context)
 
 
 

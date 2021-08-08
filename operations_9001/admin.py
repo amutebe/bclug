@@ -88,7 +88,7 @@ admin.site.register(costs)
 admin.site.register(providerparameters)
 admin.site.register(mod9001_providerassessment)
 #admin.site.register(mod9001_supplieregistration)
-admin.site.register(providers)
+#admin.site.register(providers)
 admin.site.register(mod9001_correctiveaction)
 admin.site.register(mod9001_planning)
 #admin.site.register(mod9001_trainingplanner,mod9001_trainingplannerAdmin)
@@ -96,6 +96,12 @@ admin.site.register(mod9001_trainingregister)
 admin.site.register(mod9001_customerSatisfaction)
 admin.site.register(mod9001_customerComplaint)
 admin.site.register(mod9001_changeRegister)
+
+admin.site.register(change_type)
+admin.site.register(change_type_desc)
+admin.site.register(changeRequest_reason)
+
+
 
 
 

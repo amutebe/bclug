@@ -1,8 +1,8 @@
 {% extends "accounts/base.html" %} 
 {% block content %}
 
-<div class="col-md-12 order-md-1">
-          <h4 class="mb-3">Corrective Action Plans Due</h4>
+<div class="col-md-24 order-md-1">
+          <h4 class="mb-3">Corrective Action Plans Due:</h4>
 <p class="round2"> 
 
 
@@ -11,90 +11,64 @@
 			
 			<table class="table table-sm ">
 			
-				{% for key,value in thisdict.items %}
-				<tr>
-				<td>{{ value }}</td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td><a class="btn btn-sm btn-info" href="{%url 'planning_7daysToExpiryview' value %}">Details</a></td>
-				<td><a class="btn btn-sm btn-info" href="{%url 'verify_planning' value %}">Action</a></td>
+						<thead>
+				<tr class="table-info">
+					<th>CAR ID</th>
+					<th>Date</th>
+					<th>Process</th>
+					<th>Finding</th>
+					<th>Source</th>
+				
+					<th>Add.Desc.</th>
+					<th>Containment</th>
+					<th>RootCause</th>
+					<th>RC.Desc.</th>
+					<th>Decision</th>
+					<th>Add.Details</th>
+					<th>AssignedTo</th>
+					<th>When</th>
+					<th>Status</th>
+					<th></th>
+				
+					
+				</tr>
+			</tr></thead><tbody>
+				
+						{% for i in products %}
+				
+					<tr>
+					<td>{{i.car_no}}</td>
+					<td>{{i.car_no.date}}</td>
+					<td>{{i.car_no.process}}</td>
+		
+					<td>{{i.car_no.get_finding_display}}</td>
+					<td>{{i.car_no.car_source}}</td>
+					<td>{{i.car_no.addesc}}</td>
+					<td>{{i.containment}}</td>
+					<td>{{i.rootcause}}</td>
+					<td>{{i.rootcause_desc}}</td>
+					<td>{{i.decision}}</td>
+					<td>{{i.details}}</td>									
+					<td>{{i.assignedto}}</td>
+					<td>{{i.due}}</td>
+					<td>{{i.qmsstatus}}</td>
+        
+					<td><a class="btn btn-sm btn-info" href="{%url 'verify_planning' i.car_no %}">Action</a></td>
             
 
-				</tr>
-				{% endfor %}
+				
+					</tr>
+                    </tbody>
+
+				{%endfor%}
+			
+
 		
 			</table>
 		</div>
-	</div>
 
 
-</div>
+
 
 
 {% endblock %} 

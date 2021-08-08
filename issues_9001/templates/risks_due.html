@@ -1,7 +1,7 @@
 {% extends "accounts/base.html" %} 
 {% block content %}
 
-<div class="col-md-12 order-md-1">
+<div class="col-md-24 order-md-1">
           <h4 class="mb-3">Risks Due</h4>
 <p class="round2"> 
 
@@ -11,89 +11,73 @@
 			
 			<table class="table table-sm ">
 			
-				{% for key,value in thisdict.items %}
-				<tr>
-				<td>{{ value }}</td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td><a class="btn btn-sm btn-info" href="{%url 'risks_7daysToExpiryview' value %}">Details</a> <a class="btn btn-sm btn-info" href="{%url 'verify_risk' value %}">Action</a></td>
+						<thead>
+				<tr class="table-info">
+					<th>ID</th>
+					<th>Date</th>
+					<th>Assessor</th>					
+					<th>Context</th>
+                    <th>ProcessDesc.</th>
+					<th>SWOT</th>
+					<th>IssueDesc.</th>
+					<th>Details</th>
+                    <th>RiskDesc.</th>
+					<th>Ranking</th>
+                    <th>RiskTreatment</th>
+                    <th>Mitigation</th>
+                    <th>MitigationDetails</th>
+                    <th>Responsibility</th>
+					<th>When</th>
+					<th></th>
+				
+					
+				</tr>
+			</tr></thead><tbody>
+				
+				{% for i in products %}
+				
+					<tr>
+					<td>{{i.risk_number}}</td>
+					<td>{{i.risk_date}}</td>
+					<td>{{i.assessor}}</td>
+				
+						{% if i.issue_number != empty %}
+					
+					<td colspan="1">{{i.issue_number.get_context_display}}</td>
+					{% else %}
+					<td colspan="1">{{i.get_context_display}}</td>
+					{% endif %}
+				
+                    <td>{{i.issue_number.get_process_desc_display}}</td>
+					<td>{{i.issue_number.get_process_issues_display}}</td>
+					<td>{{i.issue_number.process_StrengthWeakness}}</td>
+					<td>{{i.issue_number.description}}</td>
+                    <td>{{i.riskdescription}}</td>
+                  
+               
+			
+					<td>{{i.riskrank}}</td>
+                    <td>{{i.risktreatment}}</td>
+                    <td>{{i.riskmitigation}}</td>
+                     <td>{{i.mitigationdesc}}</td>
+                    <td>{{i.responsibility}}</td>
+					<td>{{i.due}}</td>
+					<td><a class="btn btn-sm btn-info" href="{%url 'verify_risk' i.risk_number %}">Action</a></td>
             
 
-				</tr>
-				{% endfor %}
+				
+					</tr>
+                    </tbody>
+
+				{%endfor%}
+			
+
 		
 			</table>
 		</div>
-	</div>
 
 
-</div>
+
 
 
 {% endblock %} 

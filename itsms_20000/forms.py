@@ -43,3 +43,18 @@ class VerifyServiceRequest(ModelForm):
         fields=['due','verification_status','verification_failed','qmsstatus','scheduled','completion_date','completedby','report_number','error','solution','remark','component_affected']
         widgets={'due':HiddenInput(),'completion_date':DateInput(),'scheduled':DateInput(),'verification_failed':forms.Textarea(attrs={'rows': 2, 'cols': 40})}        
 
+    #def clean(self):
+    #    cleaned_data = super().clean()
+     #   planning_date = cleaned_data.get("planning_date")
+    #    completion_date = cleaned_data.get("completion_date")
+    #    scheduled = cleaned_data.get("scheduled")
+
+        
+        
+    #    if completion_date is not None and planning_date < completion_date:
+    #        raise forms.ValidationError("Completion date should be greater than Planning date.")
+    #    elif scheduled is not None and planning_date < scheduled:
+    #        raise forms.ValidationError("Rescheduled date should not be less than Planning date.")
+
+
+        
