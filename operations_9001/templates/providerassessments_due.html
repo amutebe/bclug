@@ -7,19 +7,20 @@
 
 
 		
-		<div class="card card-body">
+
 			
-			<table class="table table-sm ">
+			<table class="tableizer-table">
 			
 						<thead>
 				<tr class="table-info">
-					<th>Review No.</th>
+				<th>Review No.</th>
 					<th>Date</th>
 					<th>Provider</th>
                     <th>Organisation</th>
 					
 					
 					<th>Appraisee</th>
+					<th>Representative</th>
 					<th>Rating</th>
 					<th>ImprovementPlan</th>
                     <th></th>
@@ -33,9 +34,12 @@
                     <th></th>
                     <th></th>
                     <th>Addit.Details</th>
-                    <th>AssignedTo</th>
+            
+                    <th>Assessor</th>
 					<th>Timeline</th>
                     <th>Status</th>
+                  
+
 					<th></th>
 				
 					
@@ -45,22 +49,22 @@
 						{% for i in products %}
 				
 					<tr>
-					<td>{{i.emp_perfrev_no}}</td>
+				<td>{{i.emp_perfrev_no}}</td>
 					<td>{{i.start}}</td>
 					<td>{{i.get_Provider_display}}</td>
                     <td>{{i.organisation}}</td>
 				
 					
 					<td>{{i.appraise}}</td>
-				
+					<td>{{i.appraiseename}}</td>				
 					<td>{{i.rank}}</td>
 					
 					<td colspan="11">
                      {% if i.get_jobknowledg_display  %}
-                 <b>Job Knowledge:</b>{{i.get_jobknowledg_display}} 
+                 <b>Knowledge/Expertise:</b>{{i.get_jobknowledg_display}} 
                     {%endif%}               
                     {% if i.get_flexibility_display %}
-                  <b> Adaptability:</b>  {{i.get_flexibility_display}}
+                  <b> Adaptability & Flexibility:</b>  {{i.get_flexibility_display}}
                     
                     {%endif%} 
                     {% if i.get_problemsolving_display %}
@@ -68,7 +72,7 @@
                     
                     {%endif%}
                     {% if i.get_Initiativenes_display %}  
-                    <b> Initiativeness:</b>{{i.get_Initiativenes_display}}
+                    <b> Initiativeness & Resourcefulness:</b>{{i.get_Initiativenes_display}}
                     
                     {%endif%}
                     {% if i.get_planing_display %} 
@@ -76,7 +80,7 @@
                     
                     {%endif%}
                     {% if i.get_workquality_display %} 
-                    <b> Work quality:</b>{{i.get_workquality_display}}
+                    <b> Work Quality & Quantity:</b>{{i.get_workquality_display}}
                     
                     {%endif%}
                     {% if i.get_interskills_display %} 
@@ -84,7 +88,7 @@
                     
                     {%endif%}
                     {% if i.get_communication_display %} 
-                    <b> Communication skills:</b>{{i.get_communication_display}}
+                    <b> Communication:</b>{{i.get_communication_display}}
                     
                     {%endif%}
                     {% if i.get_supervisionmagt_display %} 
@@ -103,6 +107,7 @@
                     
                     </td>
                     	<td>{{i.nonconfdetails}}</td>
+                   
                     <td>{{i.assigned}}</td>
 					<td>{{i.due}}</td>
                     <td>{{i.qmsstatus}}</td>

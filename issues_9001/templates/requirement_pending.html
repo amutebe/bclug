@@ -2,26 +2,31 @@
 
 {% block content %}
 
-<div class="col-md-16">
+<div class="col-md-10">
 	<h4 class="mb-3">Compliance Pending:</h4>	
    <p class="round2">	
-		<div class="card card-body">
+	
 			
-			<table class="table table-sm">
+			<table class="tableizer-table">
 				<tr class="table-info">
 					<th>ID</th>
 					<th>Analyst</th>
-					<th>Created</th>
-					<th>Status</th>
+									
 					<th>Requirement</th>
+					<th>OtherRequirement</th>
 					<th>Description</th>
-					<th>Document</th>			
-					<th>Int.Party</th>
+					<th>Document</th>
+					<th>InerestedParty</th>
+					<th>Details</th>								
 					<th>Responsility</th>
-					<th>When</th>
+					<th>ApprovalComment</th>
+					<th>StartDate</th>
+					<th>EndDate</th>
+
+					<th>Status</th>
 				
 					
-					<th></th>
+			
 					<th></th>
 				</tr>
 				
@@ -30,14 +35,18 @@
 					<tr>
 					<td>{{i.regulatory_number}}</td>
 					<td>{{i.analyst}}</td>
-					<td>{{i.registered}}</td>
-					<td>{{i.status}}</td>
+					
 					<td>{{i.cat_name}}</td>
+					<td>{{i.otherCategory}}</td>
 					<td>{{i.description}}</td>
 					<td>{{i.document}}</td>
-					<td>{{i.get_interestedparty_display}}</td>
+					<td>{{i.interestedparty}}</td>
+					<td>{{i.otherInterestedParty}}</td>
 					<td>{{i.responsibility}}</td>
+					<td>{{i.rejected}}</td>
+					<td>{{i.registered}}</td>
 					<td>{{i.due}}</td>
+					<td>{{i.status}}</td>
 					
 				
 					<td><a class="btn btn-sm btn-info" href="{%url 'approve_requirement' i.regulatory_number %}">Action</a></td>
@@ -49,8 +58,8 @@
 				{%endfor%}
 		
 			</table>
-		</div>
-	</div>
+		
+
 
 </div>
 

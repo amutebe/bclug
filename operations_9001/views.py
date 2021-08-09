@@ -1117,32 +1117,32 @@ def providerAssessment_report(request):
             #        return " "
             def jobknowledg():
                 if i.jobknowledg:
-                    return " Job Knowledge:"
+                    return " Response Time:"
                 else:
                     return " "
             def flexibility():
                 if i.flexibility:
-                    return " ,Adaptability:"
+                    return " ,Resolution Time:"
                 else:
                     return " "                         
             def problemsolving():
                 if i.problemsolving:
-                    return " ,Problem solving:"
+                    return " ,Quality:"
                 else:
                     return " "                    
             def Initiativenes():
                 if i.Initiativenes:
-                    return " ,Initiativenes:"
+                    return " ,Technical/Product Expertise:"
                 else:
                     return " " 
             def planning():
                 if i.planing:
-                    return " ,Planning & Org.:"
+                    return " ,Returns/Rejects:"
                 else:
                     return " "                            
             def workquality():
-                if i.workquality:
-                    return " ,Work Quality:"
+                if i.work:
+                    return " ,Delivery Rating:"
                 else:
                     return " " 
             #def interskills():
@@ -1152,26 +1152,26 @@ def providerAssessment_report(request):
             #        return " " 
             def communication():
                 if i.communication:
-                    return " ,Communication skills:"
+                    return " ,Complaints:"
                 else:
                     return " " 
             def supervisionmagt():
                 if i.supervisionmagt:
-                    return " ,Supervision & mngt:"
+                    return " ,Pricing:"
                 else:
                     return " " 
-            def availabilit():
-                if i.availabilit:
-                    return " ,Availability:"
-                else:
-                    return " " 
+            #def availabilit():
+            #    if i.availabilit:
+            #        return " ,Availability:"
+            #    else:
+            #        return " " 
             #def professional():
             #    if i.professional:
             #        return " ,Professional contribution:"
             #    else:
             #        return " " 
         
-            writer.writerow([i.emp_perfrev_no, i.start,i.get_Provider_display(),i.organisation,i.appraise,i.appraiseename,i.rank,jobknowledg()+ i.get_jobknowledg_display() + flexibility()+ i.get_flexibility_display()+ problemsolving()+ i.get_problemsolving_display()+ Initiativenes()+ i.get_Initiativenes_display()+ planning()+ i.get_planing_display()+ workquality()+ i.get_workquality_display()+ communication()+ i.get_communication_display()+ supervisionmagt()+ i.get_supervisionmagt_display()+ availabilit()+ i.get_availabilit_display()
+            writer.writerow([i.emp_perfrev_no, i.start,i.get_Provider_display(),i.organisation,i.appraise,i.appraiseename,i.rank,jobknowledg()+ i.get_jobknowledg_display() + flexibility()+ i.get_flexibility_display()+ problemsolving()+ i.get_problemsolving_display()+ Initiativenes()+ i.get_Initiativenes_display()+ planning()+ i.get_planing_display()+ workquality()+ i.get_workquality_display()+ communication()+ i.get_communication_display()+ supervisionmagt()+ i.get_supervisionmagt_display()+ i.get_availabilit_display()
             ,i.nonconfdetails,i.assigned,i.due,i.qmsstatus,i.comment])
             
         return response
@@ -2216,12 +2216,12 @@ def customersatisfaction_report(request):
         response['Content-Disposition'] = 'attachment; filename="customerSatisfaction_register.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['SurveyNo.', 'Createdon', 'Organisation', 'Start','End','ResponseTime','ResolutionTime','DeliveryTime','Communication','Complaint','Quality','Info.Security','CustomerService','Rank','Comment','ImprovementPlan','Details','AssignedTo','When','Approved','Verified'])
+        writer.writerow(['SurveyNo.', 'Createdon', 'Organisation', 'Start','End','ResponseTime','ResolutionTime','DeliveryTime','Communication','Complaint','Quality','Info.Security','Rank','Comment','ImprovementPlan','Details','AssignedTo','When','Approved','Verified'])
 
     
         for i in docmngr:
             
-            writer.writerow([i.satis_no, i.date,i.organisation,  i.start,i.end,i.responsetime,i.resolution,i.delivery,i.communication,i.compliant,i.quality,i.infosecurity,i.customerservice,i.rank,i.comment,i.improvplan,i.details,i.assignedto,i.due,i.status,i.qmsstatus])
+            writer.writerow([i.satis_no, i.date,i.organisation,  i.start,i.end,i.responsetime,i.resolution,i.delivery,i.communication,i.compliant,i.quality,i.infosecurity,i.rank,i.comment,i.improvplan,i.details,i.assignedto,i.due,i.status,i.qmsstatus])
         return response
         
     else:

@@ -7,25 +7,33 @@
 
 
 		
-		<div class="card card-body">
+	
 			
-			<table class="table table-sm ">
+			<table class="tableizer-table">
 			
 						<thead>
 				<tr class="table-info">
-						<th>ID</th>
-					<th>PlanDate</th>
-					<th>Type</th>
-					<th>Trainees</th>
-					<th>Start</th>
-					<th>End</th>
-					<th>Desc.</th>
-					<th>Details</th>
-					<th>Trainer</th>
-					<th>Resources</th>
-					<th>Objective</th>
-					<th>Location</th>
-					<th>Status</th>
+						<th>Planner No.</th>
+					<th>Planner</th>
+					<th>TrainingType</th>
+					<th>Description</th>
+					<th>Audience</th>
+					<th>OtherAudience</th>
+					
+					<th>Trainee</th>
+					
+					<th>AdditionalDesc.</th>
+                    <th>TrainingDate</th>
+                       
+                          <th>Objective</th>
+						  <th>Addit.Details</th>
+					<th>StartDate</th>
+					<th>EndDate</th>
+                       <th>Location</th>
+					   <th>OtherLocation</th>
+                          <th>Trainer</th>
+                             <th>Resource</th>
+					 <th>Approval</th>
 					<th></th>
 				
 					
@@ -35,18 +43,23 @@
 						{% for i in products %}
 						<tr>
 					<td>{{i.plan_number}}</td>
-					<td>{{i.trainng_date}}</td>
+					<td>{{i.planner}}</td>
 					<td>{{i.get_type_display}}</td>
+					<td>{{i.description}}</td>
 					<td>{{i.get_trainaudience_display}}</td>
+					<td>{{i.other_audience}}</td>
+					<td>{{i.trainee}}</td>
+					<td>{{i.details}}</td>
+                    <td>{{i.trainng_date}}</td>                  
+                     <td>{{i.objective}}</td>
+					 <td>{{i.comments}}</td>			
 					<td>{{i.start}}</td>
 					<td>{{i.end}}</td>
-					<td>{{i.description}}</td>
-					<td>{{i.details}}</td>
-					<td>{{i.trainer}}</td>
-					<td>{{i.resources}}</td>
-					<td>{{i.objective}}</td>
-					<td>{{i.get_trainlocation_display}}</td>
-					<td>{{i.status}}</td>
+                    <td>{{i.get_trainlocation_display}}</td>
+					<td>{{i.other_location}}</td>
+                    <td>{{i.trainer}}</td>
+                    <td>{{i.resources}}</td>
+                    <td>{{i.status}}</td>
         
 					<td><a class="btn btn-sm btn-info" href="{%url 'verify_training' i.plan_number %}">Action</a></td>
             
@@ -60,7 +73,7 @@
 
 		
 			</table>
-		</div>
+</div>
 
 
 

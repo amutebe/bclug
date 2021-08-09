@@ -1,54 +1,61 @@
 {% extends "accounts/base.html" %} 
 
 {% block content %}
-<br>
+
 <div class="col-md-16">
 	  <h5>
 <label for="residuelikelihood"> Trainings Pending: </label>
 </h5>
  <p class="round2">	
-		<div class="card card-body">
+	
 			
-			<table class="table table-sm">
+			<table class="tableizer-table">
 				<tr class="table-info">
-					<th>ID</th>
+					<th>Planner No.</th>
 					<th>Planner</th>
-					<th>PlanDate</th>
-					<th>Type</th>
+					<th>TrainingType</th>
+					<th>Description</th>
 					<th>Audience</th>
-					<th>Details</th>
+					<th>OtherAudience</th>
+					
 					<th>Trainee</th>
-					<th>Start</th>
-					<th>End</th>
-					<th>Desc.</th>
-					<th>Details</th>
-					<th>Trainer</th>
-					<th>Resources</th>
-					<th>Objective</th>
-					<th>Location</th>
-					<th>Status</th>
+					
+					<th>AdditionalDescription</th>
+                    <th>TrainingDate</th>
+                       
+                          <th>Objective</th>
+						  <th>Additional Details</th>
+					<th>StartDate</th>
+					<th>EndDate</th>
+                       <th>Location</th>
+					   <th>OtherLocation</th>
+                          <th>Trainer</th>
+                             <th>Resource</th>
+					 <th>Approval</th>
 					<th></th>
 				</tr>
 				
 				{% for i in pendingcar %}
 				
 					<tr>
-					<td>{{i.plan_number}}</td>
+				<td>{{i.plan_number}}</td>
 					<td>{{i.planner}}</td>
-					<td>{{i.trainng_date}}</td>
 					<td>{{i.get_type_display}}</td>
+					<td>{{i.description}}</td>
 					<td>{{i.get_trainaudience_display}}</td>
 					<td>{{i.other_audience}}</td>
 					<td>{{i.trainee}}</td>
+					<td>{{i.details}}</td>
+                    <td>{{i.trainng_date}}</td>                  
+                     <td>{{i.objective}}</td>
+					 <td>{{i.comments}}</td>			
 					<td>{{i.start}}</td>
 					<td>{{i.end}}</td>
-					<td>{{i.description}}</td>
-					<td>{{i.details}}</td>
-					<td>{{i.trainer}}</td>
-					<td>{{i.resources}}</td>
-					<td>{{i.objective}}</td>
-					<td>{{i.get_trainlocation_display}}</td>
-					<td>{{i.status}}</td>
+                    <td>{{i.get_trainlocation_display}}</td>
+					<td>{{i.other_location}}</td>
+                    <td>{{i.trainer}}</td>
+                    <td>{{i.resources}}</td>
+                    <td>{{i.status}}</td>
 					<td><a class="btn btn-sm btn-info" href="{%url 'approve_trainplanner' i.plan_number %}">Action</a></td>
 
 					</tr>
@@ -57,7 +64,7 @@
 		
 			</table>
 		</div>
-	</div>
+	
 
 </div>
 

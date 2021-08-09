@@ -3,16 +3,13 @@
 {% extends "accounts/base.html" %} 
 {%load static%}
 {% block content %}
-<br>
-
-
 
 <form action="" method="POST">
  {% csrf_token %}
 <div class="col-md-10">
 		<h4 class="mb-3">Issue Approval: <customer class="mb-3">{{pk_test}}</customer></h4>	
    <p class="round2">	
-		<div class="card card-body">
+
 		
 			<table class="table table-sm">
 				<tr class="table-info ">
@@ -56,7 +53,7 @@
 		</div>
 	</div>
 
-</div>
+
  
 </form>
 
