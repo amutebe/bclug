@@ -135,9 +135,9 @@ def home(request):
     if tasks==0:
         tasks=''
     #request.session['total_tasks'] = total_tasks
-    print("RISKS PENDING",total_RISKS_pending) 
-    print("total_tasks PENDING",total_tasks)  
-    print("Auditor_Tasks PENDING",Auditor_Tasks) 
+    #print("RISKS PENDING",total_RISKS_pending) 
+    #print("total_tasks PENDING",total_tasks)  
+    #print("Auditor_Tasks PENDING",Auditor_Tasks) 
 #####################END##################################
 
  ##################BAR CHART###########################

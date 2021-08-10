@@ -24,8 +24,21 @@ from django.http import HttpResponse, Http404
 from accounts.utils import *
 from issues_9001.views import get_companyCode
 from accounts.models import Customer
+from django.utils.timesince import timeuntil
 
 # Create your views here.
+def duration(start, end):
+    try:
+        if start is not None and end is not None:
+            return timeuntil(start,end)
+        else:
+            return ''
+    except (ValueError, TypeError):
+        return ''
+
+
+
+
 def service_no():
    return str(get_companyCode()+"-SR-"+(date.today()).strftime("%d%m%Y"))+str(randint(0, 999))
 
@@ -85,12 +98,14 @@ def service_request_report(request):
         
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="ServiceRequests.csv"'
-
+        
         writer = csv.writer(response)
-        writer.writerow(['SR ID', 'Date', 'Time', 'Type','Requestor','Mode','ITservice','Details','Priority','PlanningDate','Scope','Category','Resource','Dependency','PlanningDesc.','Activities','Criteria','AssignedTO','Completed','CompletedBy','ReportNo.','ComponentAffected','Error','Solution','Remark','Verification','Rescheduled','When'])
+        writer.writerow(['SR ID', 'Date', 'Time', 'Type','Requestor','Mode','ITservice','Details','Priority','PlanningDate','Scope','Category','Resource','Dependency','PlanningDesc.','Activities','Criteria','AssignedTO','Completed','CompletedBy','ReportNo.','ComponentAffected','Error','Solution','Remark','Verification','Rescheduled','When','Duration'])
     
         for i in service_request:
-            writer.writerow([i.service_number, i.service_number.date,i.service_number.time,i.service_number.request_type,i.service_number.requestor,i.service_number.request_mode,i.service_number.IT_service,i.service_number.other,i.service_number.priority,i.planning_date,i.service_scope,i.service_category,i.get_resource_display(),i.get_dependency_display(),i.description,i.activities,i.get_criteria_display(),i.assigned,i.completion_date,i.completedby,i.report_number,i.component_affected,i.error,i.solution,i.remark,i.qmsstatus,i.scheduled,i.due])
+
+                    
+            writer.writerow([i.service_number, i.service_number.date,i.service_number.time,i.service_number.request_type,i.service_number.requestor,i.service_number.request_mode,i.service_number.IT_service,i.service_number.other,i.service_number.priority,i.planning_date,i.service_scope,i.service_category,i.get_resource_display(),i.get_dependency_display(),i.description,i.activities,i.get_criteria_display(),i.assigned,i.completion_date,i.completedby,i.report_number,i.component_affected,i.error,i.solution,i.remark,i.qmsstatus,i.scheduled,i.due,duration(i.completion_date,i.service_number.date)])
         return response
         
     else:
@@ -221,7 +236,7 @@ def Verify_service_request(request,pk_test):
                 form.save()
                 return redirect('/serviceRequest_due/')
 
-    context={'form':form,'serviceRequest_id':service_no}  
+    context={'form':form,'serviceRequest_id':pk_test}  
 
 
     return render(request,'serviceRequest_verify.html',context)

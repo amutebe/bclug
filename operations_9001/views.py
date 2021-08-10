@@ -24,6 +24,18 @@ from accounts.utils import *
 from issues_9001.views import get_companyCode
 from accounts.models import Customer
 
+from django.utils.timesince import timeuntil
+
+# Create your views here.
+def duration(start, end):
+    try:
+        if start is not None and end is not None:
+            return timeuntil(start,end)
+        else:
+            return ''
+    except (ValueError, TypeError):
+        return ''
+
 # Create your views here.
 
 ##FUNCTIONS TO GENERATE IDs###########
@@ -1326,12 +1338,12 @@ def correctiveaction_report(request):
         response['Content-Disposition'] = 'attachment; filename="CorrectiveAction_register.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['CAR No.', 'Date', 'Process', 'CAR Source','Reference','Element','Findings','Add. Desc.','RequestTo','Containment','RootCause','Action','Add.Details','ProposedBy','AssignedTo','When','Approval','Verification','Completion','Reschduled','ApprovalComment','VerificationComment'])
+        writer.writerow(['CAR No.', 'Date', 'Process', 'CAR Source','Reference','Element','Findings','Add. Desc.','RequestTo','Containment','RootCause','Action','Add.Details','ProposedBy','AssignedTo','When','Approval','Verification','Completion','Reschduled','ApprovalComment','VerificationComment','Duration'])
 
     
         for i in docmngr:
             
-            writer.writerow([i.car_no, i.car_no.date,i.car_no.process,i.car_no.car_source, i.car_no.reference,i.car_no.element,i.car_no.get_finding_display(),i.car_no.addesc,i.car_no.requesto,i.containment,i.rootcause,i.decision,i.details,i.proposedby,i.assignedto,i.due,i.status,i.qmsstatus,i.completion,i.scheduled,i.comment,i.details])
+            writer.writerow([i.car_no, i.car_no.date,i.car_no.process,i.car_no.car_source, i.car_no.reference,i.car_no.element,i.car_no.get_finding_display(),i.car_no.addesc,i.car_no.requesto,i.containment,i.rootcause,i.decision,i.details,i.proposedby,i.assignedto,i.due,i.status,i.qmsstatus,i.completion,i.scheduled,i.comment,i.details,duration(i.completion,i.car_no.date)])
         return response
         
     else:
@@ -1813,12 +1825,12 @@ def customer_complaint_report(request):
         response['Content-Disposition'] = 'attachment; filename="customer_complaint_register.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['ComplaintNo.', 'Date', 'Time', 'complainant','Organisation','Process','CompalintType','Desc.','Classification','Correction','Add. Desc.','AssignedTo','When','Approved','Verification','CompletionDate'])
+        writer.writerow(['ComplaintNo.', 'Date', 'Time', 'complainant','Organisation','Process','CompalintType','Desc.','Classification','Correction','Add. Desc.','AssignedTo','When','Approved','Verification','CompletionDate','Duration'])
 
     
         for i in docmngr:
             
-            writer.writerow([i.comp_no, i.date,i.time,  i.complaint,i.organisation,i.process,i.type,i.complaint_desc,i.classification,i.correction,i.add_desc,i.assignedto,i.due,i.status,i.qmsstatus,i.completion])
+            writer.writerow([i.comp_no, i.date,i.time,  i.complaint,i.organisation,i.process,i.type,i.complaint_desc,i.classification,i.correction,i.add_desc,i.assignedto,i.due,i.status,i.qmsstatus,i.completion,duration(i.completion,i.date)])
         return response
         
     else:

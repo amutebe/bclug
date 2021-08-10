@@ -36,6 +36,20 @@ class serviceRequestPlans(ModelForm):
         
         widgets={'entered_by':HiddenInput(),'status':forms.HiddenInput,'due':DateInput(),'planning_date':DateInput(),'completion_date':DateInput(), 'description':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'error':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'activities':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'report_number':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'solution':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'remark':forms.Textarea(attrs={'rows': 2, 'cols': 40})}
 
+     def clean(self):
+        cleaned_data = super().clean()
+        start_date = cleaned_data.get("planning_date")
+        end_date = cleaned_data.get("due")
+
+            
+        if end_date is not None and start_date is not None:
+            if end_date < start_date:
+                raise forms.ValidationError("When date should be greater than Planning date.")
+        else:
+            raise forms.ValidationError("When date and Planning date cannot be empty")
+
+
+
 class VerifyServiceRequest(ModelForm):
     class Meta:
         model = mod20000_service_planning 
@@ -44,17 +58,21 @@ class VerifyServiceRequest(ModelForm):
         widgets={'due':HiddenInput(),'completion_date':DateInput(),'scheduled':DateInput(),'verification_failed':forms.Textarea(attrs={'rows': 2, 'cols': 40})}        
 
     #def clean(self):
-    #    cleaned_data = super().clean()
-     #   planning_date = cleaned_data.get("planning_date")
-    #    completion_date = cleaned_data.get("completion_date")
-    #    scheduled = cleaned_data.get("scheduled")
+    ##    cleaned_data = super().clean()
+    #    start_date = cleaned_data.get("planning_date")
+    #    end_date = cleaned_data.get("completion_date")
+    #    reschedule_date = cleaned_data.get("scheduled")
+            
+    #    print("PRINT",end_date,start_date)
+    #    if end_date is not None and start_date is not None:
+    ###        if end_date < start_date:
+    #            raise forms.ValidationError("Completion date shouldn't be less than Planning date.")
+    ##    elif reschedule_date is not None and start_date is not None:
+    #       if reschedule_date < start_date:
+    ##            raise forms.ValidationError("Reschedule date shouldn't be less than Planning date.")
 
-        
-        
-    #    if completion_date is not None and planning_date < completion_date:
-    #        raise forms.ValidationError("Completion date should be greater than Planning date.")
-    #    elif scheduled is not None and planning_date < scheduled:
-    #        raise forms.ValidationError("Rescheduled date should not be less than Planning date.")
+    #    else:
+    #        raise forms.ValidationError("Completion date or Reschedule date cannot be empty")
 
 
         

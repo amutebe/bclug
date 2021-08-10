@@ -92,40 +92,40 @@ class scope(models.Model):
 class mod20000_service_planning(models.Model):
     service_number=models.OneToOneField('mod20000_service_request', on_delete=models.CASCADE,verbose_name='SR ID:',null=True,blank=True)
     planning_date=models.DateField("Date:",null=False)    
-    service_scope=models.ForeignKey('scope', on_delete=models.CASCADE,verbose_name='Service scope:',null=True,blank=True)   
-    service_category=models.ForeignKey('service_category', on_delete=models.CASCADE,verbose_name='Service Category:',null=True,blank=True)
-    #resource=models.ForeignKey('resources', on_delete=models.CASCADE,verbose_name='Resources:',null=True,blank=True)
+    service_scope=models.ForeignKey('scope', on_delete=models.SET_NULL,verbose_name='Service scope:',null=True,blank=True)   
+    service_category=models.ForeignKey('service_category', on_delete=models.SET_NULL,verbose_name='Service Category:',null=True,blank=True)
+    #resource=models.ForeignKey('resources', on_delete=models.SET_NULL,verbose_name='Resources:',null=True,blank=True)
     resources=(('1','Transport'),('2','Tools'),('3','License'),('4','Software'),('5','Internet'),('6','Desktop/Laptop'),('7','Voice/Telephone'),('8','Docuentation'),('9','Other'))
     resource = MultiSelectField('Resources',choices=resources,null=True,blank=True)    
-    #service_dependency=models.ForeignKey('dependency', on_delete=models.CASCADE,verbose_name='Depandency on other services:',null=True,blank=True)
+    #service_dependency=models.ForeignKey('dependency', on_delete=models.SET_NULL,verbose_name='Depandency on other services:',null=True,blank=True)
     dependencies=(('1','Hardware/ Software Supplies'),('2','IT Support Services'),('3','Installation and Configuration Services'),('4','Procurement Services'),('5','Repair and Maintenance Services'),('6','Storage Services'),('7','CCTV Security Services'),('8','Access and Security (AD, Firewall)'),('9','Backup and Maintenance'),('10','Internet Services'),('11','Communication Services (Email, Telephone and PABX)'),('12','Backup and Maintenance'),('13','Personal Computing (PCs, Printers, Accessories, Software, Apps. etc.)'),('14','Other'))
     dependency = MultiSelectField('Depandency on other services:',choices=dependencies,null=True,blank=True)   
     
     description=models.TextField("Additional Description:",null=True, blank=True)
     activities=models.TextField("Key Activities:",null=True, blank=True)
-    #criteria=models.ForeignKey('criteria', on_delete=models.CASCADE,verbose_name='Service Dependency Criteria:',null=True,blank=True)
+    #criteria=models.ForeignKey('criteria', on_delete=models.SET_NULL,verbose_name='Service Dependency Criteria:',null=True,blank=True)
     criterias=(('1','Job card'),('2','Completion report/Certificate'),('3','Customer sign off acknowledgement'))
     criteria = MultiSelectField('Criteria',choices=criterias,null=True,blank=True)     
     
-    assigned = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, verbose_name='AssignedTo:',on_delete=models.CASCADE)
-    completedby= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Completed by:',null=True,blank=True)
+    assigned = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, verbose_name='AssignedTo:',on_delete=models.SET_NULL)
+    completedby= models.ForeignKey('accounts.employees',on_delete=models.SET_NULL,verbose_name='Completed by:',null=True,blank=True)
     report_number=models.TextField("Report No.:",null=True, blank=True)
     completion_date=models.DateField("Completion Date:",null=True,blank=True) 
-    component_affected= models.ForeignKey('component',on_delete=models.CASCADE,verbose_name='Component Affected:',null=True,blank=True)    
+    component_affected= models.ForeignKey('component',on_delete=models.SET_NULL,verbose_name='Component Affected:',null=True,blank=True)    
     error=models.TextField("Known Error:",null=True, blank=True)    
     solution=models.TextField("Solution:",null=True, blank=True) 
     remark=models.TextField("Remarks:",null=True, blank=True) 
     
-    #verification=models.ForeignKey('issues_9001.RISK_OPPverification', on_delete=models.CASCADE,verbose_name='Verification:',null=True,blank=True)
+    #verification=models.ForeignKey('issues_9001.RISK_OPPverification', on_delete=models.SET_NULL,verbose_name='Verification:',null=True,blank=True)
     verification_status=models.TextField(max_length=200, null=True,blank=True)
     verification_failed=models.TextField("Reason for rejecting:",null=True,blank=True, help_text='If rejected, please give a reason')
-    qmsstatus=models.ForeignKey('operations_9001.qmsstatus', on_delete=models.CASCADE,null=True,verbose_name='Verification Status:')
+    qmsstatus=models.ForeignKey('operations_9001.qmsstatus', on_delete=models.SET_NULL,null=True,verbose_name='Verification Status:')
     
   
     scheduled=models.DateField("Rescheduled Date:",null=True,blank=True)
     due=models.DateField("When:",null=True,blank=True)      
-    entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True,on_delete=models.CASCADE,related_name='planning')
+    entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True,on_delete=models.SET_NULL,related_name='planning')
     date_today=models.DateField("Date created:",default=datetime.now)
-    status=models.ForeignKey('issues_9001.approval_status', on_delete=models.CASCADE,verbose_name='Status:',null=True,blank=True)
-    def __str__(self):
-        return self.service_number
+    status=models.ForeignKey('issues_9001.approval_status', on_delete=models.SET_NULL,verbose_name='Status:',null=True,blank=True)
+    #def __str__(self):
+    #   return self.service_scope
