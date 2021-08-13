@@ -8,7 +8,7 @@
 <div class="col-md-12">
 <div class="card card-body">
 
-{{form.errors}}
+<font color="red">{{form.errors}}</font>
 <form action="" method="POST">
  
  {% csrf_token %}
@@ -34,7 +34,7 @@
 
 <div class="form-group" id="scheduledDIV">
     
-    <label for="exampleFormControlSelect1">Rescheduled:</label><br>
+    <label for="scheduled">Rescheduled:</label><br>
     {{form.scheduled}}
     <font color="red">{{form.errors.scheduled}}</font>
 
@@ -44,9 +44,9 @@
 
 <div class="form-group" id="commentDIV">
     
-    <label for="exampleFormControlSelect1">Comment:</label><br>
+    <label for="Comment">Comment:</label><br>
  
-      <input type="text" class="form-control" id="verification_failed" placeholder="" name="verification_failed" {{form.verification_failed}}
+       {{form.verification_failed}}
 
 <font color="red">{{form.errors.verification_failed}}</font>
 </div>

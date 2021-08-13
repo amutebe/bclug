@@ -194,36 +194,41 @@ def serviceRequest_7daysToExpiryview(request,pk_test):
     products=mod20000_service_planning.objects.filter(service_number=pk_test)
     return render(request,'serviceRequest_view_7_days_To_expiry.html',{'products':products})
 
-def Verify_service_request(request,pk_test):
+def Verify_service_request(request,pk_test,planning_date):
     open_car=mod20000_service_planning.objects.get(service_number=pk_test)
     form=VerifyServiceRequest(instance=open_car)
    # print("request.POST['qmsstatus']",request.POST['qmsstatus'])
     if request.method=="POST":
             #print("request.POST['qmsstatus']",request.POST['qmsstatus'])
-            
+           
             if request.POST['qmsstatus'] =="3":
                 request.POST=request.POST.copy()
+                request.POST['planning_date']= planning_date 
                 request.POST['status'] = '' #make it cancelled
                 request.POST['verification_status']='' #make it canceled
-                #request.POST['end']='1900-01-01'
+
                 #print("#MAKE IT CANCELED",  request.POST['status'])
             
             elif request.POST['qmsstatus'] == '2':#if Not complete
                 #print("request.POST['qmsstatus']",request.POST['qmsstatus'])
                 request.POST=request.POST.copy()
+                request.POST['planning_date']= planning_date
                 request.POST['status'] = 4 # keep status open
                 #request.POST['verification_status']='Closed'
             elif request.POST['qmsstatus'] == '4':#if rescheduled
                 #print("request.POST['qmsstatus']",request.POST['qmsstatus'])
                 request.POST=request.POST.copy()
+                request.POST['planning_date']= planning_date
                 request.POST['due'] = request.POST['scheduled'] # keep status open
                 #print("RESCHEDULED",request.POST['end'])
             elif request.POST['qmsstatus'] == '1':
                 request.POST=request.POST.copy()
+                request.POST['planning_date']= planning_date
                 request.POST['status'] = 1 # keep status approved
                 request.POST['verification_status']='Closed'
             else:
                 request.POST=request.POST.copy()
+                request.POST['planning_date']= planning_date
 
 
 

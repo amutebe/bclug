@@ -1,4 +1,5 @@
 from django.forms import ModelForm,TextInput,NumberInput,RadioSelect
+from django.forms.widgets import HiddenInput
 
 from .models import *
 from accounts.models import Customer
@@ -47,8 +48,8 @@ class qmsplanner(ModelForm):
   
     class Meta:
         model = mod9001_qmsplanner 
-        fields = ['planner_number','plan_date','planner','start','end','description','details','status']
-        widgets={'plan_date':DateInput(),'start':DateInput(),'end':DateInput(),'due':DateInput()}
+        fields = ['planner_number','plan_date','planner','start','end','description','details','status','record_group']
+        widgets={'plan_date':DateInput(),'start':DateInput(),'end':DateInput(),'due':DateInput(),'record_group':HiddenInput()}
 
     def clean(self):
         cleaned_data = super().clean()
@@ -75,8 +76,26 @@ class VerifyQMS(ModelForm):
     class Meta:
         model = mod9001_qmsplanner 
         #fields = '__all__'
-        fields=['verification','verification_status','verification_failed','qmsstatus','scheduled','completion','end']
-        widgets={'completion':DateInput(),'scheduled':DateInput()}   
+        fields=['verification','verification_status','verification_failed','qmsstatus','scheduled','completion','end','start']
+        widgets={'verification_failed':forms.Textarea(attrs={'rows': 3, 'cols': 120}),'start':HiddenInput(),'completion':DateInput(),'scheduled':DateInput()}   
+    def clean(self):
+        cleaned_data = super().clean()
+        start_date = cleaned_data.get("start")
+        end_date = cleaned_data.get("completion")
+        reschedule_date = cleaned_data.get("scheduled")
+            
+     #   print("PRINT",end_date,start_date)
+        if end_date is not None and start_date is not None:
+            if end_date < start_date or end_date>date.today() :
+                raise forms.ValidationError("Completion date shouldn't be less than start date or be in Future")
+
+        
+        elif reschedule_date is not None and start_date is not None:
+           if reschedule_date < start_date or reschedule_date < date.today():
+                raise forms.ValidationError("Reschedule date shouldn't be less than start date or today's date")
+
+        else:
+            raise forms.ValidationError("Completion date or Reschedule date cannot be empty")
 
 class trainingregister(ModelForm):
   
@@ -105,12 +124,13 @@ class Verifyetrainingregister(ModelForm):
 
 
 
+
 class trainingplaner(ModelForm):
   
     class Meta:
         model = mod9001_trainingplanner
         exclude=['trainplannerstatus','reason','rescheduled','completion','rejected','approval_date','approved_by','approval_date','verification','verification_status','verification_failed','trainplannerstatus','rescheduled','completion']
-        widgets={'trainng_date':DateInput(),'start':DateInput(),'end':DateInput(),'rescheduled':DateInput(),'completion':DateInput()}
+        widgets={'record_group':HiddenInput(),'trainng_date':DateInput(),'start':DateInput(),'end':DateInput(),'rescheduled':DateInput(),'completion':DateInput()}
 
     def clean(self):
         cleaned_data = super().clean()

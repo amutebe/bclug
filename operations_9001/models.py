@@ -128,6 +128,7 @@ class mod9001_document_manager(models.Model):
     status=models.CharField(max_length=200,null=True, choices=Status)
     document = models.FileField("Upload document:",upload_to='documents/',null=True,validators=[validate_file_size])
     uploaded_at = models.DateTimeField(auto_now_add=True,null=True)
+    record_group=models.CharField("Data Group",max_length=20,null=True,blank=True)
 class mod9001_calibration(models.Model):
     calibration_date=models.DateField("Date:")
     calibration_number=models.CharField("Calibration no.:",max_length=200,default="BCL-C-"+car_no(),primary_key=True)
@@ -139,7 +140,7 @@ class mod9001_calibration(models.Model):
     standard= models.ForeignKey('document_standard',on_delete=models.CASCADE,verbose_name='Standard:',related_name='calstandard')
     entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='cal_entered_by',on_delete=models.CASCADE)
     date_today=models.DateField("Date created:",default=datetime.now)
-
+    record_group=models.CharField("Data Group",max_length=20,null=True,blank=True)
 class maintenance(models.Model):
     maintenance_number=models.CharField("Maintenance no.:",max_length=200,default="BCL-M-"+car_no(),primary_key=True)
     date_today=models.DateField("Date:")
@@ -158,7 +159,7 @@ class maintenance(models.Model):
     notes =models.TextField("Notes:",null=True,blank=True, help_text='Notes')
     entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='maintenance_entered_by',on_delete=models.CASCADE)
     date_today=models.DateField("Date created:",default=datetime.now)
-
+    record_group=models.CharField("Data Group",max_length=20,null=True,blank=True)
 class prod_description(models.Model):
 
     description=models.CharField("Program Description", max_length=50,null=True,blank=True)
@@ -237,6 +238,9 @@ class mod9001_qmsplanner(models.Model):
     #planner = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='qms_by',on_delete=models.CASCADE)
     planner=models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Planner:',related_name='qms_by')
     planner_user_id= models.CharField("Planner Sytem UserID.:", max_length=20, null=True, blank=True)       
+    planner_user_title= models.CharField("Planner Title.:", max_length=20, null=True, blank=True)     
+       
+    
     start=models.DateField("Start Date:")
     end=models.DateField("End Date:")
     description= models.ForeignKey('prod_description',on_delete=models.CASCADE,verbose_name='Program description:',related_name='progdesc')
@@ -253,13 +257,15 @@ class mod9001_qmsplanner(models.Model):
     completion=models.DateField("Completion Date:",null=True,blank=True)
     scheduled=models.DateField("Rescheduled Date:",null=True,blank=True)
     entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='qms_entered_by',on_delete=models.CASCADE)
+    record_group=models.CharField("Data Group",max_length=20,null=True,blank=True)    
     date_today=models.DateField("Date created:",default=datetime.now)
     def __str__(self):
         return self.planner_number
 class mod9001_trainingplanner(models.Model):
     plan_number=models.CharField("Plan no.:",max_length=200,default="Comp-TP-"+car_no(),primary_key=True)
     planner=models.ForeignKey('accounts.employees',null=True, blank=True,on_delete=models.CASCADE,verbose_name='Planner:',related_name='tainingplanner_by')
-    planner_user_id= models.CharField("Planner Sytem UserID.:", max_length=20, null=True, blank=True)                
+    planner_user_id= models.CharField("Planner Sytem UserID.:", max_length=20, null=True, blank=True)
+    planner_user_title= models.CharField("Planner Title:", max_length=20, null=True, blank=True)                  
     trainng_date=models.DateField("Training Date:",null=True)
     TYPE=(('1','Planned'),('2','Not Planned'))
     type=models.CharField(max_length=200, choices=TYPE)
@@ -296,6 +302,7 @@ class mod9001_trainingplanner(models.Model):
 
     entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='planner_entered_by',on_delete=models.CASCADE)
     date_today=models.DateField("Date created:",default=datetime.now)
+    record_group=models.CharField("Data Group",max_length=20,null=True,blank=True) 
 
     def __str__(self):
         return self.plan_number
@@ -339,7 +346,7 @@ class mod9001_trainingregister(models.Model):
     status=models.ForeignKey('issues_9001.approval_status', on_delete=models.CASCADE,verbose_name='Status:',null=True,blank=True)
     scheduled=models.DateField("Rescheduled Date:",null=True,blank=True)
     completion=models.DateField("Completion Date:",null=True,blank=True)
-   
+    record_group=models.CharField("Data Group",max_length=20,null=True,blank=True)   
         
     entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='training_entered_by',on_delete=models.CASCADE)
     date_today=models.DateField("Date created:",default=datetime.now)
@@ -393,7 +400,7 @@ class mod9001_incidentregister(models.Model):
     entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='register_entered_byy',on_delete=models.CASCADE)
     date_today=models.DateField("Date created:",default=datetime.now)
     analysis_flag=models.TextField("Incident Analysis Done?",null=True,blank=True,default='No', help_text='To be uses while filtering incidents pending analysis')
-    
+    record_group=models.CharField("Data Group",max_length=20,null=True,blank=True)   
     
     
     def __str__(self):
@@ -441,7 +448,7 @@ class mod9001_incidentregisterStaff(models.Model):
     error=models.TextField("Known Error:",null=True, blank=True)    
     solution=models.TextField("Solution:",null=True, blank=True)    
     remark=models.TextField("Remarks:",null=True, blank=True) 
-  
+    record_group=models.CharField("Data Group",max_length=20,null=True,blank=True)  
     
     
     
@@ -574,7 +581,7 @@ class mod9001_providerassessment(models.Model):
 
     entered_by= models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='providerentered',on_delete=models.CASCADE)
     date_today=models.DateField("Date created:",default=datetime.now)
-
+    record_group=models.CharField("Data Group",max_length=20,null=True,blank=True)
 class car_source(models.Model):
 
     description=models.CharField("CAR Source:", max_length=50,null=True,blank=True)
@@ -625,7 +632,7 @@ class mod9001_correctiveaction(models.Model):
     entered_by= models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='correctiveactionentered',on_delete=models.CASCADE)
     date_today=models.DateField("Date created:",default=datetime.now)
     car_flag=models.TextField("CAR planning Done?",null=True,blank=True,default='No', help_text='To be uses while filtering CARs pending planning')
-      
+    record_group=models.CharField("Data Group",max_length=20,null=True,blank=True)      
     
     
     def __str__(self):
@@ -655,7 +662,7 @@ class mod9001_planning(models.Model):
     verification_failed=models.TextField("Reason for rejecting:",null=True,blank=True, help_text='If rejected, please give a reason')
 
     qmsstatus=models.ForeignKey(qmsstatus, on_delete=models.CASCADE,null=True,verbose_name='Verification Status:')
-    
+    record_group=models.CharField("Data Group",max_length=20,null=True,blank=True)    
     completion=models.DateField("Completion Date:",null=True,blank=True)
     scheduled=models.DateField("Rescheduled Date:",null=True,blank=True)
     comment=models.TextField("Comment:",null=True,blank=True, help_text='')
@@ -737,7 +744,7 @@ class mod9001_changeRegister(models.Model):
     proposedby= models.ForeignKey('accounts.employees',on_delete=models.SET_NULL,verbose_name='Proposed by:',related_name='proposed',null=True,blank=True)
     assignedto= models.ForeignKey('accounts.employees',on_delete=models.SET_NULL,verbose_name='Assigned to:',related_name='asigned',null=True,blank=True)
     due=models.DateTimeField("Due Date:",null=True)    
-    
+    record_group=models.CharField("Data Group",max_length=20,null=True,blank=True)   
 
 ######################CUSTOMER COMPLAINT########################
 class complaint_type(models.Model):
@@ -771,7 +778,7 @@ class mod9001_customerComplaint(models.Model):
     scheduled=models.DateField("Rescheduled Date:",null=True,blank=True)
     completion=models.DateField("Completion Date:",null=True,blank=True)
     analysis_flag=models.TextField("Complaint Analysis Done?",null=True,blank=True,default='No', help_text='To be uses while filtering complaints pending analysis')
-    
+    record_group=models.CharField("Data Group",max_length=20,null=True,blank=True)    
    
    
 
@@ -812,7 +819,7 @@ class mod9001_customerSatisfaction(models.Model):
     status=models.ForeignKey('issues_9001.approval_status', on_delete=models.SET_NULL,verbose_name='Status:',null=True,blank=True)
     scheduled=models.DateField("Rescheduled Date:",null=True,blank=True)
     completion=models.DateField("Completion Date:",null=True,blank=True)
-   
+    record_group=models.CharField("Data Group",max_length=20,null=True,blank=True)  
    
 
 

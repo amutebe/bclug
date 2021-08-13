@@ -113,7 +113,7 @@ class mod9001_issues(models.Model):
     approval_date=models.DateField("Date Approved:",null=True,blank=True)
     approved_by=models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='Approv_by',on_delete=models.CASCADE)
     risk_assessment_flag=models.TextField("Risk Assessment Done?",null=True,blank=True,default='No', help_text='To be uses while filtering issues pending risk assessment')
-
+    record_group=models.CharField("Data Group",max_length=20,null=True,blank=True)
     def __str__(self):
         return self.issue_number
 
@@ -152,6 +152,7 @@ class mod9001_interestedParties(models.Model):
     rejected=models.TextField("Reason for rejecting:",null=True,blank=True, help_text='If rejected, please give a reason')
     approval_date=models.DateField("Date Approved:",null=True,blank=True)
     approved_by=models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='IPApprov_by',on_delete=models.CASCADE)
+    record_group=models.CharField("Data Group",max_length=20,null=True,blank=True)   
     def __str__(self):
         return self.ip_number
 
@@ -202,7 +203,7 @@ class mod9001_regulatoryReq(models.Model):
     rejected=models.TextField("Reason for rejecting:",null=True,blank=True, help_text='If rejected, please give a reason')
     approval_date=models.DateField("Date Approved:",null=True,blank=True)
     approved_by=models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='reqApprov_by',on_delete=models.CASCADE)
-
+    record_group=models.CharField("Data Group",max_length=20,null=True,blank=True)
 
 class contextdetails(models.Model):
     context_id=models.CharField("Risk Context ID:",max_length=50,primary_key=True)
@@ -296,7 +297,7 @@ class mod9001_risks(models.Model):
 
     verification_status=models.CharField(max_length=200, null=True,blank=True)
     verification_failed=models.TextField("Reason for rejecting:",null=True,blank=True, help_text='If rejected, please give a reason')
-
+    record_group=models.CharField("Data Group",max_length=20,null=True,blank=True)
 
         
 

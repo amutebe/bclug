@@ -10,13 +10,15 @@
 						<thead>
 				<tr class="table-info">
 						<th>ID</th>
-					<th>PlanDate</th>
+					<th>Plan Date</th>
 					<th>Planner</th>
 					<th>Status</th>
-					<th>Start</th>
-					<th>End</th>
+					<th>Start Date</th>
+					<th>End Date</th>
 					<th>Desc.</th>
-					<th>Addit.Desc</th>
+					<th>Additional Description</th>
+					<th>Recheduled Date</th>
+					<th>Comment</th>
 					<th></th>
 				
 					
@@ -31,10 +33,13 @@
 					<td>{{i.status}}</td>
 					<td>{{i.start}}</td>
 					<td>{{i.end}}</td>
+					
 					<td>{{i.description}}</td>
 					<td>{{i.details}}</td>
+					<td>{{i.scheduled}}</td>
+					<td>{{i.verification_failed}}</td>
         
-					<td><a class="btn btn-sm btn-info" href="{%url 'verify_qms' i.planner_number %}">Action</a></td>
+					<td><a class="btn btn-sm btn-info" href="{%url 'verify_qms' i.planner_number i.start %}">Action</a></td>
             
 
 				

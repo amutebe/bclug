@@ -100,10 +100,8 @@ class Employee_titles(models.Model):
         return self.title_name
 ######## TABLE EMPLOYEES ############################
 
-
-
 class employees(models.Model):
-    employeeID=models.CharField("Employee ID",max_length=10,primary_key=True,default="BCL"+str(randint(0, 999)))
+    employeeID=models.CharField("Employee ID",max_length=20,primary_key=True,default="BCL"+str(randint(0, 999)))
     title=models.ForeignKey(Employee_titles, on_delete=models.CASCADE,verbose_name='Title:',related_name='title',null=True,blank=True)
     registered=models.DateField("Reg. Date:")
     firstName=models.TextField("First Name",null=False,blank=True)
@@ -116,13 +114,6 @@ class employees(models.Model):
     
     def __str__(self):
         return self.firstName
-
-
-
-
-
-
-
 
 
 ######Corrective Action Request###################
@@ -163,9 +154,7 @@ class car(models.Model):
         x=self.car_dateoccur.year
         return x
 
-
-
-    
+  
     def __str__(self):
         return self.car_number
 

@@ -46,7 +46,7 @@ class mod20000_service_request(models.Model):
     entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True,on_delete=models.CASCADE,related_name='SrequestBy')
     date_today=models.DateField("Date created:",default=datetime.now)
     planning_flag=models.TextField("Service planning Done?",null=True,blank=True,default='No', help_text='To be uses while filtering serive requests pending planning')
-    
+    record_group=models.CharField("Data Group",max_length=20,null=True,blank=True)    
     
     
     def __str__(self):
@@ -120,12 +120,12 @@ class mod20000_service_planning(models.Model):
     verification_status=models.TextField(max_length=200, null=True,blank=True)
     verification_failed=models.TextField("Reason for rejecting:",null=True,blank=True, help_text='If rejected, please give a reason')
     qmsstatus=models.ForeignKey('operations_9001.qmsstatus', on_delete=models.SET_NULL,null=True,verbose_name='Verification Status:')
-    
+    record_group=models.CharField("Data Group",max_length=20,null=True,blank=True)    
   
     scheduled=models.DateField("Rescheduled Date:",null=True,blank=True)
     due=models.DateField("When:",null=True,blank=True)      
     entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True,on_delete=models.SET_NULL,related_name='planning')
     date_today=models.DateField("Date created:",default=datetime.now)
     status=models.ForeignKey('issues_9001.approval_status', on_delete=models.SET_NULL,verbose_name='Status:',null=True,blank=True)
-    #def __str__(self):
-    #   return self.service_scope
+    def __str__(self):
+       return str(self.service_number)

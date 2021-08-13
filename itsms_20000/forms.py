@@ -54,25 +54,27 @@ class VerifyServiceRequest(ModelForm):
     class Meta:
         model = mod20000_service_planning 
         #fields = '__all__'
-        fields=['due','verification_status','verification_failed','qmsstatus','scheduled','completion_date','completedby','report_number','error','solution','remark','component_affected']
-        widgets={'due':HiddenInput(),'completion_date':DateInput(),'scheduled':DateInput(),'verification_failed':forms.Textarea(attrs={'rows': 2, 'cols': 40})}        
+        fields=['planning_date','due','verification_status','verification_failed','qmsstatus','scheduled','completion_date','completedby','report_number','error','solution','remark','component_affected']
+        widgets={'planning_date':HiddenInput(),'due':HiddenInput(),'completion_date':DateInput(),'scheduled':DateInput(),'verification_failed':forms.Textarea(attrs={'rows': 2, 'cols': 40})}        
 
-    #def clean(self):
-    ##    cleaned_data = super().clean()
-    #    start_date = cleaned_data.get("planning_date")
-    #    end_date = cleaned_data.get("completion_date")
-    #    reschedule_date = cleaned_data.get("scheduled")
+    def clean(self):
+        cleaned_data = super().clean()
+        start_date = cleaned_data.get("planning_date")
+        end_date = cleaned_data.get("completion_date")
+        reschedule_date = cleaned_data.get("scheduled")
             
-    #    print("PRINT",end_date,start_date)
-    #    if end_date is not None and start_date is not None:
-    ###        if end_date < start_date:
-    #            raise forms.ValidationError("Completion date shouldn't be less than Planning date.")
-    ##    elif reschedule_date is not None and start_date is not None:
-    #       if reschedule_date < start_date:
-    ##            raise forms.ValidationError("Reschedule date shouldn't be less than Planning date.")
+     #   print("PRINT",end_date,start_date)
+        if end_date is not None and start_date is not None:
+            if end_date < start_date or end_date>date.today() :
+                raise forms.ValidationError("Completion date shouldn't be less than Planning date or be in Future")
 
-    #    else:
-    #        raise forms.ValidationError("Completion date or Reschedule date cannot be empty")
+        
+        elif reschedule_date is not None and start_date is not None:
+           if reschedule_date < start_date or reschedule_date < date.today():
+                raise forms.ValidationError("Reschedule date shouldn't be less than Planning date or today's date")
+
+        else:
+            raise forms.ValidationError("Completion date or Reschedule date cannot be empty")
 
 
         

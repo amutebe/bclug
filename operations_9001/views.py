@@ -221,6 +221,21 @@ def qms_planner(request):
         request.POST['entered_by'] = request.user
         request.POST['date_today']=date.today()
         request.POST['status'] = 5
+        if is_Marketing(request.user):#assign record to a group
+            request.POST['record_group']="Marketing"
+        elif is_Accounts(request.user):
+            request.POST['record_group']="Accounts"
+        elif is_Operations(request.user):
+            request.POST['record_group']="Operations"
+        elif is_Administration(request.user):
+            request.POST['record_group']="Administration"
+        elif is_Technical(request.user):
+            request.POST['record_group']="Technical"
+        else:
+            request.POST['record_group']=""
+
+
+
         
         form=qmsplanner(request.POST)
                         
@@ -271,8 +286,12 @@ def qms_pending(request):
     if is_Auditor(request.user):
         pendingcar=mod9001_qmsplanner.objects.all().filter(status='5').filter(~Q(verification_status='Closed')) #get all qms pending approval    
         
+    
+    if is_Executive(request.user):
+        pendingcar=mod9001_qmsplanner.objects.filter(status='5').filter(planner_user_title=20)     
+
     else:
-        pendingcar=mod9001_qmsplanner.objects.filter(status='5') #get all qms pending approval
+        pendingcar=mod9001_qmsplanner.objects.filter(status='5').filter(record_group=my_data_group(request.user)) #get all qms pending approval
     
     context={'pendingcar':pendingcar} 
     return render(request,'qms_pending.html',context)
@@ -366,36 +385,40 @@ def qms_7daysToExpiryview(request,pk_test):
     return render(request,'qms_view_7_days_To_expiry.html',{'products':products})
 
 @allowed_users(allowed_roles=['Auditor'])
-def verify_qms(request,pk_test):
+def verify_qms(request,pk_test,start):
     open_car=mod9001_qmsplanner.objects.get(planner_number=pk_test)
     form=VerifyQMS(instance=open_car)
     if request.method=="POST":
-            #print("request.POST['qmsstatus']",request.POST)
+            #("request.POST['qmsstatus']",request.POST)
             
             if request.POST['qmsstatus'] =="3":
                 request.POST=request.POST.copy()
                 request.POST['status'] = '' #make it cancelled
                 request.POST['verification']='' #make it canceled
-                #request.POST['end']='1900-01-01'
+                request.POST['start']=start
                 #print("#MAKE IT CANCELED",  request.POST['status'])
             
             elif request.POST['qmsstatus'] == '2':#if canceled
                 #print("request.POST['qmsstatus']",request.POST['qmsstatus'])
                 request.POST=request.POST.copy()
                 request.POST['status'] = 4 # keep status open
+                request.POST['start']=start
                 #request.POST['verification_status']='Closed'
             elif request.POST['qmsstatus'] == '4':#if rescheduled
                 #print("request.POST['qmsstatus']",request.POST['qmsstatus'])
                 request.POST=request.POST.copy()
                 request.POST['end'] = request.POST['scheduled'] # keep status open
+                request.POST['start']=start
                 #print("RESCHEDULED",request.POST['end'])
             elif request.POST['qmsstatus'] == '1':
                 print("request.POST['qmsstatus']",request.POST['qmsstatus'])
                 request.POST=request.POST.copy()
                 request.POST['status'] = 1 # keep status approved
                 request.POST['verification_status']='Closed'
+                request.POST['start']=start
             else:
                 request.POST=request.POST.copy()
+                request.POST['start']=start
          
 
 
@@ -571,6 +594,18 @@ def training_planner(request):
         request.POST['entered_by'] = request.user
         request.POST['date_today']=date.today()
         request.POST['status'] = 5
+        if is_Marketing(request.user):#assign record to a group
+            request.POST['record_group']="Marketing"
+        elif is_Accounts(request.user):
+            request.POST['record_group']="Accounts"
+        elif is_Operations(request.user):
+            request.POST['record_group']="Operations"
+        elif is_Administration(request.user):
+            request.POST['record_group']="Administration"
+        elif is_Technical(request.user):
+            request.POST['record_group']="Technical"
+        else:
+            request.POST['record_group']=""
         
         form=trainingplaner(request.POST)
                         
@@ -619,7 +654,10 @@ def trainingplan_report(request):
 
 @login_required(login_url='login')
 def trainplanner_pending(request):
-    pendingcar=mod9001_trainingplanner.objects.filter(status='5') #get all  pending approval    
+    if is_Executive(request.user):
+        pendingcar=mod9001_trainingplanner.objects.filter(status='5').filter(planner_user_title=20) #get all  pending approval by HODs only   
+    else:
+        pendingcar=mod9001_trainingplanner.objects.filter(status='5').filter(record_group=my_data_group(request.user)) #get all  pending approval    
     context={'pendingcar':pendingcar} 
     return render(request,'trainplanner_pending.html',context)
 

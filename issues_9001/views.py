@@ -8,6 +8,7 @@ from django.contrib.auth import get_user_model
 from .decorators import unauthenticated_user,allowed_users
 from django.contrib.auth.decorators import login_required
 from datetime import date, timedelta
+from accounts.utils import *
 import json
 from django.db.models import Count, Q, F
 import xlwt
@@ -600,7 +601,18 @@ def risks(request,issue_number):
             request.POST['ip_number']=request.POST['issue_number'] #save ip number 
             request.POST['issue_number']="" #set issue number to missing, remember ip and issue number are selected by same dropdown combo
 
-
+        if is_Marketing(request.user):#assign record to a group
+            request.POST['record_group']="Marketing"
+        elif is_Accounts(request.user):
+            request.POST['record_group']="Accounts"
+        elif is_Operations(request.user):
+            request.POST['record_group']="Operations"
+        elif is_Administration(request.user):
+            request.POST['record_group']="Administration"
+        elif is_Technical(request.user):
+            request.POST['record_group']="Technical"
+        else:
+            request.POST['record_group']=""
            
         form = risk(request.POST)
         
@@ -867,14 +879,14 @@ def opportunity_report(request):
 
 @login_required(login_url='login')
 def risk_pending(request):
-    pendingcar=mod9001_risks.objects.filter(status='5',record_type='RISK').filter(~Q(verification_status='Closed')) #get all risk pending approval    
+    pendingcar=mod9001_risks.objects.filter(status='5',record_type='RISK').filter(~Q(verification_status='Closed')).filter(record_group=my_data_group(request.user)) #get all risk pending approval    
     #pendingcar=mod9001_risks.objects.all().filter(status='5',record_type='RISK').filter(~Q(riskrank='Low')).filter(~Q(risktreatment=2)).filter(~Q(risktreatment=4)).filter(~Q(verification_status='Closed'))
     context={'pendingcar':pendingcar} 
     return render(request,'risk_pending.html',context)
 
 @login_required(login_url='login')
 def opp_pending(request):
-    pendingcar=mod9001_risks.objects.filter(status='5',record_type='OPP').filter(~Q(verification_status='Closed')) #get all opportunity  pending approval    
+    pendingcar=mod9001_risks.objects.filter(status='5',record_type='OPP').filter(~Q(verification_status='Closed')).filter(record_group=my_data_group(request.user)) #get all opportunity  pending approval    
     context={'pendingcar':pendingcar} 
     return render(request,'opp_pending.html',context)
 

@@ -239,6 +239,14 @@
 
     <span class="badge" style="font-size:16px;color:red"><span class="blinking">{{Analyst_Tasks }}</span></span>
 
+{% elif request.user|has_group:"Executive"%}
+    <span><i class="fa fa-envelope" style="font-size:24px;color:Orange"></i></span>
+
+    <span class="badge" style="font-size:16px;color:red"><span class="blinking">{{Executive_Tasks }}</span></span>
+
+
+
+
 {% else %}
 
 
