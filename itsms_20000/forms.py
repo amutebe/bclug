@@ -23,7 +23,7 @@ class serviceRequest(ModelForm):
     class Meta:
         model = mod20000_service_request 
         exclude = ['date_today','planning_flag']
-        widgets={'requestor':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'entered_by':HiddenInput(),'date':DateInput(),'time':TimeInput(),'other':forms.Textarea(attrs={'rows': 2, 'cols': 40})}
+        widgets={'record_group':HiddenInput(),'requestor':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'entered_by':HiddenInput(),'date':DateInput(),'time':TimeInput(),'other':forms.Textarea(attrs={'rows': 2, 'cols': 40})}
 
 
 class serviceRequestPlans(ModelForm):

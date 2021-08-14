@@ -102,7 +102,7 @@ class trainingregister(ModelForm):
     class Meta:
         model = mod9001_trainingregister 
         exclude = ['training_desc','trainingplanid','training','location','trainer','entered_by','date_today','verification','verification_status','verification_failed','qmsstatus','scheduled','completion']
-        widgets={'status':forms.HiddenInput,'actionplanother':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'reasonother':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'timeline':DateInput(),'train_date':DateInput(),'completion_date':DateInput(),'job':HorizontalRadioSelect(),'skills':HorizontalRadioSelect(),'indicators':HorizontalRadioSelect(),'able':HorizontalRadioSelect()}
+        widgets={'record_group':HiddenInput(),'status':forms.HiddenInput,'actionplanother':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'reasonother':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'timeline':DateInput(),'train_date':DateInput(),'completion_date':DateInput(),'job':HorizontalRadioSelect(),'skills':HorizontalRadioSelect(),'indicators':HorizontalRadioSelect(),'able':HorizontalRadioSelect()}
     
     def clean(self):
         cleaned_data = super().clean()
@@ -166,7 +166,7 @@ class incident_Register(ModelForm):
     class Meta:
         model = mod9001_incidentregister 
         exclude = ['entered_by','date_today','analysis_flag']
-        widgets={'date':DateInput(),'time':TimeInput(),'other':forms.Textarea(attrs={'rows': 2, 'cols': 40})}
+        widgets={'record_group':HiddenInput(),'date':DateInput(),'time':TimeInput(),'other':forms.Textarea(attrs={'rows': 2, 'cols': 40})}
 
 class customer_Register(ModelForm):
   
@@ -184,7 +184,7 @@ class incident_RegisterStaff(ModelForm):
         exclude = ['cost','currency','costdescription','lesson','entered_by','date_today','verification','verification_status','verification_failed','qmsstatus','scheduled','completion','report_number','error','solution','component_affected','remark']
           
         
-        widgets={'status':forms.HiddenInput,'due':DateInput(),'date':DateInput(),'completion':DateInput(),'date_posted':DateInput(), 'costdescription':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'lesson':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'description':forms.Textarea(attrs={'rows': 2, 'cols': 40})}
+        widgets={'record_group':HiddenInput(),'status':forms.HiddenInput,'due':DateInput(),'date':DateInput(),'completion':DateInput(),'date_posted':DateInput(), 'costdescription':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'lesson':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'description':forms.Textarea(attrs={'rows': 2, 'cols': 40})}
 class Verifyincidentregister(ModelForm):
     class Meta:
         model = mod9001_incidentregisterStaff 
@@ -209,7 +209,7 @@ class providerassessments(ModelForm):
         #fields = ['emp_perfrev_no','planner_number','date','Provider','organisation','assesment_date','start','end','appraise']
        
         
-        widgets={'status':forms.HiddenInput,'nonconfdetails':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'due':DateInput(),'comment':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'purpose':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'date':DateInput(),'assesment_date':DateInput(),'start':DateInput(), 'end':DateInput(),'jobknowledge':HorizontalRadioSelect(),'adaptability':HorizontalRadioSelect(),'problemsolve':HorizontalRadioSelect(),'initiativeness':HorizontalRadioSelect(),'planning':HorizontalRadioSelect(),'work':HorizontalRadioSelect(),'Communication':HorizontalRadioSelect(),'skills':HorizontalRadioSelect(),'supervision':HorizontalRadioSelect(),'availability':HorizontalRadioSelect(),'professionalism':HorizontalRadioSelect()}
+        widgets={'record_group':HiddenInput(),'status':forms.HiddenInput,'nonconfdetails':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'due':DateInput(),'comment':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'purpose':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'date':DateInput(),'assesment_date':DateInput(),'start':DateInput(), 'end':DateInput(),'jobknowledge':HorizontalRadioSelect(),'adaptability':HorizontalRadioSelect(),'problemsolve':HorizontalRadioSelect(),'initiativeness':HorizontalRadioSelect(),'planning':HorizontalRadioSelect(),'work':HorizontalRadioSelect(),'Communication':HorizontalRadioSelect(),'skills':HorizontalRadioSelect(),'supervision':HorizontalRadioSelect(),'availability':HorizontalRadioSelect(),'professionalism':HorizontalRadioSelect()}
     def clean(self):
         cleaned_data = super().clean()
         last_date = cleaned_data.get("assesment_date")
@@ -244,7 +244,7 @@ class corrective_action(ModelForm):
         exclude = ['entered_by','date_today','car_flag']
         widgets = {
 
-            'date': DateInput(),'reference':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'addesc':forms.Textarea(attrs={'rows': 2, 'cols': 40})
+           'record_group':HiddenInput(), 'date': DateInput(),'reference':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'addesc':forms.Textarea(attrs={'rows': 2, 'cols': 40})
         }
 
 class mod9001planning(ModelForm):
@@ -254,7 +254,7 @@ class mod9001planning(ModelForm):
         exclude = ['completion','qmsstatus','scheduled','entered_by','date_today','verification','verification_status','verification_failed','rejected','approval_date','approved_by']
         widgets = {
 
-           'comment':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'status':forms.HiddenInput, 'due': DateInput(),'rootcause_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'details':forms.Textarea(attrs={'rows': 2, 'cols': 40})
+           'record_group':HiddenInput(),'proposedby_user_id':HiddenInput(),'comment':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'status':forms.HiddenInput, 'due': DateInput(),'rootcause_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'details':forms.Textarea(attrs={'rows': 2, 'cols': 40})
         }
 
    
@@ -285,7 +285,7 @@ class change_request(ModelForm):
         #exclude = ['status','proposedby','assignedto','due','completion','qmsstatus','scheduled','entered_by','date_today','verification','verification_status','verification_failed','rejected','approval_date','approved_by']
         widgets = {
 
-            'status':forms.HiddenInput,'date': DateInput(),'due': DateInput(),'reference':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'changedesc':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'reason_details':forms.Textarea(attrs={'rows': 2, 'cols': 40})
+           'record_group':HiddenInput(), 'status':forms.HiddenInput,'date': DateInput(),'due': DateInput(),'reference':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'changedesc':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'reason_details':forms.Textarea(attrs={'rows': 2, 'cols': 40})
         }
 
 class ApproveChangeRequest(ModelForm):
@@ -316,7 +316,7 @@ class customer_complaint(ModelForm):
         #exclude = ['entered_by','date_today','status']
         exclude = ['analysis_flag','entered_by','date_today','verification','verification_status','verification_failed','qmsstatus','scheduled','completion','re_occurance','classification','correction','add_desc','assignedto','due']
  
-        widgets={'complaint':TextInput(),'time':TimeInput(),'status':forms.HiddenInput,'due':DateInput(),'date':DateInput(),'completion':DateInput(),'date_posted':DateInput(), 'complaint_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40})}
+        widgets={'record_group':HiddenInput(),'record_group':HiddenInput(),'complaint':TextInput(),'time':TimeInput(),'status':forms.HiddenInput,'due':DateInput(),'date':DateInput(),'completion':DateInput(),'date_posted':DateInput(), 'complaint_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40})}
 
 class customer_complaintPlanning(ModelForm):
      #cost = MultiSelectFormField(choices=mod9001_incidentregisterStaff.costs)
@@ -356,7 +356,7 @@ class customer_satisfaction_survey(ModelForm): #for customers outside company wi
         model = mod9001_customerSatisfaction 
         exclude = ['start','end','entered_by','date_today','verification','verification_status','verification_failed','qmsstatus','scheduled','completion','improvplan','details','due','assignedto']
         #widgets={'improvplan':forms.HiddenInput,'details':forms.HiddenInput,'assignedto':forms.HiddenInput,'due':forms.HiddenInput,'end':DateInput(),'start':DateInput(),'status':forms.HiddenInput,'comment':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'due':DateInput(),'details':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'date':DateInput(),'responsetime':HorizontalRadioSelect(),'resolution':HorizontalRadioSelect(),'delivery':HorizontalRadioSelect(),'communication':HorizontalRadioSelect(),'compliant':HorizontalRadioSelect(),'quality':HorizontalRadioSelect(),'infosecurity':HorizontalRadioSelect(),'customerservice':HorizontalRadioSelect()}
-        widgets={'end':DateInput(),'start':DateInput(),'status':forms.HiddenInput,'comment':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'due':DateInput(),'details':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'date':DateInput(),'responsetime':HorizontalRadioSelect(),'resolution':HorizontalRadioSelect(),'delivery':HorizontalRadioSelect(),'communication':HorizontalRadioSelect(),'compliant':HorizontalRadioSelect(),'quality':HorizontalRadioSelect(),'infosecurity':HorizontalRadioSelect(),'customerservice':HorizontalRadioSelect()}
+        widgets={'record_group':HiddenInput(),'end':DateInput(),'start':DateInput(),'status':forms.HiddenInput,'comment':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'due':DateInput(),'details':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'date':DateInput(),'responsetime':HorizontalRadioSelect(),'resolution':HorizontalRadioSelect(),'delivery':HorizontalRadioSelect(),'communication':HorizontalRadioSelect(),'compliant':HorizontalRadioSelect(),'quality':HorizontalRadioSelect(),'infosecurity':HorizontalRadioSelect(),'customerservice':HorizontalRadioSelect()}
     
     
     #def clean(self):
@@ -388,7 +388,7 @@ class customer_satisfaction(ModelForm): # for company staff that require login a
         #fields = ['emp_perfrev_no','planner_number','date','Provider','organisation','assesment_date','start','end','appraise']
        
         
-        widgets={'end':DateInput(),'start':DateInput(),'status':forms.HiddenInput,'comment':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'due':DateInput(),'details':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'date':DateInput(),'responsetime':HorizontalRadioSelect(),'resolution':HorizontalRadioSelect(),'delivery':HorizontalRadioSelect(),'communication':HorizontalRadioSelect(),'compliant':HorizontalRadioSelect(),'quality':HorizontalRadioSelect(),'infosecurity':HorizontalRadioSelect(),'customerservice':HorizontalRadioSelect()}
+        widgets={'record_group':HiddenInput(),'end':DateInput(),'start':DateInput(),'status':forms.HiddenInput,'comment':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'due':DateInput(),'details':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'date':DateInput(),'responsetime':HorizontalRadioSelect(),'resolution':HorizontalRadioSelect(),'delivery':HorizontalRadioSelect(),'communication':HorizontalRadioSelect(),'compliant':HorizontalRadioSelect(),'quality':HorizontalRadioSelect(),'infosecurity':HorizontalRadioSelect(),'customerservice':HorizontalRadioSelect()}
     def clean(self):
         cleaned_data = super().clean()
         start_date = cleaned_data.get("start")

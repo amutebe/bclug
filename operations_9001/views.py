@@ -776,7 +776,7 @@ def incidentRegister(request):
         request.POST=request.POST.copy()
         request.POST['entered_by'] = request.user
         request.POST['date_today']=date.today()
-        #request.POST['status'] = 5
+        request.POST['record_group'] = "11"
         
         form=incident_Register(request.POST)
                         
@@ -1308,6 +1308,8 @@ def correctiveaction(request):
         request.POST['entered_by'] = request.user
         request.POST['date_today']=date.today()
         #request.POST['status'] = 5
+        request.POST['record_group'] = my_data_group(request.user)
+        
         
         form=corrective_action(request.POST)
                         
@@ -1759,6 +1761,7 @@ def customercomplaint(request):
         request.POST['entered_by'] = request.user
         request.POST['date_today']=date.today()
         request.POST['status'] = 1
+        request.POST['record_group'] = "11"
         
         form=customer_complaint(request.POST)
                         
@@ -1972,6 +1975,7 @@ def customersatisfaction_survey(request,customer_name):
         request.POST['entered_by']=request.user
         request.POST['date_today']=date.today()
         request.POST['status'] = 1
+        request.POST['record_group'] = my_data_group(request.user)
 #        #print("TEXT",request.POST)
 ##########################GET RANK DESCRIPTION FROM RATING SUBSTRING#####################################
         if "Poor" in request.POST['rank']:
@@ -2020,6 +2024,7 @@ def customersatisfaction_surveyed(request):
         request.POST['entered_by']=request.user
         request.POST['date_today']=date.today()
         request.POST['status'] = 1
+        request.POST['record_group'] = my_data_group(request.user)
 #        #print("TEXT",request.POST)
 ##########################GET RANK DESCRIPTION FROM RATING SUBSTRING#####################################
         if "Poor" in request.POST['rank']:

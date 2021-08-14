@@ -62,6 +62,7 @@ def services_request(request):
         request.POST['entered_by'] = request.user
         request.POST['date_today']=date.today()
         #request.POST['status'] = 5
+        request.POST['record_group'] = "11"
         
         form=serviceRequest(request.POST)
                         
