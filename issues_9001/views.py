@@ -269,7 +269,7 @@ def interested_parties(request):
         request.POST['date_today']=date.today()
         request.POST['status'] = 5 #flaging status as pending car
         form=interestedPartiesFORM(request.POST)
-        print(request.POST)
+        #print("PRINTING GROUP",my_data_group(request.POST['responsibility']))
                
         
         if form.is_valid():

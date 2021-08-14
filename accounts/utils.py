@@ -35,12 +35,14 @@ def is_Marketing(user):
 
 def my_data_group(user):
     if user.groups.filter(name='Operations').exists():
-        return "Operations"
+        return "4"
     elif user.groups.filter(name='Marketing').exists():
-        return "Marketing"
+        return "005"
     elif user.groups.filter(name='Administration').exists():
-        return "Administration"
+        return "001"
     elif user.groups.filter(name='Technical').exists():
-        return "Technical"
+        return "11"
     elif user.groups.filter(name='Accounts').exists():
-        return "Accounts"
+        return "12"
+    else:
+        return ""

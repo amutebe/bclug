@@ -221,18 +221,7 @@ def qms_planner(request):
         request.POST['entered_by'] = request.user
         request.POST['date_today']=date.today()
         request.POST['status'] = 5
-        if is_Marketing(request.user):#assign record to a group
-            request.POST['record_group']="Marketing"
-        elif is_Accounts(request.user):
-            request.POST['record_group']="Accounts"
-        elif is_Operations(request.user):
-            request.POST['record_group']="Operations"
-        elif is_Administration(request.user):
-            request.POST['record_group']="Administration"
-        elif is_Technical(request.user):
-            request.POST['record_group']="Technical"
-        else:
-            request.POST['record_group']=""
+        request.POST['record_group']=my_data_group(request.user)
 
 
 
@@ -291,7 +280,7 @@ def qms_pending(request):
         pendingcar=mod9001_qmsplanner.objects.filter(status='5').filter(planner_user_title=20)     
 
     else:
-        pendingcar=mod9001_qmsplanner.objects.filter(status='5').filter(record_group=my_data_group(request.user)) #get all qms pending approval
+        pendingcar=mod9001_qmsplanner.objects.filter(status='5').filter(record_group=my_data_group(request.user)).filter(~Q(planner_user_title=20)) #get all qms pending approval
     
     context={'pendingcar':pendingcar} 
     return render(request,'qms_pending.html',context)
@@ -594,18 +583,7 @@ def training_planner(request):
         request.POST['entered_by'] = request.user
         request.POST['date_today']=date.today()
         request.POST['status'] = 5
-        if is_Marketing(request.user):#assign record to a group
-            request.POST['record_group']="Marketing"
-        elif is_Accounts(request.user):
-            request.POST['record_group']="Accounts"
-        elif is_Operations(request.user):
-            request.POST['record_group']="Operations"
-        elif is_Administration(request.user):
-            request.POST['record_group']="Administration"
-        elif is_Technical(request.user):
-            request.POST['record_group']="Technical"
-        else:
-            request.POST['record_group']=""
+        request.POST['record_group']=my_data_group(request.user)
         
         form=trainingplaner(request.POST)
                         
@@ -657,7 +635,7 @@ def trainplanner_pending(request):
     if is_Executive(request.user):
         pendingcar=mod9001_trainingplanner.objects.filter(status='5').filter(planner_user_title=20) #get all  pending approval by HODs only   
     else:
-        pendingcar=mod9001_trainingplanner.objects.filter(status='5').filter(record_group=my_data_group(request.user)) #get all  pending approval    
+        pendingcar=mod9001_trainingplanner.objects.filter(status='5').filter(~Q(planner_user_title=20)).filter(record_group=my_data_group(request.user)) #get all  pending approval    
     context={'pendingcar':pendingcar} 
     return render(request,'trainplanner_pending.html',context)
 
