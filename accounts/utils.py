@@ -47,7 +47,9 @@ def my_data_group(user):
     else:
         return ""
 
-###################RESTRICTS UPLOAD SIZE TO 10MBS#################################
+
+
+###################RESTRICTS UPLOAD SIZE TO 10MBS FOR DOCUMENT MANAGER#################################
 def validate_file_size(value):
     filesize= value.size
     #print("PRINT FILESIZE",filesize)
@@ -55,5 +57,16 @@ def validate_file_size(value):
     if filesize > 10485760:
         #print("PRINT FILESIZE two",filesize)
         raise forms.ValidationError("The maximum file size that can be uploaded is 10MB")
+    else:
+        return value
+
+###################RESTRICTS UPLOAD SIZE TO 10MBS FOR VERIFICATIONS#################################
+def validate_file_size_verification(value):
+    filesize= value.size
+    #print("PRINT FILESIZE",filesize)
+    
+    if filesize > 5242880:
+        #print("PRINT FILESIZE two",filesize)
+        raise forms.ValidationError("The maximum file size that can be uploaded is 5MB")
     else:
         return value

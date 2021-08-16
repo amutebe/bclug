@@ -36,7 +36,7 @@ class priority(models.Model):
 
 class mod20000_service_request(models.Model):
     service_number=models.CharField("SR ID.:",max_length=200,primary_key=True)
-    date=models.DateField("Request Date:",null=False)
+    date=models.DateField("Request Date:",default=datetime.now,null=False)
     time=models.TimeField("Time (24Hr):",null=True)
     request_type=models.ForeignKey('ServiceRequest_type', on_delete=models.CASCADE,verbose_name='Request Type:',null=True,blank=True)
     requestor=models.TextField("Requestor",null=True,blank=True)   
@@ -92,7 +92,7 @@ class scope(models.Model):
 
 class mod20000_service_planning(models.Model):
     service_number=models.OneToOneField('mod20000_service_request', on_delete=models.CASCADE,verbose_name='SR ID:',null=True,blank=True)
-    planning_date=models.DateField("Date:",null=False)    
+    planning_date=models.DateField("Date:",default=datetime.now,null=False)    
     service_scope=models.ForeignKey('scope', on_delete=models.SET_NULL,verbose_name='Service scope:',null=True,blank=True)   
     service_category=models.ForeignKey('service_category', on_delete=models.SET_NULL,verbose_name='Service Category:',null=True,blank=True)
     #resource=models.ForeignKey('resources', on_delete=models.SET_NULL,verbose_name='Resources:',null=True,blank=True)
@@ -128,7 +128,7 @@ class mod20000_service_planning(models.Model):
     entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True,on_delete=models.SET_NULL,related_name='planning')
     date_today=models.DateField("Date created:",default=datetime.now)
     status=models.ForeignKey('issues_9001.approval_status', on_delete=models.SET_NULL,verbose_name='Status:',null=True,blank=True)
-    document = models.FileField("Upload Support Document:",upload_to='documents/',null=True,blank=True,validators=[validate_file_size])
+    document = models.FileField("Upload Support Document:",upload_to='documents/',null=True,blank=True,validators=[validate_file_size_verification])
     uploaded_at = models.DateTimeField(auto_now_add=True,null=True)
     
     def __str__(self):

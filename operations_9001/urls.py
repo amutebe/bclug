@@ -91,7 +91,7 @@ path('customercomplaint_due/',views.customercomplaint_due,name="customercomplain
 path('customerComplaint_rejected/',views.customerComplaint_rejected,name="customerComplaint_rejected"), 
 
 path('customercomplaint_7daysToExpiryview/<str:pk_test>/',views.customercomplaint_7daysToExpiryview,name="customercomplaint_7daysToExpiryview"),
-path('customercomplaint_planning/<str:complaint_id>/',views.customercomplaint_planning,name="customercomplaint_planning"),
+path('customercomplaint_planning/<str:complaint_id> <str:log_date>/',views.customercomplaint_planning,name="customercomplaint_planning"),
 
 path('providerassessment/', views.providerassessment, name='providerassessment'),
 path('providerAssessment_report/', views.providerAssessment_report, name='providerAssessment_report'),

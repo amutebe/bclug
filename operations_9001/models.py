@@ -403,7 +403,7 @@ class mod9001_incidentregister(models.Model):
 #####################INCIDENT ANALYSIS######################################
 class mod9001_incidentregisterStaff(models.Model):
     incident_number=models.OneToOneField('mod9001_incidentregister', on_delete=models.CASCADE,verbose_name='Incident Number:',null=True,blank=True)
-    date=models.DateField("Analysis Date:",null=False)   
+    date=models.DateField("Date:",default=datetime.now,null=False)   
     classification=models.ForeignKey('classification', on_delete=models.CASCADE,verbose_name='Incident Classification:',null=True,blank=True)
     rootcause=models.ForeignKey('rootcause', on_delete=models.CASCADE,verbose_name='Root Cause:',null=True,blank=True)
     otherootcause=models.TextField("Other Root Cause:",null=True, blank=True)
@@ -432,7 +432,7 @@ class mod9001_incidentregisterStaff(models.Model):
     
   
     scheduled=models.DateField("Rescheduled Date:",null=True,blank=True)
-    assignedto= models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.SET_NULL,verbose_name='Assigned to:',null=True,blank=True)
+    #assignedto= models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.SET_NULL,verbose_name='Assigned to:',null=True,blank=True)
     completedby= models.ForeignKey('accounts.employees',on_delete=models.SET_NULL,verbose_name='Completed by:',null=True,blank=True)
     
     due=models.DateField("When:",null=True,blank=True)      
@@ -447,7 +447,7 @@ class mod9001_incidentregisterStaff(models.Model):
     entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='incidentstaff',on_delete=models.CASCADE)
     date_today=models.DateField("Date created:",default=datetime.now)
     status=models.ForeignKey('issues_9001.approval_status', on_delete=models.CASCADE,verbose_name='Status:',null=True,blank=True)
-    document = models.FileField("Upload Support Document:",upload_to='documents/',null=True,blank=True,validators=[validate_file_size])
+    document = models.FileField("Upload Support Document:",upload_to='documents/',null=True,blank=True,validators=[validate_file_size_verification])
     uploaded_at = models.DateTimeField(auto_now_add=True,null=True)    
     
     
@@ -745,7 +745,7 @@ class complaint_type(models.Model):
         return self.description
 class mod9001_customerComplaint(models.Model):
     comp_no=models.CharField("Complaint No.:",max_length=200,default="Comp-COMP-Q-"+ correction_no(),primary_key=True)
-    date=models.DateField("Date:",null=True)
+    date=models.DateField("Date:",default=datetime.now,null=False)
     time=models.TimeField("Time (24Hr):",null=True)
     complaint=models.TextField("Complainant:",null=True, blank=True)   
     organisation=models.ForeignKey('accounts.customer', on_delete=models.SET_NULL,verbose_name='Customer Organisation:',related_name='org',null=True,blank=True)
@@ -760,7 +760,7 @@ class mod9001_customerComplaint(models.Model):
     assignedto= models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.SET_NULL,verbose_name='Assigned to:',null=True,blank=True)
     completedby= models.ForeignKey('accounts.employees',on_delete=models.SET_NULL,verbose_name='Completed by:',null=True,blank=True)
     
-    due=models.DateTimeField("When:",null=True)    
+    due=models.DateField("When:",null=True)    
     entered_by= models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True,on_delete=models.SET_NULL, related_name='entered')
     date_today=models.DateField("Date created:",default=datetime.now)
     verification=models.ForeignKey('issues_9001.RISK_OPPverification', on_delete=models.SET_NULL,verbose_name='Verification:',null=True,blank=True)
@@ -772,7 +772,7 @@ class mod9001_customerComplaint(models.Model):
     completion=models.DateField("Completion Date:",null=True,blank=True)
     analysis_flag=models.TextField("Complaint Analysis Done?",null=True,blank=True,default='No', help_text='To be uses while filtering complaints pending analysis')
     record_group=models.CharField("Data Group",max_length=20,null=True,blank=True)    
-    document = models.FileField("Upload Support Document:",upload_to='documents/',null=True,blank=True,validators=[validate_file_size])
+    document = models.FileField("Upload Support Document:",upload_to='documents/',null=True,blank=True,validators=[validate_file_size_verification])
     uploaded_at = models.DateTimeField(auto_now_add=True,null=True)  
    
 

@@ -181,7 +181,7 @@ class incident_RegisterStaff(ModelForm):
      class Meta:
         model = mod9001_incidentregisterStaff
         #exclude = ['entered_by','date_today','status']
-        exclude = ['document','cost','currency','costdescription','lesson','entered_by','date_today','verification','verification_status','verification_failed','qmsstatus','scheduled','completion','report_number','error','solution','component_affected','remark']
+        exclude = ['completedby','document','cost','currency','costdescription','lesson','entered_by','date_today','verification','verification_status','verification_failed','qmsstatus','scheduled','completion','report_number','error','solution','component_affected','remark']
           
         
         widgets={'record_group':HiddenInput(),'status':forms.HiddenInput,'due':DateInput(),'date':DateInput(),'completion':DateInput(),'date_posted':DateInput(), 'costdescription':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'lesson':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'description':forms.Textarea(attrs={'rows': 2, 'cols': 40})}
@@ -348,7 +348,7 @@ class customer_complaint(ModelForm):
      class Meta:
         model = mod9001_customerComplaint
         #exclude = ['entered_by','date_today','status']
-        exclude = ['document','analysis_flag','entered_by','date_today','verification','verification_status','verification_failed','qmsstatus','scheduled','completion','re_occurance','classification','correction','add_desc','assignedto','due']
+        exclude = ['completedby','document','analysis_flag','entered_by','date_today','verification','verification_status','verification_failed','qmsstatus','scheduled','completion','re_occurance','classification','correction','add_desc','assignedto','due']
  
         widgets={'record_group':HiddenInput(),'record_group':HiddenInput(),'complaint':TextInput(),'time':TimeInput(),'status':forms.HiddenInput,'due':DateInput(),'date':DateInput(),'completion':DateInput(),'date_posted':DateInput(), 'complaint_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40})}
 
@@ -358,9 +358,26 @@ class customer_complaintPlanning(ModelForm):
      class Meta:
         model = mod9001_customerComplaint
         #exclude = ['entered_by','date_today','status']
-        fields = ['re_occurance','classification','correction','add_desc','assignedto','due','analysis_flag']
+        fields = ['date','re_occurance','classification','correction','add_desc','assignedto','due','analysis_flag']
  
-        widgets={'time':TimeInput(),'status':forms.HiddenInput,'analysis_flag':forms.HiddenInput,'due':DateInput(),'date':DateInput(),'completion':DateInput(),'date_posted':DateInput(), 'complaint_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'add_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40})}
+        widgets={'time':TimeInput(),'status':forms.HiddenInput,'analysis_flag':forms.HiddenInput,'due':DateInput(),'date':HiddenInput(),'completion':DateInput(),'date_posted':DateInput(), 'complaint_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'add_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40})}
+
+     def clean(self):
+        cleaned_data = super().clean()
+        start_date = cleaned_data.get("date")
+        end_date = cleaned_data.get("due")
+        #print("start_date",start_date)
+
+            
+        if end_date is not None and start_date is not None:
+            if end_date < start_date:
+                raise forms.ValidationError("When date should be After Analysis date.")
+        else:
+            raise forms.ValidationError("When date and Analysis date cannot be empty")
+
+
+
+
 
 class Verifycustomer_complaint(ModelForm):
     class Meta:

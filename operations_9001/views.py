@@ -346,7 +346,7 @@ def CARnumbers_7days_expire(*x):
 
 @login_required(login_url='login')
 def qms_due(request):
-    carExpire7days=mod9001_qmsplanner.objects.all().filter(end__gte=datetime.now() - timedelta(days=7)).filter(status='1').filter(~Q(qmsstatus=1)).filter(~Q(qmsstatus=3))
+    carExpire7days=mod9001_qmsplanner.objects.all().filter(end__gte=datetime.now() - timedelta(days=7)).filter(status='1').filter(~Q(qmsstatus=1)).filter(~Q(qmsstatus=3)).filter(record_group=my_data_group(request.user))
     context={'products':carExpire7days}
     #thislist = []
     #for i in carExpire7days:
@@ -684,7 +684,7 @@ def CARnumbers_7days_expire(*x):
 @login_required(login_url='login')
 def training_due(request):
     #carExpire7days=mod9001_trainingplanner.objects.filter(status=1).filter(~Q(trainplannerstatus=1)).filter(~Q(trainplannerstatus=3))
-    carExpire7days=mod9001_trainingplanner.objects.filter(status=1).filter(~Q(trainplannerstatus=1)).filter(~Q(trainplannerstatus=3))
+    carExpire7days=mod9001_trainingplanner.objects.filter(status=1).filter(~Q(trainplannerstatus=1)).filter(~Q(trainplannerstatus=3)).filter(record_group=my_data_group(request.user))
     context={'products':carExpire7days}
     #thislist = []
     #for i in carExpire7days:
@@ -815,11 +815,11 @@ def incident_report(request):
         response['Content-Disposition'] = 'attachment; filename="IncidentRegister.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['Incident. No.', 'Date', 'Time','Reporter', 'Process','Type','Description','Details','Classification','Containment','Addit.Desc','AssignedTo','When','Comp.Date','Cost','currency','Amount','Lesson','ReportNo.','ComponentAffected','Error','Solution'])
+        writer.writerow(['Incident. No.', 'Date', 'Time','Reporter', 'Process','Type','Description','Details','Classification','Containment','Addit.Desc','AssignedTo','When','Comp.Date','Cost','currency','Amount','Lesson','ReportNo.','ComponentAffected','Error','Solution','Duration'])
     
         for i in incident:
             #if i.issue_number.get_context_display() is not None:#if the value is none django throws errors
-            writer.writerow([i.incident_number, i.incident_number.date,i.incident_number.time,i.incident_number.reporter,i.incident_number.processname,i.incident_number.incidentype,i.incident_number.incident_description,i.incident_number.other,i.classification,i.correction,i.description,i.assigned,i.due,i.completion,i.get_cost_display(),i.get_currency_display(),i.costdescription,i.verification_failed,i.report_number,i.component_affected,i.error,i.solution])
+            writer.writerow([i.incident_number, i.incident_number.date,i.incident_number.time,i.incident_number.reporter,i.incident_number.processname,i.incident_number.incidentype,i.incident_number.incident_description,i.incident_number.other,i.classification,i.correction,i.description,i.assigned,i.due,i.completion,i.get_cost_display(),i.get_currency_display(),i.costdescription,i.verification_failed,i.report_number,i.component_affected,i.error,i.solution,duration(i.completion,i.incident_number.date)])
         return response
         
     else:
@@ -1808,7 +1808,7 @@ def customerComplaint_rejected(request):
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Analyst'])
-def customercomplaint_planning(request,complaint_id):
+def customercomplaint_planning(request,complaint_id,log_date):
     pending_planning=mod9001_customerComplaint.objects.get(comp_no=complaint_id)
     form=customer_complaintPlanning(instance=pending_planning)
                           
@@ -1816,9 +1816,11 @@ def customercomplaint_planning(request,complaint_id):
 
         request.POST=request.POST.copy()
         request.POST['entered_by'] = request.user
-        request.POST['date_today']=date.today()
+        #request.POST['date_today']=date.today()
         request.POST['status'] = 1
         request.POST['analysis_flag'] = 'Yes'
+        #print("LOG DATE",log_date)
+        request.POST['date'] = log_date
         
         form=customer_complaintPlanning(request.POST,instance=pending_planning)
                         
