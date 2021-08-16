@@ -3076,17 +3076,32 @@ $(document).ready(function()
  $('#endDateDIV').hide();
 $("#id_qmsstatus").change(function() {
 
-   
+    $('label[for="id_verification_failed"]').text("Comment/Lesson Learnt:");
+ 
 			if ($(this).val()==1) {
+				 
 					
 				$('#completiondateDIV').show();
+				$('#id_completion_date').show();
+
+				$('label[for="id_completion_date"]').show();
+				$('#id_completion_date').attr('required','');
+				$('#id_completion_date').attr('data-error', 'This field is required.');
+
+
+
 				$('#id_completion').attr('required','');
+				$('#id_completion').show()
+				$('label[for="id_completion"]').show();
 				$('#id_completion').attr('data-error', 'This field is required.');
-				$('#completedby').show();
+				$('#id_completedby').show();
+				$('label[for="id_completedby"]').show();
 				$('#id_completedby').attr('required','');
 				$('#id_completedby').attr('data-error', 'This field is required.');
 
-				$('#scheduledDIV').hide();	
+				$('#uledDIV').hide();
+				$('#id_scheduled').hide();	
+				$('label[for="id_scheduled"]').hide();
             	$('#id_scheduled').removeAttr('required');
 				$('#id_scheduled').removeAttr('data-error');
 					
@@ -3096,14 +3111,26 @@ $("#id_qmsstatus").change(function() {
             {
 					
 				$('#scheduledDIV').show();
+				$('#id_scheduled').show();
+				$('label[for="id_scheduled"]').show();
 				$('#id_scheduled').attr('required','');
 				$('#id_scheduled').attr('data-error', 'This field is required.');
 
 				$('#completiondateDIV').hide();	
+				$('#id_completion_date').hide();
+				$('label[for="id_completion_date"]').hide();
+				$('#id_completion').hide()
             	$('#id_completion').removeAttr('required');
 				$('#id_completion').removeAttr('data-error');
+				$('#id_completion_date').removeAttr('required');
+				$('#id_completion_date').removeAttr('data-error');
+
+
+				$('label[for="id_completion"]').hide();
 				
-				$('#completedby').hide();	
+				$('#completedby').hide();
+				$('#id_completedby').hide()	
+				$('label[for="id_completedby"]').hide();
             	$('#id_completedby').removeAttr('required');
 				$('#id_completedby').removeAttr('data-error');
 					
@@ -3115,14 +3142,23 @@ $("#id_qmsstatus").change(function() {
             else 
             {
 			
-            $('#scheduledDIV').hide();	
+            $('#scheduledDIV').hide();
+			$('#id_scheduled').hide()
+			$('label[for="id_scheduled"]').hide();	
             $('#id_scheduled').removeAttr('required');
 			$('#id_scheduled').removeAttr('data-error');	
 
 			$('#completiondateDIV').hide();	
+			$('#id_completion_date').hide();
+			$('label[for="id_completion_date"]').hide();
+			$('#id_completion_date').removeAttr('required');
+			$('#id_completion_date').removeAttr('data-error');
+			$('#id_completion').hide();
+			$('label[for="id_completion"]').hide();
             $('#id_completion').removeAttr('required');
 			$('#id_completion').removeAttr('data-error');
-						$('#completedby').hide();	
+			$('#id_completedby').hide();
+			$('label[for="id_completedby"]').hide();	
             $('#id_completedby').removeAttr('required');
 			$('#id_completedby').removeAttr('data-error');
 						

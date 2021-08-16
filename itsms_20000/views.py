@@ -115,7 +115,7 @@ def service_request_report(request):
 @login_required(login_url='login')
 def serviceRequest_pending_planning(request):
 
-    products=mod20000_service_request.objects.filter(planning_flag='No')
+    products=mod20000_service_request.objects.filter(planning_flag='No').filter(record_group=my_data_group(request.user))
     return render(request,'serviceRequest_pending_planning.html',{'products':products})
 
 @login_required(login_url='login')
@@ -141,6 +141,7 @@ def serviceRequestPlanning(request,sr_id):
         request.POST['entered_by'] = request.user
         request.POST['date_today']=date.today()
         request.POST['status'] = 1
+        request.POST['record_group'] = "11"
         #request.POST['status'] = 5
         
         form=serviceRequestPlans(request.POST)
@@ -222,11 +223,14 @@ def Verify_service_request(request,pk_test,planning_date):
                 request.POST['planning_date']= planning_date
                 request.POST['due'] = request.POST['scheduled'] # keep status open
                 #print("RESCHEDULED",request.POST['end'])
-            elif request.POST['qmsstatus'] == '1':
-                request.POST=request.POST.copy()
-                request.POST['planning_date']= planning_date
-                request.POST['status'] = 1 # keep status approved
-                request.POST['verification_status']='Closed'
+            elif request.POST['qmsstatus'] == '1': #IF COMPLETE
+                if len(request.FILES)==0:
+                    return HttpResponse("FAILED: Please attach Support Document!")
+                else:
+                    request.POST=request.POST.copy()
+                    request.POST['planning_date']= planning_date
+                    request.POST['status'] = 1 # keep status approved
+                    request.POST['verification_status']='Closed'
             else:
                 request.POST=request.POST.copy()
                 request.POST['planning_date']= planning_date
@@ -235,8 +239,8 @@ def Verify_service_request(request,pk_test,planning_date):
 
 
             
-            form=VerifyServiceRequest(request.POST, instance=open_car)
-            #print("printing service_nmuber",open_car)
+            form=VerifyServiceRequest(request.POST,request.FILES,instance=open_car)
+            #print("printing service_nmuber",request.FILES)
             #print("printing request.POST",request.POST)
             if form.is_valid():
                 form.save()

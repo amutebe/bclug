@@ -26,7 +26,7 @@ class document_manager(ModelForm):
     class Meta:
         model = mod9001_document_manager 
         fields = '__all__'
-        widgets={'author':forms.Textarea(attrs={'rows': 1, 'cols': 40}),'Origin': RadioSelect(),'document_date':DateInput(),'document_id':forms.Textarea(attrs={'rows': 1, 'cols': 40}),'clause':forms.Textarea(attrs={'rows': 1, 'cols': 40}),'doc_name':forms.Textarea(attrs={'rows': 1, 'cols': 40}),'specifyl':forms.Textarea(attrs={'rows': 1, 'cols': 40}),'version':forms.Textarea(attrs={'rows': 1, 'cols': 40}),'Author':forms.Textarea(attrs={'rows': 1, 'cols': 40})}
+        widgets={'record_group':HiddenInput(),'author':forms.Textarea(attrs={'rows': 1, 'cols': 40}),'Origin': RadioSelect(),'document_date':DateInput(),'document_id':forms.Textarea(attrs={'rows': 1, 'cols': 40}),'clause':forms.Textarea(attrs={'rows': 1, 'cols': 40}),'doc_name':forms.Textarea(attrs={'rows': 1, 'cols': 40}),'specifyl':forms.Textarea(attrs={'rows': 1, 'cols': 40}),'version':forms.Textarea(attrs={'rows': 1, 'cols': 40}),'Author':forms.Textarea(attrs={'rows': 1, 'cols': 40})}
 
 class calibration(ModelForm):
     
@@ -181,16 +181,50 @@ class incident_RegisterStaff(ModelForm):
      class Meta:
         model = mod9001_incidentregisterStaff
         #exclude = ['entered_by','date_today','status']
-        exclude = ['cost','currency','costdescription','lesson','entered_by','date_today','verification','verification_status','verification_failed','qmsstatus','scheduled','completion','report_number','error','solution','component_affected','remark']
+        exclude = ['document','cost','currency','costdescription','lesson','entered_by','date_today','verification','verification_status','verification_failed','qmsstatus','scheduled','completion','report_number','error','solution','component_affected','remark']
           
         
         widgets={'record_group':HiddenInput(),'status':forms.HiddenInput,'due':DateInput(),'date':DateInput(),'completion':DateInput(),'date_posted':DateInput(), 'costdescription':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'lesson':forms.Textarea(attrs={'rows': 2, 'cols': 40}), 'description':forms.Textarea(attrs={'rows': 2, 'cols': 40})}
+     def clean(self):
+        cleaned_data = super().clean()
+        start_date = cleaned_data.get("date")
+        end_date = cleaned_data.get("due")
+
+            
+        if end_date is not None and start_date is not None:
+            if end_date < start_date:
+                raise forms.ValidationError("When date should be After Analysis date.")
+        else:
+            raise forms.ValidationError("When date and Analysis date cannot be empty")
+
 class Verifyincidentregister(ModelForm):
     class Meta:
         model = mod9001_incidentregisterStaff 
         #fields = '__all__'
-        fields=['cost','currency','costdescription','verification','verification_status','verification_failed','qmsstatus','scheduled','completion','report_number','error','solution','component_affected','remark']
-        widgets={'completion':DateInput(),'scheduled':DateInput(),'verification_failed':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'report_no':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'error':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'remark':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'solution':forms.Textarea(attrs={'rows': 2, 'cols': 40})}        
+        fields=['date','cost','currency','costdescription','qmsstatus','completedby','scheduled','completion','verification_failed','report_number','error','solution','component_affected','remark','document']
+        widgets={'report_number':forms.Textarea(attrs={'rows': 1, 'cols': 60}),'date':HiddenInput(),'due':HiddenInput(),'completion':DateInput(),'scheduled':DateInput(),'verification_failed':forms.Textarea(attrs={'rows': 3, 'cols': 60}),'report_no':forms.Textarea(attrs={'rows': 3, 'cols': 60}),'error':forms.Textarea(attrs={'rows': 3, 'cols': 60}),'remark':forms.Textarea(attrs={'rows': 3, 'cols': 60}),'solution':forms.Textarea(attrs={'rows': 3, 'cols': 60})}        
+
+    def clean(self):
+        cleaned_data = super().clean()
+        start_date = cleaned_data.get("date")
+        end_date = cleaned_data.get("completion")
+        reschedule_date = cleaned_data.get("scheduled")
+            
+     #   print("PRINT",end_date,start_date)
+        if end_date is not None and start_date is not None:
+            if end_date < start_date or end_date>date.today() :
+                raise forms.ValidationError("Completion date shouldn't be less than Planning date or be in Future")
+
+        
+        elif reschedule_date is not None and start_date is not None:
+           if reschedule_date < start_date or reschedule_date < date.today():
+                raise forms.ValidationError("Reschedule date shouldn't be less than Planning date or today's date")
+
+        else:
+            raise forms.ValidationError("Completion date or Reschedule date cannot be empty")
+
+
+
 
 
 
@@ -314,7 +348,7 @@ class customer_complaint(ModelForm):
      class Meta:
         model = mod9001_customerComplaint
         #exclude = ['entered_by','date_today','status']
-        exclude = ['analysis_flag','entered_by','date_today','verification','verification_status','verification_failed','qmsstatus','scheduled','completion','re_occurance','classification','correction','add_desc','assignedto','due']
+        exclude = ['document','analysis_flag','entered_by','date_today','verification','verification_status','verification_failed','qmsstatus','scheduled','completion','re_occurance','classification','correction','add_desc','assignedto','due']
  
         widgets={'record_group':HiddenInput(),'record_group':HiddenInput(),'complaint':TextInput(),'time':TimeInput(),'status':forms.HiddenInput,'due':DateInput(),'date':DateInput(),'completion':DateInput(),'date_posted':DateInput(), 'complaint_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40})}
 
@@ -332,10 +366,30 @@ class Verifycustomer_complaint(ModelForm):
     class Meta:
         model = mod9001_customerComplaint 
         #fields = '__all__'
-        fields=['verification','verification_status','verification_failed','qmsstatus','scheduled','completion']
-        widgets={'completion':DateInput(),'scheduled':DateInput()}        
+        fields=['date','due','qmsstatus','scheduled','completion','completedby','verification_failed','document']
+        widgets={'date':HiddenInput(),'due':HiddenInput(),'completion':DateInput(),'scheduled':DateInput(),'verification_failed':forms.Textarea(attrs={'rows': 3, 'cols': 60})}        
+
+    def clean(self):
+        cleaned_data = super().clean()
+        start_date = cleaned_data.get("date")
+        end_date = cleaned_data.get("completion")
+        reschedule_date = cleaned_data.get("scheduled")
+            
+     #   print("PRINT",end_date,start_date)
+        if end_date is not None and start_date is not None:
+            if end_date < start_date or end_date>date.today() :
+                raise forms.ValidationError("Completion date shouldn't be less than Planning date or be in Future")
+
+        
+        elif reschedule_date is not None and start_date is not None:
+           if reschedule_date < start_date or reschedule_date < date.today():
+                raise forms.ValidationError("Reschedule date shouldn't be less than Planning date or today's date")
+
+        else:
+            raise forms.ValidationError("Completion date or Reschedule date cannot be empty")
 
 
+        
 
 
 class customersatisfaction_email(ModelForm):# to auntenticate customer byemail input before displaying the survet form

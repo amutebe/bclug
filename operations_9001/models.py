@@ -6,6 +6,7 @@ from django import forms
 from django.conf import settings
 from multiselectfield import MultiSelectField
 from itsms_20000.models import component
+from accounts.utils import *
 
 
 
@@ -13,15 +14,7 @@ from itsms_20000.models import component
 from django.core.exceptions import ValidationError
 
 
-def validate_file_size(value):
-    filesize= value.size
-    #print("PRINT FILESIZE",filesize)
-    
-    if filesize > 10485760:
-        #print("PRINT FILESIZE two",filesize)
-        raise forms.ValidationError("The maximum file size that can be uploaded is 10MB")
-    else:
-        return value
+
 
 # Create your models here.
 def car_no():
@@ -236,7 +229,7 @@ class mod9001_qmsplanner(models.Model):
     planner_number=models.CharField("Planner no.:",max_length=200,default="BCL-QP-"+car_no(),primary_key=True)
     plan_date=models.DateField("Plan Date:")
     #planner = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='qms_by',on_delete=models.CASCADE)
-    planner=models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Planner:',related_name='qms_by')
+    planner=models.ForeignKey('accounts.employees',on_delete=models.SET_NULL,null=True,verbose_name='Planner:',related_name='qms_by')
     planner_user_id= models.CharField("Planner Sytem UserID.:", max_length=20, null=True, blank=True)       
     planner_user_title= models.CharField("Planner Title.:", max_length=20, null=True, blank=True)     
        
@@ -410,6 +403,7 @@ class mod9001_incidentregister(models.Model):
 #####################INCIDENT ANALYSIS######################################
 class mod9001_incidentregisterStaff(models.Model):
     incident_number=models.OneToOneField('mod9001_incidentregister', on_delete=models.CASCADE,verbose_name='Incident Number:',null=True,blank=True)
+    date=models.DateField("Analysis Date:",null=False)   
     classification=models.ForeignKey('classification', on_delete=models.CASCADE,verbose_name='Incident Classification:',null=True,blank=True)
     rootcause=models.ForeignKey('rootcause', on_delete=models.CASCADE,verbose_name='Root Cause:',null=True,blank=True)
     otherootcause=models.TextField("Other Root Cause:",null=True, blank=True)
@@ -427,37 +421,34 @@ class mod9001_incidentregisterStaff(models.Model):
     cost = MultiSelectField('Incident Cost',choices=costs)
     currency=(('1','UGX'),('2','USD'),('3','Kshs'),('4','GBP'))
     currency=models.CharField(verbose_name='Currency:',max_length=50, null=True,blank=True,choices=currency)
-   
-    
+
     costdescription=models.IntegerField("Cost Amount:",null=True,blank=True)
 
     lesson=models.TextField("Lesson learnt:",null=True, blank=True)
     verification=models.ForeignKey('issues_9001.RISK_OPPverification', on_delete=models.CASCADE,verbose_name='Verification:',null=True,blank=True)
     verification_status=models.CharField(max_length=200, null=True,blank=True)
-    verification_failed=models.TextField("Reason for rejecting:",null=True,blank=True, help_text='If rejected, please give a reason')
+    verification_failed=models.TextField("Reason for rejecting:",null=True,blank=True)
     qmsstatus=models.ForeignKey(qmsstatus, on_delete=models.CASCADE,null=True,verbose_name='Verification Status:')
     
   
     scheduled=models.DateField("Rescheduled Date:",null=True,blank=True)
-   
-    assigned= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Assigned to:',null=True,blank=True)
+    assignedto= models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.SET_NULL,verbose_name='Assigned to:',null=True,blank=True)
+    completedby= models.ForeignKey('accounts.employees',on_delete=models.SET_NULL,verbose_name='Completed by:',null=True,blank=True)
+    
     due=models.DateField("When:",null=True,blank=True)      
     #comp_status=models.TextField("Compliant Status:",null=True, blank=True)
-    component_affected= models.ForeignKey(component,on_delete=models.CASCADE,verbose_name='Affected Component:',null=True,blank=True)
+    component_affected= models.ForeignKey(component,on_delete=models.SET_NULL,verbose_name='Affected Component:',null=True,blank=True)
     report_number=models.TextField("Report No.:",null=True, blank=True)
     error=models.TextField("Known Error:",null=True, blank=True)    
     solution=models.TextField("Solution:",null=True, blank=True)    
     remark=models.TextField("Remarks:",null=True, blank=True) 
     record_group=models.CharField("Data Group",max_length=20,null=True,blank=True)  
-    
-    
-    
-    
-    
+
     entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True, related_name='incidentstaff',on_delete=models.CASCADE)
     date_today=models.DateField("Date created:",default=datetime.now)
     status=models.ForeignKey('issues_9001.approval_status', on_delete=models.CASCADE,verbose_name='Status:',null=True,blank=True)
-    
+    document = models.FileField("Upload Support Document:",upload_to='documents/',null=True,blank=True,validators=[validate_file_size])
+    uploaded_at = models.DateTimeField(auto_now_add=True,null=True)    
     
     
     
@@ -659,7 +650,7 @@ class mod9001_planning(models.Model):
     date_today=models.DateField("Date created:",default=datetime.now)
     verification=models.ForeignKey('accounts.carsverification', on_delete=models.CASCADE,verbose_name='Verification:',null=True,blank=True)
     verification_status=models.CharField(max_length=200, null=True,blank=True)
-    verification_failed=models.TextField("Reason for rejecting:",null=True,blank=True, help_text='If rejected, please give a reason')
+    verification_failed=models.TextField("Reason for rejecting:",null=True,blank=True)
 
     qmsstatus=models.ForeignKey(qmsstatus, on_delete=models.CASCADE,null=True,verbose_name='Verification Status:')
     record_group=models.CharField("Data Group",max_length=20,null=True,blank=True)    
@@ -734,7 +725,7 @@ class mod9001_changeRegister(models.Model):
     date_today=models.DateField("Date created:",default=datetime.now)
     verification=models.ForeignKey('accounts.carsverification', on_delete=models.SET_NULL,verbose_name='Verification:',null=True,blank=True)
     verification_status=models.CharField(max_length=200, null=True,blank=True)
-    verification_failed=models.TextField("Reason for rejecting:",null=True,blank=True, help_text='If rejected, please give a reason')
+    verification_failed=models.TextField("Reason for rejecting:",null=True,blank=True)
   
     qmsstatus=models.ForeignKey(qmsstatus, on_delete=models.SET_NULL,null=True,verbose_name='Verification Status:')
     
@@ -766,20 +757,23 @@ class mod9001_customerComplaint(models.Model):
     classification=models.ForeignKey('classification', on_delete=models.SET_NULL,verbose_name='Complaint Classification:',null=True,blank=True)
     correction=models.ForeignKey('correction', on_delete=models.SET_NULL,verbose_name='Correction/Containment:',null=True,blank=True)
     add_desc=models.TextField("Additional Description",null=True, blank=True)       
-    assignedto= models.ForeignKey('accounts.employees',on_delete=models.SET_NULL,verbose_name='Assigned to:',null=True,blank=True)
+    assignedto= models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.SET_NULL,verbose_name='Assigned to:',null=True,blank=True)
+    completedby= models.ForeignKey('accounts.employees',on_delete=models.SET_NULL,verbose_name='Completed by:',null=True,blank=True)
+    
     due=models.DateTimeField("When:",null=True)    
     entered_by= models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True,on_delete=models.SET_NULL, related_name='entered')
     date_today=models.DateField("Date created:",default=datetime.now)
     verification=models.ForeignKey('issues_9001.RISK_OPPverification', on_delete=models.SET_NULL,verbose_name='Verification:',null=True,blank=True)
     verification_status=models.CharField(max_length=200, null=True,blank=True)
-    verification_failed=models.TextField("Reason for rejecting:",null=True,blank=True, help_text='If rejected, please give a reason')
+    verification_failed=models.TextField("Reason for rejecting:",null=True,blank=True)
     qmsstatus=models.ForeignKey(qmsstatus, on_delete=models.SET_NULL,null=True,verbose_name='Verification Status:')
     status=models.ForeignKey('issues_9001.approval_status', on_delete=models.SET_NULL,verbose_name='Status:',null=True,blank=True)
     scheduled=models.DateField("Rescheduled Date:",null=True,blank=True)
     completion=models.DateField("Completion Date:",null=True,blank=True)
     analysis_flag=models.TextField("Complaint Analysis Done?",null=True,blank=True,default='No', help_text='To be uses while filtering complaints pending analysis')
     record_group=models.CharField("Data Group",max_length=20,null=True,blank=True)    
-   
+    document = models.FileField("Upload Support Document:",upload_to='documents/',null=True,blank=True,validators=[validate_file_size])
+    uploaded_at = models.DateTimeField(auto_now_add=True,null=True)  
    
 
 class mod9001_customerSatisfaction(models.Model):
@@ -814,7 +808,7 @@ class mod9001_customerSatisfaction(models.Model):
  
     verification=models.ForeignKey('issues_9001.RISK_OPPverification', on_delete=models.SET_NULL,verbose_name='Verification:',null=True,blank=True)
     verification_status=models.CharField(max_length=200, null=True,blank=True)
-    verification_failed=models.TextField("Reason for rejecting:",null=True,blank=True, help_text='If rejected, please give a reason')
+    verification_failed=models.TextField("Reason for rejecting:",null=True,blank=True)
     qmsstatus=models.ForeignKey(qmsstatus, on_delete=models.SET_NULL,null=True,verbose_name='Verification Status:')
     status=models.ForeignKey('issues_9001.approval_status', on_delete=models.SET_NULL,verbose_name='Status:',null=True,blank=True)
     scheduled=models.DateField("Rescheduled Date:",null=True,blank=True)

@@ -4,6 +4,7 @@ from datetime import datetime, date
 from random import randint
 from django import forms
 from django.conf import settings
+from accounts.utils import *
 
 # Create your models here.
 ##########################POST BACK MODEL EXAMPLE####################################
@@ -298,8 +299,6 @@ class mod9001_risks(models.Model):
     verification_status=models.CharField(max_length=200, null=True,blank=True)
     verification_failed=models.TextField("Reason for rejecting:",null=True,blank=True, help_text='If rejected, please give a reason')
     record_group=models.CharField("Data Group",max_length=20,null=True,blank=True)
-
-        
 
 
 

@@ -1,140 +1,57 @@
 
-
 {% extends "accounts/base.html" %} 
-{%load static%}
 {% block content %}
 
-<div class="row">
-<div class="col-md-8">
+<style>
+form {
+  max-width: 900px;
+  display: block;
+  margin: 0 auto;
+}
 
 
+</style>
+<div class="col-md-8 order-md-1">
+          
+          <h4 class="mb-3">Service Request Verification: <customer class="mb-3">{{serviceRequest_id}}</customer></h4>
+<p class="round2"> 
 
-<form action="" method="POST">
- 
- {% csrf_token %}
- <div class="card-header">
- <font color="red">{{form.errors}}</font>
- 	 <h4 class="mb-3">Service Request Verification: <customer class="mb-3">{{serviceRequest_id}}</customer></h4>
- <p class="round2">
+<form action="" method="post" enctype="multipart/form-data">
+                     {% csrf_token %}
+ <div class="card-header">                    
+<table border="0">
+{% for errors in form.errors %}
+<div class="alert alert-danger"> {{form.errors}}</div>
+{%endfor%}             
+{{form}}
+</table>
 
-
-
- 
-
-
-
-<div class="form-group" id="verification">
-    
-    <label for="exampleFormControlSelect1">Verification status:</label><br>
-  {{form.qmsstatus}}
-<font color="red">{{form.errors.qmsstatus}}</font>
-</div>
-<div class="form-group" id="completiondateDIV">
-    
-    <label for="exampleFormControlSelect1">Completion Date:</label><br>
-    {{form.completion_date}}
-    <font color="red">{{form.errors.completion}}</font>
-
-
-</div>
-
-<div class="form-group" id="completedby">
-    
-    <label for="exampleFormControlSelect1">Completed by:</label><br>
- 
-      {{form.completedby}}
-
-<font color="red">{{form.errors.completedby}}</font>
-</div>
-
-
-<div class="form-group" id="scheduledDIV">
-    
-    <label for="exampleFormControlSelect1">Rescheduled:</label><br>
-    {{form.scheduled}}
-    <font color="red">{{form.errors.scheduled}}</font>
-
-
-</div>
-
-
-<div class="form-group" id="commentDIV">
-    
-    <label for="exampleFormControlSelect1">Comment/Lesson Learnt:</label><br>
- 
-      <input type="text" class="form-control" id="verification_failed" placeholder="" name="verification_failed" {{form.verification_failed}}
-
-<font color="red">{{form.errors.verification_failed}}</font>
-</div>
-
-<div class="form-group" id="report_number">
-    
-    <label for="exampleFormControlSelect1">Report Number:</label><br>
- 
-      <input type="text" class="form-control" id="report_number" placeholder="" name="report" {{form.report_number}}
-
-<font color="red">{{form.errors.report_number}}</font>
-</div>
-
-<div class="form-group" id="component_affected">
-    
-    <label for="exampleFormControlSelect1">Component Affected:</label><br>
- 
-      {{form.component_affected}}
-
-<font color="red">{{form.errors.component_affected}}</font>
-</div>
-<div class="form-group" id="error">
-    
-    <label for="exampleFormControlSelect1">Known Error:</label><br>
- 
-      <input type="text" class="form-control" id="error" placeholder="" name="error" {{form.error}}
-
-<font color="red">{{form.errors.error}}</font>
-</div>
-
-<div class="form-group" id="solution">
-    
-    <label for="exampleFormControlSelect1">Solution:</label><br>
- 
-      <input type="text" class="form-control" id="solution" placeholder="" name="solution" {{form.solution}}
-
-<font color="red">{{form.errors.solution}}</font>
-</div>
-
-<div class="form-group" id="remark">
-    
-    <label for="exampleFormControlSelect1">Remark:</label><br>
- 
-      <input type="text" class="form-control" id="remark" placeholder="" name="remark" {{form.remark}}
-
-<font color="red">{{form.errors.remark}}</font>
-</div>
 
 <br>
-
 <p class="round2"> 
 <div class="card card-body">
 					<table class="form-group">
 					<tr> 
+<td ><a class="btn  btn-warning" href="{% url 'home'%}"> Cancel </a></td>
+<td align="right"><input class="btn btn-info" type="submit" name="Submit"></td>
 
-
-<td ><a class="btn btn-warning" href="{%url 'serviceRequest_due' %}">Cancel</a></td>
-<td align="right"> <input class="btn btn-info" type="submit" name="Confirm" value="Close"></td>
 					</tr>
           </table>
 </div>
-</div>
+
 </form>
 </div>
 
-</div>
+
+
+
+
 {% endblock %} 
 
-<script>
 
 
 
- 
 
-</script>
+
+
+

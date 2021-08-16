@@ -35,7 +35,7 @@
 						{% for i in products %}
 						<tr>
 					<td>{{i.incident_number}}</td>
-					<td>{{i.incident_number.date}}</td>
+					<td>{{i.date}}</td>
 					<td>{{i.incident_number.time}}</td>
 					<td>{{i.incident_number.reporter}}</td>
 					<td>{{i.incident_number.processname}}</td>
@@ -48,7 +48,7 @@
 					<td>{{i.assigned}}</td>
                     <td>{{i.due}}</td>
         
-					<td><a class="btn btn-sm btn-info" href="{%url 'Verify_incidentregister' i.incident_number %}">Action</a></td>
+					<td><a class="btn btn-sm btn-info" href="{%url 'Verify_incidentregister' i.incident_number i.date %}">Action</a></td>
             
 
 				

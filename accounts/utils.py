@@ -1,4 +1,4 @@
-
+from django import forms
 ############################DEFINE USER GROUPS#####################################################
 def is_ManagementRepresentative(user):
     return user.groups.filter(name='ManagementRepresentative').exists()
@@ -46,3 +46,14 @@ def my_data_group(user):
         return "12"
     else:
         return ""
+
+###################RESTRICTS UPLOAD SIZE TO 10MBS#################################
+def validate_file_size(value):
+    filesize= value.size
+    #print("PRINT FILESIZE",filesize)
+    
+    if filesize > 10485760:
+        #print("PRINT FILESIZE two",filesize)
+        raise forms.ValidationError("The maximum file size that can be uploaded is 10MB")
+    else:
+        return value

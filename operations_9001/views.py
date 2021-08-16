@@ -148,6 +148,7 @@ def doc_manager(request):
         request.POST=request.POST.copy()
         request.POST['entered_by'] = request.user
         request.POST['date_today']=date.today()
+        request.POST['record_group']=my_data_group(request.user)
         
            
         form = document_manager(request.POST,request.FILES)
@@ -793,6 +794,7 @@ def incidentRegister(request):
         
     context={'form':form}
     return render(request,'incidentRegister.html',context)
+
 @login_required(login_url='login')
 def incident_report(request):
 
@@ -926,7 +928,7 @@ def customerRegister(request):
 @login_required(login_url='login')
 def incidents_pending_analysis(request):
 
-    products=mod9001_incidentregister.objects.filter(analysis_flag='No')
+    products=mod9001_incidentregister.objects.filter(analysis_flag='No').filter(record_group=my_data_group(request.user))
     return render(request,'incidents_pending_analysis.html',{'products':products})
 
 @login_required(login_url='login')
@@ -948,7 +950,7 @@ def incidentRegisterStaff(request,incident_id):
         request.POST['entered_by'] = request.user
         request.POST['date_today']=date.today()
         request.POST['status'] = 1
-        #request.POST['status'] = 5
+        request.POST['record_group'] = "11"
         
         form=incident_RegisterStaff(request.POST)
                         
@@ -968,7 +970,7 @@ def incidentRegisterStaff(request,incident_id):
     return render(request,'incidentRegisterStaff.html',context)
 
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['IncidentManager'])
+@allowed_users(allowed_roles=['Analyst'])
 def incidentStaff(request):
 
     form=incident_RegisterStaff()
@@ -981,6 +983,7 @@ def incidentStaff(request):
         request.POST['date_today']=date.today()
         request.POST['status'] = 1
         #request.POST['status'] = 5
+        request.POST['record_group'] = "11"
         
         form=incident_RegisterStaff(request.POST)
                         
@@ -1030,7 +1033,7 @@ def incidentregister_due(request):
 
 
 @allowed_users(allowed_roles=['Auditor'])
-def Verify_incidentregister(request,pk_test):
+def Verify_incidentregister(request,pk_test,date):
     open_car=mod9001_incidentregisterStaff.objects.get(incident_number=pk_test)
     form=Verifyincidentregister(instance=open_car)
     if request.method=="POST":
@@ -1040,23 +1043,28 @@ def Verify_incidentregister(request,pk_test):
                 request.POST=request.POST.copy()
                 request.POST['status'] = 1 #requires approval first before next verification
                 request.POST['verification']=2 #default verifiaction to Not effective
-                print("request", request.POST)
+                request.POST['date']= date
             
             elif request.POST['qmsstatus'] == '1':
                 #print("request.POST['qmsstatus']",request.POST['qmsstatus'])
-                request.POST=request.POST.copy()
-                request.POST['status'] = 1 # keep status approved
-                request.POST['verification_status']='Closed'
+                if len(request.FILES)==0:
+                    return HttpResponse("FAILED: Please attach Support Document!")
+                else:
+                    request.POST=request.POST.copy()
+                    request.POST['status'] = 1 # keep status approved
+                    request.POST['verification_status']='Closed'
+                    request.POST['date']= date
             
             else:
                 request.POST=request.POST.copy()
+                request.POST['date']= date
 
 
 
 
 
 
-            form=Verifyincidentregister(request.POST, instance=open_car)
+            form=Verifyincidentregister(request.POST,request.FILES,instance=open_car)
             if form.is_valid():
                 print("request.POST['Verifyincidentregister']",request.POST)
                 form.save()
@@ -1328,7 +1336,7 @@ def correctiveaction(request):
 
 @login_required(login_url='login')
 def correctiveaction_pending_planning(request):
-    pendingcar=mod9001_correctiveaction.objects.filter(car_flag='No') #get all planning  pending approval    
+    pendingcar=mod9001_correctiveaction.objects.filter(car_flag='No').filter(record_group=my_data_group(request.user)) #get all planning  pending approval    
     #pendingcar=mod9001_correctiveaction.objects.all()#get all from corrective action table   
  
     
@@ -1409,6 +1417,7 @@ def planning(request, car_no):
         request.POST['entered_by'] = request.user
         request.POST['date_today']=date.today()
         request.POST['status'] = 5
+        request.POST['record_group']=my_data_group(request.user)
         
         form=mod9001planning(request.POST)
                         
@@ -1437,6 +1446,7 @@ def planning_save(request):
         request.POST['entered_by'] = request.user
         request.POST['date_today']=date.today()
         request.POST['status'] = 5
+        request.POST['record_group']=my_data_group(request.user)
         
         form=mod9001planning(request.POST)
                         
@@ -1460,7 +1470,7 @@ def planning_save(request):
 
 @login_required(login_url='login')
 def planning_pending(request):
-    pendingcar=mod9001_planning.objects.filter(status='5') #get all planning  pending approval    
+    pendingcar=mod9001_planning.objects.filter(status='5').filter(record_group=my_data_group(request.user)) #get all planning  pending approval    
     #pendingcar=mod9001_correctiveaction.objects.all()#get all from corrective action table   
  #mod9001_planning.objects.all().filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4')
     
@@ -1644,7 +1654,7 @@ def changeRegister_report(request):
 #######################CHANGE REQUEST###################################################
 @login_required(login_url='login')
 def changerequest_pending(request):
-    pendingcar=mod9001_changeRegister.objects.filter(status='5') #get all planning  pending approval    
+    pendingcar=mod9001_changeRegister.objects.filter(status='5').filter(record_group=my_data_group(request.user)) #get all planning  pending approval    
     context={'pendingcar':pendingcar} 
     return render(request,'changerequest_pending.html',context)
 
@@ -1782,7 +1792,7 @@ def customercomplaint(request):
 @login_required(login_url='login')
 #@allowed_users(allowed_roles=['RelationsManager'])
 def customerComplaints_pending_analysis(request):
-    pendingcar=mod9001_customerComplaint.objects.filter(analysis_flag='No') #get all customer complaints  pending approval    
+    pendingcar=mod9001_customerComplaint.objects.filter(analysis_flag='No').filter(record_group=my_data_group(request.user)) #get all customer complaints  pending approval    
     context={'pendingcar':pendingcar} 
     return render(request,'customerComplaint_pending_analysis.html',context)
 
@@ -1892,7 +1902,7 @@ def customercomplaint_due(request):
 
 
 @allowed_users(allowed_roles=['Auditor'])
-def Verify_customercomplaint(request,pk_test):
+def Verify_customercomplaint(request,pk_test,date):
     open_car=mod9001_customerComplaint.objects.get(comp_no=pk_test)
     form=Verifycustomer_complaint(instance=open_car)
     if request.method=="POST":
@@ -1902,23 +1912,28 @@ def Verify_customercomplaint(request,pk_test):
                 request.POST=request.POST.copy()
                 request.POST['status'] = 1 #requires approval first before next verification
                 request.POST['verification']=2 #default verifiaction to Not effective
-                print("request", request.POST)
+                request.POST['date']= date
             
             elif request.POST['qmsstatus'] == '1':
                 #print("request.POST['qmsstatus']",request.POST['qmsstatus'])
-                request.POST=request.POST.copy()
-                request.POST['status'] = 1 # keep status approved
-                request.POST['verification_status']='Closed'
+                if len(request.FILES)==0:
+                    return HttpResponse("FAILED: Please attach Support Document!")
+                else:
+                    request.POST=request.POST.copy()
+                    request.POST['status'] = 1 # keep status approved
+                    request.POST['verification_status']='Closed'
+                    request.POST['date']= date
             
             else:
                 request.POST=request.POST.copy()
+                request.POST['date']= date
 
 
 
 
 
 
-            form=Verifycustomer_complaint(request.POST, instance=open_car)
+            form=Verifycustomer_complaint(request.POST,request.FILES,instance=open_car)
             if form.is_valid():
                 form.save()
                 return redirect('/customercomplaint_due/')

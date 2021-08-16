@@ -121,9 +121,11 @@ def issues(request):
         request.POST=request.POST.copy()
         request.POST['entered_by'] = request.user
         request.POST['date_today']=date.today()
-        request.POST['status'] = 5 #flaging status as pending car
+        request.POST['status'] = 5
+        request.POST['record_group']=my_data_group(request.user) #flaging status as pending car
         #print("issue description", request.POST['issue_description'])
         form=IssuesForm(request.POST)
+
         
                
         #print("PRINTING CONTEXT",form.date_today, form.added_by, form.responsibility)
@@ -216,7 +218,7 @@ def edit_issue(request,pk_test):
 
 @login_required(login_url='login')
 def issues_pending(request):
-    pendingcar=mod9001_issues.objects.filter(status='5') #get all issues pending approval    
+    pendingcar=mod9001_issues.objects.filter(status='5').filter(record_group=my_data_group(request.user)) #get all issues pending approval    
     context={'pendingcar':pendingcar} 
     return render(request,'issues_pending.html',context)
 
@@ -268,6 +270,7 @@ def interested_parties(request):
         request.POST['entered_by'] = request.user
         request.POST['date_today']=date.today()
         request.POST['status'] = 5 #flaging status as pending car
+        request.POST['record_group']=my_data_group(request.user)
         form=interestedPartiesFORM(request.POST)
         #print("PRINTING GROUP",my_data_group(request.POST['responsibility']))
                
@@ -372,7 +375,7 @@ def deleteip(request,pk_test):
 
 @login_required(login_url='login')
 def ip_pending(request):
-    pendingcar=mod9001_interestedParties.objects.filter(status='5') #get all ip pending approval    
+    pendingcar=mod9001_interestedParties.objects.filter(status='5').filter(record_group=my_data_group(request.user)) #get all ip pending approval    
     context={'pendingcar':pendingcar} 
     return render(request,'ip_pending.html',context)
 
@@ -432,6 +435,7 @@ def regulatory_requirement(request):
         request.POST['entered_by'] = request.user
         request.POST['date_today']=date.today()
         request.POST['status'] = 5 #flaging status as pending car
+        request.POST['record_group']=my_data_group(request.user)
 
         form=regulatoryRequirmentFORM(request.POST)
                
@@ -525,7 +529,7 @@ def deleteregulatory(request,pk_test):
 
 @login_required(login_url='login')
 def requirement_pending(request):
-    pendingcar=mod9001_regulatoryReq.objects.filter(status='5').order_by('responsibility') #get all requirement pending approval    
+    pendingcar=mod9001_regulatoryReq.objects.filter(status='5').filter(record_group=my_data_group(request.user)) #get all requirement pending approval    
     context={'pendingcar':pendingcar} 
     return render(request,'requirement_pending.html',context)
 
@@ -574,7 +578,7 @@ def load_issue_description(request):
 
 @login_required(login_url='login')
 def issues_pending_risk_assesment(request):
-    pendingcar=mod9001_issues.objects.filter(risk_assessment_flag='No').filter(status='1') #get all customer survey missing improvement plan  entries  
+    pendingcar=mod9001_issues.objects.filter(risk_assessment_flag='No').filter(status='1').filter(record_group=my_data_group(request.user)) #get all customer survey missing improvement plan  entries  
     context={'pendingcar':pendingcar} 
     return render(request,'issues_pending_risk_assessment.html',context)
 
@@ -592,6 +596,7 @@ def risks(request,issue_number):
         request.POST['date_today']=date.today()
         request.POST['status'] = 5 #flaging status as pending risk
         request.POST['record_type'] = "RISK" #specifiing type of entry
+        request.POST['record_group']=my_data_group(request.user)
         if request.POST['contextdetails']=="1":
 
             request.POST['ip_number']="" #set ip_number to missing
@@ -732,7 +737,7 @@ def risks_report(request):
  ###############   OPPORTUNITY     ###############
 @login_required(login_url='login')
 def issues_pending_opp_assesment(request):
-    pendingcar=mod9001_issues.objects.filter(status='1').filter(risk_assessment_flag='No') #get all issues that have been approved and pending risk assessment    
+    pendingcar=mod9001_issues.objects.filter(status='1').filter(risk_assessment_flag='No').filter(record_group=my_data_group(request.user))#get all issues that have been approved and pending risk assessment    
     context={'pendingcar':pendingcar} 
     return render(request,'issues_pending_opp_assessment.html',context)
 
@@ -757,6 +762,7 @@ def opportunity(request,issue_number):
 
 
         request.POST['date_today']=date.today()
+        request.POST['record_group']=my_data_group(request.user)
 
         if request.POST['contextdetails']=="1":
 
@@ -806,6 +812,7 @@ def opportunity_assessed(request):
 
 
         request.POST['date_today']=date.today()
+        request.POST['record_group']=my_data_group(request.user)
 
         if request.POST['contextdetails']=="1":
 

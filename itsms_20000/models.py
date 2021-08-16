@@ -5,6 +5,7 @@ from random import randint,randrange
 from django import forms
 from django.conf import settings
 from multiselectfield import MultiSelectField
+from accounts.utils import *
 
 # Create your models here.
 class ServiceRequest_type(models.Model):
@@ -118,7 +119,7 @@ class mod20000_service_planning(models.Model):
     
     #verification=models.ForeignKey('issues_9001.RISK_OPPverification', on_delete=models.SET_NULL,verbose_name='Verification:',null=True,blank=True)
     verification_status=models.TextField(max_length=200, null=True,blank=True)
-    verification_failed=models.TextField("Reason for rejecting:",null=True,blank=True, help_text='If rejected, please give a reason')
+    verification_failed=models.TextField("Reason for rejecting:",null=True,blank=True)
     qmsstatus=models.ForeignKey('operations_9001.qmsstatus', on_delete=models.SET_NULL,null=True,verbose_name='Verification Status:')
     record_group=models.CharField("Data Group",max_length=20,null=True,blank=True)    
   
@@ -127,5 +128,8 @@ class mod20000_service_planning(models.Model):
     entered_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank=True,on_delete=models.SET_NULL,related_name='planning')
     date_today=models.DateField("Date created:",default=datetime.now)
     status=models.ForeignKey('issues_9001.approval_status', on_delete=models.SET_NULL,verbose_name='Status:',null=True,blank=True)
+    document = models.FileField("Upload Support Document:",upload_to='documents/',null=True,blank=True,validators=[validate_file_size])
+    uploaded_at = models.DateTimeField(auto_now_add=True,null=True)
+    
     def __str__(self):
        return str(self.service_number)
