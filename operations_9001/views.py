@@ -1536,7 +1536,7 @@ def CARnumbers_7days_expire(*x):
 @login_required(login_url='login')
 def planning_due(request):
     #carExpire7days=mod9001_planning.objects.filter(status=1).filter(~Q(qmsstatus=1))
-    carExpire7days=mod9001_planning.objects.all().filter(due__gte=datetime.now() - timedelta(days=7)).filter(status='1').filter(~Q(qmsstatus='3')).filter(~Q(qmsstatus='1'))
+    carExpire7days=mod9001_planning.objects.all().filter(due__gte=datetime.now() - timedelta(days=7)).filter(status='1').filter(~Q(qmsstatus='3')).filter(~Q(qmsstatus='1')).filter(record_group=my_data_group(request.user))
     context={'products':carExpire7days}
     #thislist = []
    
@@ -1672,7 +1672,21 @@ def changeRegister_report(request):
 #######################CHANGE REQUEST###################################################
 @login_required(login_url='login')
 def changerequest_pending(request):
-    pendingcar=mod9001_changeRegister.objects.filter(status='5').filter(record_group=my_data_group(request.user)) #get all planning  pending approval    
+    pendingcar={}
+    context={}
+    if is_Auditor(request.user):
+        #pendingcar=mod9001_qmsplanner.objects.all().filter(status='5').filter(~Q(verification_status='Closed')) #get all qms pending approval    
+        pendingcar=mod9001_changeRegister.objects.filter(status='5').filter(~Q(verification_status='Closed')) #get all planning  pending approval    
+        
+    
+    if is_Executive(request.user):
+        #pendingcar=mod9001_qmsplanner.objects.filter(status='5').filter(planner_user_title=20)     
+        pendingcar=mod9001_changeRegister.objects.filter(status='5') #get all planning  pending approval    
+
+    #else:
+        #pendingcar=mod9001_qmsplanner.objects.filter(status='5').filter(record_group=my_data_group(request.user)).filter(~Q(planner_user_title=20)) #get all qms pending approval
+    
+    #    pendingcar=mod9001_changeRegister.objects.filter(status='5').filter(record_group=my_data_group(request.user)) #get all planning  pending approval    
     context={'pendingcar':pendingcar} 
     return render(request,'changerequest_pending.html',context)
 

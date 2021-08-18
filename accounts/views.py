@@ -71,10 +71,7 @@ def home(request):
     total_INCIDENTREGISTER_rejected= mod9001_incidentregisterStaff.objects.all().filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(qmsstatus='3').count()
     total_INCIDENTREGISTER_pending= mod9001_incidentregisterStaff.objects.all().filter(due__gte=datetime.now() - timedelta(days=7)).filter(~Q(qmsstatus='3')).filter(~Q(qmsstatus='1')).filter(record_group=my_data_group(request.user)).count()
         
-    total_CORRECTIVEACTION_rejected= mod9001_planning.objects.all().filter(proposedby_user_id=request.user.id).filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4').count()
-    total_CORRECTIVEACTION_pending= mod9001_planning.objects.all().filter(due__gte=datetime.now() - timedelta(days=7)).filter(status='1').filter(~Q(qmsstatus='3')).filter(~Q(qmsstatus='1')).filter(record_group=my_data_group(request.user)).count()  
-    total_CORRECTIVEACTION_pending_planning= mod9001_correctiveaction.objects.filter(car_flag='No').filter(record_group=my_data_group(request.user)).count()  
-              
+       
     total_CHANGEREQUEST= mod9001_changeRegister.objects.all().filter(status='5').count()
     total_CHANGEREQUEST_rejected= mod9001_changeRegister.objects.all().filter(raisedby_user_id=request.user.id).filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4').count()
     
@@ -137,7 +134,10 @@ def home(request):
         total_Trainingplanner_rejected=0
         total_Trainingplanner_pending=0
 
-        total_CORRECTIVEACTION= mod9001_planning.objects.all().filter(status='5').filter(record_group=my_data_group(request.user)).count()
+        
+        total_CORRECTIVEACTION_rejected=0
+        total_CORRECTIVEACTION_pending_planning=0
+        total_CORRECTIVEACTION= mod9001_planning.objects.all().filter(status='5').filter(planner_user_title=20).count()
 
     else:
         total_QMSplanner= mod9001_qmsplanner.objects.all().filter(status='5').filter(record_group=my_data_group(request.user)).filter(~Q(planner_user_title=20)).count() #exclude HOD entries
@@ -147,6 +147,17 @@ def home(request):
         total_Trainingplanner= mod9001_trainingplanner.objects.all().filter(status='5').filter(record_group=my_data_group(request.user)).filter(~Q(planner_user_title=20)).count() #exclude HOD entries
         total_Trainingplanner_rejected= mod9001_trainingplanner.objects.all().filter(planner_user_id=request.user.id).filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4').count()      
         total_Trainingplanner_pending= mod9001_trainingplanner.objects.all().filter(end__gte=datetime.now() - timedelta(days=7)).filter(status='1').filter(trainplannerstatus__isnull=True).filter(record_group=my_data_group(request.user)).count()
+
+        total_CORRECTIVEACTION_rejected= mod9001_planning.objects.all().filter(proposedby_user_id=request.user.id).filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4').count()
+        total_CORRECTIVEACTION= mod9001_planning.objects.all().filter(status='5').filter(record_group=my_data_group(request.user)).filter(~Q(planner_user_title=20)).count()
+        #total_CORRECTIVEACTION= mod9001_planning.objects.all().filter(status='5').filter(record_group=my_data_group(request.user))
+        
+        total_CORRECTIVEACTION_pending= mod9001_planning.objects.all().filter(due__gte=datetime.now() - timedelta(days=7)).filter(status='1').filter(~Q(qmsstatus='3')).filter(~Q(qmsstatus='1')).filter(record_group=my_data_group(request.user)).count()  
+        total_CORRECTIVEACTION_pending_planning= mod9001_correctiveaction.objects.filter(car_flag='No').filter(record_group=my_data_group(request.user)).count()  
+                
+        
+        
+        
         
         
         total_IPS=0 
@@ -154,7 +165,7 @@ def home(request):
         total_COMPLAINCE=0 
         total_RISKS=0 
         total_OPPORTUNITY=0 
-        total_CORRECTIVEACTION=0
+        #total_CORRECTIVEACTION=0
         total_CHANGEREQUEST=0
     
     

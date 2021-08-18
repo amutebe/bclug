@@ -218,7 +218,26 @@ def edit_issue(request,pk_test):
 
 @login_required(login_url='login')
 def issues_pending(request):
-    pendingcar=mod9001_issues.objects.filter(status='5').filter(record_group=my_data_group(request.user)) #get all issues pending approval    
+    pendingcar={}
+    context={}
+    if is_Auditor(request.user):
+        #pendingcar=mod9001_qmsplanner.objects.all().filter(status='5').filter(~Q(verification_status='Closed')) #get all qms pending approval    
+        #pendingcar=mod9001_changeRegister.objects.filter(status='5').filter(~Q(verification_status='Closed')) #get all planning  pending approval    
+        #pendingcar=mod9001_issues.objects.filter(risk_assessment_flag='No').filter(status='1') #get all ip pending approval    
+        pendingcar=mod9001_issues.objects.filter(status='5') #get all issues pending approval    
+        
+    
+    if is_Executive(request.user):
+        #pendingcar=mod9001_qmsplanner.objects.filter(status='5').filter(planner_user_title=20)     
+        #pendingcar=mod9001_changeRegister.objects.filter(status='5') #get all planning  pending approval    
+        #pendingcar=mod9001_issues.objects.filter(risk_assessment_flag='No').filter(status='1')#get all ip pending approval    
+        pendingcar=mod9001_issues.objects.filter(status='5') #get all issues pending approval    
+       
+    
+    
+    
+    
+    #pendingcar=mod9001_issues.objects.filter(status='5').filter(record_group=my_data_group(request.user)) #get all issues pending approval    
     context={'pendingcar':pendingcar} 
     return render(request,'issues_pending.html',context)
 
@@ -375,7 +394,19 @@ def deleteip(request,pk_test):
 
 @login_required(login_url='login')
 def ip_pending(request):
-    pendingcar=mod9001_interestedParties.objects.filter(status='5').filter(record_group=my_data_group(request.user)) #get all ip pending approval    
+    pendingcar={}
+    context={}
+    if is_Auditor(request.user):
+        #pendingcar=mod9001_qmsplanner.objects.all().filter(status='5').filter(~Q(verification_status='Closed')) #get all qms pending approval    
+        #pendingcar=mod9001_changeRegister.objects.filter(status='5').filter(~Q(verification_status='Closed')) #get all planning  pending approval    
+        pendingcar=mod9001_interestedParties.objects.filter(status='5').filter(~Q(status=1)) #get all ip pending approval    
+        
+    
+    if is_Executive(request.user):
+        #pendingcar=mod9001_qmsplanner.objects.filter(status='5').filter(planner_user_title=20)     
+        #pendingcar=mod9001_changeRegister.objects.filter(status='5') #get all planning  pending approval    
+        pendingcar=mod9001_interestedParties.objects.filter(status='5')#get all ip pending approval    
+  
     context={'pendingcar':pendingcar} 
     return render(request,'ip_pending.html',context)
 
@@ -529,7 +560,23 @@ def deleteregulatory(request,pk_test):
 
 @login_required(login_url='login')
 def requirement_pending(request):
-    pendingcar=mod9001_regulatoryReq.objects.filter(status='5').filter(record_group=my_data_group(request.user)) #get all requirement pending approval    
+    pendingcar={}
+    context={}
+    if is_Auditor(request.user):
+        #pendingcar=mod9001_qmsplanner.objects.all().filter(status='5').filter(~Q(verification_status='Closed')) #get all qms pending approval    
+        #pendingcar=mod9001_changeRegister.objects.filter(status='5').filter(~Q(verification_status='Closed')) #get all planning  pending approval    
+        #pendingcar=mod9001_interestedParties.objects.filter(status='5').filter(~Q(status=1)) #get all ip pending approval    
+        pendingcar=mod9001_regulatoryReq.objects.filter(status='5') #get all requirement pending approval    
+        
+    
+    if is_Executive(request.user):
+        pendingcar=mod9001_regulatoryReq.objects.filter(status='5')#get all requirement pending approval    
+       
+    
+    
+    
+    
+    #pendingcar=mod9001_regulatoryReq.objects.filter(status='5').filter(record_group=my_data_group(request.user)) #get all requirement pending approval    
     context={'pendingcar':pendingcar} 
     return render(request,'requirement_pending.html',context)
 
@@ -578,7 +625,25 @@ def load_issue_description(request):
 
 @login_required(login_url='login')
 def issues_pending_risk_assesment(request):
-    pendingcar=mod9001_issues.objects.filter(risk_assessment_flag='No').filter(status='1').filter(record_group=my_data_group(request.user)) #get all customer survey missing improvement plan  entries  
+    pendingcar={}
+    context={}
+    if is_Auditor(request.user):
+        #pendingcar=mod9001_qmsplanner.objects.all().filter(status='5').filter(~Q(verification_status='Closed')) #get all qms pending approval    
+        #pendingcar=mod9001_changeRegister.objects.filter(status='5').filter(~Q(verification_status='Closed')) #get all planning  pending approval    
+        pendingcar=mod9001_issues.objects.filter(risk_assessment_flag='No').filter(status='1') #get all ip pending approval    
+        
+    
+    if is_Executive(request.user):
+        #pendingcar=mod9001_qmsplanner.objects.filter(status='5').filter(planner_user_title=20)     
+        #pendingcar=mod9001_changeRegister.objects.filter(status='5') #get all planning  pending approval    
+        pendingcar=mod9001_issues.objects.filter(risk_assessment_flag='No').filter(status='1')#get all ip pending approval    
+      
+    
+    
+    
+    
+    
+    #pendingcar=mod9001_issues.objects.filter(risk_assessment_flag='No').filter(status='1').filter(record_group=my_data_group(request.user)) #get all customer survey missing improvement plan  entries  
     context={'pendingcar':pendingcar} 
     return render(request,'issues_pending_risk_assessment.html',context)
 
@@ -886,14 +951,41 @@ def opportunity_report(request):
 
 @login_required(login_url='login')
 def risk_pending(request):
-    pendingcar=mod9001_risks.objects.filter(status='5',record_type='RISK').filter(~Q(verification_status='Closed')).filter(record_group=my_data_group(request.user)) #get all risk pending approval    
+    pendingcar={}
+    context={}
+    if is_Auditor(request.user):
+        #pendingcar=mod9001_qmsplanner.objects.all().filter(status='5').filter(~Q(verification_status='Closed')) #get all qms pending approval    
+        #pendingcar=mod9001_changeRegister.objects.filter(status='5').filter(~Q(verification_status='Closed')) #get all planning  pending approval    
+        #pendingcar=mod9001_issues.objects.filter(risk_assessment_flag='No').filter(status='1') #get all ip pending approval    
+        pendingcar=mod9001_risks.objects.filter(status='5',record_type='RISK').filter(~Q(verification_status='Closed')) #get all risk pending approval    
+        
+    
+    if is_Executive(request.user):
+        #pendingcar=mod9001_qmsplanner.objects.filter(status='5').filter(planner_user_title=20)     
+        #pendingcar=mod9001_changeRegister.objects.filter(status='5') #get all planning  pending approval    
+        #pendingcar=mod9001_issues.objects.filter(risk_assessment_flag='No').filter(status='1')#get all ip pending approval    
+        pendingcar=mod9001_risks.objects.filter(status='5',record_type='RISK').filter(~Q(verification_status='Closed')) #get all risk pending approval    
+     
+    
+
+
+
+
+
+    #pendingcar=mod9001_risks.objects.filter(status='5',record_type='RISK').filter(~Q(verification_status='Closed')).filter(record_group=my_data_group(request.user)) #get all risk pending approval    
     #pendingcar=mod9001_risks.objects.all().filter(status='5',record_type='RISK').filter(~Q(riskrank='Low')).filter(~Q(risktreatment=2)).filter(~Q(risktreatment=4)).filter(~Q(verification_status='Closed'))
     context={'pendingcar':pendingcar} 
     return render(request,'risk_pending.html',context)
 
 @login_required(login_url='login')
 def opp_pending(request):
-    pendingcar=mod9001_risks.objects.filter(status='5',record_type='OPP').filter(~Q(verification_status='Closed')).filter(record_group=my_data_group(request.user)) #get all opportunity  pending approval    
+    pendingcar={}
+    context={}
+    if is_Auditor(request.user):
+        pendingcar=mod9001_risks.objects.filter(status='5',record_type='OPP').filter(~Q(verification_status='Closed')) #get all opportunity  pending approval    
+    if is_Executive(request.user):    
+        pendingcar=mod9001_risks.objects.filter(status='5',record_type='OPP').filter(~Q(verification_status='Closed')) #get all opportunity  pending approval      
+    
     context={'pendingcar':pendingcar} 
     return render(request,'opp_pending.html',context)
 
