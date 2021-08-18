@@ -651,7 +651,8 @@ class mod9001_planning(models.Model):
     verification=models.ForeignKey('accounts.carsverification', on_delete=models.CASCADE,verbose_name='Verification:',null=True,blank=True)
     verification_status=models.CharField(max_length=200, null=True,blank=True)
     verification_failed=models.TextField("Reason for rejecting:",null=True,blank=True)
-
+    planner_user_id= models.CharField("Planner Sytem UserID.:", max_length=20, null=True, blank=True)       
+    planner_user_title= models.CharField("Planner Title.:", max_length=20, null=True, blank=True)    
     qmsstatus=models.ForeignKey(qmsstatus, on_delete=models.CASCADE,null=True,verbose_name='Verification Status:')
     record_group=models.CharField("Data Group",max_length=20,null=True,blank=True)    
     completion=models.DateField("Completion Date:",null=True,blank=True)

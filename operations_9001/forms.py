@@ -285,7 +285,7 @@ class mod9001planning(ModelForm):
     
     class Meta:
         model = mod9001_planning 
-        exclude = ['completion','qmsstatus','scheduled','entered_by','date_today','verification','verification_status','verification_failed','rejected','approval_date','approved_by']
+        exclude = ['planner_user_id','planner_user_title','completion','qmsstatus','scheduled','entered_by','date_today','verification','verification_status','verification_failed','rejected','approval_date','approved_by']
         widgets = {
 
            'record_group':HiddenInput(),'proposedby_user_id':HiddenInput(),'comment':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'status':forms.HiddenInput, 'due': DateInput(),'rootcause_desc':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'details':forms.Textarea(attrs={'rows': 2, 'cols': 40})
@@ -427,7 +427,7 @@ class customer_satisfaction_survey(ModelForm): #for customers outside company wi
         model = mod9001_customerSatisfaction 
         exclude = ['start','end','entered_by','date_today','verification','verification_status','verification_failed','qmsstatus','scheduled','completion','improvplan','details','due','assignedto']
         #widgets={'improvplan':forms.HiddenInput,'details':forms.HiddenInput,'assignedto':forms.HiddenInput,'due':forms.HiddenInput,'end':DateInput(),'start':DateInput(),'status':forms.HiddenInput,'comment':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'due':DateInput(),'details':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'date':DateInput(),'responsetime':HorizontalRadioSelect(),'resolution':HorizontalRadioSelect(),'delivery':HorizontalRadioSelect(),'communication':HorizontalRadioSelect(),'compliant':HorizontalRadioSelect(),'quality':HorizontalRadioSelect(),'infosecurity':HorizontalRadioSelect(),'customerservice':HorizontalRadioSelect()}
-        widgets={'record_group':HiddenInput(),'end':DateInput(),'start':DateInput(),'status':forms.HiddenInput,'comment':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'due':DateInput(),'details':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'date':DateInput(),'responsetime':HorizontalRadioSelect(),'resolution':HorizontalRadioSelect(),'delivery':HorizontalRadioSelect(),'communication':HorizontalRadioSelect(),'compliant':HorizontalRadioSelect(),'quality':HorizontalRadioSelect(),'infosecurity':HorizontalRadioSelect(),'customerservice':HorizontalRadioSelect()}
+        widgets={'organisation':HiddenInput(),'record_group':HiddenInput(),'end':DateInput(),'start':DateInput(),'status':forms.HiddenInput,'comment':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'due':DateInput(),'details':forms.Textarea(attrs={'rows': 2, 'cols': 40}),'date':DateInput(),'responsetime':HorizontalRadioSelect(),'resolution':HorizontalRadioSelect(),'delivery':HorizontalRadioSelect(),'communication':HorizontalRadioSelect(),'compliant':HorizontalRadioSelect(),'quality':HorizontalRadioSelect(),'infosecurity':HorizontalRadioSelect(),'customerservice':HorizontalRadioSelect()}
     
     
     #def clean(self):
