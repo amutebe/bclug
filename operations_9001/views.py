@@ -1470,7 +1470,25 @@ def planning_save(request):
 
 @login_required(login_url='login')
 def planning_pending(request):
-    pendingcar=mod9001_planning.objects.filter(status='5').filter(record_group=my_data_group(request.user)) #get all planning  pending approval    
+    if is_Auditor(request.user):
+        pendingcar=mod9001_planning.objects.all().filter(status='5').filter(~Q(verification_status='Closed')) #get all qms pending approval    
+      
+    
+    
+    
+    if is_Executive(request.user):
+        pendingcar=mod9001_planning.objects.filter(status='5').filter(planner_user_title=20)     
+
+    else:
+        pendingcar=mod9001_planning.objects.filter(status='5').filter(record_group=my_data_group(request.user)) #get all planning  pending approval    
+   
+    
+    
+    
+    
+    
+    
+    
     #pendingcar=mod9001_correctiveaction.objects.all()#get all from corrective action table   
  #mod9001_planning.objects.all().filter(date_today__gte=datetime.now() - timedelta(days=7)).filter(status='4')
     
@@ -1966,7 +1984,7 @@ def customersatisfaction_survey_email(request):
             for name in customerByName:
                 customer=name.id
                 flag=True
-                print("CUSTOMER NAME",customer)
+                #print("CUSTOMER NAME",customer)
             if flag:
                 return redirect('customersatisfaction_survey',customer_name=customer)
                     
@@ -1993,6 +2011,7 @@ def customersatisfaction_survey(request,customer_name):
         request.POST['date_today']=date.today()
         request.POST['status'] = 1
         request.POST['record_group'] = my_data_group(request.user)
+        
 #        #print("TEXT",request.POST)
 ##########################GET RANK DESCRIPTION FROM RATING SUBSTRING#####################################
         if "Poor" in request.POST['rank']:
@@ -2041,7 +2060,7 @@ def customersatisfaction_surveyed(request):
         request.POST['entered_by']=request.user
         request.POST['date_today']=date.today()
         request.POST['status'] = 1
-        request.POST['record_group'] = my_data_group(request.user)
+        request.POST['record_group'] = "13"
 #        #print("TEXT",request.POST)
 ##########################GET RANK DESCRIPTION FROM RATING SUBSTRING#####################################
         if "Poor" in request.POST['rank']:

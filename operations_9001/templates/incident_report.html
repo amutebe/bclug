@@ -80,6 +80,7 @@
 <th>Error</th>
 <th>Solution</th>
 <th>Duration</th>
+<th>SupportDocuments</th>
                     
 					
 				</tr></thead><tbody>
@@ -124,7 +125,11 @@
 					
 					</td>
 
-
+{% if i.document.url != empty %}
+	<td><a href="{{ i.document.url }}" download="{{ i.document.url }}">Download</a></td>
+{% else %}
+	<td><i>No file<i></td>
+{% endif %}
 
 				
 					</tr>

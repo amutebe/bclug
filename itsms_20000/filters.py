@@ -12,8 +12,9 @@ class serviceRequestFilter(django_filters.FilterSet):
     end=DateFilter(field_name="planning_date",lookup_expr='lte',label='End Date',widget=DateInput())
     error = django_filters.CharFilter(lookup_expr='icontains', distinct=True)
     solution = django_filters.CharFilter(lookup_expr='icontains', distinct=True)
+    #assigned = django_filters.CharFilter(lookup_expr='icontains', distinct=True)
 
 
     class Meta:
         model=mod20000_service_planning
-        fields=['service_category','component_affected','error','solution']
+        fields=['service_category','component_affected','error','solution','assigned']

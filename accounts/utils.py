@@ -44,6 +44,8 @@ def my_data_group(user):
         return "11"
     elif user.groups.filter(name='Accounts').exists():
         return "12"
+    elif user.groups.filter(name='RelationsManager').exists():
+        return "13"
     else:
         return ""
 

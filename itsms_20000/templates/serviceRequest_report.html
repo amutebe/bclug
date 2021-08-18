@@ -26,6 +26,7 @@
 <th>Service Category</th>
 <th>Affected Component</th>
 <th>Solution</th>
+<th>AssignedTo</th>
 
 <th></th>
 </tr></thead>
@@ -39,6 +40,7 @@
 <td>{{myFilter.form.service_category}}</td>
 <td>{{myFilter.form.component_affected}}</td>
 <td>{{myFilter.form.solution}}</td>
+<td>{{myFilter.form.assigned}}</td>
 
 <td><button class="btn btn-info btn-sm" type="submit">Search</button></td>
 </tr></tbody>
@@ -63,7 +65,7 @@
 						<thead><tr class="tableizer-firstrow">
 <th>SR ID</th> 
 <th>Date</th> 
-<th>Time</th> 
+<th>Time</th>
 <th>Type</th>
 <th>Requestor</th>
 <th>Mode</th>
@@ -90,6 +92,7 @@
 <th>Verification</th>
 <th>Rescheduled</th>
 <th>Duration</th>
+<th>SupportDocuments</th>
 
 										
 				</tr></thead><tbody>
@@ -131,6 +134,12 @@
 
 
 </td>
+{% if i.document.url != empty %}
+	<td><a href="{{ i.document.url }}" download="{{ i.document.url }}">Download</a></td>
+{% else %}
+	<td><i>No file<i></td>
+{% endif %}
+
 
                    
 
