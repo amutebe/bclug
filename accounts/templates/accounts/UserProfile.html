@@ -1,0 +1,83 @@
+{% extends "accounts/base.html" %} 
+
+{% block content %}
+
+<div class="col-md-26">
+	<h4 class="mb-3">{{user}}'s user Profile:</h4>	
+  <font color="green">  {% for message in messages%}
+                <p id="messages">{{message}}<p>
+                {%endfor%}</font>
+	 <p class="round2">
+	
+				<table class="tableizer-table">
+				<tr class="table-info ">
+					<th>Id</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Email</th>
+					<th>Department</th>
+					<th>Title</th>
+					<th>Supervisor</th>					
+					<th>Date Registered</th>
+
+					<th></th>
+                    <th></th>
+					
+				</tr>
+				
+				{% for i in my_profile %}
+				
+					<tr>
+					<td>{{i.employeeID}}</td>
+					<td>{{i.firstName}}</td>
+					<td>{{i.lastName}}</td>
+					<td>{{i.email}}</td>					
+					<td>{{i.dept}}</td>
+					<td>{{i.title}}</td>
+					<td>{{i.supervisor}}</td>				
+					<td>{{i.registered}}</td>
+
+					
+					
+					 <td><a class="btn btn-sm btn-warning" href="{%url 'change_password' %}">Change Password</a></td>
+                  
+					  <td><a class="btn btn-sm btn-info" href="{%url 'home' %}">Exit</a></td>
+                     
+
+					</tr>
+
+				{%endfor%}
+		
+			</table>
+            <br>
+	<font color="Green"><h6 class="mb-3">Your Access Groups:</h6></font>
+
+<table class="tableizer-table">
+				<tr class="table-info ">
+					
+					
+                    <th>ID</th>
+                    <th>Name</th>
+					
+					
+				</tr>
+				
+				
+				{%for i in group%}
+					<tr>
+					<td>{{i.id}}</td>
+					<td>{{i.name}}</td>
+                    </tr>
+                    {%endfor%}
+			
+					
+
+			
+		
+			</table>
+
+
+</div>
+
+
+{% endblock %} 

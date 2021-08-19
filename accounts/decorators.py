@@ -12,7 +12,7 @@ def unauthenticated_user(view_func):
 def allowed_users(allowed_roles=[]):
     def decorator(view_func):
         def wrapper_func(request,*args,**kwargs):
-            print("Working",allowed_roles)
+            #print("Working",allowed_roles)
             group=None
             if request.user.groups.exists():
                 group=request.user.groups.all()[0].name

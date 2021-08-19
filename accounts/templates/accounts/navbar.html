@@ -200,8 +200,17 @@
         </li>
         <li><a data-icon="&#xF13E;" >HSEMS</a></li>
         <li><a data-icon="&#xF02D;" href="{% url 'doc_manager'%}">DocumentManager</a></li>
-        <li><a data-icon="&#xF007;" href="{% url 'admin:index' %}">Admin</a></li>
-        <li>  
+                 
+         <li> <a data-icon="&#xF007;"><welcome>Logged in as, {{request.user}}</welcome></a>
+             <ul>
+             <li><a  data-icon="&#xF040;" href="{% url 'user_profile'%}">My Profile</a></li>
+            
+             </ul>
+        </li>
+       
+       
+       
+       <li>  
 
 {% if request.user|has_group:"Auditor" and request.user|has_group:"Analyst" and request.user|has_group:"TopManager" %}
     <span><i class="fa fa-envelope" style="font-size:24px;color:Orange"></i></span>
@@ -255,7 +264,8 @@
     </li>
     
         <li><a data-icon="&#xF08B;" href="{% url 'logout'%}">Signout</a></li>
-         <li><welcome>Logged in as, {{request.user}}</welcome></li>
+           <li><a href="{% url 'admin:index' %}">Admin</a></li>
+        
     </ul>
 <canvas><noscript><a href="//swimbi.com/download/">Here - maker css menu</a> at swimbi.com. All Rights Reserved</noscript></canvas>
 <div id="ie_message"><noscript>Local test in IE is better if you "<a href="http://f-source.com/swimbi/ie-allow-blocked-content/" target="_blank">Allow blocked content</a>" - click the button below.</noscript></div>

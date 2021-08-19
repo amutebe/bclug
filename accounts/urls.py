@@ -1,4 +1,5 @@
 from django.urls import path
+from django.conf.urls import url
 from . import views
 from django.contrib import admin
 from django.urls import path, include
@@ -40,6 +41,8 @@ urlpatterns = [
     path('SaveCAR/',views.SaveCAR,name="SaveCAR"),
     path('hideshow/',views.hideshow,name="hideshow"),
     path('ticket_class_view_3/',views.ticket_class_view_3,name="ticket_class_view_3"),
+    path('user_profile', views.user_profile, name='user_profile'),
+    path('change_password', views.change_password, name='change_password'),
   
     
     

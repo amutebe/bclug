@@ -802,7 +802,22 @@ def risks_report(request):
  ###############   OPPORTUNITY     ###############
 @login_required(login_url='login')
 def issues_pending_opp_assesment(request):
-    pendingcar=mod9001_issues.objects.filter(status='1').filter(risk_assessment_flag='No').filter(record_group=my_data_group(request.user))#get all issues that have been approved and pending risk assessment    
+    pendingcar={}
+    context={}
+    if is_Auditor(request.user):
+        pendingcar=mod9001_issues.objects.filter(status='1').filter(risk_assessment_flag='No')#get all issues that have been approved and pending risk assessment    
+        
+    
+    if is_Executive(request.user):
+        pendingcar=mod9001_issues.objects.filter(status='1').filter(risk_assessment_flag='No')#get all issues that have been approved and pending risk assessment    
+            
+    
+    
+    
+    
+    
+    
+    #pendingcar=mod9001_issues.objects.filter(status='1').filter(risk_assessment_flag='No').filter(record_group=my_data_group(request.user))#get all issues that have been approved and pending risk assessment    
     context={'pendingcar':pendingcar} 
     return render(request,'issues_pending_opp_assessment.html',context)
 
@@ -954,26 +969,17 @@ def risk_pending(request):
     pendingcar={}
     context={}
     if is_Auditor(request.user):
-        #pendingcar=mod9001_qmsplanner.objects.all().filter(status='5').filter(~Q(verification_status='Closed')) #get all qms pending approval    
-        #pendingcar=mod9001_changeRegister.objects.filter(status='5').filter(~Q(verification_status='Closed')) #get all planning  pending approval    
-        #pendingcar=mod9001_issues.objects.filter(risk_assessment_flag='No').filter(status='1') #get all ip pending approval    
-        pendingcar=mod9001_risks.objects.filter(status='5',record_type='RISK').filter(~Q(verification_status='Closed')) #get all risk pending approval    
+     pendingcar=mod9001_risks.objects.filter(status='5',record_type='RISK').filter(~Q(verification_status='Closed')) #get all risk pending approval    
         
     
     if is_Executive(request.user):
-        #pendingcar=mod9001_qmsplanner.objects.filter(status='5').filter(planner_user_title=20)     
-        #pendingcar=mod9001_changeRegister.objects.filter(status='5') #get all planning  pending approval    
-        #pendingcar=mod9001_issues.objects.filter(risk_assessment_flag='No').filter(status='1')#get all ip pending approval    
-        pendingcar=mod9001_risks.objects.filter(status='5',record_type='RISK').filter(~Q(verification_status='Closed')) #get all risk pending approval    
+     pendingcar=mod9001_risks.objects.filter(status='5',record_type='RISK').filter(~Q(verification_status='Closed')) #get all risk pending approval    
      
     
 
 
 
 
-
-    #pendingcar=mod9001_risks.objects.filter(status='5',record_type='RISK').filter(~Q(verification_status='Closed')).filter(record_group=my_data_group(request.user)) #get all risk pending approval    
-    #pendingcar=mod9001_risks.objects.all().filter(status='5',record_type='RISK').filter(~Q(riskrank='Low')).filter(~Q(risktreatment=2)).filter(~Q(risktreatment=4)).filter(~Q(verification_status='Closed'))
     context={'pendingcar':pendingcar} 
     return render(request,'risk_pending.html',context)
 
@@ -1077,7 +1083,7 @@ def risks_7daysToExpiryview(request,pk_test):
     products=mod9001_risks.objects.filter(risk_number=pk_test)
     return render(request,'risk_view_7_days_To_expiry.html',{'products':products})
 
-@allowed_users(allowed_roles=['Auditor'])
+@allowed_users(allowed_roles=['Executive'])
 def verify_risk(request,pk_test):
     open_car=mod9001_risks.objects.get(risk_number=pk_test)
     
@@ -1144,7 +1150,7 @@ def opp_7daysToExpiryview(request,pk_test):
     products=mod9001_risks.objects.filter(risk_number=pk_test)
     return render(request,'opp_view_7_days_To_expiry.html',{'products':products})
 
-@allowed_users(allowed_roles=['Auditor'])
+@allowed_users(allowed_roles=['Executive'])
 def verify_opp(request,pk_test):
     open_car=mod9001_risks.objects.get(risk_number=pk_test)
     form=VerifyOpp(instance=open_car)

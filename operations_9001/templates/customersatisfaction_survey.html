@@ -13,11 +13,12 @@ form {
 
 </style>
 <div class="col-md-9 order-md-1">
-          <h6 class="mb-3">Business Centre Ltd - Customer Satisfaction Survey</h6>
+          <h6 class="mb-3">Business Centre Ltd - Customer Satisfaction Survey:
+
           <customer class="mb-3"> </customer>
 <p class="round2"> 
 
-<form action="/customersatisfaction_surveyed/" method="post">
+<form action="/customersatisfaction_surveyed/{{customer_name}}" method="post">
                      {% csrf_token %}
  <div class="card-header">                    
 <table border="0">            

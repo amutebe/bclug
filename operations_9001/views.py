@@ -2016,7 +2016,7 @@ def customersatisfaction_survey_email(request):
 def customersatisfaction_survey(request,customer_name):
     
     form=customer_satisfaction_survey(initial={'satis_no': satis_survey_no(),'organisation':customer_name})
-    
+
               
                             
     if request.method=="POST":
@@ -2024,7 +2024,9 @@ def customersatisfaction_survey(request,customer_name):
         request.POST['entered_by']=request.user
         request.POST['date_today']=date.today()
         request.POST['status'] = 1
-        
+
+
+       
         
         request.POST['record_group'] = my_data_group(request.user)
         
@@ -2063,12 +2065,12 @@ def customersatisfaction_survey(request,customer_name):
             
           
         
-    context={'form':form,'providers':providers}
+    context={'form':form,'providers':providers,'customer_name':customer_name}
     return render(request,'customersatisfaction_survey.html',context)
 
-def customersatisfaction_surveyed(request):
+def customersatisfaction_surveyed(request,customer_name):
     form=customer_satisfaction_survey(initial={'satis_no': satis_survey_no()})
-    
+    #print("HE REIGNS************")
               
                             
     if request.method=="POST":
@@ -2077,7 +2079,7 @@ def customersatisfaction_surveyed(request):
         request.POST['date_today']=date.today()
         request.POST['status'] = 1
         request.POST['record_group'] = "13"
-        #request.POST['organisation'] = customer_name
+        request.POST['organisation'] = customer_name
         
         #print("TEXT",request.POST)
 ##########################GET RANK DESCRIPTION FROM RATING SUBSTRING#####################################

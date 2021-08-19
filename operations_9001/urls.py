@@ -105,7 +105,7 @@ path('providerassesment_7daysToExpiryview/<str:pk_test>/',views.providerassesmen
 
 path('customersatisfaction_survey/<str:customer_name>/', views.customersatisfaction_survey, name='customersatisfaction_survey'),#for customers outside without login accounts
 path('customersatisfaction_survey_email/', views.customersatisfaction_survey_email, name='customersatisfaction_survey_email'),#for customers outside without login accounts
-path('customersatisfaction_surveyed/', views.customersatisfaction_surveyed, name='customersatisfaction_surveyed'),#for customers outside without login accounts
+path('customersatisfaction_surveyed/<str:customer_name>', views.customersatisfaction_surveyed, name='customersatisfaction_surveyed'),#for customers outside without login accounts
 path('customersatisfaction/', views.customersatisfaction, name='customersatisfaction'),
 path('customersatisfaction_pending_improvement_plan/', views.customersatisfaction_pending_improvement_plan, name='customersatisfaction_pending_improvement_plan'),
 path('customersatisfaction_rejected/', views.customersatisfaction_rejected, name='customersatisfaction_rejected'),
