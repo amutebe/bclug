@@ -169,6 +169,8 @@ def home(request):
         total_OPPORTUNITY=0 
         #total_CORRECTIVEACTION=0
         total_CHANGEREQUEST=0
+        total_RISKS_pending=0
+        total_OPPORTUNITY_pending=0
     
     
     
@@ -393,22 +395,23 @@ def home(request):
    
 
     for i in customer_complaint:
-        w=i.date
-        t=w.strftime('%m/%d/%Y')
-        if get_7days_expire(t)<=30 and get_7days_expire(t)>=0:
-            aa+=1
-        elif get_7days_expire(t)>30 and get_7days_expire(t)<=60:
-            bb+=1
-        elif get_7days_expire(t)>60 and get_7days_expire(t)<=90:
-            cc+=1
-        elif get_7days_expire(t)>90 and get_7days_expire(t)<=120:
-            dd+=1
-        elif get_7days_expire(t)>120 and get_7days_expire(t)<=150:
-            ee+=1
-        elif get_7days_expire(t)>150 and get_7days_expire(t)<=180:
-            ff+=1
-        else:
-            pass
+        if i is not None:
+            w=i.date
+            t=w.strftime('%m/%d/%Y')
+            if get_7days_expire(t)<=30 and get_7days_expire(t)>=0:
+                aa+=1
+            elif get_7days_expire(t)>30 and get_7days_expire(t)<=60:
+                bb+=1
+            elif get_7days_expire(t)>60 and get_7days_expire(t)<=90:
+                cc+=1
+            elif get_7days_expire(t)>90 and get_7days_expire(t)<=120:
+                dd+=1
+            elif get_7days_expire(t)>120 and get_7days_expire(t)<=150:
+                ee+=1
+            elif get_7days_expire(t)>150 and get_7days_expire(t)<=180:
+                ff+=1
+            else:
+                pass
 
     #print("PRINTING MONTHS aa bb cc dd ee ff ", aa, bb, cc, dd , ee ,ff )
 

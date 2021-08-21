@@ -376,7 +376,9 @@ def qms_7daysToExpiryview(request,pk_test):
 
 @allowed_users(allowed_roles=['Auditor'])
 def verify_qms(request,pk_test,start):
+    print("PRINTING")
     open_car=mod9001_qmsplanner.objects.get(planner_number=pk_test)
+    print("PRINTING AGAIN")
     form=VerifyQMS(instance=open_car)
     if request.method=="POST":
             #("request.POST['qmsstatus']",request.POST)
@@ -401,7 +403,7 @@ def verify_qms(request,pk_test,start):
                 request.POST['start']=start
                 #print("RESCHEDULED",request.POST['end'])
             elif request.POST['qmsstatus'] == '1':
-                print("request.POST['qmsstatus']",request.POST['qmsstatus'])
+                #print("request.POST['qmsstatus']",request.POST['qmsstatus'])
                 request.POST=request.POST.copy()
                 request.POST['status'] = 1 # keep status approved
                 request.POST['verification_status']='Closed'

@@ -380,7 +380,7 @@ class mod9001_supplieregistration(models.Model):
 
 class mod9001_incidentregister(models.Model):
     incident_number=models.CharField("Incident No.:",max_length=200,primary_key=True)
-    date=models.DateField("Date:",null=True)
+    date=models.DateField("Date:",default=datetime.now,null=False)
     time=models.TimeField("Time (24Hr):",null=True)
     reporter= models.ForeignKey('accounts.employees',on_delete=models.CASCADE,verbose_name='Reported by:',null=True,blank=True)
        
@@ -779,7 +779,7 @@ class mod9001_customerComplaint(models.Model):
 
 class mod9001_customerSatisfaction(models.Model):
     satis_no=models.CharField("Satisfaction Survey No.:",max_length=200,default="Comp-CS-Q-"+ correction_no(),primary_key=True)
-    date=models.DateField("Date created:",default=datetime.now)
+    date=models.DateField("Date created:",default=datetime.now,null=False)
     organisation=models.ForeignKey('accounts.customer', on_delete=models.SET_NULL,verbose_name='Customer Organisation:',null=True,blank=True)
     #year=models.DateField("Survey Period:",null=True)
     start=models.DateField("Start Date:",null=True, blank=True)
